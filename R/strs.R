@@ -11,10 +11,10 @@
 #' @param Yi Quoted name of the volume variable, or other variable one desires to evaluate, in quotes.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param strata_area Quoted name of the strata area variable, or a numeric vector with the plot strata values. If there are more than 1 area values, it's possible to use a vector with all area values, like so:\code{c(14.4, 16.4, 14.2)}. The strata area values must be in hectares.
-#' @param .groups Quoted name of the subdivision variable(s), also known as strata. It's also possible to use more grouping variables.
-#' In this case, the additional variables will be used to run multiple stratified surveys, one for each level of the additional groups,
-#' while the last variable will be treated as the strata variable. In this case, one can use a character vector, like so: \code{c("MAP", "STRATA")}.
-#' @param age Quoted name of the age variable. This is an optional parameter, that calculates the average age supplied.
+#' @param strata Quoted name of the subdivision variable(s), also known as strata. If this argument is not supplied, the defined groups in the dataframe will be used, if they exist.
+#' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
+#' If this argument is \code{NULL}, the defined groups in the dataframe will be used, if they exist. Default: \code{NULL}.
+#' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NULL}.
 #' @param alpha Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.
 #' @param error Numeric value for the minimum admitted error value in the survey, in percentage. Default: \code{10}.
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
@@ -24,9 +24,9 @@
 #' 
 #' @keywords Stratified Random Sampling
 #' @references 
-#' CAMPOS, J. C. C.; LEITE, H. G. Mensuracao florestal: perguntas e respostas. 3a. ed. Vicosa: Editora UFV, 2013. 605 p.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 #' 
-#' SOARES, C. P. B.; NETO, F. D. P.; SOUZA, A. L. D. Dendrometria e Inventario Florestal. 2a. ed. Vicosa: UFV, 2012. 272 p.
+#' Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventário Florestal. 2nd edn. Viçosa: UFV.
 #' 
 #' @seealso other sampling functions: 
 #'   \code{\link{sprs}} for Simple Random Sampling, and
@@ -58,11 +58,8 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-strs <- function(df, Yi, plot_area, strata_area, .groups, age, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=T ){
+strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NULL, age=NULL, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=T ){
   # Checagem de variaveis ####
-  
-  # Definir pipe para facilitar
-  `%>%` <- dplyr::`%>%`
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
@@ -112,7 +109,7 @@ strs <- function(df, Yi, plot_area, strata_area, .groups, age, alpha = 0.05, err
     
     # Se area do estrato for fornecida numericamente, e for maior que uma area,
     # temos que criar uma tabela com os nomes dos talhoes e suas areas, e juntar com os dados originais.
-    estrato_name <- .groups[length(.groups)]
+    estrato_name <- strata
     estratos <- levels(factor(df[[estrato_name]]))
     
     if(!all.equal(length(estratos), length(strata_area))){stop("numero de estratos e numero de areas de estrato nao coincidem")}
@@ -148,22 +145,44 @@ strs <- function(df, Yi, plot_area, strata_area, .groups, age, alpha = 0.05, err
     stop(forestmangr::check_names(df, age, boolean=F), call.=F)
   }
   
+  # Se strata nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+  if(missing(strata) && is.null(dplyr::groups(df)) ){
+    stop("strata not set. strata must be set if data doesn't have any groups", call. = F)
+  }else if(missing(strata) && !is.null(dplyr::groups(df)) ){
+    strata_syms <- rlang::syms(dplyr::groups(df))
+  }else if(!is.character(strata)){
+    stop("strata must be a character", call. = F)
+  }else if(! length(strata)%in% 1:10){
+    stop("Length of 'strata' must be between 1 and 10", call.=F) 
+  }else if(forestmangr::check_names(df,strata)==F){
+    # Parar se algum nome nao existir, e avisar qual nome nao existe
+    stop(forestmangr::check_names(df,strata, boolean=F), call.=F) 
+  }else{
+    strata_syms <- rlang::syms(strata) 
+  }
+  
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if( missing(.groups) || .groups == "" ){
-    stop(".groups not set", call. = F) 
+  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+    .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
-  }else if(!is.character(.groups)){
-    stop(".groups must be a character", call.=F)
+  }else if(!is.character(.groups)){ 
+    stop(".groups must be a character", call. = F)
   }else if(! length(.groups)%in% 1:10){
     stop("Length of '.groups' must be between 1 and 10", call.=F)
-  }else if(forestmangr::check_names(df,.groups)==F ){
+  }else if(forestmangr::check_names(df,.groups)==F){
     # Parar se algum nome nao existir, e avisar qual nome nao existe
-    stop(forestmangr::check_names(df,.groups, boolean=F), call.=F)
+    stop(forestmangr::check_names(df,.groups, boolean=F), call.=F) 
     # se os grupos forem fornecidos e forem nomes dos dados
     # Transformar o objeto em simbolo, para que dplyr entenda
     # e procure o nome das variaveis dentro dos objetos
   }else{
-    .groups_syms <- rlang::syms(.groups)
+    .groups_syms <- rlang::syms(.groups) 
+  }
+  # se di_mm_to_cm nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! di_mm_to_cm %in% c(TRUE, FALSE) ){ 
+    stop("'di_mm_to_cm' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(di_mm_to_cm)!=1){
+    stop("Length of 'di_mm_to_cm' must be 1", call.=F) 
   }
   
   # Se alpha nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
@@ -219,7 +238,7 @@ strs <- function(df, Yi, plot_area, strata_area, .groups, age, alpha = 0.05, err
   # Calcula-se o N separado, para caso se tenha diferentes tamanhos de area por talhao
   aux <- df %>%
     dplyr::na_if(0) %>%
-    dplyr::group_by( !!!.groups_syms ) %>%
+    dplyr::group_by( !!!.groups_syms, !!!strata_syms ) %>%
     dplyr::summarise( Nj = mean(!!strata_area_sym) / (mean(!!plot_area_sym)/10000) ) %>%
     dplyr::summarise(N  = sum(Nj) )
   
@@ -231,13 +250,13 @@ strs <- function(df, Yi, plot_area, strata_area, .groups, age, alpha = 0.05, err
   }else{
     # se tiver mais de uma linha, ou seja, varios talhoes,
     # unir as areas aos dados originais utilizando join
-    x_ <- dplyr::left_join(data.frame(df),aux, by = .groups[-length(.groups)])
+    x_ <- dplyr::left_join(data.frame(df),aux, by = .groups )
     
   }
   
   x_ <- x_ %>% 
     dplyr::mutate(Nj = (!!strata_area_sym ) / ( (!!plot_area_sym)/10000 ) ) %>%
-    dplyr::group_by( !!!.groups_syms) %>%
+    dplyr::group_by( !!!.groups_syms, !!!strata_syms) %>%
     dplyr::summarise(
       AGE  = mean(!!age_sym),
       AREA_PC= mean(!!plot_area_sym),

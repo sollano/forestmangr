@@ -10,10 +10,9 @@
 #' @param Yi Quoted name of the volume variable, or other variable one desires to evaluate, in quotes.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param total_area Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.
-#' @param .groups Quoted name of the subdivision variable(s), also known as strata. It's also possible to use more grouping variables.
-#' In this case, the additional variables will be used to run multiple stratified surveys, one for each level of the additional groups,
-#' while the last variable will be treated as the strata variable. In this case, one can use a character vector, like so: \code{c("MAP", "STRATA")}.
-#' @param age Quoted name of the age variable. This is an optional parameter, that calculates the average age supplied.
+#' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
+#' If this argument is \code{NULL}, the defined groups in the dataframe will be used, if they exist. Default: \code{NULL}.
+#' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NULL}.
 #' @param alpha Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.
 #' @param error Numeric value for the minimum admitted error value in the survey, in percentage. Default: \code{10}.
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
@@ -22,9 +21,9 @@
 #' 
 #' @keywords Systematic Sampling
 #' @references 
-#' CAMPOS, J. C. C.; LEITE, H. G. Mensuracao florestal: perguntas e respostas. 3a. ed. Vicosa: Editora UFV, 2013. 605 p.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 #' 
-#' SOARES, C. P. B.; NETO, F. D. P.; SOUZA, A. L. D. Dendrometria e Inventario Florestal. 2a. ed. Vicosa: UFV, 2012. 272 p.
+#' Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventário Florestal. 2nd edn. Viçosa: UFV.
 #' 
 #' @seealso other sampling functions: 
 #'   \code{\link{sprs}} for Simple Random Sampling, and
@@ -54,13 +53,10 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-ss_diffs <- function(df, Yi, plot_area, total_area,  age, .groups, alpha = 0.05, error = 10, dec_places=4, tidy=T ) {
+ss_diffs <- function(df, Yi, plot_area, total_area,  age=NULL, .groups=NULL, alpha = 0.05, error = 10, dec_places=4, tidy=T ) {
   
   # checagem de variaveis ####
-  
-  # Definir pipe do dplyr, para facilitar
-  `%>%` <- dplyr::`%>%`
-  
+
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 

@@ -9,8 +9,8 @@
 #' @param di Quoted name of the section diameter  variable, in centimeters.
 #' @param hi Quoted name of the section height  variable, in meters
 #' @param bt Quoted name of the bark thickness variable, in centimeters.
-#' @param .groups Quoted name of the factor variable(s) used to identify the trees. 
-#' Aditional grouping variables can be added to differenciate subdivisions of the data. 
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
+#' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
 #' If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
 #' @param di_mm_to_cm Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.
 #' @param hi_cm_to_m Boolean argument that, if \code{TRUE}, converts the hi argument from centimeters to meters. Default: \code{FALSE}.
@@ -18,10 +18,12 @@
 #' @return Dataframe with volume values by section.
 #' 
 #' @references 
-#' CAMPOS, J. C. C.; LEITE, H. G. Mensuracao florestal: perguntas e respostas. 3a. ed. Vicosa: Editora UFV, 2013. 605 p.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 #'
-#' @seealso Complementary function:
-#'   \code{\link{smalianwb}}, For calculation of the volume with bark.
+#' @seealso Complementary functions:
+#'   \code{\link{smalianwb}}, For calculation of volume with bark using Smalian's method,
+#'   \code{\link{huberwb}}, for calculation of volume with bark using Huber's method,
+#'   \code{\link{huberwob}}, for calculation of volume without bark Huber's method.
 #'   
 #' @export
 #' @examples
@@ -42,11 +44,8 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-smalianwob <- function(df, di, hi, bt, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE, bt_mm_to_cm=FALSE ){
+smalianwob <- function(df, di, hi, bt, tree, .groups=NULL, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE, bt_mm_to_cm=FALSE ){
   # Checagem de variaveis ####
-  
-  # Definir pipe para facilitar
-  `%>%` <- dplyr::`%>%`
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
@@ -90,21 +89,39 @@ smalianwob <- function(df, di, hi, bt, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FA
     stop(forestmangr::check_names(df, bt, boolean=F), call.=F)
   }
   
+  # Se tree nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+  if(missing(tree) && is.null(dplyr::groups(df)) ){
+    stop("tree not set. tree must be set if data doesn't have any groups", call. = F)
+  }else if(missing(tree) && !is.null(dplyr::groups(df)) ){
+    tree_syms <- rlang::syms(dplyr::groups(df))
+  }else if(!is.character(tree)){
+    stop("tree must be a character", call. = F)
+  }else if(! length(tree)%in% 1:10){
+    stop("Length of 'tree' must be between 1 and 10", call.=F) 
+  }else if(forestmangr::check_names(df,tree)==F){
+    # Parar se algum nome nao existir, e avisar qual nome nao existe
+    stop(forestmangr::check_names(df,tree, boolean=F), call.=F) 
+  }else{
+    tree_syms <- rlang::syms(tree) 
+  }
+  
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups) && is.null(dplyr::groups(df))){
-    stop(".groups must be set if data doesn't have any groups", call. = F)
-  }else if(missing(.groups) && !is.null(dplyr::groups(df))){
-    .groups_syms <- rlang::syms(dplyr::groups(df))
-  }else if(!is.character(.groups)){
+  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+    .groups_syms <- character()
+    # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
+  }else if(!is.character(.groups)){ 
     stop(".groups must be a character", call. = F)
   }else if(! length(.groups)%in% 1:10){
     stop("Length of '.groups' must be between 1 and 10", call.=F)
   }else if(forestmangr::check_names(df,.groups)==F){
+    # Parar se algum nome nao existir, e avisar qual nome nao existe
     stop(forestmangr::check_names(df,.groups, boolean=F), call.=F) 
+    # se os grupos forem fornecidos e forem nomes dos dados
+    # Transformar o objeto em simbolo, para que dplyr entenda
+    # e procure o nome das variaveis dentro dos objetos
   }else{
     .groups_syms <- rlang::syms(.groups) 
   }
- 
   # se di_mm_to_cm nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
   if(! di_mm_to_cm %in% c(TRUE, FALSE) ){ 
     stop("'di_mm_to_cm' must be equal to TRUE or FALSE", call. = F) 
@@ -143,7 +160,7 @@ smalianwob <- function(df, di, hi, bt, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FA
   # ####
   
   df %>% 
-    dplyr::group_by(!!!.groups_syms, add=T) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
     dplyr::mutate(
         di_sc = (!!di_sym)-2*(!!bt_sym),
         CSA_WOB = (di_sc^2* pi) / 40000 , 

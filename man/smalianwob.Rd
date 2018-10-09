@@ -4,7 +4,7 @@
 \alias{smalianwob}
 \title{Calculate the volume without bark of trees using the Smalian method}
 \usage{
-smalianwob(df, di, hi, bt, .groups, di_mm_to_cm = FALSE,
+smalianwob(df, di, hi, bt, tree, .groups = NULL, di_mm_to_cm = FALSE,
   hi_cm_to_m = FALSE, bt_mm_to_cm = FALSE)
 }
 \arguments{
@@ -16,8 +16,9 @@ smalianwob(df, di, hi, bt, .groups, di_mm_to_cm = FALSE,
 
 \item{bt}{Quoted name of the bark thickness variable, in centimeters.}
 
-\item{.groups}{Quoted name of the factor variable(s) used to identify the trees. 
-Aditional grouping variables can be added to differenciate subdivisions of the data. 
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
+
+\item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
 If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
 
 \item{di_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.}
@@ -52,11 +53,13 @@ library(dplyr)
 
 }
 \references{
-CAMPOS, J. C. C.; LEITE, H. G. Mensuracao florestal: perguntas e respostas. 3a. ed. Vicosa: Editora UFV, 2013. 605 p.
+Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 }
 \seealso{
-Complementary function:
-  \code{\link{smalianwb}}, For calculation of the volume with bark.
+Complementary functions:
+  \code{\link{smalianwb}}, For calculation of volume with bark using Smalian's method,
+  \code{\link{huberwb}}, for calculation of volume with bark using Huber's method,
+  \code{\link{huberwob}}, for calculation of volume without bark Huber's method.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}
