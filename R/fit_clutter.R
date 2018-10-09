@@ -1,3 +1,4 @@
+#' @title 
 #' Ajuste do Modelo de Clutter (MQ2O)
 #' 
 #' @description 

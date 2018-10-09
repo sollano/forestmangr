@@ -1,3 +1,4 @@
+#' @title 
 #' Calculate the inverse of a number
 #' @description 
 #' This function returns the inverse of a numeric vector.

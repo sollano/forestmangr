@@ -1,3 +1,4 @@
+#' @title 
 #' Systematic Sampling
 #' @description 
 #' Function for processing forest inventory data using systematic sampling. 

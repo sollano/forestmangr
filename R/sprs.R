@@ -1,3 +1,4 @@
+#' @title 
 #' Simple Random Sampling
 #' @description 
 #' Function for processing forest inventory data using simple random sampling. 

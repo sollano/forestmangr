@@ -1,41 +1,48 @@
-#' @title Volume sem casca pelo metodo de Smalian
+#' @title 
+#' Calculate the volume without bark of trees using the Smalian method
+#' @description
+#' Function used to calculate the volume without bark of trees using the Smalian method.
+#' This function has integration with dplyr, so it can be used inside a pipe, along with the
+#' \code{group_by} function.
 #' 
-#' @description Calculo do volume sem casca em nivel de secao utilizando o metodo de Smalian.
-#' 
-#' @details 
-#' Funcao utilizada para calcular o volume sem casca pelo metodo de Smalian. A funcao possui
-#' integracao com dplyr, podendo ser utilizada dentro de um pipe, em conjunto com a funcao
-#' group_by.
-#' 
-#' @param df Data frame a ser utilizado.
-#' @param di Nome entre aspas da variavel diametro da secao em centimetros.
-#' @param hi Nome entre aspas da variavel altura da secao em metros.
-#' @param es Nome entre aspas da variavel espessura da casca em milimetros.
-#' @param .groups Nome(s) entre aspas da(s) variavel(s) classificatoria(s) utilizadas para identificar as arvores. Caso este argumento seja \code{NULL}, serao utilizados grupos ja definidos no dataframe. Padrao: \code{NULL}.
-#' @return Dataframe contendo os valores em nivel de secao.
+#' @param df A dataframe.
+#' @param di Quoted name of the section diameter  variable, in centimeters.
+#' @param hi Quoted name of the section height  variable, in meters
+#' @param bt Quoted name of the bark thickness variable, in centimeters.
+#' @param .groups Quoted name of the factor variable(s) used to identify the trees. 
+#' Aditional grouping variables can be added to differenciate subdivisions of the data. 
+#' If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
+#' @param di_mm_to_cm Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.
+#' @param hi_cm_to_m Boolean argument that, if \code{TRUE}, converts the hi argument from centimeters to meters. Default: \code{FALSE}.
+#' @param nt_mm_to_cm Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.
+#' @return Dataframe with volume values by section.
 #' 
 #' @references 
 #' CAMPOS, J. C. C.; LEITE, H. G. Mensuracao florestal: perguntas e respostas. 3a. ed. Vicosa: Editora UFV, 2013. 605 p.
 #'
-#' @seealso Funcao complementar:
-#'   \code{\link{smaliancc}}, para o calculo do volume com casca.
+#' @seealso Complementary function:
+#'   \code{\link{smalianwb}}, For calculation of the volume with bark.
 #'   
 #' @export
 #' @examples
-#' library(forestr)
+#' library(forestmangr)
 #' data("ex7_mfr")
-#'
-#' # Calcular o volume sem casca pelo metodo de Smalian:
-#' smaliansc(ex7_mfr,"di_cc", "hi", "e_casca", "ARVORE")
 #' 
-#' # ou, utilizando pipes:
+#' head(ex7_mfr)
+#' 
+#' # Calculate the volume without bark using Smalian's method:
+#' smalianwob(ex7_mfr,"di_wb", "hi", "bark_t", "TREE")
+#' 
+#' # Using pipes:
+#' library(dplyr)
+#' 
 #'  ex7_mfr %>% 
-#'  group_by(ARVORE) %>% 
-#'  smaliansc("di_cc", "hi", "e_casca")
+#'  group_by(TREE) %>% 
+#'  smalianwob("di_wb", "hi", "bark_t")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-
-smaliansc <- function(df, di, hi, es, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE, es_mm_to_cm=FALSE ){
+#' 
+smalianwob <- function(df, di, hi, bt, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE, bt_mm_to_cm=FALSE ){
   # Checagem de variaveis ####
   
   # Definir pipe para facilitar
@@ -57,8 +64,8 @@ smaliansc <- function(df, di, hi, es, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FAL
     stop("'di' must be a character containing a variable name", call.=F)
   }else if(length(di)!=1){
     stop("Length of 'di' must be 1", call.=F)
-  }else if(forestr::check_names(df, di)==F){
-    stop(forestr::check_names(df, di, boolean=F), call.=F)
+  }else if(forestmangr::check_names(df, di)==F){
+    stop(forestmangr::check_names(df, di, boolean=F), call.=F)
   }
   
   # se hi nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
@@ -68,19 +75,19 @@ smaliansc <- function(df, di, hi, es, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FAL
     stop("'hi' must be a character containing a variable name", call.=F)
   }else if(length(hi)!=1){
     stop("Length of 'hi' must be 1", call.=F)
-  }else if(forestr::check_names(df, hi)==F){
-    stop(forestr::check_names(df, hi, boolean=F), call.=F)
+  }else if(forestmangr::check_names(df, hi)==F){
+    stop(forestmangr::check_names(df, hi, boolean=F), call.=F)
   }
   
-  # se es nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-  if(  missing(es) ){  
-    stop("es not set", call. = F) 
-  }else if( !is.character(es) ){
-    stop("'es' must be a character containing a variable name", call.=F)
-  }else if(length(es)!=1){
-    stop("Length of 'es' must be 1", call.=F)
-  }else if(forestr::check_names(df, es)==F){
-    stop(forestr::check_names(df, es, boolean=F), call.=F)
+  # se bt nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+  if(  missing(bt) ){  
+    stop("bt not set", call. = F) 
+  }else if( !is.character(bt) ){
+    stop("'bt' must be a character containing a variable name", call.=F)
+  }else if(length(bt)!=1){
+    stop("Length of 'bt' must be 1", call.=F)
+  }else if(forestmangr::check_names(df, bt)==F){
+    stop(forestmangr::check_names(df, bt, boolean=F), call.=F)
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
@@ -92,8 +99,8 @@ smaliansc <- function(df, di, hi, es, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FAL
     stop(".groups must be a character", call. = F)
   }else if(! length(.groups)%in% 1:10){
     stop("Length of '.groups' must be between 1 and 10", call.=F)
-  }else if(forestr::check_names(df,.groups)==F){
-    stop(forestr::check_names(df,.groups, boolean=F), call.=F) 
+  }else if(forestmangr::check_names(df,.groups)==F){
+    stop(forestmangr::check_names(df,.groups, boolean=F), call.=F) 
   }else{
     .groups_syms <- rlang::syms(.groups) 
   }
@@ -125,21 +132,21 @@ smaliansc <- function(df, di, hi, es, .groups, di_mm_to_cm=FALSE, hi_cm_to_m=FAL
   }
 
   # Converter espessura da casca de milimetro para centimetro
-  if(es_mm_to_cm){
-    df[[es]] <- df[[es]]/10
+  if(bt_mm_to_cm){
+    df[[bt]] <- df[[bt]]/10
   }
   
   di_sym <- rlang::sym(di)
   hi_sym <- rlang::sym(hi)
-  es_sym <- rlang::sym(es)
+  bt_sym <- rlang::sym(bt)
   
   # ####
   
   df %>% 
     dplyr::group_by(!!!.groups_syms, add=T) %>% 
     dplyr::mutate(
-        di_sc = (!!di_sym)-2*(!!es_sym),
-        AS_SC = (di_sc^2* pi) / 40000 , 
-        VSC   = ((AS_SC + dplyr::lead(AS_SC) )/2 ) * (dplyr::lead(!!hi_sym) - (!!hi_sym) ) )  %>% 
+        di_sc = (!!di_sym)-2*(!!bt_sym),
+        CSA_WOB = (di_sc^2* pi) / 40000 , 
+        VWOB   = ((CSA_WOB + dplyr::lead(CSA_WOB) )/2 ) * (dplyr::lead(!!hi_sym) - (!!hi_sym) ) )  %>% 
     dplyr::ungroup()
 }

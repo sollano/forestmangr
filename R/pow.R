@@ -1,3 +1,4 @@
+#' @title 
 #' Raise a numeric vector to a given power
 #' @description 
 #' This function returns a numeric vector raised to a given power.

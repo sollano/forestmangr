@@ -1,3 +1,4 @@
+#' @title 
 #' Ajuste de funcoes nao lineares com saida customizada
 #' @description 
 #' Funcao para se gerar uma tabela por grupo ou nao contendo apenas as informacoes mais importantes de uma regressao nao linear,

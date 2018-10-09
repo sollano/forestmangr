@@ -1,3 +1,4 @@
+#' @title 
 #' Round all numeric variables of a dataframe to a given digit
 #' @description 
 #' This function allows the user to round all numeric values of a dataframe,

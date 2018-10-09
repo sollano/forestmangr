@@ -1,3 +1,4 @@
+#' @title 
 #' Bias of an estimator in percentage
 #' @description 
 #' Function for calculating the bias of an estimator. 

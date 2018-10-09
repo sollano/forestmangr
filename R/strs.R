@@ -1,3 +1,4 @@
+#' @title 
 #' Stratified Random Sampling
 #' @description 
 #' Function for processing forest inventory data using stratified random sampling. 

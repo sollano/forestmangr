@@ -1,3 +1,4 @@
+#' @title 
 #' RMSE of an estimator in percentage
 #' @description 
 #' Function for calculating the Root-Mean-Square-Error of an estimator. 
