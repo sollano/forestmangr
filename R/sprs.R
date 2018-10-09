@@ -1,7 +1,7 @@
 #' Simple Random Sampling
-#'
+#' @description 
 #' Function for processing forest inventory data using simple random sampling. 
-#'@details 
+#' @details 
 #' This function allows the user to processes inventory data using simple random sampling for finite or infinite populations.
 #' It's possible to run multiple sampling analysis using a factor variable indicated in the \code{.groups}() parameter.
 #'
@@ -18,7 +18,7 @@
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
 #' @param pop Character value for the type of population considered in the calculations. This can be either infinite (\code{"inf"}) or finite (\code{"fin"}). Default: \code{"inf"}.
 #' @param tidy Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.
-#' @return A dataframe with the sampling results
+#' @return A dataframe with the sampling results.
 #' 
 #' @keywords Simple Random Sampling
 #' @references 

@@ -31,7 +31,7 @@ while the last variable will be treated as the strata variable. In this case, on
 \item{tidy}{Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.}
 }
 \value{
-A dataframe with the sampling results
+A dataframe with the sampling results.
 }
 \description{
 Function for processing forest inventory data using systematic sampling.

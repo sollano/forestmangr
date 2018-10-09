@@ -1,5 +1,5 @@
 #' Stratified Random Sampling
-#'
+#' @description 
 #' Function for processing forest inventory data using stratified random sampling. 
 #' @details 
 #' This function allows the user to processes inventory data using stratified random sampling for n forest subdivisions (strata),

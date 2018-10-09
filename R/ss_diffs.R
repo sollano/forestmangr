@@ -1,7 +1,7 @@
 #' Systematic Sampling
-#'
+#' @description 
 #' Function for processing forest inventory data using systematic sampling. 
-#'@details 
+#' @details 
 #' This function allows the user to processes inventory data using simple random sampling for finite or infinite populations.
 #' It's possible to run multiple sampling analysis using a factor variable indicated in the \code{.groups}() parameter.
 #'
@@ -17,7 +17,7 @@
 #' @param error Numeric value for the minimum admitted error value in the survey, in percentage. Default: \code{10}.
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
 #' @param tidy Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.
-#' @return A dataframe with the sampling results
+#' @return A dataframe with the sampling results.
 #' 
 #' @keywords Systematic Sampling
 #' @references 
