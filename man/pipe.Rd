@@ -3,14 +3,6 @@
 \name{\%>\%}
 \alias{\%>\%}
 \title{Pipe}
-\usage{
-lhs %>% rhs
-}
-\arguments{
-\item{lhs}{A value or the magrittr placeholder.}
-
-\item{rhs}{A function call using the magrittr semantics.}
-}
 \description{
-Pipe an object forward into a function or call expression.
+Pipe an object forward into a function or call expression. See \code{\link[magrittr]{magrittr}} for more details.
 }

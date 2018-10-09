@@ -1,6 +1,6 @@
 #' @export
 
-arv_summary <- function(df, tree, dbh, .groups, plot_area, total_area, th, vwb, vwob){
+tree_summarise <- function(df,  dbh, tree, th=NULL, vwb=NULL, vwob=NULL, plot_area=NULL, total_area=NULL, .groups=NULL){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

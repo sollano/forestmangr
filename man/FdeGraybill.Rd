@@ -58,10 +58,6 @@ GRAYBILL, F. A. Theory and application of the linear model. Massa chusetts: Ouxb
 
 LEITE, H. G.; OLIVEIRA, F. H. T. Statistical procedure to test identity between analytical methods. Communications in Soil Science Plant Analysis, v.33, n.7/8, p.1105-1118, 2002.
 }
-\seealso{
-Funcao complementar:
-  \code{\link{FdeGraybill_}}, que utiliza caracteres especiais em sua saida.
-}
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}
 }

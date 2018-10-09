@@ -3,10 +3,10 @@
 #' @description 
 #' This function allows the user to round all numeric values of a dataframe,
 #' directly, even if the dataframe contains non-numeric variables
-#' (which would throw an error in the \code{base::round} function).
+#' (which would throw an error in the \link[base]{round} function).
 #' @param df A dataframe.
 #' @param digits Numeric vector for the desired number of digits.
-#' @param rf Type of round to be used. It can either be \code{"ceiling"}, \code{"floor"}, \code{"trunc"}, \code{"signif"}, or \code{"round"}. Default \code("round").
+#' @param rf Type of round to be used. It can either be \code{"ceiling"}, \code{"floor"}, \code{"trunc"}, \code{"signif"}, or \code{"round"}. Default \code{"round"}.
 #' 
 #' @return A dataframe, with all the numeric variables rounded up to the number given to \code{digits}.
 #' 
@@ -24,10 +24,10 @@
 #' # Do not run
 #' # trying this with the base::round function throws an error:
 #' 
-#' round(iris)
+#' # round(iris)
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-
+#'
 round_df <- function(df, digits, rf="round") {
   
   if(  missing(df) ){  

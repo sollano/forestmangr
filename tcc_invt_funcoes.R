@@ -127,7 +127,7 @@ average_tree_curve(df = dados_smalian, d = "di_wb", dbh = "DBH", h = "hi", th = 
 
 dados_vol_secao <- dados_smalian
 
-dados_vol_arvore <- vol_summarise(dados_smalian, dbh = "DBH", th = "TH", vwb = "VWB", vwob = "VWOB", "TREE", "STRATA")
+dados_vol_arvore <- vol_summarise(dados_smalian, dbh = "DBH", th = "TH", vwb = "VWB", tree = "TREE", .groups = "STRATA", vwob = "VWOB")
 dados_vol_arvore
 
 # ####

@@ -8,9 +8,9 @@
 #' @param dbh Quoted name of the diameter at breast hight variable, im cm.
 #' @param th Quoted name of the total height variable, in meters.
 #' @param vwb Quoted name of the volume with bark varible, in cubic meters.
-#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters.
 #' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
+#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.
 #' If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
 #' @return A dataframe summarised by the .groups variable(s).
 #' 
@@ -35,17 +35,17 @@
 #' sec_data_vol
 #' 
 #' # Now, we summarise the tree's volume:
-#' vol_summarise(sec_data_vol, dbh = "DBH", th = "TH", vwb = "VWB", vwob = "VWOB",tree = "TREE")
+#' vol_summarise(sec_data_vol, dbh = "DBH", th = "TH", vwb = "VWB",tree = "TREE", .groups = "STRATA",vwob = "VWOB")
 #' 
 #' # It's possible to do everything using pipes:
 #' ex7_mfr %>% 
 #' smalianwb("di_wb", "hi", "TREE") %>% 
 #' smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T) %>% 
-#' vol_summarise("DBH", "TH", "VWB", "VWOB", "TREE", "STRATA")
+#' vol_summarise("DBH", "TH", "VWB", "TREE", "STRATA", "VWOB")
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-vol_summarise <- function(df, dbh, th, vwb, vwob, tree, .groups){
+vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NULL, vwob=NULL){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

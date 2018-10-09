@@ -11,7 +11,7 @@ round_df(df, digits, rf = "round")
 
 \item{digits}{Numeric vector for the desired number of digits.}
 
-\item{rf}{Type of round to be used. It can either be \code{"ceiling"}, \code{"floor"}, \code{"trunc"}, \code{"signif"}, or \code{"round"}. Default \code("round").}
+\item{rf}{Type of round to be used. It can either be \code{"ceiling"}, \code{"floor"}, \code{"trunc"}, \code{"signif"}, or \code{"round"}. Default \code{"round"}.}
 }
 \value{
 A dataframe, with all the numeric variables rounded up to the number given to \code{digits}.
@@ -19,7 +19,7 @@ A dataframe, with all the numeric variables rounded up to the number given to \c
 \description{
 This function allows the user to round all numeric values of a dataframe,
 directly, even if the dataframe contains non-numeric variables
-(which would throw an error in the \code{base::round} function).
+(which would throw an error in the \link[base]{round} function).
 }
 \examples{
 library(forestmangr)
@@ -33,7 +33,7 @@ round_df(iris, rf="floor")
 # Do not run
 # trying this with the base::round function throws an error:
 
-round(iris)
+# round(iris)
 
 }
 \author{

@@ -4,7 +4,7 @@
 \alias{vol_summarise}
 \title{Summarise volume of trees}
 \usage{
-vol_summarise(df, dbh, th, vwb, vwob, tree, .groups)
+vol_summarise(df, dbh, th, vwb, tree, .groups = NULL, vwob = NULL)
 }
 \arguments{
 \item{df}{A dataframe.}
@@ -15,11 +15,11 @@ vol_summarise(df, dbh, th, vwb, vwob, tree, .groups)
 
 \item{vwb}{Quoted name of the volume with bark varible, in cubic meters.}
 
-\item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters.}
-
 \item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
 
-\item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
+\item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data.}
+
+\item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.
 If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
 }
 \value{
@@ -43,13 +43,13 @@ smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T)
 sec_data_vol
 
 # Now, we summarise the tree's volume:
-vol_summarise(sec_data_vol, dbh = "DBH", th = "TH", vwb = "VWB", vwob = "VWOB",tree = "TREE")
+vol_summarise(sec_data_vol, dbh = "DBH", th = "TH", vwb = "VWB",tree = "TREE", .groups = "STRATA",vwob = "VWOB")
 
 # It's possible to do everything using pipes:
 ex7_mfr \%>\% 
 smalianwb("di_wb", "hi", "TREE") \%>\% 
 smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T) \%>\% 
-vol_summarise("DBH", "TH", "VWB", "VWOB", "TREE", "STRATA")
+vol_summarise("DBH", "TH", "VWB", "TREE", "STRATA", "VWOB")
 
 }
 \seealso{
