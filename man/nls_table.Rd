@@ -2,133 +2,125 @@
 % Please edit documentation in R/nls_table.R
 \name{nls_table}
 \alias{nls_table}
-\title{Ajuste de funcoes nao lineares com saida customizada}
+\title{Fit non-linear regressions by group, using LM algorithm and get different output options.}
 \usage{
-nls_table(df, modelo, mod_start, .groups, output = "table",
+nls_table(df, model, mod_start, .groups, output = "table",
   est.name = "est", replace = F, keep_model = F, global_start,
   algorithm = "LM")
 }
 \arguments{
-\item{df}{Data frame a ser utilizado.}
+\item{df}{A dataframe.}
 
-\item{modelo}{Modelo que sera ajustado. Pode ser entrado de com ou sem aspas. lados x e y da equacao devem ser separados por "~".}
+\item{model}{A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".}
 
-\item{mod_start}{Valores iniciais para os coeficientes do modelo. Pode ser um vetor contendo apenas um valor para cada coeficiente, ou um dataframe contendo valores de coeficiente por um determinado grupo.}
+\item{mod_start}{A vector or dataframe, with start values for coefficients used in the model. This can be a dataframe containing the same group variables used in the .groups argument, and the start values.}
 
-\item{.groups}{(Opcional) Nomes entre aspas das variaveis classificatorias que podem ser utilizadas para se realizar a regressao por grupo. Caso este argumento seja \code{NULL}, serao utilizados grupos ja definidos no dataframe. Caso nao sejam encontrados grupos no dataframe, a regressao sera aplicada para todo o dataframe. Padrao: \code{NULL}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.}
 
-\item{output}{Indica se a saida sera a tabela de coeficientes, a tabela unida aos dados originais ou o y estimado. Pode ter como entrada "table", "merge", "est" ou "nest". Padrao: \code{"table"}.}
+\item{output}{Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.}
 
-\item{est.name}{Nome do y estimado, caso \code{est = TRUE}. Padrao: \code{"est"}.}
+\item{est.name}{Name of the estimated y value. Used only if \code{est.name = TRUE}. Padrao: \code{"est"}.}
 
-\item{replace}{Indica se ajustes por grupo que nao convergiram devem ser substituidos pelo modelo ajustado para todos os tados. Padrão \code{FALSE}.}
+\item{replace}{If \code{TRUE}, models that don't converge on a grouped regression fit will be replaced by coefficients fitted using all data. Default: \code{FALSE}.}
 
-\item{keep_model}{Indica se a variavel contendo o(s) ajuste(s) deve ser mantida ou nao. Padrão: \code{FALSE}.}
+\item{keep_model}{If \code{TRUE}, a column containg lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.}
 
-\item{algorithm}{Algoritmo a ser utilizado. Pode ser \code{"LM"} (Levenberg-Marquardt, mais robusto) ou \code{"GN"} (Gauss-Newton, menos robusto, utiliza a funcao nls padrao). Padrão: \code{"LM"}.}
+\item{algorithm}{Algorithm to be used in the non-linear regression. It can be \code{"LM"} (Levenberg-Marquardt, more robust) or \code{"GN"} (Gauss-Newton, less robust, uses nls default algorithm). Default: \code{"LM"}.}
 }
 \value{
-Dataframe. Sua composicao varia de acordo com o argumento ouput.
+A dataframe. Different dataframe options are available using the output argument.
 }
 \description{
-Funcao para se gerar uma tabela por grupo ou nao contendo apenas as informacoes mais importantes de uma regressao nao linear,
-utilizando o algoritmo Levenberg-Marquardt ou Gauss-Newton.
-Possui integracao com o pacote dplyr.
+With this function it's possible to fit non-linear regressions using Levenberg-Marquardt or Gauss-Newton algorithms by a grouping variable, and get a dataframe
+with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 }
 \details{
-Com esta funcao nao ha a necessidade de se utilizar a funcao do() para se ajustar um modelo linear
-dentro de um pipe do dplyr. Alem disso sua saida com os coeficientes em forma de coluna e
-propria para a aplicacao do modelo, podendo-se chamar os coeficientes por nome ou posicao na coluna.
-Alem disso, caso output = "merge", une-se o dataframe original aos coeficientes gerados automaticamente.
+This function Levenberg-Marquardt algorithm as default for fitting non-linear regression models.
+Also, with this function there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
+It's also possible to easily make fit miltiple regressions, specifying a grouping variable.
+In addition to that, the default output sets each coeffient as a column, making it easy to call coefficients by name or position
+when estimating values. The Levenberg-Marquardt fit uses \code{\link[mimpack.lm]{nlsLM}}.
 }
 \examples{
 library(forestmangr)
 library(dplyr)
-data("ex14_mfr")
-dados <- ex14_mfr
-head(dados)
+data("exfm14")
+head(exfm14)
 
-# Ajustar o modelo nao linear de Chapman e Richards para todos os dados
-nls_table(dados, HD ~ b0 * (1 - exp( -b1 * idade )  )^b2, 
-         mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
+# Ajustar o model nao linear de Chapman e Richards para todos os exfm14
+# Fit Chapman & Richards non-linear model for dominant Height:
+nls_table(exfm14, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
 
-# Ajustar o modelo nao linear de Chapman e Richards por talhao
-nls_table(dados,HD ~ b0 * (1 - exp( -b1 * idade )  )^b2,
-         mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
-         "talhao")
+# Fit CR model by strata:
+nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
+          .groups = "strata") \%>\% 
+          as.data.frame
+          
+# ou, using group_by
+
+exfm14 \%>\% 
+group_by(strata) \%>\% 
+nls_table(dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
+
+# If there are multiple start values, for each strata, they can be supplied like so:
+tab_coef <- data.frame(strata = c(1:20, 24,25,27,28,30,31,33,35,36,37), 
+                       rbind(data.frame(b0 = rep(23, 20), b1 = rep(0.03, 20), b2 = rep(1.3, 20) ), 
+                             data.frame(b0 = rep(23, 10), b1 = rep(0.03, 10), b2 = rep(.5, 10) )  )  )
+
+tab_coef
+
+nls_table(exfm14, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = tab_coef,
+          .groups = "strata" )
+# mod_start needs to be a dataframe in this case.
+
+# It's possible to bind the coefficients to the original data,
+# to estimate y. We'll also estimate bias and rmse for this estimation:
+nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = tab_coef ,
+          .groups = "strata", 
+          replace = T,
+          output = "merge" ) \%>\% 
+  mutate(
+  dh_est = b0 * (1 - exp( -b1 * age )  )^b2,
+  bias = bias_per(y = dh, yhat = dh_est),
+  rmse = rmse_per(y = dh, yhat = dh_est) ) \%>\% 
+  head(15)
+
+# This can also be done directly using "merge_est" as output:
+nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = tab_coef ,
+          .groups = "strata", 
+          output = "merge_est", 
+          est.name = "dh_est" ) \%>\% 
+  mutate(
+  bias = bias_per(y = dh, yhat = dh_est),
+  rmse = rmse_per(y = dh, yhat = dh_est) ) \%>\% 
+  head(15)
+
+# It's possible to further customize the output, using nested columns:
+nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = tab_coef ,
+          .groups = "strata",
+          output = "nest" ) 
+             
+# It's possible to use Gauss-Newton's algorithm. In this case,
+# some regressions will not converge.            
+ exfm14 \%>\% 
+group_by(strata) \%>\% 
+nls_table(dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),algorithm="GN" )
          
-# ou, utilizando group_by
-
-dados \%>\% 
-group_by(talhao) \%>\% 
-nls_table(HD ~ b0 * (1 - exp( -b1 * idade )  )^b2,
-         mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
-
-
-# Percebe-se que nao houve convergencia em aguns talhoes; neste caso gera-se NAs.
-# E possivel substituir estes NAs pelos coeficientes ajustados para todos os dados,
-# com o argumento replace:
-nls_table(dados,HD ~ b0 * (1 - exp( -b1 * idade )  )^b2, 
-         mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
-         "talhao",
-         replace = T )
-
-# Caso se tenha uma tabela com varios chutes iniciais, um para cada talhao, por exemplo,
-# pode-se utiliza-la da seguinte forma:
-tab_coef <- data.frame(talhao = c(1:20, 24,25,27,28,30,31,33,35,36,37), 
-                      rbind(data.frame(b0 = rep(23, 20), b1 = rep(0.03, 20), b2 = rep(1.3, 20) ), 
-                            data.frame(b0 = rep(23, 10), b1 = rep(0.03, 10), b2 = rep(.5, 10) )  )  )
-
-# Basta inserir o dataframe no argumento mod_start
-nls_table(dados, HD ~ b0 * (1 - exp( -b1 * idade )  )^b2, 
-         mod_start = tab_coef ,
-         "talhao",
-         replace = F )
-# lembrando que este deve ser um datafame, neste caso.
-
-nls_table(dados, HD ~ b0 * (1 - exp( -b1 * idade )  )^b2, 
-         mod_start = tab_coef ,
-         "talhao",
-         replace = T )
-
-# E possivel tambem unir os coeficientes obitidos aos dados originais para conveniencia, 
-# facilitando na hora de se estimar a variavel posteriormente:
-nls_table(dados,HD ~ b0 * (1 - exp( -b1 * idade )  )^b2, 
-         mod_start = tab_coef ,
-         "talhao", 
-         replace = T,
-         output = "merge" ) \%>\% 
- mutate(
- HD_EST = b0 * (1 - exp( -b1 * idade )  )^b2,
- bias = bias_por(y = HD, yhat = HD_EST),
- rmse = rmse_por(y = HD, yhat = HD_EST) )
-
-# ou, estimar a variavel diretamente utilizando o output "est"
-nls_table(dados,HD ~ b0 * (1 - exp( -b1 * idade )  )^b2, 
-         mod_start = tab_coef ,
-         "talhao", 
-         replace = T,
-         output = "est", 
-         est.name = "HD_EST" ) \%>\% 
- mutate(
- bias = bias_por(y = HD, yhat = HD_EST),
- rmse = rmse_por(y = HD, yhat = HD_EST) )
-
-# No processo interno desta funcao, sao utilizadas
-# "list_columns", que sao convertidos em colunas comuns 
-# posteriormente. Caso seja de interesse do usuario trabalhar
-# com estas colunas, basta utilizar o output "nest":
-nls_table(dados,HD ~ b0 * (1 - exp( -b1 * idade )  )^b2, 
-         mod_start = tab_coef ,
-         "talhao",
-         output = "nest" )
-             
-             
-# Utilizar algoritmo Gauss-Newton, o mesmo da funcao nls             
-dados \%>\% 
-group_by(talhao) \%>\% 
-nls_table(HD ~ b0 * (1 - exp( -b1 * idade )  )^b2,
-         mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),algorithm="GN" )
+# If some regressions don't converge, it's possible to fill those NAs with
+# regression coeffients from a general fit, using the entire data: 
+nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+          mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
+          .groups = "strata",
+          replace = T,
+          algorithm="GN" )
 
 }
 \author{

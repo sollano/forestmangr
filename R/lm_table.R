@@ -4,7 +4,7 @@
 #' With this function it's possible to fit linear regressions by a grouping variable, and get a dataframe
 #' with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 #' @details 
-#' With this functions there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
+#' With this function there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
 #' It's also possible to easily make fit miltiple regressions, specifying a grouping variable.
 #' In addition to that, the default output sets each coeffient as a column, making it easy to call coefficients by name or position
 #' when estimating values. 
@@ -19,7 +19,7 @@
 #' @param model A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".
 #' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
 #' @param output  Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.
-#' @param est.name Nmae of the estimated y value. Used only if \code{est = TRUE}. Padrao: \code{"est"}. 
+#' @param est.name Nmae of the estimated y value. Used only if \code{est.name = TRUE}. Padrao: \code{"est"}. 
 #' @param keep_model If \code{TRUE}, a column containg lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.
 #' @return  A dataframe. Different dataframe options are available using the output argument.
 #' 
@@ -44,12 +44,12 @@
 #'   group_by(STRATA) %>% 
 #'   lm_table(log(VWB) ~  log(DBH) + log(TH) )
 #'   
-#' # It's possible to merge original data with the table containg the coefficients
+#' # It's possible to merge the original data with the table containg the coefficients
 #' # using the output parameter:
-#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA", output = "merge")
+#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA", output = "merge") %>% head(15)
 #' 
-#' # It's possible to merge original data with the table, and get the estimated values for this model:
-#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA", output = "merge_est", est.name = "VWB_EST")
+#' # It's possible to merge the original data with the table, and get the estimated values for this model:
+#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA", output = "merge_est", est.name = "VWB_EST") %>% head(15)
 #'    
 #' # It's possible to further customize the output,
 #' # unnesting the nested variables provided when output is defined as "nest":
@@ -212,7 +212,10 @@ lm_table <- function(df, model, .groups, output = "table", est.name = "est", kee
   }
   
   # Remover o model caso o usuario deseje
-  if(keep_model==F & output != "nest"){y$Reg <- NULL}
+  if(keep_model==F & output != "nest"){
+    y$Reg <- NULL
+    y <- as.data.frame(y)
+    }
   # Renomear est
   names(y)[names(y)=="est"] <- est.name
   
