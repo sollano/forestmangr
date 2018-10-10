@@ -21,7 +21,7 @@
 #' @references 
 #' CAMPOS, J. C. C.; LEITE, H. G. Mensuração florestal: perguntas e respostas. 3ª. ed. Viçosa: Editora UFV, 2013. 605 p.
 #'
-#'GRAYBILL, F. A. Theory and application of the linear model. Massa chusetts: Ouxburg Press, p. 704, 1976.
+#' GRAYBILL, F. A. Theory and application of the linear model. Massa chusetts: Ouxburg Press, p. 704, 1976.
 #'
 #' LEITE, H. G.; OLIVEIRA, F. H. T. Statistical procedure to test identity between analytical methods. Communications in Soil Science Plant Analysis, v.33, n.7/8, p.1105-1118, 2002. 
 #' 

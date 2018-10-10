@@ -8,22 +8,28 @@
 #' @param df A dataframe.
 #' @param dbh Quoted name of the diameter at breast height variable.
 #' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
-#' @param th Optional argument. Quoted name of the total height variable, in meters.
-#' @param vwb Optional argument. Quoted name of the volume with bark varible, in cubic meters.
+#' @param th Optional argument. Quoted name of the total height variable, in meters. Default: \code{NULL}.
+#' @param vwb Optional argument. Quoted name of the volume with bark varible, in cubic meters. Default: \code{NULL}.
 #' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.
-#' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. 
-#' @output A dataframe with the the equivalent diameter calculated.
+#' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NULL}.
+#' @return A dataframe with the the equivalent diameter calculated.
 #' 
+#' @references 
+#' Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventário Florestal. 2nd edn. Viçosa: UFV.
+#'
 #' @export
-
-library(forestmangr)
-data("exfm18")
-head(exfm18)
-
-# Calculate the equivalent diameter of trees with more than one trunk:
-tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
-
-
+#' 
+#' @examples
+#' 
+#' library(forestmangr)
+#' data("exfm18")
+#' head(exfm18)
+#' 
+#' # Calculate the equivalent diameter of trees with more than one trunk:
+#' tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
+#' 
+#' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+#' 
 tree_summarise <- function(df,  dbh, tree, th=NULL, vwb=NULL, vwob=NULL, plot_area=NULL, total_area=NULL, .groups=NULL){
   # Checagem de variaveis ####
   
@@ -173,12 +179,12 @@ tree_summarise <- function(df,  dbh, tree, th=NULL, vwb=NULL, vwob=NULL, plot_ar
   df %>% 
     dplyr::group_by(!!!.groups_syms, !!!tree_sym, add=T) %>% 
     dplyr::summarise(
-      !!plot_area_name := mean((!!plot_area), na.rm = TRUE),
-      !!total_area_name   := mean((!!total_area_sym), na.rm = TRUE),
-      !!dbh_name          := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ),
-      !!th_name           := mean((!!th_sym), na.rm = TRUE),
-      !!vwb_name          := mean((!!vwb_sym), na.rm = TRUE),
-      !!vwob_name          := mean((!!vwob_sym), na.rm = TRUE) ) %>% 
+      !!plot_area_name  := mean((!!plot_area), na.rm = TRUE),
+      !!total_area_name := mean((!!total_area_sym), na.rm = TRUE),
+      !!dbh_name        := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ),
+      !!th_name         := mean((!!th_sym), na.rm = TRUE),
+      !!vwb_name        := mean((!!vwb_sym), na.rm = TRUE),
+      !!vwob_name       := mean((!!vwob_sym), na.rm = TRUE) ) %>% 
     dplyr::na_if(0) %>% 
     as.data.frame() %>% 
     dplyr::select_if( function(x) !all(is.nan(x)) ) %>% # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NaN)

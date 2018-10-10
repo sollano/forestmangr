@@ -40,7 +40,7 @@ head(dados_sma)
 head(dados_hub)
 head(dados_invt)
 
-tab_invt <- ex4_mfr
+tab_invt <- exfm4
 
 # para se trabalhar melhor no R, transformamos 0 em NA
 dados_sma[dados_sma==0]   <- NA 
@@ -131,11 +131,9 @@ dados_vol_arvore
 
 # ####
 
-classe_diametro(df = dados_vol_arvore, dbh = "DBH", ic = 5, dbhmin = 5, volume = "VWB") %>%
+diameter_class(df = dados_vol_arvore, dbh = "DBH", ci = 5, dbhmin = 5, volume = "VWB") %>%
   rename(VWB= volume) %>% 
-  mutate(VWOB = classe_diametro(df = dados_vol_arvore, dbh = "DBH", ic = 5, dbhmin = 5, volume = "VWOB") %>%
-           rename(VWOB= volume) %>%
-           pull(VWOB) )
+  mutate(VWOB = classe_diametro(df = dados_vol_arvore, dbh = "DBH", ci = 5, dbhmin = 5, volume = "VWOB") %>%rename(VWOB= volume) %>% pull(VWOB) )
 
 # 4) Metodo de estimacao de volume ---------------------------------------------------------------------------------------------------------------------------------
 
