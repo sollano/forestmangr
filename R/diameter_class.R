@@ -1,6 +1,57 @@
+#' @title 
+#' Divide data into diameter classes, and get humber of observations
+#' @description 
+#' This function can be used to divide data into diameter classes,
+#' get the humber of observations, number of observations per ha,
+#' and check number of species individuals, volume and G in each diameter class.
+#' It's also possible to spread the diameter classes as columns.
+#'
+#' @param df A dataframe.
+#' @param dbh Quoted name of the diameter at breast hight variable, im cm.
+#' @param plot Optional parameter.Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots. Default \code{NA}.
+#' @param plot_area Optional parameter. Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters. Default \code{NA}.
+#' @param ci Numeric value for the class interval used to classify the data. Default: \code{5}.
+#' @param dbhmin Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be disconsidered from the classification. Default: \code{5}.
+#' @param species Optional parameter. Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.
+#' @param volume Optional parameter. Quoted name of the volume variable. If supplied, will be used classify the volume variable in the different diameter classes. Also, if \code{cc_to_column} is \code{TRUE}, the center of class columns will be filled with volume values, instead of number of individuals. Default \code{NA}.
+#' @param NI_label Species not identified label. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.
+#' @param cc_to_column If \code{TRUE}, will spread the center class column as multiple columns, one for each class. The value that fills these columns, by default is the number of individuals found in each class, but this can be changed by using other arguments. Default \code{FALSE}.
+#' @param G_to_cc If \code{TRUE}, and \code{cc_to_column} is also \code{TRUE}, will fill the center of class columns with basal area values, instead of number of individuals. Default \code{FALSE}.
+#' @param cctc_ha  If \code{TRUE}, will calculate values per hectare for number of individuals per class, basal area per class and volume per class (if supplied). These values will also be used to fill the center of class columns, if cc_to_column is \code{TRUE}. Default \code{TRUE}.
+#' @param keep_unused_classes Some diameter classes may end up empty, depending on the maximum value of diameter and the class interval used. If this is \code{TRUE}, those classes will not be removed from the final dataframe. Default \code{FALSE}.
+#' @return A dataframe containg the supplied data divided into diameter classes.
+#'
 #' @export
-
-diameter_class <- function(df, dbh, plot, plot_area, ci = 5, dbhmin = 5, species=NA, volume=NA, NI_label="NI", cc_to_column=F, G_to_cc=F, cctc_ha=T, keep_unused_classes=F){
+#' @examples 
+#' library(forestmangr)
+#' data("exfm20")
+#' head(exfm20)
+#' 
+#' # n
+#' # Number of individuals per ha per diameter class
+#' diameter_class(df = exfm20, dbh = "dbh", ci = 10, dbhmin = 10, volume = "vol") 
+#' 
+#' # Number of individuals per ha per diameter class per species
+#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name") 
+#'
+#' # Number of individuals per ha per diameter class, with each diameter class as a column
+#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", cc_to_column=T) 
+#'
+#' # G
+#' # Basal area per ha per diameter class, with each diameter class as a column
+#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", cc_to_column=T, G_to_cc=F) 
+#'
+#'
+#' # Volume
+#' # Volume per ha per diameter class
+#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", volume = "vol") 
+#'
+#' # Volume per ha per diameter class, with each diameter class as a column
+#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", volume = "vol", cc_to_column=T) 
+#'
+#' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+#'
+diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, species=NA, volume=NA, NI_label="NI", cc_to_column=F, G_to_cc=F, cctc_ha=T, keep_unused_classes=F){
   # checagem de variaveis ####
 
   # ci precisa ser numerico e de tamanho 1
@@ -158,7 +209,7 @@ diameter_class <- function(df, dbh, plot, plot_area, ci = 5, dbhmin = 5, species
       G_ha = sum(g) / (plot_area_num/10000 * nplot ),
       volume = sum( !!volume_sym, na.rm = T  ),
       volume_ha = sum( !!volume_sym, na.rm = T) / (plot_area_num/10000 * nplot )     ) %>% 
-    dplyr::mutate(DR =  round(NumIndv/sum(NumIndv) * 100, 4) ) %>% # Calcular densidade relativa
+    dplyr::mutate(RD =  round(NumIndv/sum(NumIndv) * 100, 4) ) %>% # Calcular densidade relativa
     dplyr::arrange( CC ) %>% 
     dplyr::filter(CC >= dbhmin) %>% # Remover classes menores que o dbh minimo
     dplyr::ungroup() %>% 

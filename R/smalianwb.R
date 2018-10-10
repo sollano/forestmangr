@@ -41,7 +41,7 @@
 #'  smalianwb("di_wb", "hi")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-
+#'
 smalianwb <- function(df, di, hi, tree, .groups=NULL, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE ){
   # Checagem de variaveis ####
   
