@@ -31,17 +31,17 @@ This function has integration with dplyr, so it can be used inside a pipe, along
 }
 \examples{
 library(forestmangr)
-data("ex8_mfr")
+data("exfm8")
 
-head(ex8_mfr)
+head(exfm8)
 
 # Calculate the volume with bark using Huber's method:
-huberwb(ex8_mfr,"di_wb", "sec_length", "TREE")
+huberwb(exfm8,"di_wb", "sec_length", "TREE")
 
 # Using pipes:
 library(dplyr)
 
- ex8_mfr \%>\% 
+ exfm8 \%>\% 
  group_by(TREE) \%>\% 
  huberwb("di_wb", "sec_length")
 

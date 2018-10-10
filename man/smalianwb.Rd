@@ -33,17 +33,17 @@ This function has integration with dplyr, so it can be used inside a pipe, along
 }
 \examples{
 library(forestmangr)
-data("ex7_mfr")
+data("exfm7")
 
-head(ex7_mfr)
+head(exfm7)
 
 # Calculate the volume with bark using Smalian's method:
-smalianwb(ex7_mfr,"di_wb", "hi", "TREE")
+smalianwb(exfm7,"di_wb", "hi", "TREE")
 
 # Using pipes:
 library(dplyr)
 
- ex7_mfr \%>\% 
+ exfm7 \%>\% 
  group_by(TREE) \%>\% 
  smalianwb("di_wb", "hi")
 

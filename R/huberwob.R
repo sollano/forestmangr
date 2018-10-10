@@ -26,17 +26,17 @@
 #' @export
 #' @examples
 #' library(forestmangr)
-#' data("ex8_mfr")
+#' data("exfm8")
 #' 
-#' head(ex8_mfr)
+#' head(exfm8)
 #' 
 #' # Calculate the volume without bark using Huber's method:
-#' huberwob(ex8_mfr,"di_wb", "sec_length", "bark_t", "TREE")
+#' huberwob(exfm8,"di_wb", "sec_length", "bark_t", "TREE")
 #' 
 #' # Using pipes:
 #' library(dplyr)
 #' 
-#'  ex8_mfr %>% 
+#'  exfm8 %>% 
 #'  group_by(TREE) %>% 
 #'  huberwob("di_wb", "sec_length", "bark_t")
 #'

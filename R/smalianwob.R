@@ -28,17 +28,17 @@
 #' @export
 #' @examples
 #' library(forestmangr)
-#' data("ex7_mfr")
+#' data("exfm7")
 #' 
-#' head(ex7_mfr)
+#' head(exfm7)
 #' 
 #' # Calculate the volume without bark using Smalian's method:
-#' smalianwob(ex7_mfr,"di_wb", "hi", "bark_t", "TREE")
+#' smalianwob(exfm7,"di_wb", "hi", "bark_t", "TREE")
 #' 
 #' # Using pipes:
 #' library(dplyr)
 #' 
-#'  ex7_mfr %>% 
+#'  exfm7 %>% 
 #'  group_by(TREE) %>% 
 #'  smalianwob("di_wb", "hi", "bark_t")
 #'

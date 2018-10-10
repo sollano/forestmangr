@@ -34,27 +34,27 @@
 #' @export
 #' @examples
 #' library(forestmangr)
-#' data("ex1_mfr")
-#' data("ex2_mfr")
-#' data("ex6_mfr")
+#' data("exfm1")
+#' data("exfm2")
+#' data("exfm6")
 #' 
 #' # The objective is to sample an area, with an error of 5%.
 #' # First we run a pilot inventory, considering a 5% error and a finite population:
-#' strs(ex1_mfr, "VWB", "PLOT_AREA", "STRATA_AREA",  .groups = "STRATA", error = 5, pop = "fin")
+#' strs(exfm1, "VWB", "PLOT_AREA", "STRATA_AREA", strata = "STRATA", error = 5, pop = "fin")
 #'
 #' # With these results, in order to meet the desired error of 5%, we'll need to sample 59 more plots,
 #' # 14 in stratum 1, 21 in stratum 2, and 24 in stratum 3.
 #' # After sampling the necessary plots, we now run a definitive inventory,
 #' # considering an 5% error and a finite population:
-#' strs(ex2_mfr, "VWB", "PLOT_AREA", "STRATA_AREA",  .groups = "STRATA", error = 5, pop = "fin")
+#' strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", strata = "STRATA", error = 5, pop = "fin")
 #'
 #' # The desired error value was met.
 #' 
 #' # Area values can be numeric:
-#' strs(ex2_mfr, "VWB", 1000, c(14.4, 16.4,14.2),  .groups = "STRATA", error = 5, pop = "fin")
+#' strs(exfm2, "VWB", 1000, c(14.4, 16.4,14.2), strata = "STRATA", error = 5, pop = "fin")
 #'
 #' # Optional variable age, and one stratified sampled inventory for each map:
-#' strs(ex6_mfr, "VWB", "PLOT_AREA", "STRATA_AREA",  .groups = c("MAP","STRATA"), age = "AGE")
+#' strs(exfm6, "VWB", "PLOT_AREA", "STRATA_AREA", strata ="STRATA", .groups = "MAP", age = "AGE")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
@@ -177,12 +177,6 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NULL, age=NULL,
     # e procure o nome das variaveis dentro dos objetos
   }else{
     .groups_syms <- rlang::syms(.groups) 
-  }
-  # se di_mm_to_cm nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
-  if(! di_mm_to_cm %in% c(TRUE, FALSE) ){ 
-    stop("'di_mm_to_cm' must be equal to TRUE or FALSE", call. = F) 
-  }else  if(length(di_mm_to_cm)!=1){
-    stop("Length of 'di_mm_to_cm' must be 1", call.=F) 
   }
   
   # Se alpha nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar

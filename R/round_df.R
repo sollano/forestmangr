@@ -34,8 +34,6 @@ round_df <- function(df, digits, rf="round") {
     stop("df not set", call. = F) 
   }else if(!is.data.frame(df)){
     stop("df must be a dataframe", call.=F)
-  }else if(length(df)<=1 | nrow(df)<=1){
-    stop("Length and number of rows of 'df' must be greater than 1", call.=F)
   }
   
   if(missing(digits)){

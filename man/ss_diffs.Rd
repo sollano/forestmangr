@@ -41,25 +41,25 @@ It's possible to run multiple sampling analysis using a factor variable indicate
 }
 \examples{
 library(forestmangr)
-data("ex2_mfr")
-data("ex5_mfr")
+data("exfm2")
+data("exfm5")
 
 # We're trying to run a inventory for an area This data was colected systematically,
 # but we'll try to run the data using simple random sampling, to show the difference between the two methods:
-sprs(ex5_mfr,  "VWB", "PLOT_AREA", "TOTAL_AREA")
+sprs(exfm5,  "VWB", "PLOT_AREA", "TOTAL_AREA")
 
 # We get a 22\% error value. Now, we run this same data
 # considering the data as a systematic inventory, using the
 # successive differences method:
-ss_diffs(ex5_mfr,  "VWB", "PLOT_AREA", "TOTAL_AREA")
+ss_diffs(exfm5,  "VWB", "PLOT_AREA", "TOTAL_AREA")
 
 # The error was significantly lowered,
 
 # Area Values can be numeric;
-ss_diffs(ex5_mfr,  "VWB", 200, 18)
+ss_diffs(exfm5,  "VWB", 200, 18)
 
 # Here we run a systematic sampling inventory for each forest subdivision, using the STRATA variable as a group variable:
-ss_diffs(ex2_mfr,  "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA")
+ss_diffs(exfm2,  "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA")
 
 }
 \references{

@@ -28,20 +28,20 @@
 #' @export
 #' @examples
 #' library(forestr)
-#' data("ex11_mfr")
+#' data("exfm11")
 #' 
-#' # O data frame ex11_mfr possui estimativas de altura para uma determinada floresta.
+#' # O data frame exfm11 possui estimativas de altura para uma determinada floresta.
 #' # Pode-se determinar se o dado estimado e estatisticamente igual ao observado utilizando 
 #' # o teste F de Graybill:
 #' 
-#' FdeGraybill( ex11_mfr,"HT",  "HT_EST1")
+#' FdeGraybill( exfm11,"HT",  "HT_EST1")
 #' 
 #' # Pode-se alterar a significancia do teste utilizando o argumento signif:
-#' FdeGraybill( ex11_mfr,"HT",  "HT_EST1" , signif = 0.01)
+#' FdeGraybill( exfm11,"HT",  "HT_EST1" , signif = 0.01)
 #' 
 #' # Para saidas mais detalhadas do teste, pode-se utilizar o argumento output:
-#' FdeGraybill( ex11_mfr,"HT",  "HT_EST2" , output=2)
-#' FdeGraybill( ex11_mfr,"HT",  "HT_EST2" , output=3)
+#' FdeGraybill( exfm11,"HT",  "HT_EST2" , output=2)
+#' FdeGraybill( exfm11,"HT",  "HT_EST2" , output=3)
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 

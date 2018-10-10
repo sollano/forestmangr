@@ -17,11 +17,11 @@
 #' @export
 #' @examples 
 #' library(forestmangr)
-#' data("ex7_mfr")
-#' head(ex7_mfr)
+#' data("exfm7")
+#' head(exfm7)
 #'    
-#' average_tree_curve(df = ex7_mfr, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
-#' average_tree_curve(df = ex7_mfr, d = "di_wb", dbh = "DBH", h = "hi", th = "TH", facet = "STRATA")
+#' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+#' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH", facet = "STRATA")
 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 

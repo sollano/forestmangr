@@ -27,15 +27,14 @@ library(forestmangr)
 # caso este esteja no diretorio de trabalho, nao e preciso especificar o caminho ate este ponto,
 # sendo apenas "dados/dados_sma.csv"
 # Neste caso existe uma pasta chamada dados, no diretorio de trabalho
+data("exfm7")
+data("exfm8")
+data("exfm9")
+data("exfm4")
 
-data("ex7_mfr")
-data("ex8_mfr")
-data("ex9_mfr")
-data("ex4_mfr")
-
-dados_sma  <- ex7_mfr
-dados_hub  <- ex8_mfr
-dados_invt  <- ex9_mfr
+dados_sma  <- exfm7
+dados_hub  <- exfm8
+dados_invt  <- exfm9
 
 head(dados_sma)
 head(dados_hub)
@@ -279,8 +278,8 @@ tab_invt <- inv_summary(dados_invt3, "DBH", "TH_EST", "VWB", "PLOT_AREA", groups
 tab_invt
 
 # 4) Parte III secao I e II - Processo direto ----------------------------------------------------------------------------------------------------------------------------------------------
-data("ex9_mfr")
-dados_invt <- ex9_mfr
+data("exfm4")
+dados_invt <- exfm4
 
 dados_invt$DATA_MEDICAO <- as.Date(dados_invt$DATA_MEDICAO, format = "%d/%m/%Y")
 dados_invt$DATA_PLANTIO <- as.Date(dados_invt$DATA_PLANTIO, format = "%d/%m/%Y")
