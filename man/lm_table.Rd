@@ -2,105 +2,94 @@
 % Please edit documentation in R/lm_table.R
 \name{lm_table}
 \alias{lm_table}
-\title{Ajuste de funcoes lineares com saida customizada}
+\title{Fit linear regressions by group, and get different output options.}
 \usage{
-lm_table(df, modelo, .groups, output = "table", est.name = "est",
+lm_table(df, model, .groups, output = "table", est.name = "est",
   keep_model = F)
 }
 \arguments{
-\item{df}{Data frame a ser utilizado.}
+\item{df}{A dataframe.}
 
-\item{modelo}{Modelo que sera ajustado. Pode ser entrado de com ou sem aspas. lados x e y da equacao devem ser separados por "~".}
+\item{model}{A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".}
 
-\item{.groups}{(opcional) Variaveis classificatorias que serao utilizadas para realizar a regressao por grupos. Caso este argumento seja \code{NULL}, serao utilizados grupos ja definidos no dataframe. Caso nao sejam encontrados grupos no dataframe, a regressao sera aplicada para todo o dataframe. Padrao: \code{NULL}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.}
 
-\item{output}{Indica se a saida sera a tabela de coeficientes, a tabela unida aos dados originais ou o y estimado. Pode ter como entrada "table", "merge", "est" ou "nest". Padrao: \code{"table"}.}
+\item{output}{Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.}
 
-\item{est.name}{Nome do y estimado, caso \code{est = TRUE}. Padrao: \code{"est"}.}
+\item{est.name}{Nmae of the estimated y value. Used only if \code{est = TRUE}. Padrao: \code{"est"}.}
 
-\item{keep_model}{Indica se a variavel contendo o(s) ajuste(s) deve ser mantida ou nao. Padrao: \code{FALSE}.}
+\item{keep_model}{If \code{TRUE}, a column containg lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.}
 }
 \value{
-Dataframe. Sua composicao varia de acordo com o argumento ouput.
+A dataframe. Different dataframe options are available using the output argument.
 }
 \description{
-Funcao para se gerar uma tabela por grupo ou nao contendo apenas as informacoes mais importantes de uma regressao.
-Possui integracao com o pacote dplyr.
+With this function it's possible to fit linear regressions by a grouping variable, and get a dataframe
+with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 }
 \details{
-Com esta funcao nao ha a necessidade de se utilizar a funcao do() para se ajustar um modelo linear
-dentro de um pipe do dplyr. Alem disso sua saida com os coeficientes em forma de coluna e
-propria para a aplicacao do modelo, podendo-se chamar os coeficientes por nome ou posicao na coluna.
-Alem disso, caso output = "merge", une-se o dataframe original aos coeficientes gerados automaticamente.
+With this functions there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
+It's also possible to easily make fit miltiple regressions, specifying a grouping variable.
+In addition to that, the default output sets each coeffient as a column, making it easy to call coefficients by name or position
+when estimating values. 
+
+It's possible to use the \code{output} argument to get a merged table if \code{output="merge"}, that binds
+the original dataframe and the fitted coefficients. 
+If \code{output="merge_est"} we get a merged table aswell, but with y estimated using the coefficients. If the fit is made using groups, this is taken into account, i.e. the estimation is made by group.
+
+If \code{output="nest"}, a dataframe with nested columns is provided. This can be used if the user desires to get a customized output.
 }
 \examples{
 library(forestmangr)
 library(dplyr)
 
-data("ex7_mfr")
-head(ex7_mfr)
+data("exfm19")
+head(exfm19)
 
-# Para preparar gerar dados de exemplo para a regressao, 
-# utiliza-se a funcao smaliancc:
-dados_smalian <- smaliancc(ex7_mfr,"di_cc", "hi","ARVORE") \%>\% 
-   group_by(FAZENDA, PROJETO, TALHAO, MATGEN, ARVORE ) \%>\% 
-   summarise(VCC=sum(VCC,na.rm=T), DAP=mean(DAP), HT=mean(HT) ) \%>\% 
-   ungroup
-   
-dados_smalian
+# Fit Schumacher and Hall model for volume estimation, and get
+# coefficient, R2 and error values:
 
-# Agora sera ajustado o modelo de Schumacher e Hall:
+lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH))   
 
-# Rodar regressao, e gerar tabela com coeficientes, R2 e erro:
-lm_table(dados_smalian, log(VCC) ~  log(DAP) + log(HT))
+# Fit SH model by group:
+lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA")
 
-# ou
-dados_smalian \%>\% 
-  lm_table(log(VCC) ~  log(DAP) + log(HT) )
+# This can also be done using dplyr::group_by:
+exfm19 \%>\% 
+  group_by(STRATA) \%>\% 
+  lm_table(log(VWB) ~  log(DBH) + log(TH) )
   
+# It's possible to merge original data with the table containg the coefficients
+# using the output parameter:
+lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA", output = "merge")
 
-# Rodar regressao por talhao, e gerar tabela com coeficientes, R2 e erro:
-lm_table(dados_smalian, log(VCC) ~  log(DAP) + log(HT), "TALHAO")
-
-# ou
-dados_smalian \%>\% 
-  group_by(TALHAO) \%>\% 
-  lm_table(log(VCC) ~  log(DAP) + log(HT) )
-  
-# Rodar regressao, e gerar tabela com coeficientes, R2 e erro,
-# e anexar tabela aos dados originais:
-lm_table(dados_smalian, log(VCC) ~  log(DAP) + log(HT), "TALHAO", output = "merge")
-
-dados_smalian \%>\% 
-  lm_table(log(VCC) ~  log(DAP) + log(HT),"TALHAO", output = "merge")
+# It's possible to merge original data with the table, and get the estimated values for this model:
+lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA", output = "merge_est", est.name = "VWB_EST")
    
-# Rodar regressao, e estimar a variavel y do modelo
-dados_smalian \%>\% 
- lm_table(log(VCC) ~  log(DAP) + log(HT),"TALHAO", output = "est", est.name = "VOL_EST")
-   
-# Rodar regressao, e gerar dataframe com variaveis agrupadas
-dados_smalian \%>\% 
- lm_table(log(VCC) ~  log(DAP) + log(HT),"TALHAO", output = "nest")
+# It's possible to further customize the output,
+# unnesting the nested variables provided when output is defined as "nest":
+lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA", output = "nest")
  
  
-# No exemplo a seguir, estima-se a altura das arvores nao medidas
-# de um inventario florestal.
+# In the following example, the objective is to estimate non-measured height
+# values in a forest inventory data.
 
-# Para isso basta ajustar o modelo normalmente, e selecionar "est" como output.
-# A funcao ira ajustar o modelo ignorando as arvores nao medidas
-# automaticamente.
-#
-# Em seguida seleciona-se apenas as arvores nao medidas, e repete-se
-# as arvores medidas em uma coluna separada, utilizando ifelse.
+# To do this, we'll fit a hipsometrical model. The non-measured trees will be automatically
+# ignored in this step. We'll define the argument output as "merge_est", so that we can get
+# the estimated height values as a separate column.
+# Then, we'll use mutate to create a new variable, that will contain measured height values, along with estimated ones.
+# To do this we'll use ifelse, and check for NAs inside the Height column. When it finds it, it will basically fill them with estimated values.
+library(forestmangr)
+library(dplyr)
 
-data("ex15_mfr")
+data("exfm15")
+head(exfm15, 20)
 
-dados_inv <- ex15_mfr
-
-dados_inv <- dados_inv \%>\%  
-  lm_table(log(HT) ~ inv(DAP),output = "est" ) \%>\% 
-  mutate( HT_EST = if_else(is.na(HT), est, HT ) )
-head(dados_inv, 20)
+ex_th_est <- exfm15 \%>\%  
+  lm_table(log(TH) ~ inv(DBH),output = "merge_est" ) \%>\% 
+  mutate( TH_EST = ifelse(is.na(TH), est, TH ) )
+# Now we can see that the values were estimated successfully.
+head(ex_th_est, 20)
 
 }
 \author{
