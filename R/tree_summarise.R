@@ -1,5 +1,12 @@
 #' @export
 
+library(forestmangr)
+data("exfm18")
+head(exfm18)
+
+tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
+
+
 tree_summarise <- function(df,  dbh, tree, th=NULL, vwb=NULL, vwob=NULL, plot_area=NULL, total_area=NULL, .groups=NULL){
   # Checagem de variaveis ####
   
