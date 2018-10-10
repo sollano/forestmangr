@@ -1,9 +1,26 @@
+#' @title
+#' Calculate the equivalent diameter of trees with more than one trunk
+#' @description 
+#' This function uses takes the square root of the diameters squared sum,
+#' in order to estimate the equivalent diameter of trees. Other supplied variables
+#' are summed up, or averaged, depending on the variable.
+#'
+#' @param df A dataframe.
+#' @param dbh Quoted name of the diameter at breast height variable.
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
+#' @param th Optional argument. Quoted name of the total height variable, in meters.
+#' @param vwb Optional argument. Quoted name of the volume with bark varible, in cubic meters.
+#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.
+#' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. 
+#' @output A dataframe with the the equivalent diameter calculated.
+#' 
 #' @export
 
 library(forestmangr)
 data("exfm18")
 head(exfm18)
 
+# Calculate the equivalent diameter of trees with more than one trunk:
 tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
 
 
