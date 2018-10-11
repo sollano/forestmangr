@@ -173,21 +173,12 @@ tabcoef_vwob
 
 # 1.1) Calculo da Altura dominante (DH) --------------------------------------------------------------------------------------------------------------------------
 
-#a funcao hd nos da a tabela de altura dominante
-           #dataframe   #grupos      # altura #dbh # classe da arvore #classe das arvores dominantes
-tabhd <- hd(dados_invt, "TH","DBH","OBS","D",c("STRATA", "PLOT"))
-head(tabhd)
+#a funcao dom_height nos da a tabela de altura dominante
+dom_height(df=dados_invt,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D",.groups="STRATA")
 
-# apos criada a tabela, podemos uni-la aos dados originais
-dados_hd <- dados_invt %>% # Definicao do df
-  filter(!is.na(DBH) ) %>% # Remover arvores mortas
-  left_join(tabhd, by = c("STRATA", "PLOT") ) # uniao com tabela DH
-head(dados_hd)
+# podemos uni-la diretamente aos dados utilizando o argumento merge_data:
+dados_hd <- dom_height(df=dados_invt,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D",.groups="STRATA", merge_data=T)
 
-# ou utilizar a funcao hdjoin, que faz o processo direto
-
-# a funcao hdjoin gera a tabela de altura dominante, e a une aos dados originais
-dados_hd <- hdjoin(dados_invt, "TH","DBH","OBS","D", c("STRATA", "PLOT") )
 head(dados_hd)
 
 # 1.2) Proces de altura - Ajuste ---------------------------------------------------------------------------------------------------------------------------------

@@ -12,7 +12,7 @@ tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
 
 \item{dbh}{Quoted name of the diameter at breast height variable.}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the dataframe will be used. If there are no groups in the data, the function will fail.}
 
 \item{th}{Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.}
 

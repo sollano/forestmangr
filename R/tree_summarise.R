@@ -7,7 +7,7 @@
 #'
 #' @param df A dataframe.
 #' @param dbh Quoted name of the diameter at breast height variable.
-#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the dataframe will be used. If there are no groups in the data, the function will fail.
 #' @param th Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.
 #' @param vwb Optional argument. Quoted name of the volume with bark varible, in cubic meters. Default: \code{NA}.
 #' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
@@ -168,7 +168,6 @@ tree_summarise <- function(df,  dbh, tree, th=NA, vwb=NA, vwob=NA, plot_area=NA,
   
   dbh_sym          <- rlang::sym(dbh)
   th_sym           <- rlang::sym(th)
-  tree_sym         <- rlang::sym(tree)
   plot_area        <- rlang::sym(plot_area)
   total_area_sym   <- rlang::sym(total_area)
   vwb_sym          <- rlang::sym(vwb)
@@ -177,7 +176,7 @@ tree_summarise <- function(df,  dbh, tree, th=NA, vwb=NA, vwob=NA, plot_area=NA,
   # ####
   
   df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!tree_sym, add=T) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
     dplyr::summarise(
       !!plot_area_name  := mean((!!plot_area), na.rm = TRUE),
       !!total_area_name := mean((!!total_area_sym), na.rm = TRUE),
