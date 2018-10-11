@@ -8,7 +8,7 @@
 #' @param dbh Quoted name of the diameter at breast hight variable, in cm.
 #' @param h Quoted name of the section height variable, in meters.
 #' @param th Quoted name of the total height variable, in meters.
-#' @param .facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets.
+#' @param .facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: NA.
 #' @return A ggplot object.
 #' 
 #' @references 
@@ -25,7 +25,7 @@
 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-average_tree_curve <- function(df, d, dbh, h, th, facet){
+average_tree_curve <- function(df, d, dbh, h, th, facet=NA){
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

@@ -4,23 +4,23 @@
 \alias{tree_summarise}
 \title{Calculate the equivalent diameter of trees with more than one trunk}
 \usage{
-tree_summarise(df, dbh, tree, th = NULL, vwb = NULL, vwob = NULL,
-  plot_area = NULL, total_area = NULL, .groups = NULL)
+tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
+  plot_area = NA, total_area = NA, .groups = NA)
 }
 \arguments{
 \item{df}{A dataframe.}
 
 \item{dbh}{Quoted name of the diameter at breast height variable.}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
 
-\item{th}{Optional argument. Quoted name of the total height variable, in meters. Default: \code{NULL}.}
+\item{th}{Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.}
 
-\item{vwb}{Optional argument. Quoted name of the volume with bark varible, in cubic meters. Default: \code{NULL}.}
+\item{vwb}{Optional argument. Quoted name of the volume with bark varible, in cubic meters. Default: \code{NA}.}
 
-\item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.}
+\item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.}
 
-\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NULL}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.}
 }
 \value{
 A dataframe with the the equivalent diameter calculated.

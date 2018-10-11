@@ -7,11 +7,11 @@
 #'
 #' @param df A dataframe.
 #' @param dbh Quoted name of the diameter at breast height variable.
-#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
-#' @param th Optional argument. Quoted name of the total height variable, in meters. Default: \code{NULL}.
-#' @param vwb Optional argument. Quoted name of the volume with bark varible, in cubic meters. Default: \code{NULL}.
-#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.
-#' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NULL}.
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
+#' @param th Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.
+#' @param vwb Optional argument. Quoted name of the volume with bark varible, in cubic meters. Default: \code{NA}.
+#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
+#' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.
 #' @return A dataframe with the the equivalent diameter calculated.
 #' 
 #' @references 
@@ -30,7 +30,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-tree_summarise <- function(df,  dbh, tree, th=NULL, vwb=NULL, vwob=NULL, plot_area=NULL, total_area=NULL, .groups=NULL){
+tree_summarise <- function(df,  dbh, tree, th=NA, vwb=NA, vwob=NA, plot_area=NA, total_area=NA, .groups=NA){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

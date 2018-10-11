@@ -4,7 +4,7 @@
 \alias{sprs}
 \title{Simple Random Sampling}
 \usage{
-sprs(df, Yi, plot_area, total_area, age = NULL, .groups = NULL,
+sprs(df, Yi, plot_area, total_area, age = NA, .groups = NA,
   alpha = 0.05, error = 10, dec_places = 4, pop = "inf",
   tidy = T)
 }
@@ -17,10 +17,10 @@ sprs(df, Yi, plot_area, total_area, age = NULL, .groups = NULL,
 
 \item{total_area}{Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.}
 
-\item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NULL}.}
+\item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
-If this argument is \code{NULL}, the defined groups in the dataframe will be used, if they exist. Default: \code{NULL}.}
+If this argument is \code{NA}, the defined groups in the dataframe will be used, if they exist. Default: \code{NA}.}
 
 \item{alpha}{Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.}
 

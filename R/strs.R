@@ -13,8 +13,8 @@
 #' @param strata_area Quoted name of the strata area variable, or a numeric vector with the plot strata values. If there are more than 1 area values, it's possible to use a vector with all area values, like so:\code{c(14.4, 16.4, 14.2)}. The strata area values must be in hectares.
 #' @param strata Quoted name of the subdivision variable(s), also known as strata. If this argument is not supplied, the defined groups in the dataframe will be used, if they exist.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
-#' If this argument is \code{NULL}, the defined groups in the dataframe will be used, if they exist. Default: \code{NULL}.
-#' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NULL}.
+#' If this argument is \code{NA}, the defined groups in the dataframe will be used, if they exist. Default: \code{NA}.
+#' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.
 #' @param alpha Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.
 #' @param error Numeric value for the minimum admitted error value in the survey, in percentage. Default: \code{10}.
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
@@ -58,7 +58,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NULL, age=NULL, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=T ){
+strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=T ){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

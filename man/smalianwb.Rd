@@ -4,7 +4,7 @@
 \alias{smalianwb}
 \title{Calculate the volume with bark of trees using the Smalian method}
 \usage{
-smalianwb(df, di, hi, tree, .groups = NULL, di_mm_to_cm = FALSE,
+smalianwb(df, di, hi, tree, .groups = NA, di_mm_to_cm = FALSE,
   hi_cm_to_m = FALSE)
 }
 \arguments{
@@ -14,10 +14,10 @@ smalianwb(df, di, hi, tree, .groups = NULL, di_mm_to_cm = FALSE,
 
 \item{hi}{Quoted name of the section height  variable, in meters}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
-If this argument is not supplied, the defined groups in the dataframe will be used. Default: \code{NULL}.}
+If this argument is not supplied, the defined groups in the dataframe will be used. Default: \code{NA}.}
 
 \item{di_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.}
 

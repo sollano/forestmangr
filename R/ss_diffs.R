@@ -11,8 +11,8 @@
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param total_area Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
-#' If this argument is \code{NULL}, the defined groups in the dataframe will be used, if they exist. Default: \code{NULL}.
-#' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NULL}.
+#' If this argument is \code{NA}, the defined groups in the dataframe will be used, if they exist. Default: \code{NA}.
+#' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.
 #' @param alpha Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.
 #' @param error Numeric value for the minimum admitted error value in the survey, in percentage. Default: \code{10}.
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
@@ -53,7 +53,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-ss_diffs <- function(df, Yi, plot_area, total_area,  age=NULL, .groups=NULL, alpha = 0.05, error = 10, dec_places=4, tidy=T ) {
+ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, tidy=T ) {
   
   # checagem de variaveis ####
 

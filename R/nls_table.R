@@ -106,7 +106,7 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 
-nls_table <- function(df, model, mod_start, .groups, output = "table", est.name = "est", replace = F, keep_model = F, global_start, algorithm="LM") {
+nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.name = "est", replace = F, keep_model = F, global_start, algorithm="LM") {
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

@@ -9,9 +9,9 @@
 #' @param di Quoted name of the section diameter  variable, in centimeters.
 #' @param hi Quoted name of the section height  variable, in meters
 #' @param bt Quoted name of the bark thickness variable, in centimeters.
-#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
-#' If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
+#' If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
 #' @param di_mm_to_cm Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.
 #' @param hi_cm_to_m Boolean argument that, if \code{TRUE}, converts the hi argument from centimeters to meters. Default: \code{FALSE}.
 #' @param nt_mm_to_cm Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.
@@ -44,7 +44,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-smalianwob <- function(df, di, hi, bt, tree, .groups=NULL, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE, bt_mm_to_cm=FALSE ){
+smalianwob <- function(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE, bt_mm_to_cm=FALSE ){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

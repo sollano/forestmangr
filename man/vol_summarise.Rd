@@ -4,7 +4,7 @@
 \alias{vol_summarise}
 \title{Summarise volume of trees}
 \usage{
-vol_summarise(df, dbh, th, vwb, tree, .groups = NULL, vwob = NULL)
+vol_summarise(df, dbh, th, vwb, tree, .groups = NA, vwob = NA)
 }
 \arguments{
 \item{df}{A dataframe.}
@@ -15,12 +15,12 @@ vol_summarise(df, dbh, th, vwb, tree, .groups = NULL, vwob = NULL)
 
 \item{vwb}{Quoted name of the volume with bark varible, in cubic meters.}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data.}
 
-\item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.
-If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
+\item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
+If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
 }
 \value{
 A dataframe summarised by the .groups variable(s).

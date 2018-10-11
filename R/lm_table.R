@@ -78,7 +78,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-lm_table <- function(df, model, .groups, output = "table", est.name = "est", keep_model = F){
+lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = F){
   # Checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

@@ -4,7 +4,7 @@
 \alias{nls_table}
 \title{Fit non-linear regressions by group, using LM algorithm and get different output options.}
 \usage{
-nls_table(df, model, mod_start, .groups, output = "table",
+nls_table(df, model, mod_start, .groups = NA, output = "table",
   est.name = "est", replace = F, keep_model = F, global_start,
   algorithm = "LM")
 }

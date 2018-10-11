@@ -4,9 +4,9 @@
 \alias{strs}
 \title{Stratified Random Sampling}
 \usage{
-strs(df, Yi, plot_area, strata_area, strata, .groups = NULL,
-  age = NULL, alpha = 0.05, error = 10, dec_places = 4,
-  pop = "inf", tidy = T)
+strs(df, Yi, plot_area, strata_area, strata, .groups = NA, age = NA,
+  alpha = 0.05, error = 10, dec_places = 4, pop = "inf",
+  tidy = T)
 }
 \arguments{
 \item{df}{a data frame.}
@@ -20,9 +20,9 @@ strs(df, Yi, plot_area, strata_area, strata, .groups = NULL,
 \item{strata}{Quoted name of the subdivision variable(s), also known as strata. If this argument is not supplied, the defined groups in the dataframe will be used, if they exist.}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
-If this argument is \code{NULL}, the defined groups in the dataframe will be used, if they exist. Default: \code{NULL}.}
+If this argument is \code{NA}, the defined groups in the dataframe will be used, if they exist. Default: \code{NA}.}
 
-\item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NULL}.}
+\item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.}
 
 \item{alpha}{Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.}
 

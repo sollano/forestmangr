@@ -133,7 +133,7 @@ dados_vol_arvore
 
 diameter_class(df = dados_vol_arvore, dbh = "DBH", ci = 5, dbhmin = 5, volume = "VWB") %>%
   rename(VWB= volume) %>% 
-  mutate(VWOB = classe_diametro(df = dados_vol_arvore, dbh = "DBH", ci = 5, dbhmin = 5, volume = "VWOB") %>%rename(VWOB= volume) %>% pull(VWOB) )
+  mutate(VWOB = diameter_class(df = dados_vol_arvore, dbh = "DBH", ci = 5, dbhmin = 5, volume = "VWOB") %>%rename(VWOB= volume) %>% pull(VWOB) )
 
 # 4) Metodo de estimacao de volume ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -144,8 +144,8 @@ diameter_class(df = dados_vol_arvore, dbh = "DBH", ci = 5, dbhmin = 5, volume = 
 # 4.1) Fator de forma ---------------------------------------------------------------------------------------------------------------------------------------------
 
 dados_vol_arvore <- dados_vol_arvore %>% 
-  mutate(VFFCC = mean(FFCC) * (pi * DBH^2 / 4000 * TH), 
-         VFFSC = mean(FFSC) * (pi * DBH^2 / 4000 * TH) )
+  mutate(VFFCC = mean(FFWB_medio) * (pi * DBH^2 / 4000 * TH), 
+         VFFSC = mean(FFWOB_medio) * (pi * DBH^2 / 4000 * TH) )
 dados_vol_arvore
 
 # 4.2) Ajus eq de volume ------------------------------------------------------------------------------------------------------------------------------------------

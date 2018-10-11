@@ -8,10 +8,10 @@
 #' @param dbh Quoted name of the diameter at breast hight variable, im cm.
 #' @param th Quoted name of the total height variable, in meters.
 #' @param vwb Quoted name of the volume with bark varible, in cubic meters.
-#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
-#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NULL}.
-#' If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.
+#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
+#' If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
 #' @return A dataframe summarised by the .groups variable(s).
 #' 
 #' @seealso Complementary functions:
@@ -45,7 +45,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NULL, vwob=NULL){
+vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

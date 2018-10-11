@@ -4,7 +4,7 @@
 \alias{average_tree_curve}
 \title{Generate the curve of a forest's average tree using Kozak's taper model}
 \usage{
-average_tree_curve(df, d, dbh, h, th, facet)
+average_tree_curve(df, d, dbh, h, th, facet = NA)
 }
 \arguments{
 \item{df}{A dataframe.}
@@ -17,7 +17,7 @@ average_tree_curve(df, d, dbh, h, th, facet)
 
 \item{th}{Quoted name of the total height variable, in meters.}
 
-\item{.facet}{Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets.}
+\item{.facet}{Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: NA.}
 }
 \value{
 A ggplot object.

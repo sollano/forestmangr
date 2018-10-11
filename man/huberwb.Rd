@@ -4,7 +4,7 @@
 \alias{huberwb}
 \title{Calculate the volume with bark of trees using the Huber method}
 \usage{
-huberwb(df, di, section_length, tree, .groups = NULL,
+huberwb(df, di, section_length, tree, .groups = NA,
   di_mm_to_cm = FALSE)
 }
 \arguments{
@@ -14,10 +14,10 @@ huberwb(df, di, section_length, tree, .groups = NULL,
 
 \item{section_length}{Quoted name of the section length variable, in meters}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
-If this argument is \code{NULL}, the defined groups in the dataframe will be used. Default: \code{NULL}.}
+If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
 
 \item{di_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.}
 }
