@@ -1,7 +1,7 @@
 #' @title 
 #' Summarise volume of trees
 #' @description 
-#' This function can be used to calculate volume with and without bark
+#' This function can be used to summarise volume with and without bark
 #' of trees in a dataframe.
 #'
 #' @param df A dataframe.

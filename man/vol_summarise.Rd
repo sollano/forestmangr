@@ -26,7 +26,7 @@ If this argument is \code{NA}, the defined groups in the dataframe will be used.
 A dataframe summarised by the .groups variable(s).
 }
 \description{
-This function can be used to calculate volume with and without bark
+This function can be used to summarise volume with and without bark
 of trees in a dataframe.
 }
 \examples{

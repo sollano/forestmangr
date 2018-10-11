@@ -317,8 +317,6 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   
   
   y_ <- x_ %>%
-    dplyr::group_by(!!! (.groups_syms[-length(.groups)]) ) %>%
-    #dplyr::group_by_(.dots=.groups[-length(.groups)] ) %>%
     dplyr::summarise(
       t     = mean(t),
       Sy           = ifelse(pop=="inf",
@@ -367,9 +365,10 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
     
   }else{
     
-    vec1 <- rlang::syms(names(x)[! names(x) %in% .groups ])
-    vec2 <- rlang::sym(.groups[length(.groups)])
-    vec3 <- rlang::syms(.groups[.groups!=vec2])
+    vec1 <- rlang::syms(names(x)[! names(x) %in% c(.groups, strata) ])
+    vec2 <- rlang::sym(strata)
+   # vec3 <- rlang::syms(.groups[.groups!=vec2])
+    vec3 <- .groups
     vec4 <- rlang::syms(names(y)[! names(y) %in% vec3 ]) 
     vec5 <- as.character(vec3[length(vec3)])
     vec6 <- vec3[as.character(vec3)!=as.character(vec5)]
@@ -377,16 +376,14 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
     x <-  x %>%
       tidyr::gather("Variables","value", !!!vec1, factor_key=T) %>% 
       dplyr::arrange(!!!.groups_syms) %>% 
-      tidyr::spread(!!vec2,"value",sep=" ") %>%
-      dplyr::group_by(!!!vec3)
+      tidyr::spread(!!vec2,"value",sep=" ")
     
     if(length(.groups)!=1 ){
       
       y <- y %>%
         tidyr::gather("Variables","value", !!!vec4, factor_key=T) %>% 
         dplyr::arrange(!!!vec3) %>% 
-        tidyr::spread(vec5,"value") %>%
-        dplyr::group_by(!!!vec6)
+        tidyr::spread(vec5,"value") 
       
     } else{
       
