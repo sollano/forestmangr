@@ -2,7 +2,7 @@
 
 export("%>%")
 export("%T>%")
-export(FdeGraybill)
+export(Graybill_F)
 export(average_tree_curve)
 export(bias_per)
 export(check_names)

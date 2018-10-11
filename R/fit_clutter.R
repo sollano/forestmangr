@@ -60,10 +60,7 @@
 
 fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model = 1, keep_model = F){
   # checagem de variaveis ####
-  
-  # Definir pipe do dplyr, para facilitar
-  `%>%` <- dplyr::`%>%`
-  
+
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
