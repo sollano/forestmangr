@@ -6,7 +6,7 @@
 #' @param df a dataframe.
 #' @param factor Quoted name of the factor variable used to differentiate the data projects in the test.
 #' @param reduced_model Quoted or unquoted reduced model used in the test.  The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".
-#' @param filter Optional argument. If supplied with levels present in factor, only these levels will be used in the test. \code{NA}.
+#' @param filter Optional argument. If supplied with levels present in \code{factor}, only these levels will be used in the test. \code{NA}.
 #' @param output Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,
 #' if \code{"plot"} a ggplot plot/object representing the test is created,
 #' if \code{"table_plot"}, both anova table and plot are provided, and if \code{"full"},
