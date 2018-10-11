@@ -1,5 +1,47 @@
+#' Graficos de Residuo
+#'
+#' Funcao para se criar graficos e tabelas de residuo a partir de dados observados e estimados.
+#' 
+#' @param df Data frame a ser utilizado.
+#' @param obs nome entre aspas da variavel observada.
+#' @param ... nome(s) entre aspas da(s) variavel(s) estimada(s). Multiplas variaveis devem ser separadas por virgula.
+#' @param type tipo de grafico a ser gerado. Pode ser "scatterplot", "histogram", "histogram_curve", "versus". Padrao: \code{"scatterplot"}
+#' @param lim_y Limite para o eixo y. Por padrao, este e definido automaticamente, mas pode ser ajustado caso necessario. Entra-se com um valor numero. Padrao: \code{NULL}.
+#' @param res_table Caso verdadeiro, sera gerado um dataframe com os dados originais e seus respectivos erros. Padrao: \code{FALSE}.
+#' @return objeto ggplot, ou, caso \code{res_table = TRUE}, um dataframe contendo os dados originais e os residuals gerados.
+#' 
 #' @export
-residuos_exp <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NULL, nrow = NULL,ncol = NULL, 
+#' @examples 
+#' library(forestmangr)
+#' data("exfm11")
+#'
+#' # Especificando-se apenas as variaveis observadas e estimadas,
+#' # gera-se um grafico de dispersao:
+#' resid_plot(exfm11, "TH", "TH_EST1")
+#' resid_plot(exfm11, "TH", "TH_EST1", type = "scatterplot")
+#' 
+#' # Utilizando o argumento type, pode se criar outros tipos de grafico:
+#' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram")
+#' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve")
+#' resid_plot(exfm11, "TH", "TH_EST1", type = "versus")
+#' 
+#' # Pode-se utilizar duas ou mais variáveis na comparaçao:
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "scatterplot")
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "histogram")
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "histogram_curve")
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "versus")
+#' 
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3")
+#' 
+#' #  Pode-se especificar os limites do eixo y com o argumento lim_y:
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 80)
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 40)
+#' 
+#' # E possivel gerar a tabela de resíduos com o argumento res_table:
+#' head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = T) )
+#' 
+#' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NULL, nrow = NULL,ncol = NULL, 
                           lim_y = NULL, xlab = NULL, clab=NULL, font = "serif",legend_pos = "bottom",res_table = F){
   DF <- as.data.frame(df)
   OBS <- obs 

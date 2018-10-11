@@ -1,56 +1,69 @@
-#' Teste de Identidade de Modelo
+#' @title
+#' Identity of a Model Test
+#' @description 
+#' Function for using the Identity of a Model test, as described by Regazzi (1999).
 #'
-#' Funcao para se realizar o Teste de Identidade de Modelo Conforme descrito por Regazzi (1999)
-#'
-#' @param df Data frame a ser utilizado.
-#' @param factor Nome entre aspas da variavel classificatória utilizada no teste.
-#' @param modelo_reduzido Modelo que sera utilizado no teste. Deve ser composto por nomes das variaveis, separando as variaveis dependendes e independentes com '~'.
-#' @param filtrar Caso seja diferente de nulo, a funcao ira filtrar o dado com base na variavel factor fornecida, e os niveis inseridos aqui. Padrao: \code{NULL}.
-#' @param output Argumento que indica se a saida sera a tabela anova, a tabela anova e o gráfico, ou uma lista contendo vários objetos, como tabela com variáveis dummy e regressões, além do gráfico. Pode ter como entrada "table", "table_plot" ou "full". Padrao: \code{"table"}. 
-#' @param signif Valor da significancia a ser utilizada do teste. Padrao: \code{0.05}.
-#' @return Por padrao, um dataframe contendo as informacoes sobre o teste. Caso
-#' \code{saida_full = TRUE}, a saida sera uma lista, contendo alem da tabela do teste,
-#'  um grafico ggplot, a tabela dummies e o summary dos ajuestes dos modelos reduzido e completo.
-#'
+#' @param df a dataframe.
+#' @param factor Quoted name of the factor variable used to differentiate the data projects in the test.
+#' @param reduced_model Quoted or unquoted reduced model used in the test.  The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".
+#' @param filter Optional argument. If supplied with levels present in factor, only these levels will be used in the test. \code{NA}.
+#' @param output Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,
+#' if \code{"plot"} a ggplot plot/object representing the test is created,
+#' if \code{"table_plot"}, both anova table and plot are provided, and if \code{"full"},
+#' a list is provided, with details on the dummies variables created, the reduced and complete models,
+#' the anova table and the plot. Default: \code{"table"}
+#' @param grey_scale If \code{TRUE} a grey scale will be used in the plots. Default: \code{FALSE}.
+#' @param signif Numeric value for the sifinificance level used in the test. Default: \code{0.05}.
+#' @param font font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for Arial Unicode MS. Default: \code{serif}.
+#' @return A dataframe, a ggplot object, or a list, varying according to the \code{output} argument.
+#' 
 #' @references 
-#' REGAZZI, A. J. Teste para verificar a identidade de modelos de regressão e a igualdade de parâmetros no caso de dados de delineamentos experimentais. Ceres, v. 46, n. 266, p. 383–409, 1999.
+#' Regazzi, A. J. (1999) ‘Teste para verificar a identidade de modelos de regressão e a igualdade de parâmetros no caso de dados de delineamentos experimentais’, Ceres, 46(266), pp. 383–409.
 #'
 #' @export
 #' @examples
-#' # Deseja-se saber se o comportamento do diametro e semelhante entre 3 especies.
-#' # Sera utilizado o modelo quadratico.
-#' # Primeiro visualiza-se os dados:
-#' library(forestr)
-#' data("ex13_mfr")
-#' dados <- ex13_mfr
-#' head(dados, 10)
+#' library(forestmangr)
+#' data("exfm13")
+#' head(exfm13, 10)
 #' 
-#' # Agora basta rodar a função, especificando o nome da variavel que indica
-#' # o projeto, e o modelo escolhido
-#' ident_model(dados, "especie", dap ~ N + N2)
+#' # The objective is to know if the diameter's behaviour is similar among 3 species.
+#' # For this we'll use a quadratic model. We'll use nitrogen (N) as our X variable.
+#'
+#' ident_model(exfm13, "species", dbh ~ N + N2)
 #' 
-#' # Para se ter a saida completa com todas as tabelas e grafico de analise, utiliza-se:
-#' ident_model(dados, "especie", dap ~  N + N2, output = "full")
-#'
-#' # Caso o teste seja significativo e hajam mais de duas especies,
-#' # e necessario fazer o teste com todas as combinacoes.
-#' # Pode-se especificar em quais niveis se deseja fazer o teste
-#' # com o argumento 'filtrar':
-#'
-#' ident_model(dados, "especie", dap ~  N + N2, filtrar = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot")
-#' ident_model(dados, "especie", dap ~  N + N2, filtrar = c("PEQUI", "VINHATICO"), output = "table_plot")
-#' ident_model(dados, "especie", dap ~  N + N2, filtrar = c("SUCUPIRA-PRETA", "PEQUI"), output = "table_plot")
-#' ident_model(dados, "especie", dap ~  N + N2, filtrar = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
-#'
-#' # Utilizando o argumento 'grey_scale' pode-se alterar a cor do grafico para tons de cinza:
+#' # This test shows that there are differences between the species. 
+#' # We can get more details on this using a different output, that will also
+#' # give us a plot:
 #' 
-#' ident_model(dados, "especie", dap ~  N + N2, output = "plot", grey_scale = T)
+#' ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot")
+#' 
+#' # This gives us only the plot:
+#' ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot")
+#' 
+#' # And this gives us additional information on the test:
+#' ident_model(exfm13, "species", dbh ~  N + N2, output = "full")
+#' 
+#' # Looking at the plot, it seemes that 2 species are behaving very similar, while
+#' # the Pequi species is different from the other 2. We can confirm this by runing
+#' # the test in a paired fashion, using the filter argument:
+#'
+#' ident_model(exfm13, "species", dbh ~  N + N2, filter = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot")
+#' ident_model(exfm13, "species", dbh ~  N + N2, filter = c("PEQUI", "VINHATICO"), output = "table_plot")
+#' ident_model(exfm13, "species", dbh ~  N + N2, filter = c("SUCUPIRA-PRETA", "PEQUI"), output = "table_plot")
+#' ident_model(exfm13, "species", dbh ~  N + N2, filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
+#'
+#' # As we imagined, a single model can be used to descibre the behaviour of the "Sucupira-preta" and "Vinhatico" species,
+#' # And a second model is needed to explain the Pequi Variable.
+#'
+#' # It's possible to apply a grey scale to the plots, and also change it's font to arial:
+#' 
+#' ident_model(exfm13, "species", dbh ~  N + N2, output = "plot", grey_scale = T, font="sans")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' @author Marcio leles Romarco de Oliveira \email{marcioromarco@@gmail.com}
 
 
-ident_model <- function(df, factor, modelo_reduzido, filtrar = NULL, output = "table", grey_scale = F, signif = 0.05 ){
+ident_model <- function(df, factor, reduced_model, filter = NA, output = "table", grey_scale = F, signif = 0.05, font="serif" ){
   # ####
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
@@ -68,33 +81,33 @@ ident_model <- function(df, factor, modelo_reduzido, filtrar = NULL, output = "t
     stop("'factor' must be a character containing a variable name", call.=F)
   }else if(length(factor)!=1){
     stop("Length of 'factor' must be 1", call.=F)
-  }else if(forestr::check_names(df, factor)==F){
-    stop(forestr::check_names(df, factor, boolean=F), call.=F)
+  }else if(forestmangr::check_names(df, factor)==F){
+    stop(forestmangr::check_names(df, factor, boolean=F), call.=F)
   }
   
-  # se modelo_reduzido nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-  if(  missing(modelo_reduzido) ){  
-    stop("modelo not set", call. = F) 
-  }else if(is.character(modelo_reduzido)){
-   modelo_reduzido <- stats::as.formula(modelo_reduzido)
-  }else if(!is(modelo_reduzido, "formula") ){
-    stop("'modelo_reduzido' must be a character or a formula containing a model", call.=F)
+  # se reduced_model nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+  if(  missing(reduced_model) ){  
+    stop("reduced_model not set", call. = F) 
+  }else if(is.character(reduced_model)){
+   reduced_model <- stats::as.formula(reduced_model)
+  }else if(!is(reduced_model, "formula") ){
+    stop("'reduced_model' must be a character or a formula containing a model", call.=F)
   }
   
-  # Se filtrar nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(filtrar)||is.null(filtrar)||is.na(filtrar)||filtrar==F||filtrar==""){
-    filtrar <- NULL
+  # Se filter nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+  if(missing(filter)||is.null(filter)||is.na(filter)||filter==F||filter==""){
+    filter <- NULL
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
-  }else if(!is.character(filtrar)){ 
-    stop("filtrar must be a character", call. = F)
-  }else if(! length(filtrar) == 2){ 
-    stop("Length of 'filtrar' must be equal to 2", call.=F) 
-    # se nao existir algum nivel citado em filtrar na var factor, parar
-  }else if( any( ! filtrar %in% levels(as.factor(df[[factor]])) ) ){
-    stop("Levels in 'filtrar' do not exist in factor", call.=F) 
+  }else if(!is.character(filter)){ 
+    stop("filter must be a character", call. = F)
+  }else if(! length(filter) == 2){ 
+    stop("Length of 'filter' must be equal to 2", call.=F) 
+    # se nao existir algum nivel citado em filter na var factor, parar
+  }else if( any( ! filter %in% levels(as.factor(df[[factor]])) ) ){
+    stop("Levels in 'filter' do not exist in factor", call.=F) 
   }else{
-      # filtrar dados caso o filtro seja fornecido
-      df <- df[ df[[factor]] %in% filtrar, ]
+      # filter dados caso o filtro seja fornecido
+      df <- df[ df[[factor]] %in% filter, ]
     }
   
   # se grey_scale nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
@@ -128,7 +141,7 @@ ident_model <- function(df, factor, modelo_reduzido, filtrar = NULL, output = "t
   DF <- as.data.frame(df)
   
   # Definicao do modelo reduzido
-  MODELO_REDUZIDO <- modelo_reduzido
+  MODELO_REDUZIDO <- reduced_model
   
   # Definicao da significancia do teste
   SIGNIF <- signif
@@ -307,15 +320,15 @@ ident_model <- function(df, factor, modelo_reduzido, filtrar = NULL, output = "t
   # Criacao da tabela final com os resultados
   TABELA_FINAL <- data.frame(
     
-    FV = c("Parametro_c", "Parametro_r", "Reducao", "Residuo"),
-    GL =  c(gl_comp, gl_redz, reducao_gl, residuo_gl ),
-    SQ = round(c(SQParamC, SQParamR, SQ_reducao, SQRes_comp), 4),
-    QM = c(QMParamC, QMParamR, QMReducao, QMResiduo ),
+    SV = c("Parameter_c", "Parameter_r", "Reduction", "Residuals"),
+    Df =  c(gl_comp, gl_redz, reducao_gl, residuo_gl ),
+    Sum_Sq = round(c(SQParamC, SQParamR, SQ_reducao, SQRes_comp), 4),
+    Mean_Sq = c(QMParamC, QMParamR, QMReducao, QMResiduo ),
     F_Regazzi = c("", "", F_regazzi ,""),
-    F_tabelado = c("", "", F_tabelado, ""),
-    # "p-valor" = c("", format(p_valor, scientific = F), "", ""),
-    "p-valor" = c("", "", signif(p_valor, 3), ""),
-    Resultado = c("", "", resultado, "")
+    F_value = c("", "", F_tabelado, ""),
+    # "p-value" = c("", format(p_valor, scientific = F), "", ""),
+    "p-value" = c("", "", signif(p_valor, 3), ""),
+    Result = c("", "", resultado, "")
     
     
   )
@@ -396,7 +409,7 @@ ident_model <- function(df, factor, modelo_reduzido, filtrar = NULL, output = "t
       
       ggplot2::stat_summary(fun.y = mean, geom = "point", ggplot2::aes(color=NULL),size = 5 ) +
       
-      ggthemes::theme_igray(base_family = "serif") +
+      ggthemes::theme_igray(base_family = font) +
       
       ggplot2::theme(
         legend.position = "bottom",
@@ -431,9 +444,16 @@ ident_model <- function(df, factor, modelo_reduzido, filtrar = NULL, output = "t
       
       ggplot2::stat_summary(fun.y = mean, geom = "point", ggplot2::aes(color=NULL),size = 5 ) +
       
+      ggthemes::theme_igray(base_family = font) +
+      
       ggplot2::theme(
         legend.position = "bottom",
-        legend.title    = ggplot2::element_text(size = 17),
+        panel.grid.major = ggplot2::element_blank(), 
+        panel.grid.minor = ggplot2::element_blank(),
+        panel.border = ggplot2::element_blank(),
+        axis.line.x = ggplot2::element_line(color="black"),
+        axis.line.y = ggplot2::element_line(color="black"),
+        legend.title    = ggplot2::element_text(size = 17, face = "bold"),
         legend.text     = ggplot2::element_text(size = 17),
         axis.title      = ggplot2::element_text(size = 22, face = "bold"), 
         axis.text       = ggplot2::element_text(size = 17) )
@@ -448,11 +468,11 @@ ident_model <- function(df, factor, modelo_reduzido, filtrar = NULL, output = "t
   
   # Uniao dos objetos de interesse em uma lista
   lista_final <- list(
-    tabela_dummies  = dplyr::as.tbl(DUMMIES_FINAL),
-    Modelo_Reduzido = SUMMARY_MOD_RED, 
-    Modelo_Completo = SUMMARY_MOD_COMP,
-    Grafico         = graph,
-    Teste_F_Regazzi = TABELA_FINAL )
+    dummies_table  = dplyr::as.tbl(DUMMIES_FINAL),
+    Reduced_Model  = SUMMARY_MOD_RED, 
+    Complete_Model = SUMMARY_MOD_COMP,
+    Plot           = graph,
+    Regazzi_F_Test = TABELA_FINAL )
   
   
   if(output == "full"){
