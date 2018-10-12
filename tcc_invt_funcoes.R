@@ -215,7 +215,7 @@ head(dados_invt2,20)
 # nao ha a necessidade de se utilizar funcoes compostas nesta parte,
 # portanto utilzamos o dplyr direto
 dados_invt3 <- dados_invt2 %>% # remocao das var criadas
-  left_join(tabcoef_vwb, by = c("STRATA") ) %>% # uniao com coefs de vwb
+  left_join(tabcoef_vwb, by = "STRATA" ) %>% # uniao com coefs de vwb
   mutate(CSA = pi*DBH^2/40000,
          AGE = as.numeric(MEASUREMENT_DATE - PLANTING_DATE) / 30,
          VWB = exp(b0 + b1*log(DBH) + b2*log(TH_EST) ) ) %>%
@@ -262,18 +262,17 @@ dados_invt$MEASUREMENT_DATE <- as.Date(dados_invt$MEASUREMENT_DATE, format = "%d
 dados_invt$PLANTING_DATE <- as.Date(dados_invt$PLANTING_DATE, format = "%d/%m/%Y")
 
 tab_invt  <- dados_invt %>% 
-  hdjoin(c("STRATA", "PLOT"), "TH","DBH","OBS","D") %>%  # calculo da altura dominante por talhao/parcela
-  lm_table_group("log(TH) ~ inv(DBH) + log(DH)", "STRATA", merge_coef = T) %>% # ajuste do modelo de altura por talhao
-  mutate(LN_TH = log(TH), INV_DBH = 1/DBH, LN_DH = log(DH) ) %>% # variaveis necessarias para reg
-  fit_mod("LN_TH ~ INV_DBH + LN_DH", "TH_EST", "TH" ) %>% # estimar altura para arvores nao medidas
-  left_join(tabcoef_vwb, by = c("STRATA") ) %>% # uniao com coefs de vwb por talhao
+  dom_height(th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D",.groups="STRATA", merge_data=T, dh_name = "DH") %>% 
+  lm_table(log(TH) ~ inv(DBH) + log(DH),output = "merge_est" ) %>% 
+  mutate( TH_EST = ifelse(is.na(TH), est, TH ), est=NULL ) %>% 
+  left_join(tabcoef_vwb, by = "STRATA") %>% # uniao com coefs de vwb
   mutate(AGE = as.numeric(MEASUREMENT_DATE - PLANTING_DATE) / 30,
-         VWB = exp(b0 + b1*log(DBH) + b2*log(TH_EST) ) ) %>% # estimar VWB
-  select(-b0,-b1,-b2, -Rsqr, -Rsqr_adj, -Std.Error) %>% # remocao das var criadas # caso nao se tenha valores para VWOB, deve-se parar por aqui
-  left_join(tabcoef_vwob, by = c("STRATA") ) %>% # uniao com coefs de vwob
+         VWB = exp(b0 + b1*log(DBH) + b2*log(TH_EST) ) ) %>%
+  select(-matches("^b|Rs|Std")) %>% 
+  left_join(tabcoef_vwob, by = "STRATA" ) %>% # uniao com coefs de vwob
   mutate(VWOB = exp(b0 + b1*log(DBH) + b2*log(TH_EST) ) )%>% # estimar VWOB
-  select(-b0,-b1,-b2, -Rsqr, -Rsqr_adj, -Std.Error) %>% # remocao dos betas
-  plot_summarise("DBH", "TH_EST", "VWB", "PLOT_AREA", c("STRATA", "PLOT"), "STRATA_AREA", "AGE", "VWOB", "DH") # totalizacao de parcelas
+  select(-matches("^b|Rs|Std")) %>% 
+  plot_summarise("PLOT", "PLOT_AREA", "DBH", "TH_EST", "STRATA", "STRATA_AREA", "VWB", "VWOB", "DH", "AGE")
 tab_invt 
 
 # PARTE III SECAO III - Estatisticas do Inventario ===============================================================================================================

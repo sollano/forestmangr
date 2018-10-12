@@ -4,7 +4,8 @@
 \alias{dom_height}
 \title{Calculate the Dominant Height of forest inventory data plots}
 \usage{
-dom_height(df, th, dbh, plot, obs, dom, .groups, merge_data = F)
+dom_height(df, th, dbh, plot, obs, dom, .groups, merge_data = F,
+  dh_name = "DH")
 }
 \arguments{
 \item{df}{A dataframe.}
@@ -20,6 +21,10 @@ dom_height(df, th, dbh, plot, obs, dom, .groups, merge_data = F)
 \item{dom}{Character value for the dominant tree code used in the observations variable variable supplied  in the \code{obs} argument. This is used alongside the \code{obs} argument to differentiate dominant trees from the others.}
 
 \item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.}
+
+\item{merge_data}{If \code{TRUE}, will merge the original dataframe with the dominant hight table. Default: \code{FALSE}.}
+
+\item{dh_name}{Character value for the name of the dominant height variable created. Default: \code{"DH"}}
 }
 \value{
 A dataframe with the the dominant height values by plot.

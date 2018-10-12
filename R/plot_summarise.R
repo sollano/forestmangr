@@ -211,7 +211,9 @@ plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vw
   plot_area_name <- plot_area
   total_area_name <- total_area
   vwb_name <- vwb
+  vwb_ha_name <- paste(vwb,"ha",sep="_")
   vwob_name <- vwob
+  vwob_ha_name <- paste(vwob,"ha",sep="_")
   age_name <- age
   
   
@@ -226,38 +228,42 @@ plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vw
   # ####
   
   if(missing(dh) || dh=="" || is.null(dh) || is.na(dh) ){ # se a altura dominante nao for fornecida
-    
     # se ja existir uma variavel chamada "DH", deletar
     if(  "DH" %in% names(df) ){ df$DH <- NULL }
-    
     # estimar altura dominante
-    x <- forestmangr::dom_height(df = df, th = th,plot = plot, .groups = .groups, merge_data = T)
+    df <- forestmangr::dom_height(df = df, th = th,plot = plot, .groups = .groups, merge_data = T)
     
-    # caso contrario, renomear "dh" para "DH"
+    dh_name <- "DH"
+    dh_sym <- rlang::sym( "DH" )
+    
+    # caso contrario, so criar os symbolos
   } else{ 
+    
+    dh_name <- dh
     dh_sym <- rlang::sym( dh )
-    x <- df %>% dplyr::rename(DH = !!dh_sym) }
+    
+    }
   # novo nome = nome antigo
   
-  x %>% 
+  df %>% 
     dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T) %>% 
     dplyr::mutate(CSA = pi * (!!dbh_sym)^2 / 40000 ) %>% 
     dplyr::summarise(
       !!age_name        := round( mean(as.numeric( (!!age_sym) ), na.rm=T) ),
-      !!total_area_name   := mean( !!total_area_sym, na.rm=T), 
-      !!plot_area_name := mean( !!plot_area_sym, na.rm=T),
-      !!dbh_name          := mean(!!dbh_sym, na.rm=T),
-      q            = sqrt(mean(CSA, na.rm=T) * 40000 / pi),
-      !!th_name    := mean(!!th_sym, na.rm=T),
-      DH           = mean(DH),
-      Indv         = n(),
-      Indvha       = Indv* 10000/(!!plot_area_sym),
-      G            = sum(CSA, na.rm=T),
-      G_ha         = G * 10000/(!!plot_area_sym),
-      vwb          = sum(!!vwb_sym, na.rm=T),
-      vwb_ha       = vwb * 10000/ (!!plot_area_sym),
-      vwob         = sum(!!vwob_sym, na.rm=T),
-      vwob_ha      = vwob * 10000/ (!!plot_area_sym)  ) %>% #sumarise 
+      !!total_area_name := mean( !!total_area_sym, na.rm=T), 
+      !!plot_area_name  := mean( !!plot_area_sym, na.rm=T),
+      !!dbh_name        := mean(!!dbh_sym, na.rm=T),
+      q                 = sqrt(mean(CSA, na.rm=T) * 40000 / pi),
+      !!th_name         := mean(!!th_sym, na.rm=T),
+      !!dh_name         := mean(!!dh_sym),
+      Indv              = n(),
+      Indvha            = Indv* 10000/(!!plot_area_sym),
+      G                 = sum(CSA, na.rm=T),
+      G_ha              = G * 10000/(!!plot_area_sym),
+      !!vwb_name        := sum(!!vwb_sym, na.rm=T),
+      !!vwb_ha_name     := (!!rlang::sym(vwb_name)) * 10000/ (!!plot_area_sym),
+      !!vwob_name       := sum(!!vwob_sym, na.rm=T),
+      !!vwob_ha_name    := (!!rlang::sym(vwob_name)) * 10000/ (!!plot_area_sym)  ) %>% #sumarise 
     dplyr::na_if(0) %>% # substitui 0 por NA
     dplyr::select_if(Negate(anyNA)) %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     forestmangr::round_df(dec_places)
