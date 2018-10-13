@@ -2,79 +2,63 @@
 % Please edit documentation in R/fit_clutter.R
 \name{fit_clutter}
 \alias{fit_clutter}
-\title{Ajuste do Modelo de Clutter (MQ2O)}
+\title{Fit Clutter's model for growth and yield}
 \usage{
-fit_clutter(df, Id, HD, B, V, S, .groups, struct_form_df = F,
-  model = 1, keep_model = F)
+fit_clutter(df, age, DH, B, V, S, plot, .groups = NA, model = "full",
+  keep_model = F)
 }
 \arguments{
-\item{df}{Dataframe a ser utilizado.}
+\item{df}{A dataframe.}
 
-\item{Id}{Nome com ou sem aspas da variavel Idade.}
+\item{age}{Quoted name for the age variable.}
 
-\item{HD}{Nome com ou sem aspas da variavel Altura Dominante.}
+\item{DH}{Quoted name fof the dominant height variable.}
 
-\item{B}{Nome com ou sem aspas da variavel Area Seccional.}
+\item{B}{Quoted name for the basal area variable.}
 
-\item{V}{Nome com ou sem aspas da variavel Volume.}
+\item{V}{Quoted name for the volume area variable.}
 
-\item{S}{Nome com ou sem aspas da variavel Site.}
+\item{S}{Quoted name for the site variable.}
 
-\item{.groups}{Nome com ou sem aspas de uma ou mais variáveis classificatorias,  utilizadas para criacao da forma estrutural e, caso haja mais de uma, para ajuste do modelo por grupo. Pelo menos uma deve ser inserida, referente a Parcela.}
+\item{plot}{Quoted name for the plot variable.}
 
-\item{struct_form_df}{Caso seja verdadeira, o dataframe inserido sera considerado como um dado ja padronizado para a forma estrutural. Este deve conter as variaveis Y1, X1, X2, X3, Y2, Y4 E Y5. Padrao: \code{F}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.}
 
-\item{model}{Selecao do tipo de modelo ajustado. Caso seja igual 1, ajusta-se o modelo completo. Caso seja igual a 2, ajusta-se o modelo retirando-se X3 do ajuste. Padrao: \code{1}.}
+\item{model}{Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, weere the X3 variable is excluded from the regression. Default: \code{full}.}
 
-\item{keep_model}{Indica se a variavel contendo o ajuste deve ser mantida ou nao. Padrao \code{FALSE}.}
+\item{keep_model}{If \code{TRUE} a variable with the regression model will be kept in the dataframe. Default: \code{FALSE}.}
 }
 \value{
 Dataframe contendo os coeficientes do ajuste, e uma coluna contendo o ajuste em si.
 }
 \description{
-Ajuste do Modelo de Clutter para Crescimento e Producao pelo metodo dos Minimos Quadrados em 2 Estagios.
-}
-\details{
-
+Fit clutter's model for growth and yield using the two stage least squares method (2SLS).
 }
 \examples{
 
 library(forestmangr)
-library(dplyr)
-data("ex16_mfr")
-data("ex17_mfr")
+data("exfm17")
 
-# Primeiro iremos estimar o Site utilizando para a idade indice de 64 meses:
-Idade_I <- 64
+head(exfm17)
 
-dados <- ex16_mfr \%>\% 
-  lm_table(log(HD) ~ inv(Idade), output = "merge") \%>\% 
-  mutate(S = exp(log(HD) - b1 * (1/Idade - 1/Idade_I))  ) \%>\% 
-  select(-b0, -b1, -Rsqr, -Rsqr_adj, -Std.Error)
-dados 
+# To fit Clutter's model we just need to define the data, and age, dominant height,
+# basal area, volume, site and plot variables:
+fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
 
-# Agora para rodar o modelo de Clutter basta inserir os nomes das variÃ¡veis
-# Idade, altura dominante, area basal, volume, site e parcela:
-coefs_clutter <- fit_clutter(dados, "Idade", "HD", "B", "V", "S", "Parcela")
-coefs_clutter
+# To fit the alternate model (without a1) just use model="mod":
+fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot",model="mod")
 
-# Caso os seus dados ja estejam no formato estrutural, basta utilizar
-# o argumento struct_form_df para realizar o ajuste:
-ex17_mfr
-
-coefs_clutter <- fit_clutter(ex17_mfr, struct_form_df = T)
-coefs_clutter
-# obs: Neste caso, a nomemclatura deve ser respeitada
+# To keep the regression model, use keep_model=TRUE:
+fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot", keep_model=TRUE) 
              
 }
 \references{
-CLUTTER, J. L. Compatible Growth For Loblolly by the Southeastern. Forest Science, v. 9, n. 3, p. 354–371, 1963. 
-SULLIVAN, A. D.; CLUTTER, J. L. A Simultaneous Growth and Yield for Loblolly Pine. Forest Science, v. 18, n. 1, p. 76–86, 1972. 
-CAMPOS, J. C. C.; LEITE, H. G. Mensuracao florestal: perguntas e respostas. 3a. ed. Vicosa: Editora UFV, 2013. 605 p.
+Clutter, J. L. (1963) ‘Compatible Growth For Loblolly by the Southeastern’, Forest Science, 9(3), pp. 354–371.
+Sullivan, A. D. and Clutter, J. L. (1972) ‘A Simultaneous Growth and Yield for Loblolly Pine’, Forest Science, 18(1), pp. 76–86.
+Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}
 }
 \keyword{2SLS}
 \keyword{Clutter,}
-\keyword{MQ20,}

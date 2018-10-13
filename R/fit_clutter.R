@@ -1,64 +1,49 @@
 #' @title 
-#' Ajuste do Modelo de Clutter (MQ2O)
+#' Fit Clutter's model for growth and yield
 #' 
 #' @description 
-#' Ajuste do Modelo de Clutter para Crescimento e Producao pelo metodo dos Minimos Quadrados em 2 Estagios.
-#' 
-#' @details 
-#' 
-#' @param df Dataframe a ser utilizado.
-#' @param Id Nome com ou sem aspas da variavel Idade.
-#' @param HD Nome com ou sem aspas da variavel Altura Dominante.
-#' @param B Nome com ou sem aspas da variavel Area Seccional.
-#' @param V Nome com ou sem aspas da variavel Volume.
-#' @param S Nome com ou sem aspas da variavel Site.
-#' @param .groups Nome com ou sem aspas de uma ou mais variáveis classificatorias,  utilizadas para criacao da forma estrutural e, caso haja mais de uma, para ajuste do modelo por grupo. Pelo menos uma deve ser inserida, referente a Parcela.
-#' @param struct_form_df Caso seja verdadeira, o dataframe inserido sera considerado como um dado ja padronizado para a forma estrutural. Este deve conter as variaveis Y1, X1, X2, X3, Y2, Y4 E Y5. Padrao: \code{F}.
-#' @param model Selecao do tipo de modelo ajustado. Caso seja igual 1, ajusta-se o modelo completo. Caso seja igual a 2, ajusta-se o modelo retirando-se X3 do ajuste. Padrao: \code{1}.
-#' @param keep_model Indica se a variavel contendo o ajuste deve ser mantida ou nao. Padrao \code{FALSE}.
+#' Fit clutter's model for growth and yield using the two stage least squares method (2SLS).
+#'
+#' @param df A dataframe.
+#' @param age Quoted name for the age variable.
+#' @param DH Quoted name fof the dominant height variable.
+#' @param B Quoted name for the basal area variable.
+#' @param V Quoted name for the volume area variable.
+#' @param S Quoted name for the site variable.
+#' @param plot Quoted name for the plot variable.
+#' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
+#' @param model Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, weere the X3 variable is excluded from the regression. Default: \code{full}.
+#' @param keep_model If \code{TRUE} a variable with the regression model will be kept in the dataframe. Default: \code{FALSE}.
 #'
 #' @return  Dataframe contendo os coeficientes do ajuste, e uma coluna contendo o ajuste em si.
 #' 
-#' @keywords Clutter, MQ20, 2SLS
+#' @keywords Clutter,  2SLS
 #' @references 
-#' CLUTTER, J. L. Compatible Growth For Loblolly by the Southeastern. Forest Science, v. 9, n. 3, p. 354–371, 1963. 
-#' SULLIVAN, A. D.; CLUTTER, J. L. A Simultaneous Growth and Yield for Loblolly Pine. Forest Science, v. 18, n. 1, p. 76–86, 1972. 
-#' CAMPOS, J. C. C.; LEITE, H. G. Mensuracao florestal: perguntas e respostas. 3a. ed. Vicosa: Editora UFV, 2013. 605 p.
+#' Clutter, J. L. (1963) ‘Compatible Growth For Loblolly by the Southeastern’, Forest Science, 9(3), pp. 354–371.
+#' Sullivan, A. D. and Clutter, J. L. (1972) ‘A Simultaneous Growth and Yield for Loblolly Pine’, Forest Science, 18(1), pp. 76–86.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 #' 
 #' @export
 #' @examples 
 #' 
 #' library(forestmangr)
-#' library(dplyr)
-#' data("ex16_mfr")
-#' data("ex17_mfr")
+#' data("exfm17")
 #' 
-#' # Primeiro iremos estimar o Site utilizando para a idade indice de 64 meses:
-#' Idade_I <- 64
+#' head(exfm17)
 #' 
-#' dados <- ex16_mfr %>% 
-#'   lm_table(log(HD) ~ inv(Idade), output = "merge") %>% 
-#'   mutate(S = exp(log(HD) - b1 * (1/Idade - 1/Idade_I))  ) %>% 
-#'   select(-b0, -b1, -Rsqr, -Rsqr_adj, -Std.Error)
-#' dados 
+#' # To fit Clutter's model we just need to define the data, and age, dominant height,
+#' # basal area, volume, site and plot variables:
+#' fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
 #' 
-#' # Agora para rodar o modelo de Clutter basta inserir os nomes das variáveis
-#' # Idade, altura dominante, area basal, volume, site e parcela:
-#' coefs_clutter <- fit_clutter(dados, "Idade", "HD", "B", "V", "S", "Parcela")
-#' coefs_clutter
+#' # To fit the alternate model (without a1) just use model="mod":
+#' fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot",model="mod")
 #' 
-#' # Caso os seus dados ja estejam no formato estrutural, basta utilizar
-#' # o argumento struct_form_df para realizar o ajuste:
-#' ex17_mfr
-#' 
-#' coefs_clutter <- fit_clutter(ex17_mfr, struct_form_df = T)
-#' coefs_clutter
-#' # obs: Neste caso, a nomemclatura deve ser respeitada
+#' # To keep the regression model, use keep_model=TRUE:
+#' fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot", keep_model=TRUE) 
 #'              
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-
-
-fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model = 1, keep_model = F){
+#'
+fit_clutter <- function(df, age, DH, B, V, S, plot, .groups=NA, model = "full", keep_model = F){
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -70,34 +55,26 @@ fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model 
     stop("Length and number of rows of 'df' must be greater than 1", call.=F)
   }
   
-  # se struct_form_df nao for igual a TRUE ou FALSE
-  if(!   struct_form_df %in% c(TRUE, FALSE) ){ 
-    stop("struct_form_df must be equal to TRUE or FALSE", call. = F) 
-  }
-  
-  # Se struct_form_df nao for verdadeiro, testar os nomes das variaveis
-  if(struct_form_df == F){
-    
-    # se Id nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-    if(  missing(Id) ){  
-      stop("Id not set", call. = F) 
-    }else if( !is.character(Id) ){
-      stop("'Id' must be a character containing a variable name", call.=F)
-    }else if(length(Id)!=1){
-      stop("Length of 'Id' must be 1", call.=F)
-    }else if(forestmangr::check_names(df, Id)==F){
-      stop(forestmangr::check_names(df, Id, boolean=F), call.=F)
+    # se age nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+    if(  missing(age) ){  
+      stop("age not set", call. = F) 
+    }else if( !is.character(age) ){
+      stop("'age' must be a character containing a variable name", call.=F)
+    }else if(length(age)!=1){
+      stop("Length of 'age' must be 1", call.=F)
+    }else if(forestmangr::check_names(df, age)==F){
+      stop(forestmangr::check_names(df, age, boolean=F), call.=F)
     }
     
-    # se HD nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-    if(  missing(HD) ){  
-      stop("HD not set", call. = F) 
-    }else if( !is.character(HD) ){
-      stop("'HD' must be a character containing a variable name", call.=F)
-    }else if(length(HD)!=1){
-      stop("Length of 'HD' must be 1", call.=F)
-    }else if(forestmangr::check_names(df, HD)==F){
-      stop(forestmangr::check_names(df, HD, boolean=F), call.=F)
+    # se DH nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+    if(  missing(DH) ){  
+      stop("DH not set", call. = F) 
+    }else if( !is.character(DH) ){
+      stop("'DH' must be a character containing a variable name", call.=F)
+    }else if(length(DH)!=1){
+      stop("Length of 'DH' must be 1", call.=F)
+    }else if(forestmangr::check_names(df, DH)==F){
+      stop(forestmangr::check_names(df, DH, boolean=F), call.=F)
     }
     
     # se B nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
@@ -133,12 +110,27 @@ fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model 
       stop(forestmangr::check_names(df, S, boolean=F), call.=F)
     }
     
+    # Se plot nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+    if(missing(plot) && is.null(dplyr::groups(df)) ){
+      stop("plot not set. plot must be set if data doesn't have any groups", call. = F)
+    }else if(missing(plot) && !is.null(dplyr::groups(df)) ){
+      plot_syms <- rlang::syms(dplyr::groups(df))
+    }else if(!is.character(plot)){
+      stop("plot must be a character", call. = F)
+    }else if(! length(plot)%in% 1:10){
+      stop("Length of 'plot' must be between 1 and 10", call.=F) 
+    }else if(forestmangr::check_names(df,plot)==F){
+      # Parar se algum nome nao existir, e avisar qual nome nao existe
+      stop(forestmangr::check_names(df,plot, boolean=F), call.=F) 
+    }else{
+      plot_syms <- rlang::syms(plot) 
+    }
+    
     # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-    if(missing(.groups) && is.null(dplyr::groups(df))){
-      stop(".groups must be set if data doesn't have any groups", call. = F)
-    }else if(missing(.groups) && !is.null(dplyr::groups(df))){
-      .groups_syms <- rlang::syms(dplyr::groups(df))
-    }else if(!is.character(.groups)){
+    if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+      .groups_syms <- character()
+      # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
+    }else if(!is.character(.groups)){ 
       stop(".groups must be a character", call. = F)
     }else if(! length(.groups)%in% 1:10){
       stop("Length of '.groups' must be between 1 and 10", call.=F)
@@ -152,43 +144,36 @@ fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model 
       .groups_syms <- rlang::syms(.groups) 
     }
     
-    Id_sym <- rlang::sym(Id)
-    HD_sym <- rlang::sym(HD)
-    B_sym <- rlang::sym(B)
-    V_sym <- rlang::sym(V)
-    S_sym <- rlang::sym(S)
-    
-  }
   
-  # Se model nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
-  if(!is.numeric( model )){
-    stop( "'model' must be numeric", call.=F)
+  # Se model nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( model )){
+    stop( "'model' must be character", call.=F)
   }else if(length(model)!=1){
     stop("Length of 'model' must be 1", call.=F)
-  }else if(! model %in%  c(1, 2) ){
-    stop("'model' must be equal to 1 or 2", call.=F)
+  }else if(! model %in% c('full', 'mod') ){ 
+  stop("'model' must be equal to 'full' or 'mod' ", call. = F) 
   }
-  
+
   # se keep_model nao for igual a TRUE ou FALSE
   if(! keep_model %in% c(TRUE, FALSE) ){ 
     stop("keep_model must be equal to TRUE or FALSE", call. = F) 
   }
   
-  # ####
+  age_sym <- rlang::sym(age)
+  DH_sym <- rlang::sym(DH)
+  B_sym <- rlang::sym(B)
+  V_sym <- rlang::sym(V)
+  S_sym <- rlang::sym(S)
   
-  if(struct_form_df == T){
-    
-    struct_form_data <- df
-    
-  }else if(struct_form_df == F){
+  # ####
     
     suppressMessages(
       
       struct_form_data <- df %>% 
-        dplyr::group_by( !!!.groups_syms, add=T ) %>% 
+        dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T ) %>% 
         dplyr::transmute(
-          I1 = !!Id_sym, I2  = dplyr::lead(!!Id_sym), 
-          HD = !!HD_sym, HD2 = dplyr::lead(!!HD_sym), 
+          I1 = !!age_sym, I2  = dplyr::lead(!!age_sym), 
+          DH = !!DH_sym, DH2 = dplyr::lead(!!DH_sym), 
           B1 = !!B_sym,  B2  = dplyr::lead(!!B_sym), 
           V1 = !!V_sym,  V2  = dplyr::lead(!!V_sym),
           S  = !!S_sym   ) %>% 
@@ -206,9 +191,9 @@ fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model 
       
     )
     
-  }
   
-  if(model == 1){
+  
+  if(model == "full"){
     
     eq1 <- Y2 ~ X4 + X5 + Y1
     eq2 <- Y1 ~ X1 + X2 + X3
@@ -224,7 +209,7 @@ fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model 
     restrict.rhs <- c(0, 1)
     
     model_fit <-  struct_form_data %>%   
-      dplyr::group_by( !!!(.groups_syms[-length(.groups)]), add=T ) %>% 
+      dplyr::group_by( !!!.groups_syms, add=T ) %>% 
       dplyr::do(Reg = systemfit::systemfit(system, "2SLS", inst = inst, data = ., 
                                            restrict.matrix = restrict, 
                                            restrict.rhs = restrict.rhs)) %>% 
@@ -239,7 +224,7 @@ fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model 
       dplyr:: ungroup()
     
     
-  }else if(model == 2 ){
+  }else if(model == "mod" ){
     
     eq1 <- Y2 ~ X4 + X5 + Y1
     eq2 <- Y1 ~ X1 + X2
@@ -255,7 +240,7 @@ fit_clutter <- function(df, Id, HD, B, V, S, .groups, struct_form_df = F, model 
     restrict.rhs <- c(0, 1)
     
     model_fit <-  struct_form_data %>%   
-      dplyr::group_by( !!!(.groups_syms[-length(.groups)]), add=T ) %>% 
+      dplyr::group_by( !!!.groups_syms, add=T ) %>% 
       dplyr::do(Reg = systemfit::systemfit(system, "2SLS", inst = inst, data = ., 
                                            restrict.matrix = restrict, 
                                            restrict.rhs = restrict.rhs)) %>% 

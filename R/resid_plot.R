@@ -17,6 +17,7 @@
 #' @param clab Character value for the color label used, if a color variable is supplied. If not supplied, the \code{color} variable name will be used. Default: \code{NA}.
 #' @param font Type of font used in the plot. Default: \code{"serif"}.
 #' @param legend_pos Position of legend, when a color variable is supplied. This can either be \code{"left"}, \code{"right"}, \code{"top"} or \code{"bottom"}. Default: \code{"bottom"}.
+#' @param grey_scale If \code{TRUE}, the plot will be rendered in a grey scale. Default: \code{"TRUE"}.
 #' @param res_table If \code{TRUE}, the function will return a dataframe with observed, estimated, and residual values. Default: \code{FALSE}.
 #' @return A ggplot object, or if \code{res_table = TRUE}, a dataframe.
 #' 
@@ -45,6 +46,9 @@
 #' # It's possible to change the color legend position: 
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", legend_pos="top")
 #' 
+#' # A colored plot is also available:
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", grey_scale=FALSE)
+#' 
 #' # It's possible to change xlabels and color labels:  
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",xlab="Total Height (m)", clab="Strata")
 #' 
@@ -71,7 +75,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NA, nrow = NA, ncol = NA, 
-                          lim_y = NA, xlab = "Observed values", clab=NA, font = "serif", legend_pos = "bottom", res_table = F){
+                          lim_y = NA, xlab = "Observed values", clab=NA, font = "serif", legend_pos = "bottom", grey_scale=T, res_table = F){
   # ####
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
@@ -183,6 +187,14 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
     stop("Length of 'font' must be 1", call.=F)
   }
   
+  # se grey_scale nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! grey_scale %in% c(TRUE, FALSE) ){ 
+    stop("'grey_scale' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(grey_scale)!=1){
+    stop("Length of 'grey_scale' must be 1", call.=F)
+  }
+  
+  
   # Se legend_pos nao for character,ou nao for de tamanho 1, parar
   if(!is.character( legend_pos )){
     stop( "'legend_pos' must be character", call.=F)
@@ -277,10 +289,15 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
     else if (type == "versus") ggplot2::labs(x = XLAB, y = YLAB, color = CLAB)
   } + {
     if(is.null(COLOR)){
+      
+    }else if(grey_scale==FALSE){
+      
     }else if(is.numeric(DF[[COLOR]]) )ggplot2::scale_colour_gradient(low = "light gray", high = "gray20")
     else( ggplot2::scale_colour_grey(start = 0.8, end = 0.2) )
     
-  }  + ggplot2::scale_fill_grey(start = 0.8, end = 0.2) +
+  }  +{
+    if(grey_scale) ggplot2::scale_fill_grey(start = 0.8, end = 0.2) 
+  }+
     ggthemes::theme_igray(base_family = font) +
     ggplot2::theme(
       legend.position = legend_pos,
