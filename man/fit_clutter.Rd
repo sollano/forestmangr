@@ -29,7 +29,7 @@ fit_clutter(df, age, DH, B, V, S, plot, .groups = NA, model = "full",
 \item{keep_model}{If \code{TRUE} a variable with the regression model will be kept in the dataframe. Default: \code{FALSE}.}
 }
 \value{
-Dataframe contendo os coeficientes do ajuste, e uma coluna contendo o ajuste em si.
+A dataframe with the regressions coefficients.
 }
 \description{
 Fit clutter's model for growth and yield using the two stage least squares method (2SLS).

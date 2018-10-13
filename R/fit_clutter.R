@@ -15,9 +15,9 @@
 #' @param model Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, weere the X3 variable is excluded from the regression. Default: \code{full}.
 #' @param keep_model If \code{TRUE} a variable with the regression model will be kept in the dataframe. Default: \code{FALSE}.
 #'
-#' @return  Dataframe contendo os coeficientes do ajuste, e uma coluna contendo o ajuste em si.
-#' 
-#' @keywords Clutter,  2SLS
+#' @return A dataframe with the regressions coefficients.
+#'  
+#' @keywords Clutter, 2SLS
 #' @references 
 #' Clutter, J. L. (1963) ‘Compatible Growth For Loblolly by the Southeastern’, Forest Science, 9(3), pp. 354–371.
 #' Sullivan, A. D. and Clutter, J. L. (1972) ‘A Simultaneous Growth and Yield for Loblolly Pine’, Forest Science, 18(1), pp. 76–86.
