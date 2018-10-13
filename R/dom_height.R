@@ -142,6 +142,12 @@ dom_height <- function(df, th, dbh, plot, obs, dom, .groups, merge_data=F,dh_nam
     stop("Length of 'merge_data' must be 1", call.=F)
   }
   
+  # Se dh_name nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( dh_name )){
+    stop( "'dh_name' must be character", call.=F)
+  }else if(length(dh_name)!=1){
+    stop("Length of 'dh_name' must be 1", call.=F)
+  }
   
   th_sym <- rlang::sym( th )
   

@@ -1,62 +1,213 @@
-#' Graficos de Residuo
+#' @title 
+#' Calculate residual values and create plots
 #'
-#' Funcao para se criar graficos e tabelas de residuo a partir de dados observados e estimados.
+#' @description 
+#' Function for creating plots and tables for residual values from observed and estimated values.
 #' 
-#' @param df Data frame a ser utilizado.
-#' @param obs nome entre aspas da variavel observada.
-#' @param ... nome(s) entre aspas da(s) variavel(s) estimada(s). Multiplas variaveis devem ser separadas por virgula.
-#' @param type tipo de grafico a ser gerado. Pode ser "scatterplot", "histogram", "histogram_curve", "versus". Padrao: \code{"scatterplot"}
-#' @param lim_y Limite para o eixo y. Por padrao, este e definido automaticamente, mas pode ser ajustado caso necessario. Entra-se com um valor numero. Padrao: \code{NULL}.
-#' @param res_table Caso verdadeiro, sera gerado um dataframe com os dados originais e seus respectivos erros. Padrao: \code{FALSE}.
-#' @return objeto ggplot, ou, caso \code{res_table = TRUE}, um dataframe contendo os dados originais e os residuals gerados.
+#' @param df A dataframe.
+#' @param obs Quoted name of the observed values variable.
+#' @param ... Quoted name(s) for the estimated values variable(s). Multiple variables must be separated by comma.
+#' @param type Character object for the type of plot created, The available plots are: \code{"scatterplot"}, \code{"histogram"}, \code{"histogram_curve"} and \code{"versus"}. Default: \code{"scatterplot"}.
+#' @param point_size Numeric value for the point size in scatterplots. Default: \code{3}.
+#' @param color Quoted name of a variable. If supplied, this variable will be used to classify the data by color. Default: \code{NA}.
+#' @param nrow Numeric value for number of rows in the plot matrix. If not supplied, the plots will be automatically sorted. Default: \code{NA}.
+#' @param ncol Numeric value for number of columns in the plot matrix. If not supplied, the plots will be automatically sorted. Default: \code{NA}.
+#' @param lim_y Numeric value for the y axis upper and lower limit. If \code{NA}, the biggest residual value is used. Default: \code{NA}.
+#' @param xlab Character value for the x label used in some plots. Default: \code{"Observed values"}.
+#' @param clab Character value for the color label used, if a color variable is supplied. If not supplied, the \code{color} variable name will be used. Default: \code{NA}.
+#' @param font Type of font used in the plot. Default: \code{"serif"}.
+#' @param legend_pos Position of legend, when a color variable is supplied. This can either be \code{"left"}, \code{"right"}, \code{"top"} or \code{"bottom"}. Default: \code{"bottom"}.
+#' @param res_table If \code{TRUE}, the function will return a dataframe with observed, estimated, and residual values. Default: \code{FALSE}.
+#' @return A ggplot object, or if \code{res_table = TRUE}, a dataframe.
 #' 
 #' @export
 #' @examples 
 #' library(forestmangr)
 #' data("exfm11")
 #'
-#' # Especificando-se apenas as variaveis observadas e estimadas,
-#' # gera-se um grafico de dispersao:
+#' head(exfm11)
+#'
+#' # Specifying the observed and estimated variables, we get a scatterplot
+#' # for the percentual residuals:
 #' resid_plot(exfm11, "TH", "TH_EST1")
-#' resid_plot(exfm11, "TH", "TH_EST1", type = "scatterplot")
 #' 
-#' # Utilizando o argumento type, pode se criar outros tipos de grafico:
+#' # It's possible to change the size of points in a scatterplot with point_size:
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", point_size=1)
+#' 
+#' # It's possible to get other types of plots, with the type argument:
 #' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram")
 #' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve")
 #' resid_plot(exfm11, "TH", "TH_EST1", type = "versus")
 #' 
-#' # Pode-se utilizar duas ou mais variáveis na comparaçao:
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "scatterplot")
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "histogram")
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "histogram_curve")
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "versus")
+#' # It's possible to add a factor variable as color in the plots:
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA")
+#'
+#' # It's possible to change the color legend position: 
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", legend_pos="top")
 #' 
+#' # It's possible to change xlabels and color labels:  
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",xlab="Total Height (m)", clab="Strata")
+#' 
+#' # It's póssible to change the font of the plot. R natively supports
+#' # sans, serif and mono, but these can be expanded using packages:
+#' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="sans")
+#' resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="mono")
+#' 
+#' # If there are more estimated values variables, they can also be used
+#' # in the comparisson:
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2")
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3")
 #' 
-#' #  Pode-se especificar os limites do eixo y com o argumento lim_y:
+#' # It's possible to rearange the plots with ncol and nrow:
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", ncol=1)
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", nrow=2)
+#' 
+#' # It's possible to specify the y axis limit with lim_y:
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 80)
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 40)
 #' 
-#' # E possivel gerar a tabela de resíduos com o argumento res_table:
+#' # It's possible to get the residuals table used to generate these plots, with res_table=TRUE:
 #' head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = T) )
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NULL, nrow = NULL,ncol = NULL, 
-                          lim_y = NULL, xlab = NULL, clab=NULL, font = "serif",legend_pos = "bottom",res_table = F){
+resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NA, nrow = NA, ncol = NA, 
+                          lim_y = NA, xlab = "Observed values", clab=NA, font = "serif", legend_pos = "bottom", res_table = F){
+  # ####
+  # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
+  if(  missing(df) ){  
+    stop("df not set", call. = F) 
+  }else if(!is.data.frame(df)){
+    stop("df must be a dataframe", call.=F)
+  }else if(length(df)<=1 | nrow(df)<=1){
+    stop("Length and number of rows of 'df' must be greater than 1", call.=F)
+  }
+  
+  # se obs nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+  if(  missing(obs) ){  
+    stop("obs not set", call. = F) 
+  }else if( !is.character(obs) ){
+    stop("'obs' must be a character containing a variable name", call.=F)
+  }else if(length(obs)!=1){
+    stop("Length of 'obs' must be 1", call.=F)
+  }else if(forestmangr::check_names(df, obs)==F){
+    stop(forestmangr::check_names(df, obs, boolean=F), call.=F)
+  }
+  
+  # Se type nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( type )){
+    stop( "'type' must be character", call.=F)
+  }else if(length(type)!=1){
+    stop("Length of 'type' must be 1", call.=F)
+  }else if(! type %in% c('scatterplot', 'histogram', 'histogram_curve', 'versus') ){ 
+  stop("'type' must be equal to 'scatterplot', 'histogram', 'histogram_curve' or 'versus' ", call. = F) 
+  }
+  
+  # Se point_size nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
+  if(!is.numeric( point_size )){
+    stop( "'point_size' must be numeric", call.=F)
+  }else if(length(point_size)!=1){
+    stop("Length of 'point_size' must be 1", call.=F)
+  }else if(! point_size %in%  seq(from=0,to=10,by=0.01) ){
+    stop("'point_size' must be a number between 0 and 10", call.=F)
+  }
+  
+  if(missing(color) || is.null(color) || is.na(color) || color == "" ){
+    COLOR <- NULL
+    COLORgg <- NULL
+  }else if(!is.character(color)){
+    stop("'color' must be a character containing a variable name", call.=F)
+  }else if(length(color)!=1){
+    stop("Length of 'color' must be 1", call.=F)
+  }else if(forestmangr::check_names(df, color)==F){
+    stop(forestmangr::check_names(df, color, boolean=F), call.=F)
+  }else{
+    COLOR <- color
+    COLORgg <- paste("`",COLOR,"`",sep="")
+  }
+  
+  # Se nrow nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
+
+  
+  if(missing(nrow) || is.null(nrow) || is.na(nrow) || nrow == "" ){
+    nrow <- NULL
+  } else if(!is.numeric( nrow )){
+    stop( "'nrow' must be numeric", call.=F)
+  }else if(length(nrow)!=1){
+    stop("length of 'nrow' must be 0", call.=F)
+  }else if(! nrow > 0 | ! nrow <= 500){
+    stop("'nrow' must be a number between 0 and 500", call.=F)
+  }
+  
+  if(missing(ncol) || is.null(ncol) || is.na(ncol) || ncol == "" ){
+    ncol <- NULL
+  } else if(!is.numeric( ncol )){
+    stop( "'ncol' must be numeric", call.=F)
+  }else if(length(ncol)!=1){
+    stop("length of 'ncol' must be 0", call.=F)
+  }else if(! ncol > 0 | ! ncol <= 500){
+    stop("'ncol' must be a number between 0 and 500", call.=F)
+  }
+  
+  if(missing(lim_y) || is.null(lim_y) || is.na(lim_y) || lim_y == "" ){
+    lim_y <- NULL
+  } else if(!is.numeric( lim_y )){
+    stop( "'lim_y' must be numeric", call.=F)
+  }else if(length(lim_y)!=1){
+    stop("length of 'lim_y' must be 1", call.=F)
+  }
+  
+  if(missing(xlab) || is.null(xlab) || is.na(xlab) || xlab == "" ){
+    XLAB <- "Observed values" 
+  } else if(!is.character( xlab )){
+    stop( "'xlab' must be character", call.=F)
+  }else if(length(xlab)!=1){
+    stop("Length of 'xlab' must be 1", call.=F)
+  }else{
+    XLAB <- xlab
+  }
+  
+  if(missing(clab) || is.null(clab) || is.na(clab) || clab == "" ){
+    CLAB <- COLOR 
+  } else if(!is.character( clab )){
+    stop( "'clab' must be character", call.=F)
+  }else if(length(clab)!=1){
+    stop("Length of 'clab' must be 1", call.=F)
+  }else{
+    CLAB <- clab
+  }
+  
+  # Se font nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( font )){
+    stop( "'font' must be character", call.=F)
+  }else if(length(font)!=1){
+    stop("Length of 'font' must be 1", call.=F)
+  }
+  
+  # Se legend_pos nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( legend_pos )){
+    stop( "'legend_pos' must be character", call.=F)
+  }else if(length(legend_pos)!=1){
+    stop("Length of 'legend_pos' must be 1", call.=F)
+  }else if(! legend_pos %in% c('left', 'right', 'top', 'bottom') ){ 
+  stop("'legend_pos' must be equal to 'left', 'right', 'top or 'bottom' ", call. = F) 
+  }
+  
+  # se res_table nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! res_table %in% c(TRUE, FALSE) ){ 
+    stop("'res_table' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(res_table)!=1){
+    stop("Length of 'res_table' must be 1", call.=F)
+  }
+  
+  # ####
+  ARGS <- list(...)
   DF <- as.data.frame(df)
   OBS <- obs 
   OBSgg <- paste("`",OBS,"`",sep="") #Adiciona "`" para o comeco do nome, para caso a variavel tenha caracteres especiais
-  COLOR <- color
-  if(is.null(COLOR)||is.na(COLOR)||COLOR==""){COLOR <- NULL;COLORgg <- NULL}else(COLORgg <- paste("`",COLOR,"`",sep="")) #Adiciona "`" para o comeco do nome, para caso a variavel tenha caracteres especiais
   ARGS <- list(...)
-  XLAB <- xlab
-  if (is.null(XLAB)) {XLAB <- "Valor observado"  }
-  CLAB <- clab
-  if(is.null(CLAB)){CLAB <- COLOR}
-  # XLIM <- lim_x
-  YLAB <- "Valor estimado"
+  YLAB <- "Estimated values"
   YLIM <- lim_y
-  
+ 
   # se a variavel nao existir, gerar erro    
   if( !any(names(DF) == OBS) ) stop(paste("Wrong variable name. Variable '", OBS, "' not found", ".",sep=""))
   
@@ -77,7 +228,7 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
                                DF[OBS],
                                DF[COLOR],
                                EST = DF[[ ARGS[[i]] ]],
-                               ERRO = ((DF[[ ARGS[[i]] ]] - DF[[OBS]])/DF[[OBS]]) * 100,
+                               ERROR = ((DF[[ ARGS[[i]] ]] - DF[[OBS]])/DF[[OBS]]) * 100,
                                check.names = F)
       # check names=F garante que variaveis com nomes contendo caracteres especiais nao sejam renomeadas
     }
@@ -87,10 +238,10 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
   
   lista2 <- vector("list", length(ARGS))
   for (i in 1:length(ARGS)) {
-    lista2[[i]] <- df_graph[df_graph$ID == ARGS[[i]], c("EST", "ERRO")]
+    lista2[[i]] <- df_graph[df_graph$ID == ARGS[[i]], c("EST", "ERROR")]
     names(lista2[[i]])[1] <- ARGS[[i]]
-    names(lista2[[i]])[2] <- paste("ERRO", i, sep = "_")
-    # names(lista2[[i]])[2] <- paste(ARGS[[i]], "ERRO", sep = "_")
+    names(lista2[[i]])[2] <- paste("ERROR", i, sep = "_")
+    # names(lista2[[i]])[2] <- paste(ARGS[[i]], "ERROR", sep = "_")
   }
   
   # Se o usuario utilizar histograma, converter a cor pra fator
@@ -104,15 +255,15 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
   
   if (res_table) {return(df_graph)}
   
-  if (is.null(YLIM)) {YLIM <- round(max(df_graph["ERRO"]), -1) + 10}
+  if (is.null(YLIM)) {YLIM <- round(max(df_graph["ERROR"]), -1) + 10}
   #if( is.null(XLIM) ){ XLIM <- round(max(df_graph[OBS]), -1) + 10 }
   
   p <- ggplot2::ggplot(df_graph) + {
-    if (type == "scatterplot")ggplot2::geom_point(ggplot2::aes_string(OBSgg, "ERRO", color=COLORgg), size = point_size, alpha = 0.9)
-    else if (type == "histogram" | type == "histogram_curve")  ggplot2::geom_histogram(ggplot2::aes_string(x = "ERRO", y = "..density..", fill=COLORgg), color = "gray50", binwidth = 3, position = "dodge")
+    if (type == "scatterplot")ggplot2::geom_point(ggplot2::aes_string(OBSgg, "ERROR", color=COLORgg), size = point_size, alpha = 0.9)
+    else if (type == "histogram" | type == "histogram_curve")  ggplot2::geom_histogram(ggplot2::aes_string(x = "ERROR", y = "..density..", fill=COLORgg), color = "gray50", binwidth = 3, position = "dodge")
     else if (type == "versus") ggplot2::geom_point(ggplot2::aes_string(OBSgg, "EST", color=COLORgg), size = point_size, alpha = 0.9)
   } + {
-    if (type == "histogram_curve") ggplot2::geom_density(ggplot2::aes_string("ERRO"), size = 1, color = "gray10")
+    if (type == "histogram_curve") ggplot2::geom_density(ggplot2::aes_string("ERROR"), size = 1, color = "gray10")
   } + {
     if (type == "scatterplot") ggplot2::geom_hline(yintercept = 0, color = "gray45")
     else if (type == "histogram" | type == "histogram_curve")ggplot2::geom_vline(xintercept = 0, linetype="dashed",color = "gray45")
@@ -121,8 +272,8 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
     if (type == "scatterplot") ggplot2::scale_y_continuous(breaks = seq(-YLIM, YLIM, 20), limits = c(-YLIM, YLIM))
     else if (type == "histogram" | type == "histogram_curve") ggplot2::scale_x_continuous(breaks = seq(-YLIM, YLIM, 20), limits = c(-YLIM, YLIM))
   } + {
-    if (type == "scatterplot") ggplot2::labs(x = XLAB, y = "Residuo (%)", color = CLAB)
-    else if (type == "histogram" | type == "histogram_curve") ggplot2::labs(x = "Residuo (%)", y = "Densidade relativa", fill = CLAB)
+    if (type == "scatterplot") ggplot2::labs(x = XLAB, y = "Residuals (%)", color = CLAB)
+    else if (type == "histogram" | type == "histogram_curve") ggplot2::labs(x = "Residuals (%)", y = "Relative Density", fill = CLAB)
     else if (type == "versus") ggplot2::labs(x = XLAB, y = YLAB, color = CLAB)
   } + {
     if(is.null(COLOR)){
@@ -149,3 +300,4 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
   if (length(ARGS) > 1) { p <- p + ggplot2::facet_wrap(~ID, nrow = nrow, ncol = ncol) }
   return(p)
 }
+

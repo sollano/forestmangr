@@ -22,7 +22,7 @@
 #'    
 #' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
 #' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH", facet = "STRATA")
-
+#'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
 average_tree_curve <- function(df, d, dbh, h, th, facet=NA){

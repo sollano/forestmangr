@@ -2,59 +2,94 @@
 % Please edit documentation in R/resid_plot.R
 \name{resid_plot}
 \alias{resid_plot}
-\title{Graficos de Residuo}
+\title{Calculate residual values and create plots}
 \usage{
 resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
-  color = NULL, nrow = NULL, ncol = NULL, lim_y = NULL,
-  xlab = NULL, clab = NULL, font = "serif", legend_pos = "bottom",
-  res_table = F)
+  color = NA, nrow = NA, ncol = NA, lim_y = NA,
+  xlab = "Observed values", clab = NA, font = "serif",
+  legend_pos = "bottom", res_table = F)
 }
 \arguments{
-\item{df}{Data frame a ser utilizado.}
+\item{df}{A dataframe.}
 
-\item{obs}{nome entre aspas da variavel observada.}
+\item{obs}{Quoted name of the observed values variable.}
 
-\item{...}{nome(s) entre aspas da(s) variavel(s) estimada(s). Multiplas variaveis devem ser separadas por virgula.}
+\item{...}{Quoted name(s) for the estimated values variable(s). Multiple variables must be separated by comma.}
 
-\item{type}{tipo de grafico a ser gerado. Pode ser "scatterplot", "histogram", "histogram_curve", "versus". Padrao: \code{"scatterplot"}}
+\item{type}{Character object for the type of plot created, The available plots are: \code{"scatterplot"}, \code{"histogram"}, \code{"histogram_curve"} and \code{"versus"}. Default: \code{"scatterplot"}.}
 
-\item{lim_y}{Limite para o eixo y. Por padrao, este e definido automaticamente, mas pode ser ajustado caso necessario. Entra-se com um valor numero. Padrao: \code{NULL}.}
+\item{point_size}{Numeric value for the point size in scatterplots. Default: \code{3}.}
 
-\item{res_table}{Caso verdadeiro, sera gerado um dataframe com os dados originais e seus respectivos erros. Padrao: \code{FALSE}.}
+\item{color}{Quoted name of a variable. If supplied, this variable will be used to classify the data by color. Default: \code{NA}.}
+
+\item{nrow}{Numeric value for number of rows in the plot matrix. If not supplied, the plots will be automatically sorted. Default: \code{NA}.}
+
+\item{ncol}{Numeric value for number of columns in the plot matrix. If not supplied, the plots will be automatically sorted. Default: \code{NA}.}
+
+\item{lim_y}{Numeric value for the y axis upper and lower limit. If \code{NA}, the biggest residual value is used. Default: \code{NA}.}
+
+\item{xlab}{Character value for the x label used in some plots. Default: \code{"Observed values"}.}
+
+\item{clab}{Character value for the color label used, if a color variable is supplied. If not supplied, the \code{color} variable name will be used. Default: \code{NA}.}
+
+\item{font}{Type of font used in the plot. Default: \code{"serif"}.}
+
+\item{legend_pos}{Position of legend, when a color variable is supplied. This can either be \code{"left"}, \code{"right"}, \code{"top"} or \code{"bottom"}. Default: \code{"bottom"}.}
+
+\item{res_table}{If \code{TRUE}, the function will return a dataframe with observed, estimated, and residual values. Default: \code{FALSE}.}
 }
 \value{
-objeto ggplot, ou, caso \code{res_table = TRUE}, um dataframe contendo os dados originais e os residuals gerados.
+A ggplot object, or if \code{res_table = TRUE}, a dataframe.
 }
 \description{
-Funcao para se criar graficos e tabelas de residuo a partir de dados observados e estimados.
+Function for creating plots and tables for residual values from observed and estimated values.
 }
 \examples{
 library(forestmangr)
 data("exfm11")
 
-# Especificando-se apenas as variaveis observadas e estimadas,
-# gera-se um grafico de dispersao:
-resid_plot(exfm11, "TH", "TH_EST1")
-resid_plot(exfm11, "TH", "TH_EST1", type = "scatterplot")
+head(exfm11)
 
-# Utilizando o argumento type, pode se criar outros tipos de grafico:
+# Specifying the observed and estimated variables, we get a scatterplot
+# for the percentual residuals:
+resid_plot(exfm11, "TH", "TH_EST1")
+
+# It's possible to change the size of points in a scatterplot with point_size:
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", point_size=1)
+
+# It's possible to get other types of plots, with the type argument:
 resid_plot(exfm11, "TH", "TH_EST1", type = "histogram")
 resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve")
 resid_plot(exfm11, "TH", "TH_EST1", type = "versus")
 
-# Pode-se utilizar duas ou mais variáveis na comparaçao:
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "scatterplot")
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "histogram")
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "histogram_curve")
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", type = "versus")
+# It's possible to add a factor variable as color in the plots:
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA")
 
+# It's possible to change the color legend position: 
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", legend_pos="top")
+
+# It's possible to change xlabels and color labels:  
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",xlab="Total Height (m)", clab="Strata")
+
+# It's póssible to change the font of the plot. R natively supports
+# sans, serif and mono, but these can be expanded using packages:
+resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="sans")
+resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="mono")
+
+# If there are more estimated values variables, they can also be used
+# in the comparisson:
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2")
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3")
 
-#  Pode-se especificar os limites do eixo y com o argumento lim_y:
+# It's possible to rearange the plots with ncol and nrow:
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", ncol=1)
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", nrow=2)
+
+# It's possible to specify the y axis limit with lim_y:
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 80)
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 40)
 
-# E possivel gerar a tabela de resíduos com o argumento res_table:
+# It's possible to get the residuals table used to generate these plots, with res_table=TRUE:
 head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = T) )
 
 }
