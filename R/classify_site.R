@@ -8,6 +8,7 @@
 #' @param nc number of categories used to classify the data. If \code{3}, a additional column will be created with levels Inferior, Medium and Superior, referencing the 3 categories. If not, only numbers will be used to differentiate the categories. Default: \code{3}.
 #' @param plot Quoted name for the plot variable.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
+#' @return A dataframe classified based on the site index.
 #' 
 #' @export
 #' 
@@ -91,16 +92,16 @@ classify_site <- function(df, site, nc=3, plot, .groups=NA){
  suppressMessages(
    df <- df %>% 
     dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T ) %>% 
-    dplyr::summarise(Site_medio = mean( !!site_sym ) ) %>% 
+    dplyr::summarise(site_mean = mean( !!site_sym ) ) %>% 
     dplyr::left_join(df) %>%
     round(4) %>% 
-    dplyr::arrange(Site_medio)
+    dplyr::arrange(site_mean)
   )
   # Em seguida, com base no numero de classes, estas medias serao dividas em
   # nc classes.
   #
   # define-se a variavel que sera classificada
-  VAR <- df[["Site_medio"]]
+  VAR <- df[["site_mean"]]
   
   # cria-se uma lista com o numero de linhas correspondente ao numero de classes
   list <- vector("list", nc)

@@ -17,6 +17,9 @@ classify_site(df, site, nc = 3, plot, .groups = NA)
 
 \item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.}
 }
+\value{
+A dataframe classified based on the site index.
+}
 \description{
 Use the site variable to classify a forest management data.
 }
