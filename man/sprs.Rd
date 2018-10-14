@@ -6,7 +6,7 @@
 \usage{
 sprs(df, Yi, plot_area, total_area, age = NA, .groups = NA,
   alpha = 0.05, error = 10, dec_places = 4, pop = "inf",
-  tidy = T)
+  tidy = TRUE)
 }
 \arguments{
 \item{df}{a data frame.}
@@ -62,7 +62,8 @@ sprs(exfm4, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 # area values can be numeric
 sprs(exfm4, "VWB", 3000, 46.8, error = 20, pop = "fin")
 
-# Here we run a simple random sampling inventory for each forest subdivision, using the STRATA variable as a group variable:
+# Here we run a simple random sampling inventory for each forest subdivision,
+# using the STRATA variable as a group variable:
 sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA" ,error = 20, pop = "fin")
 
 }

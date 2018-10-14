@@ -31,7 +31,7 @@ round_df(iris)
 round_df(iris, rf="floor") 
 
 # Do not run
-# trying this with the base::round function throws an error:
+# trying this with the the base function throws an error:
 
 # round(iris)
 

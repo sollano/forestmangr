@@ -35,7 +35,8 @@
 #' data("exfm5")
 #'
 #' # We're trying to run a inventory for an area This data was colected systematically,
-#' # but we'll try to run the data using simple random sampling, to show the difference between the two methods:
+#' # but we'll try to run the data using simple random sampling, 
+#' # to show the difference between the two methods:
 #' sprs(exfm5,  "VWB", "PLOT_AREA", "TOTAL_AREA")
 #'
 #' # We get a 22% error value. Now, we run this same data
@@ -48,12 +49,13 @@
 #' # Area Values can be numeric;
 #' ss_diffs(exfm5,  "VWB", 200, 18)
 #' 
-#' # Here we run a systematic sampling inventory for each forest subdivision, using the STRATA variable as a group variable:
+#' # Here we run a systematic sampling inventory for each forest subdivision, 
+#' # using the STRATA variable as a group variable:
 #' ss_diffs(exfm2,  "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, tidy=T ) {
+ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, tidy=TRUE ) {
   
   # checagem de variaveis ####
 

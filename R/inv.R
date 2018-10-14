@@ -17,17 +17,17 @@
 #' 
 #' @examples
 #' library(forestmangr)
-#' data("ex15_mfr")
-#' head(ex15_mfr)
+#' data("exfm15")
+#' head(exfm15)
 #' 
 #' # Get the inverse of a vector
 #' inv(iris$Petal.Length)
 #' 
 #' # Fit a model that contains the inverse of a variable, without the need to
 #' # create a new variable for the inverse:
-#' lm(log(TH) ~ inv(DBH), ex15_mfr )
+#' lm(log(TH) ~ inv(DBH), exfm15 )
 #' # or 
-#' lm_table(ex15_mfr, log(TH) ~ inv(DBH) )
+#' lm_table(exfm15, log(TH) ~ inv(DBH) )
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 

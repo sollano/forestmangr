@@ -32,26 +32,27 @@
 #' diameter_class(df = exfm20, dbh = "dbh", ci = 10, dbhmin = 10, volume = "vol") 
 #' 
 #' # Number of individuals per ha per diameter class per species
-#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name") 
+#' diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name") 
 #'
 #' # Number of individuals per ha per diameter class, with each diameter class as a column
-#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", cc_to_column=T) 
+#' diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name", cc_to_column=TRUE) 
 #'
 #' # G
 #' # Basal area per ha per diameter class, with each diameter class as a column
-#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", cc_to_column=T, G_to_cc=F) 
+#' diameter_class(exfm20,"dbh", "transect",10000,10,10,"scientific.name",
+#' cc_to_column=TRUE,G_to_cc=FALSE) 
 #'
 #'
 #' # Volume
 #' # Volume per ha per diameter class
-#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", volume = "vol") 
+#' diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name",volume = "vol") 
 #'
 #' # Volume per ha per diameter class, with each diameter class as a column
-#' diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", volume = "vol", cc_to_column=T) 
+#' diameter_class(exfm20,"dbh","transect",10000,10,10,"scientific.name","vol",cc_to_column=TRUE) 
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
-diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, species=NA, volume=NA, NI_label="NI", cc_to_column=F, G_to_cc=F, cctc_ha=T, keep_unused_classes=F){
+diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, species=NA, volume=NA, NI_label="NI", cc_to_column=FALSE, G_to_cc=FALSE, cctc_ha=TRUE, keep_unused_classes=FALSE){
   # checagem de variaveis ####
 
   # ci precisa ser numerico e de tamanho 1
@@ -182,14 +183,14 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
     
     plot_area_num <- df %>% 
       dplyr::group_by( !!!plot_sym ) %>% 
-      dplyr::summarise(AREA = mean(!!plot_area_sym), na.rm=T) %>% 
-      dplyr::summarise(A = mean(AREA, na.rm=T)) %>% 
+      dplyr::summarise(AREA = mean(!!plot_area_sym), na.rm=TRUE) %>% 
+      dplyr::summarise(A = mean(AREA, na.rm=TRUE)) %>% 
       dplyr::pull(A) 
     
   }
   
   # Parar se o usuario pedir o resultado por ha sem fornecer as variaveis necessarias
-  if(cctc_ha==T & cc_to_column==T &  plot == 1 & plot_area == 10000 ){stop("plot and plot_area must be provided if cctc_ha=TRUE",call. = F)}
+  if(cctc_ha==TRUE & cc_to_column==TRUE &  plot == 1 & plot_area == 10000 ){stop("plot and plot_area must be provided if cctc_ha=TRUE",call. = F)}
   
   # Permitir se e nse como entrada de nomes de variaveis
   dbh_sym <- rlang::sym(dbh)

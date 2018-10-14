@@ -7,7 +7,7 @@
 resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
   color = NA, nrow = NA, ncol = NA, lim_y = NA,
   xlab = "Observed values", clab = NA, font = "serif",
-  legend_pos = "bottom", grey_scale = T, res_table = F)
+  legend_pos = "bottom", grey_scale = TRUE, res_table = FALSE)
 }
 \arguments{
 \item{df}{A dataframe.}
@@ -74,7 +74,8 @@ resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", legend_pos="top")
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", grey_scale=FALSE)
 
 # It's possible to change xlabels and color labels:  
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",xlab="Total Height (m)", clab="Strata")
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",
+xlab="Total Height (m)", clab="Strata")
 
 # It's póssible to change the font of the plot. R natively supports
 # sans, serif and mono, but these can be expanded using packages:
@@ -95,7 +96,7 @@ resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 80)
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 40)
 
 # It's possible to get the residuals table used to generate these plots, with res_table=TRUE:
-head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = T) )
+head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = TRUE) )
 
 }
 \author{

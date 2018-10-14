@@ -8,7 +8,7 @@
 #' @param df A dataframe.
 #' @param age A numeric vector with the desired age range to be used in the estimation, or a Quoted name for the age variable.
 #' @param basal_area Quoted name for the basal area variable.
-#' @param site_mean Quoted name for the average site variable.
+#' @param site Quoted name for the average site variable.
 #' @param category Quoted name for the category variable.
 #' @param a0 Numeric value for the a0 coefficient from Clutter's growth and yield model.
 #' @param a1 Numeric value for the a1 coefficient from Clutter's growth and yield model.
@@ -16,8 +16,7 @@
 #' @return A dataframe with the estimated values of basal area.
 #' @export
 #' 
-#' @examples 
-#' 
+#' @examples
 #' library(forestmangr)
 #' data("exfm17")
 #' 
@@ -31,15 +30,15 @@
 #' head(ex_class ,15)
 #' 
 #' # Estimate basal area using the average basal area as the initial basal area:
-#' ex_est <- est_B2_clutter(ex_class, 20:125, "B", "S", "category_", clutter$a0, clutter$a1, method = "average") 
+#' ex_est<-est_B2_clutter(ex_class,20:125, "B", "S", "category_", clutter$a0, clutter$a1,"average")
 #' head(ex_est, 15)
 #'
 #' # Estimate basal area using an estimated basal area as the initial basal area:
-#' ex_est <- est_B2_clutter(ex_class, 20:125, "B", "S", "category_", clutter$a0, clutter$a1, method = "model") 
+#' ex_est<-est_B2_clutter(ex_class,20:125, "B", "S", "category_", clutter$a0, clutter$a1,"model") 
 #' head(ex_est, 15)
 #' 
 #' #' Estimate basal area using an estimated basal area as the initial basal area:
-#' ex_est <- est_B2_clutter(ex_class, "age", "B", "S", "category_", clutter$a0, clutter$a1, method = "model") 
+#' ex_est<-est_B2_clutter(ex_class,"age, "B", "S", "category_", clutter$a0, clutter$a1,"model") 
 #' head(ex_est, 15)
 #' 
 #'   

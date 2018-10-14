@@ -22,6 +22,8 @@ huberwob(df, di, section_length, bt, tree, .groups = NA,
 If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
 
 \item{di_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.}
+
+\item{bt_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.}
 }
 \value{
 Dataframe with volume values by section.

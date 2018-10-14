@@ -25,7 +25,7 @@ If this argument is \code{NA}, the defined groups in the dataframe will be used.
 
 \item{hi_cm_to_m}{Boolean argument that, if \code{TRUE}, converts the hi argument from centimeters to meters. Default: \code{FALSE}.}
 
-\item{nt_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.}
+\item{bt_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.}
 }
 \value{
 Dataframe with volume values by section.

@@ -12,8 +12,8 @@ Authors@R: c(
     )
 Author: Sollano Rabelo Braga [aut, cre]
 Maintainer: Sollano Rabelo Braga <sollanorb@gmail.com>
-Depends: R(>= 3.3.2)
-Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, scales(>= 0.4.1), psych, purrr, plyr, tibble, systemfit, htmltools, ggpmisc, rlang, graphics, stats, utils, covr, rmarkdown, curl, car, stats, methods,magrittr,minpack.lm  
+Depends: R(>= 3.3)
+Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, scales(>= 0.4.1), psych, purrr, plyr, tibble, systemfit, htmltools, ggpmisc, rlang, graphics, utils, covr, rmarkdown, curl, car, stats, methods,magrittr,minpack.lm  
 Suggests:
 Date: 2018-10-10
 Encoding: UTF-8

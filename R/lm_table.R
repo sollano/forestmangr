@@ -46,10 +46,12 @@
 #'   
 #' # It's possible to merge the original data with the table containg the coefficients
 #' # using the output parameter:
-#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA", output = "merge") %>% head(15)
+#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA", output = "merge")
 #' 
-#' # It's possible to merge the original data with the table, and get the estimated values for this model:
-#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA", output = "merge_est", est.name = "VWB_EST") %>% head(15)
+#' # It's possible to merge the original data with the table,
+#' # and get the estimated values for this model:
+#' lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA",
+#'  output = "merge_est", est.name = "VWB_EST") %>% head(15)
 #'    
 #' # It's possible to further customize the output,
 #' # unnesting the nested variables provided when output is defined as "nest":
@@ -59,11 +61,13 @@
 #' # In the following example, the objective is to estimate non-measured height
 #' # values in a forest inventory data.
 #' 
-#' # To do this, we'll fit a hipsometrical model. The non-measured trees will be automatically
-#' # ignored in this step. We'll define the argument output as "merge_est", so that we can get
-#' # the estimated height values as a separate column.
-#' # Then, we'll use mutate to create a new variable, that will contain measured height values, along with estimated ones.
-#' # To do this we'll use ifelse, and check for NAs inside the Height column. When it finds it, it will basically fill them with estimated values.
+#' # To do this, we'll fit a hipsometrical model. The non-measured trees will 
+#' # be automatically ignored in this step. We'll define the argument output as
+#' # "merge_est", so that we can get the estimated height values as a separate column.
+#' # Then, we'll use mutate to create a new variable, that will contain measured
+#' # height values, along with estimated ones. To do this we'll use ifelse, 
+#' # and check for NAs inside the Height column. When it finds it, 
+#' # it will basically fill them with estimated values.
 #' library(forestmangr)
 #' library(dplyr)
 #' 
@@ -78,7 +82,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = F){
+lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE){
   # Checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

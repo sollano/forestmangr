@@ -8,8 +8,7 @@
 #' @param df a dataframe.
 #' @param y Quoted name of the variable representing the observed values in the dataframe. If a dataframe is not provided, \code{y} can also be a numeric vector.
 #' @param yhat Quoted name of the variable representing the estimated values in the dataframe. If a dataframe is not provided, \code{yhat} can also be a numeric vector.
-#' @return 
-#' Numeric vector with the RMSE value, in percentage.
+#' @return Numeric vector with the RMSE value, in percentage.
 #' 
 #' @keywords Root-Mean-Square-Error
 #' 
@@ -18,23 +17,20 @@
 #' @export
 #' @examples 
 #' library(forestmangr)
-#' data(ex11_mfr)
-#' head(ex11_mfr)
+#' data(exfm11)
+#' head(exfm11)
 #'
 #' # RMSE of an estimator, given the dataframe and quoted variable names:
-#' rmse_per(ex11_mfr, "TH", "TH_EST3")
+#' rmse_per(exfm11, "TH", "TH_EST3")
 #'
 #' # RMSE of an estimator, given the vectors for observed and estimated values:
-#' rmse_per(y = ex11_mfr$TH, yhat = ex11_mfr$TH_EST3)
+#' rmse_per(y = exfm11$TH, yhat = exfm11$TH_EST3)
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 
 rmse_per <- function(df, y, yhat){
   # Checagem de variaveis ####
-  
-  # Definir pipe para facilitar
-  `%>%` <- dplyr::`%>%`
   
   if(missing(df) & !missing(y) & !missing(yhat) ){
     return( 100 * mean(y)^-1 * sqrt( mean( (y - yhat)^2 ) ) )

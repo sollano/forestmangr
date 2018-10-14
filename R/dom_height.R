@@ -45,11 +45,12 @@
 #' # It's possible to automatically bind the dominant heights table to the original data, 
 #' # using the merge_data argument:
 #' 
-#' dom_height(df=exfm9,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D",.groups="STRATA", merge_data=T)
+#' dom_height(df=exfm9,th="TH",dbh="DBH",plot="PLOT",obs="OBS",
+#' dom="D",.groups="STRATA", merge_data=TRUE)
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-dom_height <- function(df, th, dbh, plot, obs, dom, .groups, merge_data=F,dh_name="DH"){
+dom_height <- function(df, th, dbh, plot, obs, dom, .groups, merge_data=FALSE,dh_name="DH"){
   # checagem de variaveis ####
   
   df[["DH"]] <- NULL

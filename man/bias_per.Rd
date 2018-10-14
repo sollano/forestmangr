@@ -24,14 +24,14 @@ Function for calculating the bias of an estimator, given the observed values, an
 }
 \examples{
 library(forestmangr)
-data(ex11_mfr)
-head(ex11_mfr)
+data(exfm11)
+head(exfm11)
 
 # Bias of an estimator, given the dataframe and quoted variable names:
-bias_per(ex11_mfr, "TH", "TH_EST3")
+bias_per(exfm11, "TH", "TH_EST3")
 
 # Bias of an estimator, given the vectors for observed and estimated values:
-bias_per(y = ex11_mfr$TH, yhat = ex11_mfr$TH_EST3)
+bias_per(y = exfm11$TH, yhat = exfm11$TH_EST3)
 
 }
 \seealso{

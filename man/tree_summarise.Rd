@@ -20,6 +20,10 @@ tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
 
 \item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.}
 
+\item{plot_area}{Optional argument. Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
+
+\item{total_area}{Optional argument. Quoted name of the total area variable, or a numeric vector with the total area value. The total area value must be in hectares. Default: \code{NA}.}
+
 \item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.}
 }
 \value{

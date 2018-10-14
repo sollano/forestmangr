@@ -14,7 +14,7 @@
 #' If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
 #' @param di_mm_to_cm Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.
 #' @param hi_cm_to_m Boolean argument that, if \code{TRUE}, converts the hi argument from centimeters to meters. Default: \code{FALSE}.
-#' @param nt_mm_to_cm Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.
+#' @param bt_mm_to_cm Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.
 #' @return Dataframe with volume values by section.
 #' 
 #' @references 

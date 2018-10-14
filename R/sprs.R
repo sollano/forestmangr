@@ -50,12 +50,13 @@
 #' # area values can be numeric
 #' sprs(exfm4, "VWB", 3000, 46.8, error = 20, pop = "fin")
 #' 
-#' # Here we run a simple random sampling inventory for each forest subdivision, using the STRATA variable as a group variable:
+#' # Here we run a simple random sampling inventory for each forest subdivision,
+#' # using the STRATA variable as a group variable:
 #' sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA" ,error = 20, pop = "fin")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=T){
+sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar

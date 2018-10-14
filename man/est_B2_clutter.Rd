@@ -14,6 +14,8 @@ est_B2_clutter(df, age, basal_area, site, category, a0, a1,
 
 \item{basal_area}{Quoted name for the basal area variable.}
 
+\item{site}{Quoted name for the average site variable.}
+
 \item{category}{Quoted name for the category variable.}
 
 \item{a0}{Numeric value for the a0 coefficient from Clutter's growth and yield model.}
@@ -21,8 +23,6 @@ est_B2_clutter(df, age, basal_area, site, category, a0, a1,
 \item{a1}{Numeric value for the a1 coefficient from Clutter's growth and yield model.}
 
 \item{method}{Method used for estimating the present basal area of each class. It can either be the class' average basal area \code{"average"}, or an estimated value from a linear quadratic model of site as a function of basal area \code{"model"}. Default: \code{"average"}.}
-
-\item{site_mean}{Quoted name for the average site variable.}
 }
 \value{
 A dataframe with the estimated values of basal area.
@@ -31,34 +31,6 @@ A dataframe with the estimated values of basal area.
 This function estimates the present the present value of basal area for each class
 using either the class' mean, or a linear quadratic model, and then uses it's value to calculate
 the basal area from clutter's growth and yield model.
-}
-\examples{
-
-library(forestmangr)
-data("exfm17")
-
-head(exfm17)
-
-clutter <- fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
-clutter
-
-# Classify data into 3 classes:
-ex_class <- classify_site(exfm17, "S", 3, "plot")
-head(ex_class ,15)
-
-# Estimate basal area using the average basal area as the initial basal area:
-ex_est <- est_B2_clutter(ex_class, 20:125, "B", "S", "category_", clutter$a0, clutter$a1, method = "average") 
-head(ex_est, 15)
-
-# Estimate basal area using an estimated basal area as the initial basal area:
-ex_est <- est_B2_clutter(ex_class, 20:125, "B", "S", "category_", clutter$a0, clutter$a1, method = "model") 
-head(ex_est, 15)
-
-#' Estimate basal area using an estimated basal area as the initial basal area:
-ex_est <- est_B2_clutter(ex_class, "age", "B", "S", "category_", clutter$a0, clutter$a1, method = "model") 
-head(ex_est, 15)
-
-  
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

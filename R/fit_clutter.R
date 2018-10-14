@@ -43,7 +43,7 @@
 #'              
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
-fit_clutter <- function(df, age, dh, basal_area, volume, site, plot, .groups=NA, model = "full", keep_model = F){
+fit_clutter <- function(df, age, dh, basal_area, volume, site, plot, .groups=NA, model = "full", keep_model = FALSE){
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

@@ -13,6 +13,7 @@
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
 #' If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
 #' @param di_mm_to_cm Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.
+#' @param bt_mm_to_cm Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.
 #' @return Dataframe with volume values by section.
 #' 
 #' @references 

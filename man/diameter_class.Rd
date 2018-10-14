@@ -5,8 +5,8 @@
 \title{Divide data into diameter classes, and get humber of observations}
 \usage{
 diameter_class(df, dbh, plot = NA, plot_area, ci = 5, dbhmin = 5,
-  species = NA, volume = NA, NI_label = "NI", cc_to_column = F,
-  G_to_cc = F, cctc_ha = T, keep_unused_classes = F)
+  species = NA, volume = NA, NI_label = "NI", cc_to_column = FALSE,
+  G_to_cc = FALSE, cctc_ha = TRUE, keep_unused_classes = FALSE)
 }
 \arguments{
 \item{df}{A dataframe.}
@@ -54,22 +54,23 @@ head(exfm20)
 diameter_class(df = exfm20, dbh = "dbh", ci = 10, dbhmin = 10, volume = "vol") 
 
 # Number of individuals per ha per diameter class per species
-diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name") 
+diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name") 
 
 # Number of individuals per ha per diameter class, with each diameter class as a column
-diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", cc_to_column=T) 
+diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name", cc_to_column=TRUE) 
 
 # G
 # Basal area per ha per diameter class, with each diameter class as a column
-diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", cc_to_column=T, G_to_cc=F) 
+diameter_class(exfm20,"dbh", "transect",10000,10,10,"scientific.name",
+cc_to_column=TRUE,G_to_cc=FALSE) 
 
 
 # Volume
 # Volume per ha per diameter class
-diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", volume = "vol") 
+diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name",volume = "vol") 
 
 # Volume per ha per diameter class, with each diameter class as a column
-diameter_class(df = exfm20, dbh = "dbh",plot="transect",plot_area=10000, ci = 10, dbhmin = 10, species="scientific.name", volume = "vol", cc_to_column=T) 
+diameter_class(exfm20,"dbh","transect",10000,10,10,"scientific.name","vol",cc_to_column=TRUE) 
 
 }
 \author{

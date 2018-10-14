@@ -15,13 +15,14 @@
 #' library(forestmangr)
 #'
 #'check_names(iris, "Species")
-#'check_names(iris, "Species", boolean = F )
+#'check_names(iris, "Species", boolean = FALSE )
 #'
 #'check_names(iris, c("Especies", "Setal.Width") )
-#'check_names(iris, c("Especies", "Setal.Width"), boolean = F)
+#'check_names(iris, c("Especies", "Setal.Width"), boolean = FALSE)
+#'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-check_names <- function(df, var_names, boolean=T){
+check_names <- function(df, var_names, boolean=TRUE){
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar
   if(  missing(df) ){  
@@ -59,3 +60,4 @@ check_names <- function(df, var_names, boolean=T){
   }
   
 }
+

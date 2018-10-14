@@ -4,7 +4,7 @@
 \alias{check_names}
 \title{Check if character vector contains variable names}
 \usage{
-check_names(df, var_names, boolean = T)
+check_names(df, var_names, boolean = TRUE)
 }
 \arguments{
 \item{df}{a dataframe.}
@@ -24,10 +24,11 @@ This functions is mainly used to errorproof other functions of this package,
 library(forestmangr)
 
 check_names(iris, "Species")
-check_names(iris, "Species", boolean = F )
+check_names(iris, "Species", boolean = FALSE )
 
 check_names(iris, c("Especies", "Setal.Width") )
-check_names(iris, c("Especies", "Setal.Width"), boolean = F)
+check_names(iris, c("Especies", "Setal.Width"), boolean = FALSE)
+
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

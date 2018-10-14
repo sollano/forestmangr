@@ -8,7 +8,7 @@
 #' Also, with this function there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
 #' It's also possible to easily make fit miltiple regressions, specifying a grouping variable.
 #' In addition to that, the default output sets each coeffient as a column, making it easy to call coefficients by name or position
-#' when estimating values. The Levenberg-Marquardt fit uses \code{\link[mimpack.lm]{nlsLM}}.
+#' when estimating values. The Levenberg-Marquardt fit uses \code{\link[minpack.lm]{nlsLM}}.
 #' 
 #' @param df A dataframe.
 #' @param model A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".
@@ -18,6 +18,7 @@
 #' @param est.name Name of the estimated y value. Used only if \code{est.name = TRUE}. Padrao: \code{"est"}. 
 #' @param replace  If \code{TRUE}, models that don't converge on a grouped regression fit will be replaced by coefficients fitted using all data. Default: \code{FALSE}.
 #' @param keep_model If \code{TRUE}, a column containg lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.
+#' @param global_start Optional argument. A vector or dataframe, with start values for the global fit regression used when  \code{"replace"} is \code{TRUE}.
 #' @param algorithm Algorithm to be used in the non-linear regression. It can be \code{"LM"} (Levenberg-Marquardt, more robust) or \code{"GN"} (Gauss-Newton, less robust, uses nls default algorithm). Default: \code{"LM"}.
 #' @return  A dataframe. Different dataframe options are available using the output argument.
 #'
@@ -48,8 +49,9 @@
 #'
 #' # If there are multiple start values, for each strata, they can be supplied like so:
 #' tab_coef <- data.frame(strata = c(1:20, 24,25,27,28,30,31,33,35,36,37), 
-#'                        rbind(data.frame(b0 = rep(23, 20), b1 = rep(0.03, 20), b2 = rep(1.3, 20) ), 
-#'                              data.frame(b0 = rep(23, 10), b1 = rep(0.03, 10), b2 = rep(.5, 10) )  )  )
+#'               rbind(
+#'               data.frame(b0 = rep(23, 20), b1 = rep(0.03, 20), b2 = rep(1.3, 20) ), 
+#'               data.frame(b0 = rep(23, 10), b1 = rep(0.03, 10), b2 = rep(.5, 10) )))
 #' 
 #' tab_coef
 #' 
@@ -63,7 +65,7 @@
 #' nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
 #'           mod_start = tab_coef ,
 #'           .groups = "strata", 
-#'           replace = T,
+#'           replace = TRUE,
 #'           output = "merge" ) %>% 
 #'   mutate(
 #'   dh_est = b0 * (1 - exp( -b1 * age )  )^b2,
@@ -100,13 +102,13 @@
 #' nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
 #'           mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
 #'           .groups = "strata",
-#'           replace = T,
+#'           replace = TRUE,
 #'           algorithm="GN" )
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 
-nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.name = "est", replace = F, keep_model = F, global_start, algorithm="LM") {
+nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.name = "est", replace = FALSE, keep_model = FALSE, global_start, algorithm="LM") {
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

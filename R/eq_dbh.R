@@ -8,6 +8,7 @@
 #' @param dbh Quoted name of the diameter at breast height variable. Used to filter out trees with no diameter measerument.
 #' @param sep Separator used in the dbh variable to separate the values. Can be either: \code{";"}, \code{","} \code{"-"} , \code{" "} or \code{"+"}. Default: \code{"+"}.
 #' @param dbh_name Character object for the new variable name. Default: \code{FALSE}.
+#' @param dec_comma If \code{TRUE}, the decimals will be considred as a comma, if \code{FALSE}, decimals will be condidered as dot. Default: \code{}FALSE.
 #' @param remove_old If \code{TRUE}, the old dbh variable will me removed from the dataframe. Default: \code{TRUE}.
 #' @return A dataframe with an added equivalent diameter variable.
 #' 
@@ -33,7 +34,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-eq_dbh <- function(df, dbh, sep="+", dbh_name = "dbh", dec_comma=F,remove_old=T){
+eq_dbh <- function(df, dbh, sep="+", dbh_name = "dbh", dec_comma=FALSE,remove_old=TRUE){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

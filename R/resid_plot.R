@@ -50,7 +50,8 @@
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", grey_scale=FALSE)
 #' 
 #' # It's possible to change xlabels and color labels:  
-#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",xlab="Total Height (m)", clab="Strata")
+#' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",
+#' xlab="Total Height (m)", clab="Strata")
 #' 
 #' # It's póssible to change the font of the plot. R natively supports
 #' # sans, serif and mono, but these can be expanded using packages:
@@ -71,11 +72,11 @@
 #' resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 40)
 #' 
 #' # It's possible to get the residuals table used to generate these plots, with res_table=TRUE:
-#' head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = T) )
+#' head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = TRUE) )
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NA, nrow = NA, ncol = NA, 
-                          lim_y = NA, xlab = "Observed values", clab=NA, font = "serif", legend_pos = "bottom", grey_scale=T, res_table = F){
+                          lim_y = NA, xlab = "Observed values", clab=NA, font = "serif", legend_pos = "bottom", grey_scale=TRUE, res_table = FALSE){
   # ####
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  

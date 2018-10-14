@@ -5,7 +5,7 @@
 \title{Fit Clutter's model for growth and yield}
 \usage{
 fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
-  model = "full", keep_model = F)
+  model = "full", keep_model = FALSE)
 }
 \arguments{
 \item{df}{A dataframe.}

@@ -6,7 +6,7 @@
 \usage{
 strs(df, Yi, plot_area, strata_area, strata, .groups = NA, age = NA,
   alpha = 0.05, error = 10, dec_places = 4, pop = "inf",
-  tidy = T)
+  tidy = TRUE)
 }
 \arguments{
 \item{df}{a data frame.}

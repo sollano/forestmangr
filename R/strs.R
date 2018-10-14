@@ -58,7 +58,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=T ){
+strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=TRUE ){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

@@ -5,7 +5,7 @@
 \title{Identity of a Model Test}
 \usage{
 ident_model(df, factor, reduced_model, filter = NA, output = "table",
-  grey_scale = F, signif = 0.05, font = "serif")
+  grey_scale = FALSE, signif = 0.05, font = "serif")
 }
 \arguments{
 \item{df}{a dataframe.}
@@ -60,17 +60,25 @@ ident_model(exfm13, "species", dbh ~  N + N2, output = "full")
 # the Pequi species is different from the other 2. We can confirm this by runing
 # the test in a paired fashion, using the filter argument:
 
-ident_model(exfm13, "species", dbh ~  N + N2, filter = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot")
-ident_model(exfm13, "species", dbh ~  N + N2, filter = c("PEQUI", "VINHATICO"), output = "table_plot")
-ident_model(exfm13, "species", dbh ~  N + N2, filter = c("SUCUPIRA-PRETA", "PEQUI"), output = "table_plot")
-ident_model(exfm13, "species", dbh ~  N + N2, filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
+ident_model(exfm13, "species", dbh ~  N + N2,
+ filter = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot")
+ 
+ident_model(exfm13, "species", dbh ~  N + N2, 
+filter = c("PEQUI", "VINHATICO"), output = "table_plot")
 
-# As we imagined, a single model can be used to descibre the behaviour of the "Sucupira-preta" and "Vinhatico" species,
-# And a second model is needed to explain the Pequi Variable.
+ident_model(exfm13, "species", dbh ~  N + N2, 
+filter = c("SUCUPIRA-PRETA", "PEQUI"), output = "table_plot")
+
+ident_model(exfm13, "species", dbh ~  N + N2, 
+filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
+
+# As we imagined, a single model can be used to descibre the behaviour of
+# the "Sucupira-preta" and "Vinhatico" species,
+# and a second model is needed to explain the Pequi Variable.
 
 # It's possible to apply a grey scale to the plots, and also change it's font to arial:
 
-ident_model(exfm13, "species", dbh ~  N + N2, output = "plot", grey_scale = T, font="sans")
+ident_model(exfm13, "species", dbh ~  N + N2,output="plot",grey_scale=TRUE,font="sans")
 
 }
 \references{

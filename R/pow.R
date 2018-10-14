@@ -18,16 +18,16 @@
 #' 
 #' @examples
 #' library(forestmangr)
-#' data("ex15_mfr")
-#' head(ex15_mfr)
+#' data("exfm15")
+#' head(exfm15)
 #' 
 #' # Raise a numeric vector to the power of 2:
 #' pow(iris$Petal.Length, 2)
 #' 
 #' # Fit a model that contains the dbh squared, without the need to create a new variable:
-#' lm(log(TH) ~ DBH + pow(DBH,2), ex15_mfr )
+#' lm(log(TH) ~ DBH + pow(DBH,2), exfm15 )
 #' # or 
-#' lm_table(ex15_mfr, log(TH) ~ DBH + pow(DBH,2) )
+#' lm_table(exfm15, log(TH) ~ DBH + pow(DBH,2) )
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
