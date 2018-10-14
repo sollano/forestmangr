@@ -6,10 +6,10 @@
 #'
 #' @param df A dataframe.
 #' @param age Quoted name for the age variable.
-#' @param DH Quoted name fof the dominant height variable.
-#' @param B Quoted name for the basal area variable.
-#' @param V Quoted name for the volume area variable.
-#' @param S Quoted name for the site variable.
+#' @param dh Quoted name fof the dominant height variable.
+#' @param basal_area Quoted name for the basal area variable.
+#' @param volume Quoted name for the volume area variable.
+#' @param site Quoted name for the site variable.
 #' @param plot Quoted name for the plot variable.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
 #' @param model Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, weere the X3 variable is excluded from the regression. Default: \code{full}.
@@ -43,7 +43,7 @@
 #'              
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
-fit_clutter <- function(df, age, DH, B, V, S, plot, .groups=NA, model = "full", keep_model = F){
+fit_clutter <- function(df, age, dh, basal_area, volume, site, plot, .groups=NA, model = "full", keep_model = F){
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -66,51 +66,51 @@ fit_clutter <- function(df, age, DH, B, V, S, plot, .groups=NA, model = "full", 
       stop(forestmangr::check_names(df, age, boolean=F), call.=F)
     }
     
-    # se DH nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-    if(  missing(DH) ){  
-      stop("DH not set", call. = F) 
-    }else if( !is.character(DH) ){
-      stop("'DH' must be a character containing a variable name", call.=F)
-    }else if(length(DH)!=1){
-      stop("Length of 'DH' must be 1", call.=F)
-    }else if(forestmangr::check_names(df, DH)==F){
-      stop(forestmangr::check_names(df, DH, boolean=F), call.=F)
+    # se dh nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+    if(  missing(dh) ){  
+      stop("dh not set", call. = F) 
+    }else if( !is.character(dh) ){
+      stop("'dh' must be a character containing a variable name", call.=F)
+    }else if(length(dh)!=1){
+      stop("Length of 'dh' must be 1", call.=F)
+    }else if(forestmangr::check_names(df, dh)==F){
+      stop(forestmangr::check_names(df, dh, boolean=F), call.=F)
     }
     
-    # se B nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-    if(  missing(B) ){  
-      stop("B not set", call. = F) 
-    }else if( !is.character(B) ){
-      stop("'B' must be a character containing a variable name", call.=F)
-    }else if(length(B)!=1){
-      stop("Length of 'B' must be 1", call.=F)
-    }else if(forestmangr::check_names(df, B)==F){
-      stop(forestmangr::check_names(df, B, boolean=F), call.=F)
+    # se basal_area nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+    if(  missing(basal_area) ){  
+      stop("basal_area not set", call. = F) 
+    }else if( !is.character(basal_area) ){
+      stop("'basal_area' must be a character containing a variable name", call.=F)
+    }else if(length(basal_area)!=1){
+      stop("Length of 'basal_area' must be 1", call.=F)
+    }else if(forestmangr::check_names(df, basal_area)==F){
+      stop(forestmangr::check_names(df, basal_area, boolean=F), call.=F)
     }
     
-    # se V nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-    if(  missing(V) ){  
-      stop("V not set", call. = F) 
-    }else if( !is.character(V) ){
-      stop("'V' must be a character containing a variable name", call.=F)
-    }else if(length(V)!=1){
-      stop("Length of 'V' must be 1", call.=F)
-    }else if(forestmangr::check_names(df, V)==F){
-      stop(forestmangr::check_names(df, V, boolean=F), call.=F)
+    # se volume nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+    if(  missing(volume) ){  
+      stop("volume not set", call. = F) 
+    }else if( !is.character(volume) ){
+      stop("'volume' must be a character containing a variable name", call.=F)
+    }else if(length(volume)!=1){
+      stop("Length of 'volume' must be 1", call.=F)
+    }else if(forestmangr::check_names(df, volume)==F){
+      stop(forestmangr::check_names(df, volume, boolean=F), call.=F)
     }
     
-    # se S nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-    if(  missing(S) ){  
-      stop("S not set", call. = F) 
-    }else if( !is.character(S) ){
-      stop("'S' must be a character containing a variable name", call.=F)
-    }else if(length(S)!=1){
-      stop("Length of 'S' must be 1", call.=F)
-    }else if(forestmangr::check_names(df, S)==F){
-      stop(forestmangr::check_names(df, S, boolean=F), call.=F)
+    # se site nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
+    if(  missing(site) ){  
+      stop("site not set", call. = F) 
+    }else if( !is.character(site) ){
+      stop("'site' must be a character containing a variable name", call.=F)
+    }else if(length(site)!=1){
+      stop("Length of 'site' must be 1", call.=F)
+    }else if(forestmangr::check_names(df, site)==F){
+      stop(forestmangr::check_names(df, site, boolean=F), call.=F)
     }
     
-    # Se plot nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+    # sitee plot nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
     if(missing(plot) && is.null(dplyr::groups(df)) ){
       stop("plot not set. plot must be set if data doesn't have any groups", call. = F)
     }else if(missing(plot) && !is.null(dplyr::groups(df)) ){
@@ -160,10 +160,10 @@ fit_clutter <- function(df, age, DH, B, V, S, plot, .groups=NA, model = "full", 
   }
   
   age_sym <- rlang::sym(age)
-  DH_sym <- rlang::sym(DH)
-  B_sym <- rlang::sym(B)
-  V_sym <- rlang::sym(V)
-  S_sym <- rlang::sym(S)
+  dh_sym <- rlang::sym(dh)
+  basal_area_sym <- rlang::sym(basal_area)
+  volume_sym <- rlang::sym(volume)
+  site_sym <- rlang::sym(site)
   
   # ####
     
@@ -173,19 +173,19 @@ fit_clutter <- function(df, age, DH, B, V, S, plot, .groups=NA, model = "full", 
         dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T ) %>% 
         dplyr::transmute(
           I1 = !!age_sym, I2  = dplyr::lead(!!age_sym), 
-          DH = !!DH_sym, DH2 = dplyr::lead(!!DH_sym), 
-          B1 = !!B_sym,  B2  = dplyr::lead(!!B_sym), 
-          V1 = !!V_sym,  V2  = dplyr::lead(!!V_sym),
-          S  = !!S_sym   ) %>% 
+          dh = !!dh_sym, dh2 = dplyr::lead(!!dh_sym), 
+          basal_area1 = !!basal_area_sym,  basal_area2  = dplyr::lead(!!basal_area_sym), 
+          volume1 = !!volume_sym,  volume2  = dplyr::lead(!!volume_sym),
+          site  = !!site_sym   ) %>% 
         stats::na.omit() %>% 
         dplyr::mutate(
-          Y1 = log(B2)          ,
-          X1 = log(B1) * (I1/I2),
+          Y1 = log(basal_area2)          ,
+          X1 = log(basal_area1) * (I1/I2),
           X2 = 1 - I1/I2        ,
-          X3 = (1 - I1/I2) * S  ,
-          Y2 = log(V2)          ,
+          X3 = (1 - I1/I2) * site  ,
+          Y2 = log(volume2)          ,
           X4 = 1 / I2           ,
-          X5 = S
+          X5 = site
         ) %>% 
         dplyr::ungroup()
       
@@ -255,7 +255,10 @@ fit_clutter <- function(df, age, DH, B, V, S, plot, .groups=NA, model = "full", 
     
   } 
   
-  if(keep_model == F){ model_fit$Reg <- NULL }
+  if(keep_model == F){ 
+    model_fit <- as.data.frame(model_fit)
+    model_fit$Reg <- NULL
+    }
   model_fit$A <- NULL
   
   return(model_fit)

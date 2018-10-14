@@ -1,11 +1,32 @@
+#' @title 
+#' Classify inventory data based on site index
+#' @description 
+#' Use the site variable to classify a forest management data.
+#' 
+#' @param df A dataframe.
+#' @param site Quoted name for the site variable.
+#' @param nc number of categories used to classify the data. If \code{3}, a additional column will be created with levels Inferior, Medium and Superior, referencing the 3 categories. If not, only numbers will be used to differentiate the categories. Default: \code{3}.
+#' @param plot Quoted name for the plot variable.
+#' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
+#' 
 #' @export
-
-class_data <- function(df, var, nc, .groups){
+#' 
+#' @examples 
+#' 
+#' library(forestmangr)
+#' data("exfm17")
+#' 
+#' head(exfm17)
+#' 
+#' # Classify data into 3 classes:
+#' ex_class <- classify_site(exfm17, "S", 3, "plot")
+#' head(ex_class ,15)
+#' 
+#' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+#'
+classify_site <- function(df, site, nc=3, plot, .groups=NA){
   # checagem de variaveis ####
-  
-  # Definir pipe do dplyr, para facilitar
-  `%>%` <- dplyr::`%>%`
-  
+
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
@@ -15,59 +36,66 @@ class_data <- function(df, var, nc, .groups){
     stop("Length and number of rows of 'df' must be greater than 1", call.=F)
   }
   
-  # se var nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-  if(  missing(var) ){  
-    stop("var not set", call. = F) 
-  }else if( !is.character(var) ){
-    stop("'var' must be a character containing a variable name", call.=F)
-  }else if(length(var)!=1){
-    stop("Length of 'var' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, var)==F){
-    stop(forestmangr::check_names(df, var, boolean=F), call.=F)
+  # se site nao for fornecido nao for character, ou nao for um nome de siteiavel,ou nao for de tamanho 1, parar
+  if(  missing(site) ){  
+    stop("site not set", call. = F) 
+  }else if( !is.character(site) ){
+    stop("'site' must be a character containing a siteiable name", call.=F)
+  }else if(length(site)!=1){
+    stop("Length of 'site' must be 1", call.=F)
+  }else if(forestmangr::check_names(df, site)==F){
+    stop(forestmangr::check_names(df, site, boolean=F), call.=F)
   }
   
-  # se .groups nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
-  if(  missing(.groups) ){  
-    stop(".groups not set", call. = F) 
-  }else if( !is.character(.groups) ){
-    stop("'.groups' must be a character containing a variable name", call.=F)
-  }else if( ! length(.groups) %in% 1:10 ){
-    stop("Length of '.groups' must an integer number between 1 1 and 10", call.=F)
-  }else if(forestmangr::check_names(df, .groups)==F){
-    stop(forestmangr::check_names(df, .groups, boolean=F), call.=F)
+  # Se plot nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+  if(missing(plot) && is.null(dplyr::groups(df)) ){
+    stop("plot not set. plot must be set if data doesn't have any groups", call. = F)
+  }else if(missing(plot) && !is.null(dplyr::groups(df)) ){
+    plot_syms <- rlang::syms(dplyr::groups(df))
+  }else if(!is.character(plot)){
+    stop("plot must be a character", call. = F)
+  }else if(! length(plot)%in% 1:10){
+    stop("Length of 'plot' must be between 1 and 10", call.=F) 
+  }else if(forestmangr::check_names(df,plot)==F){
+    # Parar se algum nome nao existir, e avisar qual nome nao existe
+    stop(forestmangr::check_names(df,plot, boolean=F), call.=F) 
+  }else{
+    plot_syms <- rlang::syms(plot) 
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups) && is.null(dplyr::groups(df))){
-    stop(".groups must be set if data doesn't have any groups", call. = F)
-  }else if(missing(.groups) && !is.null(dplyr::groups(df))){
-    .groups_syms <- rlang::syms(dplyr::groups(df))
-  }else if(!is.character(.groups)){
+  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+    .groups_syms <- character()
+    # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
+  }else if(!is.character(.groups)){ 
     stop(".groups must be a character", call. = F)
   }else if(! length(.groups)%in% 1:10){
     stop("Length of '.groups' must be between 1 and 10", call.=F)
   }else if(forestmangr::check_names(df,.groups)==F){
-    stop(forestmangr::check_names(df,.groups, boolean=F), call.=F)
+    # Parar se algum nome nao existir, e avisar qual nome nao existe
+    stop(forestmangr::check_names(df,.groups, boolean=F), call.=F) 
+    # se os grupos forem fornecidos e forem nomes dos dados
+    # Transformar o objeto em simbolo, para que dplyr entenda
+    # e procure o nome das variaveis dentro dos objetos
   }else{
-    .groups_syms <- rlang::syms(.groups)
+    .groups_syms <- rlang::syms(.groups) 
   }
-
-  var_sym <- rlang::sym(var)
+  
+  site_sym <- rlang::sym(site)
   
   # ####
   
   # Primeiro calcula-se a media da variavel a ser classificada
   # por grupo determinado pelo usuario, e a anexa-se a mesma aos dados,
   # que sao organizados da menor para o maior valor de media
-  df <- df %>% 
-    dplyr::group_by( !!!.groups_syms ) %>% 
-    dplyr::summarise(Site_medio = mean( !!var_sym ) ) %>% 
-    dplyr::left_join(df,.
-              , by = .groups 
-    ) %>%
+ suppressMessages(
+   df <- df %>% 
+    dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T ) %>% 
+    dplyr::summarise(Site_medio = mean( !!site_sym ) ) %>% 
+    dplyr::left_join(df) %>%
     round(4) %>% 
     dplyr::arrange(Site_medio)
-  
+  )
   # Em seguida, com base no numero de classes, estas medias serao dividas em
   # nc classes.
   #
@@ -167,12 +195,12 @@ class_data <- function(df, var, nc, .groups){
   ## dar nome as variaveis, e adicionar os resultados aos dados:
   
   aux3 <- cbind(aux1, aux2)
-  names(aux3) <- c("Intervalo", "Categoria")
+  names(aux3) <- c("interval", "category")
   
   # Se forem 3 categorias, adicionar os nomes baixa media e alta as classes:
   if(nc ==3) {
     
-    aux3$Categoria_ <- car::recode(aux3$Categoria, " 1 = 'Inferior'; 2 = 'Media'; 3 = 'Superior' "  )
+    aux3$category_ <- car::recode(aux3$category, " 1 = 'Inferior'; 2 = 'Medium'; 3 = 'Superior' "  )
     
   }
   

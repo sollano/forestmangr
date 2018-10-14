@@ -4,21 +4,21 @@
 \alias{fit_clutter}
 \title{Fit Clutter's model for growth and yield}
 \usage{
-fit_clutter(df, age, DH, B, V, S, plot, .groups = NA, model = "full",
-  keep_model = F)
+fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
+  model = "full", keep_model = F)
 }
 \arguments{
 \item{df}{A dataframe.}
 
 \item{age}{Quoted name for the age variable.}
 
-\item{DH}{Quoted name fof the dominant height variable.}
+\item{dh}{Quoted name fof the dominant height variable.}
 
-\item{B}{Quoted name for the basal area variable.}
+\item{basal_area}{Quoted name for the basal area variable.}
 
-\item{V}{Quoted name for the volume area variable.}
+\item{volume}{Quoted name for the volume area variable.}
 
-\item{S}{Quoted name for the site variable.}
+\item{site}{Quoted name for the site variable.}
 
 \item{plot}{Quoted name for the plot variable.}
 
