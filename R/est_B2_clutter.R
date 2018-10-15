@@ -17,6 +17,7 @@
 #' @export
 #' 
 #' @examples
+#' 
 #' library(forestmangr)
 #' data("exfm17")
 #' 
@@ -30,15 +31,15 @@
 #' head(ex_class ,15)
 #' 
 #' # Estimate basal area using the average basal area as the initial basal area:
-#' ex_est<-est_B2_clutter(ex_class,20:125, "B", "S", "category_", clutter$a0, clutter$a1,"average")
+#' ex_est<-est_B2_clutter(ex_class,20:125, "B","S","category_",clutter$a0,clutter$a1,"average")
 #' head(ex_est, 15)
 #'
 #' # Estimate basal area using an estimated basal area as the initial basal area:
-#' ex_est<-est_B2_clutter(ex_class,20:125, "B", "S", "category_", clutter$a0, clutter$a1,"model") 
+#' ex_est<-est_B2_clutter(ex_class,20:125,"B","S","category_",clutter$a0,clutter$a1,"model") 
 #' head(ex_est, 15)
 #' 
 #' #' Estimate basal area using an estimated basal area as the initial basal area:
-#' ex_est<-est_B2_clutter(ex_class,"age, "B", "S", "category_", clutter$a0, clutter$a1,"model") 
+#' ex_est<-est_B2_clutter(ex_class,"age","B","S","category_", clutter$a0,clutter$a1,"model") 
 #' head(ex_est, 15)
 #' 
 #'   

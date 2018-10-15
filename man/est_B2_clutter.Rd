@@ -32,6 +32,34 @@ This function estimates the present the present value of basal area for each cla
 using either the class' mean, or a linear quadratic model, and then uses it's value to calculate
 the basal area from clutter's growth and yield model.
 }
+\examples{
+
+library(forestmangr)
+data("exfm17")
+
+head(exfm17)
+
+clutter <- fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
+clutter
+
+# Classify data into 3 classes:
+ex_class <- classify_site(exfm17, "S", 3, "plot")
+head(ex_class ,15)
+
+# Estimate basal area using the average basal area as the initial basal area:
+ex_est<-est_B2_clutter(ex_class,20:125, "B","S","category_",clutter$a0,clutter$a1,"average")
+head(ex_est, 15)
+
+# Estimate basal area using an estimated basal area as the initial basal area:
+ex_est<-est_B2_clutter(ex_class,20:125,"B","S","category_",clutter$a0,clutter$a1,"model") 
+head(ex_est, 15)
+
+#' Estimate basal area using an estimated basal area as the initial basal area:
+ex_est<-est_B2_clutter(ex_class,"age","B","S","category_", clutter$a0,clutter$a1,"model") 
+head(ex_est, 15)
+
+  
+}
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}
 }

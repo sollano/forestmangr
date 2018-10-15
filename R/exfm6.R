@@ -1,0 +1,30 @@
+#' @title 
+#' Stratified random inventory definite data 2
+#' @description 
+#' In this data, each observation is a plot.
+#' @usage 
+#' data(exfm6)
+#' 
+#' @format
+#' A dataframe with 10 observations and 14 variables:
+#' \describe{
+#'   \item{GENCODE}{genetic code of plots}
+#'   \item{MAP}{map numbers}
+#'   \item{STRATA}{stratum number}
+#'   \item{PLOT}{plot number}
+#'   \item{AGE}{average age of plots, in months}
+#'   \item{STRATA_AREA}{area of each strata, in hectares}
+#'   \item{PLOT_AREA}{area of plots, in square meters}
+#'   \item{DBH}{diameter at breast height, in meters}
+#'   \item{q}{quadratic diameter, in meters}
+#'   \item{TH}{total height, in meters}
+#'   \item{DH}{dominant height, in meters}
+#'   \item{G}{basal area, in square meters}
+#'   \item{VWB}{volume with bark, in cubic meters}
+#'   \item{VWOB}{volume without bark, in cubic meters}
+#' }
+#' @name exfm6
+#' @docType data
+#' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+#' @keywords data
+NULL
