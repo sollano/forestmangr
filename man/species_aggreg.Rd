@@ -9,11 +9,11 @@ species_aggreg(df, species, plot, NI_label = "")
 \arguments{
 \item{df}{A data frame.}
 
-\item{species}{Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.}
+\item{species}{Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data.}
 
-\item{plot}{Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots. Default \code{NA}.}
+\item{plot}{Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots.}
 
-\item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.}
+\item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.}
 }
 \value{
 a data frame with the aggregation classification.

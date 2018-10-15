@@ -4,9 +4,9 @@
 #' Get the aggregation state of species according to Payandeh, Hazen and Morista's methods.
 #' 
 #' @param df A data frame.
-#' @param plot Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots. Default \code{NA}.
-#' @param species Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.
-#' @param NI_label Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.
+#' @param plot Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots.
+#' @param species Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data.
+#' @param NI_label Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.
 #' @return a data frame with the aggregation classification.
 #' 
 #' @references 

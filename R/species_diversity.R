@@ -5,9 +5,9 @@
 #' Shannon, Simpson, Equitability, Pielou and Jentsch.
 #' 
 #' @param df A data frame.
-#' @param species Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.
-#' @param NI_label Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.
-#' @param plot Optional parameter. Quoted name of the plot variable. used to differentiate the plots, and calculate the indices by plot, or other subdivision variable. Default: \code{NA}.
+#' @param species Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data.
+#' @param NI_label Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.
+#' @param plot Optional parameter. Quoted name of the plot variable. used to differentiate the plots, and calculate the indices by plot, or other subdivision variable.
 #' @param index Character value for the desired index to be used. Can be either \code{"H"} for Shannon's diversity index, \code{"S"} for Total number of species in the community, \code{"Hmax"} for the maximum equitability, \code{"J"} for Pielou's evenness, \code{"QM"} for the mixture coefficient of Jentsch, or \code{"all"}, to get all indices. Default: \code{"all"}.
 #' @return a data frame with the indices, or a numeric value of the desired index specified in the index argument.
 #' 

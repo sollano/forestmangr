@@ -10,11 +10,11 @@ species_diversity(df, species, plot = NA, NI_label = "",
 \arguments{
 \item{df}{A data frame.}
 
-\item{species}{Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.}
+\item{species}{Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data.}
 
-\item{plot}{Optional parameter. Quoted name of the plot variable. used to differentiate the plots, and calculate the indices by plot, or other subdivision variable. Default: \code{NA}.}
+\item{plot}{Optional parameter. Quoted name of the plot variable. used to differentiate the plots, and calculate the indices by plot, or other subdivision variable.}
 
-\item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.}
+\item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.}
 
 \item{index}{Character value for the desired index to be used. Can be either \code{"H"} for Shannon's diversity index, \code{"S"} for Total number of species in the community, \code{"Hmax"} for the maximum equitability, \code{"J"} for Pielou's evenness, \code{"QM"} for the mixture coefficient of Jentsch, or \code{"all"}, to get all indices. Default: \code{"all"}.}
 }
