@@ -10,7 +10,7 @@ guide_curve(df, dh, age, age_index, n_class = 4, model = "Schumacher",
   grey_scale = TRUE, output = "plot")
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{dh}{Quoted name for the dominant height variable.}
 
@@ -32,10 +32,10 @@ guide_curve(df, dh, age, age_index, n_class = 4, model = "Schumacher",
 
 \item{grey_scale}{If \code{TRUE}, the plot will be rendered in a grey scale. Default: \code{"TRUE"}.}
 
-\item{output}{Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a dataframe with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a dataframe with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.}
+\item{output}{Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.}
 }
 \value{
-A dataframe, a ggplot object, or a list, varying according to the \code{"output"} argument.
+A data frame, a ggplot object, or a list, varying according to the \code{"output"} argument.
 }
 \description{
 Get the guide curve for growth and yield analysis of inventory data

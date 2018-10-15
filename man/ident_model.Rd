@@ -8,11 +8,11 @@ ident_model(df, factor, reduced_model, filter = NA, output = "table",
   grey_scale = FALSE, signif = 0.05, font = "serif")
 }
 \arguments{
-\item{df}{a dataframe.}
+\item{df}{a data frame.}
 
 \item{factor}{Quoted name of the factor variable used to differentiate the data projects in the test.}
 
-\item{reduced_model}{Quoted or unquoted reduced model used in the test.  The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".}
+\item{reduced_model}{Quoted or unquoted reduced model used in the test.  The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".}
 
 \item{filter}{Optional argument. If supplied with levels present in \code{factor}, only these levels will be used in the test. \code{NA}.}
 
@@ -24,12 +24,12 @@ the anova table and the plot. Default: \code{"table"}}
 
 \item{grey_scale}{If \code{TRUE} a grey scale will be used in the plots. Default: \code{FALSE}.}
 
-\item{signif}{Numeric value for the sifinificance level used in the test. Default: \code{0.05}.}
+\item{signif}{Numeric value for the significance level used in the test. Default: \code{0.05}.}
 
 \item{font}{font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for Arial Unicode MS. Default: \code{serif}.}
 }
 \value{
-A dataframe, a ggplot object, or a list, varying according to the \code{output} argument.
+A data frame, a ggplot object, or a list, varying according to the \code{output} argument.
 }
 \description{
 Function for using the Identity of a Model test, as described by Regazzi (1999).
@@ -39,7 +39,7 @@ library(forestmangr)
 data("exfm13")
 head(exfm13, 10)
 
-# The objective is to know if the diameter's behaviour is similar among 3 species.
+# The objective is to know if the diameter's behavior is similar among 3 species.
 # For this we'll use a quadratic model. We'll use nitrogen (N) as our X variable.
 
 ident_model(exfm13, "species", dbh ~ N + N2)
@@ -56,8 +56,8 @@ ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot")
 # And this gives us additional information on the test:
 ident_model(exfm13, "species", dbh ~  N + N2, output = "full")
 
-# Looking at the plot, it seemes that 2 species are behaving very similar, while
-# the Pequi species is different from the other 2. We can confirm this by runing
+# Looking at the plot, it seems that 2 species are behaving very similar, while
+# the Pequi species is different from the other 2. We can confirm this by running
 # the test in a paired fashion, using the filter argument:
 
 ident_model(exfm13, "species", dbh ~  N + N2,
@@ -72,7 +72,7 @@ filter = c("SUCUPIRA-PRETA", "PEQUI"), output = "table_plot")
 ident_model(exfm13, "species", dbh ~  N + N2, 
 filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
 
-# As we imagined, a single model can be used to descibre the behaviour of
+# As we imagined, a single model can be used to describe the behavior of
 # the "Sucupira-preta" and "Vinhatico" species,
 # and a second model is needed to explain the Pequi Variable.
 

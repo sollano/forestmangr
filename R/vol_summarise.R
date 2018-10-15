@@ -1,18 +1,18 @@
 #' @title 
-#' Summarise volume of trees
+#' Summarize volume of trees
 #' @description 
-#' This function can be used to summarise volume with and without bark
-#' of trees in a dataframe.
+#' This function can be used to summarize volume with and without bark
+#' of trees in a data frame.
 #'
-#' @param df A dataframe.
-#' @param dbh Quoted name of the diameter at breast hight variable, im cm.
+#' @param df A data frame.
+#' @param dbh Quoted name of the diameter at breast hight variable, in cm.
 #' @param th Quoted name of the total height variable, in meters.
-#' @param vwb Quoted name of the volume with bark varible, in cubic meters.
-#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
-#' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
+#' @param vwb Quoted name of the volume with bark variable, in cubic meters.
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.
+#' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differentiate subdivisions of the data. 
 #' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
-#' If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
-#' @return A dataframe summarised by the .groups variable(s).
+#' If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.
+#' @return A data frame summarized by the .groups variable(s).
 #' 
 #' @seealso Complementary functions:
 #'   \code{\link{smalianwb}}, For calculation of volume with bark using Smalian's method,
@@ -34,7 +34,7 @@
 #' 
 #' sec_data_vol
 #' 
-#' # Now, we summarise the tree's volume:
+#' # Now, we summarize the tree's volume:
 #' vol_summarise(sec_data_vol, dbh = "DBH", th = "TH", vwb = "VWB",
 #' tree = "TREE", .groups = "STRATA",vwob = "VWOB")
 #' 

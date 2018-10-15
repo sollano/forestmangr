@@ -1,22 +1,22 @@
 #' @title 
-#' Summarise forest inventory data
+#' Summarize forest inventory data
 #' @description 
 #' Get informations about forest inventory plots, like number of individuals,
 #' mean DBH, q, Height, basal area, volume, etc.
 #' 
-#' @param df A dataframe.
-#' @param plot Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the dataframe will be used, If there are no groups in the data, the function will fail.
+#' @param df A data frame.
+#' @param plot Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the data frame will be used, If there are no groups in the data, the function will fail.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters. 
 #' @param dbh Optional parameter. Quoted name of the diameter at breast height variable. If supplied, will be used to calculate the mean diameter per plot, quadratic diameter (q), basal area and basal area per hectare. Default \code{NA}.
 #' @param th Optional parameter. Quoted name of the total height variable. If supplied, will be used to calculate the mean total height, and the dominant height variable, if the \code{dh} is \code{NA}. Default \code{NA}.
-#' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.
+#' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.
 #' @param total_area Optional argument. Quoted name of the total area variable, or a numeric vector with the total area value. The total area value must be in hectares. Default: \code{NA}.
 #' @param vwb Optional parameter. Quoted name of the volume with bark variable. If supplied, will be used to calculate the total vwb per plot, and vwb per hectare per plot. Default \code{NA}.
-#' @param vwob Optional parameter. Quoted name of the volume withot bark variable. If supplied, will be used to calculate the total vwob per plot, and vwob per hectare per plot. Default \code{NA}.
+#' @param vwob Optional parameter. Quoted name of the volume without bark variable. If supplied, will be used to calculate the total vwob per plot, and vwob per hectare per plot. Default \code{NA}.
 #' @param dh Optional parameter. Quoted name of the dominant height variable. If supplied, will be used to calculate the mean dominant height per plot. If not, the \code{ht} variable supplied will be used to calculate the average of the top two trees of each plot, and use that as dh. Default: \code{NA}.
 #' @param age Optional parameter. Quoted name of the age variable. If supplied, will be used to calculate the average age per plot. Default: \code{NA}.
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
-#' @return A dataframe with informations per plot.
+#' @return A data frame with informations per plot.
 #'
 #' @export
 #' 

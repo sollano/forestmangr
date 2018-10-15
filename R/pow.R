@@ -9,7 +9,7 @@
 #' in the model, leading to the need of creating a separate variable. This function allows the user to get the power
 #' of a given numeric vector to \code{y} inside the model, without the need to create a new variable.
 #'  
-#' @param x A numeric vector
+#' @param x A numeric vector.
 #' @param y A numeric value for the power \code{x} should be raised to.
 #' 
 #' @return a numeric vector containing \code{x} to the power of \code{y}.

@@ -3,9 +3,9 @@
 #' @description 
 #' This function estimates the present the present value of basal area for each class
 #' using either the class' mean, or a linear quadratic model, and then uses it's value to calculate
-#' the basal area from clutter's growth and yield model.
+#' the basal area from Clutter's growth and yield model.
 #'
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param age A numeric vector with the desired age range to be used in the estimation, or a Quoted name for the age variable.
 #' @param basal_area Quoted name for the basal area variable.
 #' @param site Quoted name for the average site variable.
@@ -13,7 +13,7 @@
 #' @param a0 Numeric value for the a0 coefficient from Clutter's growth and yield model.
 #' @param a1 Numeric value for the a1 coefficient from Clutter's growth and yield model.
 #' @param method Method used for estimating the present basal area of each class. It can either be the class' average basal area \code{"average"}, or an estimated value from a linear quadratic model of site as a function of basal area \code{"model"}. Default: \code{"average"}.
-#' @return A dataframe with the estimated values of basal area.
+#' @return A data frame with the estimated values of basal area.
 #' @export
 #' 
 #' @examples

@@ -1,12 +1,12 @@
 #' @title 
-#' Simplified Inventory data of an eucalyptus forest in minas gerais, Brazil
+#' Simplified Inventory data of an eucalyptus forest in Minas Gerais, Brazil
 #' @description 
 #' In this data, each observation is a tree.
 #' @usage 
 #' data(exfm15)
 #' 
 #' @format
-#' A dataframe with 900 observations and 7 variables:
+#' A data frame with 900 observations and 7 variables:
 #' \describe{
 #'   \item{STRATA}{stratum number}
 #'   \item{STRATA_AREA}{area of each strata, in hectares}

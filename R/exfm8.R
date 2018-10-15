@@ -6,7 +6,7 @@
 #' data(exfm8)
 #' 
 #' @format
-#' A dataframe with 10 observations and 596 variables:
+#' A data frame with 10 observations and 596 variables:
 #' \describe{
 #'   \item{CLONE}{Clone number}
 #'   \item{STRATA}{stratum number}
@@ -16,7 +16,7 @@
 #'   \item{TH}{total height, in meters}
 #'   \item{hi}{height of sections, in meters}
 #'   \item{di_wb}{diameter of sections with bark, in centimeters}
-#'   \item{bark_t}{bark of thickness, in millimiters}
+#'   \item{bark_t}{bark of thickness, in millimeters}
 #'   \item{sec_length}{section length, in meters}
 #' }
 #' @name exfm8

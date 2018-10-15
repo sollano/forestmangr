@@ -4,7 +4,7 @@
 \name{exfm13}
 \alias{exfm13}
 \title{Experimental data on nitrogen effect in species fertilizing}
-\format{A dataframe with 36 observations and 7 variables:
+\format{A data frame with 36 observations and 7 variables:
 \describe{
   \item{species}{species common name}
   \item{trat}{treatment number}

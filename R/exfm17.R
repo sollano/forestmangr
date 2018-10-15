@@ -1,12 +1,12 @@
 #' @title 
-#' Inventory data of an eucalyptus forest in minas gerais, with age and site variables
+#' Inventory data of an eucalyptus forest in Minas Gerais, with age and site variables
 #' @description 
 #' In this data, each observation is a plot. The site was estimated using Schumacher's model.
 #' @usage 
 #' data(exfm17)
 #' 
 #' @format
-#' A dataframe with 139 observations and 8 variables:
+#' A data frame with 139 observations and 8 variables:
 #' \describe{
 #'   \item{strata}{stratum number}
 #'   \item{plot}{plot number}

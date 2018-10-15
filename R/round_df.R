@@ -1,14 +1,14 @@
 #' @title 
-#' Round all numeric variables of a dataframe to a given digit
+#' Round all numeric variables of a data frame to a given digit
 #' @description 
-#' This function allows the user to round all numeric values of a dataframe,
-#' directly, even if the dataframe contains non-numeric variables
+#' This function allows the user to round all numeric values of a data frame,
+#' directly, even if the data frame contains non-numeric variables
 #' (which would throw an error in the \link[base]{round} function).
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param digits Numeric vector for the desired number of digits.
 #' @param rf Type of round to be used. It can either be \code{"ceiling"}, \code{"floor"}, \code{"trunc"}, \code{"signif"}, or \code{"round"}. Default \code{"round"}.
 #' 
-#' @return A dataframe, with all the numeric variables rounded up to the number given to \code{digits}.
+#' @return A data frame, with all the numeric variables rounded up to the number given to \code{digits}.
 #' 
 #' @export 
 #' 

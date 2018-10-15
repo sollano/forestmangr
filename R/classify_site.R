@@ -3,12 +3,12 @@
 #' @description 
 #' Use the site variable to classify a forest management data.
 #' 
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param site Quoted name for the site variable.
 #' @param nc number of categories used to classify the data. If \code{3}, a additional column will be created with levels Inferior, Medium and Superior, referencing the 3 categories. If not, only numbers will be used to differentiate the categories. Default: \code{3}.
 #' @param plot Quoted name for the plot variable.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
-#' @return A dataframe classified based on the site index.
+#' @return A data frame classified based on the site index.
 #' 
 #' @export
 #' 

@@ -2,32 +2,32 @@
 % Please edit documentation in R/vol_summarise.R
 \name{vol_summarise}
 \alias{vol_summarise}
-\title{Summarise volume of trees}
+\title{Summarize volume of trees}
 \usage{
 vol_summarise(df, dbh, th, vwb, tree, .groups = NA, vwob = NA)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
-\item{dbh}{Quoted name of the diameter at breast hight variable, im cm.}
+\item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
 
 \item{th}{Quoted name of the total height variable, in meters.}
 
-\item{vwb}{Quoted name of the volume with bark varible, in cubic meters.}
+\item{vwb}{Quoted name of the volume with bark variable, in cubic meters.}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.}
 
-\item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data.}
+\item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differentiate subdivisions of the data.}
 
 \item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
-If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
+If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.}
 }
 \value{
-A dataframe summarised by the .groups variable(s).
+A data frame summarized by the .groups variable(s).
 }
 \description{
-This function can be used to summarise volume with and without bark
-of trees in a dataframe.
+This function can be used to summarize volume with and without bark
+of trees in a data frame.
 }
 \examples{
 library(forestmangr)
@@ -42,7 +42,7 @@ smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = TRUE)
 
 sec_data_vol
 
-# Now, we summarise the tree's volume:
+# Now, we summarize the tree's volume:
 vol_summarise(sec_data_vol, dbh = "DBH", th = "TH", vwb = "VWB",
 tree = "TREE", .groups = "STRATA",vwob = "VWOB")
 

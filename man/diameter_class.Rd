@@ -2,16 +2,16 @@
 % Please edit documentation in R/diameter_class.R
 \name{diameter_class}
 \alias{diameter_class}
-\title{Divide data into diameter classes, and get humber of observations}
+\title{Divide data into diameter classes, and get number of observations}
 \usage{
 diameter_class(df, dbh, plot = NA, plot_area, ci = 5, dbhmin = 5,
   species = NA, volume = NA, NI_label = "NI", cc_to_column = FALSE,
   G_to_cc = FALSE, cctc_ha = TRUE, keep_unused_classes = FALSE)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
-\item{dbh}{Quoted name of the diameter at breast hight variable, im cm.}
+\item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
 
 \item{plot}{Optional parameter.Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots. Default \code{NA}.}
 
@@ -33,14 +33,14 @@ diameter_class(df, dbh, plot = NA, plot_area, ci = 5, dbhmin = 5,
 
 \item{cctc_ha}{If \code{TRUE}, will calculate values per hectare for number of individuals per class, basal area per class and volume per class (if supplied). These values will also be used to fill the center of class columns, if cc_to_column is \code{TRUE}. Default \code{TRUE}.}
 
-\item{keep_unused_classes}{Some diameter classes may end up empty, depending on the maximum value of diameter and the class interval used. If this is \code{TRUE}, those classes will not be removed from the final dataframe. Default \code{FALSE}.}
+\item{keep_unused_classes}{Some diameter classes may end up empty, depending on the maximum value of diameter and the class interval used. If this is \code{TRUE}, those classes will not be removed from the final data frame. Default \code{FALSE}.}
 }
 \value{
-A dataframe containg the supplied data divided into diameter classes.
+A data frame containing the supplied data divided into diameter classes.
 }
 \description{
 This function can be used to divide data into diameter classes,
-get the humber of observations, number of observations per ha,
+get the number of observations, number of observations per ha,
 and check number of species individuals, volume and G in each diameter class.
 It's also possible to spread the diameter classes as columns.
 }

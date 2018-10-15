@@ -6,7 +6,7 @@
 #' data(exfm2)
 #' 
 #' @format
-#' A dataframe with 57 observations and 4 variables:
+#' A data frame with 57 observations and 4 variables:
 #' \describe{
 #'   \item{STRATA}{stratum number}
 #'   \item{STRATA_AREA}{area of each strata, in hectares}

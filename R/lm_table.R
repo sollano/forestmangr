@@ -1,27 +1,27 @@
 #' @title 
 #' Fit linear regressions by group, and get different output options.
 #' @description 
-#' With this function it's possible to fit linear regressions by a grouping variable, and get a dataframe
+#' With this function it's possible to fit linear regressions by a grouping variable, and get a data frame
 #' with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 #' @details 
 #' With this function there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
-#' It's also possible to easily make fit miltiple regressions, specifying a grouping variable.
-#' In addition to that, the default output sets each coeffient as a column, making it easy to call coefficients by name or position
+#' It's also possible to easily make fit multiple regressions, specifying a grouping variable.
+#' In addition to that, the default output sets each coefficient as a column, making it easy to call coefficients by name or position
 #' when estimating values. 
 #' 
 #' It's possible to use the \code{output} argument to get a merged table if \code{output="merge"}, that binds
-#' the original dataframe and the fitted coefficients. 
-#' If \code{output="merge_est"} we get a merged table aswell, but with y estimated using the coefficients. If the fit is made using groups, this is taken into account, i.e. the estimation is made by group.
+#' the original data frame and the fitted coefficients. 
+#' If \code{output="merge_est"} we get a merged table as well, but with y estimated using the coefficients. If the fit is made using groups, this is taken into account, i.e. the estimation is made by group.
 #' 
-#' If \code{output="nest"}, a dataframe with nested columns is provided. This can be used if the user desires to get a customized output.
+#' If \code{output="nest"}, a data frame with nested columns is provided. This can be used if the user desires to get a customized output.
 #'
-#' @param df A dataframe.
-#' @param model A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".
+#' @param df A data frame.
+#' @param model A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".
 #' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
 #' @param output  Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.
-#' @param est.name Nmae of the estimated y value. Used only if \code{est.name = TRUE}. Padrao: \code{"est"}. 
-#' @param keep_model If \code{TRUE}, a column containg lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.
-#' @return  A dataframe. Different dataframe options are available using the output argument.
+#' @param est.name Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}. 
+#' @param keep_model If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.
+#' @return  A data frame. Different data frame options are available using the output argument.
 #' 
 #' @export
 #' @examples 
@@ -61,7 +61,7 @@
 #' # In the following example, the objective is to estimate non-measured height
 #' # values in a forest inventory data.
 #' 
-#' # To do this, we'll fit a hipsometrical model. The non-measured trees will 
+#' # To do this, we'll fit a hypsometric model. The non-measured trees will 
 #' # be automatically ignored in this step. We'll define the argument output as
 #' # "merge_est", so that we can get the estimated height values as a separate column.
 #' # Then, we'll use mutate to create a new variable, that will contain measured

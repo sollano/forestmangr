@@ -6,7 +6,7 @@
 #' data(exfm12)
 #' 
 #' @format
-#' A dataframe with 139 observations and 8 variables:
+#' A data frame with 139 observations and 8 variables:
 #' \describe{
 #'   \item{strata}{stratum number}
 #'   \item{plot}{plot number}

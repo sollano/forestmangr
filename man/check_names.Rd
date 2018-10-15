@@ -7,18 +7,18 @@
 check_names(df, var_names, boolean = TRUE)
 }
 \arguments{
-\item{df}{a dataframe.}
+\item{df}{a data frame.}
 
-\item{var_names}{Chracter vector to be compared with the dataframe names.}
+\item{var_names}{Character vector to be compared with the data frame names.}
 
 \item{boolean}{Boolean object used to define if the output is going to be a boolean object \code{TRUE} , or a string \code{FALSE}. Default: \code{TRUE}.}
 }
 \description{
-Function used to check if a string, or a character vector contains variable names of a given dataframe.
+Function used to check if a string, or a character vector contains variable names of a given data frame.
 }
 \details{
-Function used to check if a string, or a character vector contains variable names of a given dataframe. 
-This functions is mainly used to errorproof other functions of this package,
+Function used to check if a string, or a character vector contains variable names of a given data frame. 
+This functions is mainly used to error-proof other functions of this package,
 }
 \examples{
 library(forestmangr)

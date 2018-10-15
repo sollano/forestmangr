@@ -3,7 +3,7 @@
 #' @description 
 #' Generate a ggplot curve of a forest's average tree using Kozak's taper model (Kozak, Munro and Smith, 1969).
 #'  
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param d Quoted name of the section diameter variable, in cm.
 #' @param dbh Quoted name of the diameter at breast hight variable, in cm.
 #' @param h Quoted name of the section height variable, in meters.

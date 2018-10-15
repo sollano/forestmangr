@@ -11,13 +11,13 @@
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param total_area Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
-#' If this argument is \code{NA}, the defined groups in the dataframe will be used, if they exist. Default: \code{NA}.
+#' If this argument is \code{NA}, the defined groups in the data frame will be used, if they exist. Default: \code{NA}.
 #' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.
 #' @param alpha Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.
 #' @param error Numeric value for the minimum admitted error value in the survey, in percentage. Default: \code{10}.
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
 #' @param tidy Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.
-#' @return A dataframe with the sampling results.
+#' @return A data frame with the sampling results.
 #' 
 #' @keywords Systematic Sampling
 #' @references 
@@ -34,7 +34,7 @@
 #' data("exfm2")
 #' data("exfm5")
 #'
-#' # We're trying to run a inventory for an area This data was colected systematically,
+#' # We're trying to run a inventory for an area This data was collected systematically,
 #' # but we'll try to run the data using simple random sampling, 
 #' # to show the difference between the two methods:
 #' sprs(exfm5,  "VWB", "PLOT_AREA", "TOTAL_AREA")

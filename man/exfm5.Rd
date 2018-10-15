@@ -4,7 +4,7 @@
 \name{exfm5}
 \alias{exfm5}
 \title{Systematic inventory data}
-\format{A dataframe with 18 observations and 3 variables:
+\format{A data frame with 18 observations and 3 variables:
 \describe{
   \item{TOTAL_AREA}{total area, in hectares}
   \item{PLOT_AREA}{area of plots, in square meters}

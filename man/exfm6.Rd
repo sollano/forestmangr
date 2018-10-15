@@ -4,7 +4,7 @@
 \name{exfm6}
 \alias{exfm6}
 \title{Stratified random inventory definite data 2}
-\format{A dataframe with 10 observations and 14 variables:
+\format{A data frame with 10 observations and 14 variables:
 \describe{
   \item{GENCODE}{genetic code of plots}
   \item{MAP}{map numbers}

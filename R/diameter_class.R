@@ -1,13 +1,13 @@
 #' @title 
-#' Divide data into diameter classes, and get humber of observations
+#' Divide data into diameter classes, and get number of observations
 #' @description 
 #' This function can be used to divide data into diameter classes,
-#' get the humber of observations, number of observations per ha,
+#' get the number of observations, number of observations per ha,
 #' and check number of species individuals, volume and G in each diameter class.
 #' It's also possible to spread the diameter classes as columns.
 #'
-#' @param df A dataframe.
-#' @param dbh Quoted name of the diameter at breast hight variable, im cm.
+#' @param df A data frame.
+#' @param dbh Quoted name of the diameter at breast hight variable, in cm.
 #' @param plot Optional parameter.Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots. Default \code{NA}.
 #' @param plot_area Optional parameter. Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters. Default \code{NA}.
 #' @param ci Numeric value for the class interval used to classify the data. Default: \code{5}.
@@ -18,8 +18,8 @@
 #' @param cc_to_column If \code{TRUE}, will spread the center class column as multiple columns, one for each class. The value that fills these columns, by default is the number of individuals found in each class, but this can be changed by using other arguments. Default \code{FALSE}.
 #' @param G_to_cc If \code{TRUE}, and \code{cc_to_column} is also \code{TRUE}, will fill the center of class columns with basal area values, instead of number of individuals. Default \code{FALSE}.
 #' @param cctc_ha  If \code{TRUE}, will calculate values per hectare for number of individuals per class, basal area per class and volume per class (if supplied). These values will also be used to fill the center of class columns, if cc_to_column is \code{TRUE}. Default \code{TRUE}.
-#' @param keep_unused_classes Some diameter classes may end up empty, depending on the maximum value of diameter and the class interval used. If this is \code{TRUE}, those classes will not be removed from the final dataframe. Default \code{FALSE}.
-#' @return A dataframe containg the supplied data divided into diameter classes.
+#' @param keep_unused_classes Some diameter classes may end up empty, depending on the maximum value of diameter and the class interval used. If this is \code{TRUE}, those classes will not be removed from the final data frame. Default \code{FALSE}.
+#' @return A data frame containing the supplied data divided into diameter classes.
 #'
 #' @export
 #' @examples 

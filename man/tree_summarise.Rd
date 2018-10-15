@@ -8,15 +8,15 @@ tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
   plot_area = NA, total_area = NA, .groups = NA)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{dbh}{Quoted name of the diameter at breast height variable.}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the dataframe will be used. If there are no groups in the data, the function will fail.}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the data frame will be used. If there are no groups in the data, the function will fail.}
 
 \item{th}{Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.}
 
-\item{vwb}{Optional argument. Quoted name of the volume with bark varible, in cubic meters. Default: \code{NA}.}
+\item{vwb}{Optional argument. Quoted name of the volume with bark variable, in cubic meters. Default: \code{NA}.}
 
 \item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.}
 
@@ -24,10 +24,10 @@ tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
 
 \item{total_area}{Optional argument. Quoted name of the total area variable, or a numeric vector with the total area value. The total area value must be in hectares. Default: \code{NA}.}
 
-\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.}
 }
 \value{
-A dataframe with the the equivalent diameter calculated.
+A data frame with the the equivalent diameter calculated.
 }
 \description{
 This function uses takes the square root of the diameters squared sum,

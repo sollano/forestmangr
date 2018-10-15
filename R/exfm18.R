@@ -6,13 +6,13 @@
 #' data(exfm18)
 #' 
 #' @format
-#' A dataframe with 877 observations and 6 variables:
+#' A data frame with 877 observations and 6 variables:
 #' \describe{
 #'   \item{Plot}{plot number}
 #'   \item{Species}{species scientific name}
 #'   \item{Tree}{tree number}
 #'   \item{Trunk}{trunk number}
-#'   \item{cbh}{circunference at breast height, in meters}
+#'   \item{cbh}{circumference at breast height, in meters}
 #'   \item{dbh}{diameter at breast height, in meters}
 #' }
 #' @name exfm18

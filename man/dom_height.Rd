@@ -8,29 +8,29 @@ dom_height(df, th, dbh, plot, obs, dom, .groups, merge_data = FALSE,
   dh_name = "DH")
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{th}{Quoted name of the total height variable.}
 
-\item{dbh}{Quoted name of the diameter at breast height variable. Used to filter out trees with no diameter measerument.}
+\item{dbh}{Quoted name of the diameter at breast height variable. Used to filter out trees with no diameter measurement.}
 
-\item{plot}{Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the dataframe will be used, If there are no groups in the data, the function will fail.}
+\item{plot}{Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the data frame will be used, If there are no groups in the data, the function will fail.}
 
 \item{obs}{Quoted name of the observations variable. This will be used to tell which trees are dominant, i.e. it's the variable that tells the type of tree; if it is normal, dominant, suppressed, etc. If this argument is not supplied, the function will calculate the average value of 2 trees with bigger height values in each plot, and use that as the dominant value.}
 
 \item{dom}{Character value for the dominant tree code used in the observations variable variable supplied  in the \code{obs} argument. This is used alongside the \code{obs} argument to differentiate dominant trees from the others.}
 
-\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.}
 
-\item{merge_data}{If \code{TRUE}, will merge the original dataframe with the dominant hight table. Default: \code{FALSE}.}
+\item{merge_data}{If \code{TRUE}, will merge the original data frame with the dominant hight table. Default: \code{FALSE}.}
 
 \item{dh_name}{Character value for the name of the dominant height variable created. Default: \code{"DH"}}
 }
 \value{
-A dataframe with the the dominant height values by plot.
+A data frame with the the dominant height values by plot.
 }
 \description{
-This function is used to get a dataframe with Dominant height values for each plot
+This function is used to get a data frame with Dominant height values for each plot
 in an forest inventory data.
 }
 \examples{
@@ -45,7 +45,7 @@ dom_height(df=exfm9,th="TH",dbh="DBH",plot="PLOT")
 
 # Of course, if we do have a variable that differentiate the dominant trees, it's
 # best we use it. For that we use the obs argument, and the dom argument.
-# In ths data, the OBS variable is used to tell the type of tree.
+# In this data, the OBS variable is used to tell the type of tree.
 # Let's check the levels in our OBS variable, to see which one is associated 
 # with dominant trees.
 
@@ -54,7 +54,7 @@ levels(as.factor(exfm9$OBS))
 # So, the "D" level must be the one that tells which trees are dominant. Let's use it:#' 
 dom_height(df=exfm9,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D")
 
-# If there are subdivitions of the data, like different strata, they can be inlcuded in the
+# If there are subdivisions of the data, like different strata, they can be included in the
 # .groups argument: 
 dom_height(df=exfm9,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D",.groups="STRATA")
 

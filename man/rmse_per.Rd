@@ -7,11 +7,11 @@
 rmse_per(df, y, yhat)
 }
 \arguments{
-\item{df}{a dataframe.}
+\item{df}{a data frame.}
 
-\item{y}{Quoted name of the variable representing the observed values in the dataframe. If a dataframe is not provided, \code{y} can also be a numeric vector.}
+\item{y}{Quoted name of the variable representing the observed values in the data frame. If a data frame is not provided, \code{y} can also be a numeric vector.}
 
-\item{yhat}{Quoted name of the variable representing the estimated values in the dataframe. If a dataframe is not provided, \code{yhat} can also be a numeric vector.}
+\item{yhat}{Quoted name of the variable representing the estimated values in the data frame. If a data frame is not provided, \code{yhat} can also be a numeric vector.}
 }
 \value{
 Numeric vector with the RMSE value, in percentage.
@@ -27,7 +27,7 @@ library(forestmangr)
 data(exfm11)
 head(exfm11)
 
-# RMSE of an estimator, given the dataframe and quoted variable names:
+# RMSE of an estimator, given the data frame and quoted variable names:
 rmse_per(exfm11, "TH", "TH_EST3")
 
 # RMSE of an estimator, given the vectors for observed and estimated values:

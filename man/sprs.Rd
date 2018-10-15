@@ -20,7 +20,7 @@ sprs(df, Yi, plot_area, total_area, age = NA, .groups = NA,
 \item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
-If this argument is \code{NA}, the defined groups in the dataframe will be used, if they exist. Default: \code{NA}.}
+If this argument is \code{NA}, the defined groups in the data frame will be used, if they exist. Default: \code{NA}.}
 
 \item{alpha}{Numeric value for the significance value used in the t-student estimation. Default: \code{0.05}.}
 
@@ -33,7 +33,7 @@ If this argument is \code{NA}, the defined groups in the dataframe will be used,
 \item{tidy}{Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.}
 }
 \value{
-A dataframe with the sampling results.
+A data frame with the sampling results.
 }
 \description{
 Function for processing forest inventory data using simple random sampling.

@@ -8,11 +8,11 @@ fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
   model = "full", keep_model = FALSE)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{age}{Quoted name for the age variable.}
 
-\item{dh}{Quoted name fof the dominant height variable.}
+\item{dh}{Quoted name for the dominant height variable.}
 
 \item{basal_area}{Quoted name for the basal area variable.}
 
@@ -24,15 +24,15 @@ fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
 
 \item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.}
 
-\item{model}{Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, weere the X3 variable is excluded from the regression. Default: \code{full}.}
+\item{model}{Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, where the X3 variable is excluded from the regression. Default: \code{full}.}
 
-\item{keep_model}{If \code{TRUE} a variable with the regression model will be kept in the dataframe. Default: \code{FALSE}.}
+\item{keep_model}{If \code{TRUE} a variable with the regression model will be kept in the data frame. Default: \code{FALSE}.}
 }
 \value{
-A dataframe with the regressions coefficients.
+A data frame with the regressions coefficients.
 }
 \description{
-Fit clutter's model for growth and yield using the two stage least squares method (2SLS).
+Fit Clutter's model for growth and yield using the two stage least squares method (2SLS).
 }
 \examples{
 

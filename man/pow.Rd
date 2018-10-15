@@ -7,7 +7,7 @@
 pow(x, y)
 }
 \arguments{
-\item{x}{A numeric vector}
+\item{x}{A numeric vector.}
 
 \item{y}{A numeric value for the power \code{x} should be raised to.}
 }

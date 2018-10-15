@@ -4,7 +4,7 @@
 \name{exfm11}
 \alias{exfm11}
 \title{Observed and estimated values of height of trees, using 3 different models}
-\format{A dataframe with 199 observations and 6 variables:
+\format{A data frame with 199 observations and 6 variables:
 \describe{
   \item{STRATA}{stratum number}
   \item{PLOT}{plot number}

@@ -8,7 +8,7 @@ smalianwob(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm = FALSE,
   hi_cm_to_m = FALSE, bt_mm_to_cm = FALSE)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{di}{Quoted name of the section diameter  variable, in centimeters.}
 
@@ -16,19 +16,19 @@ smalianwob(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm = FALSE,
 
 \item{bt}{Quoted name of the bark thickness variable, in centimeters.}
 
-\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
+\item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.}
 
-\item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
-If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.}
+\item{.groups}{Optional argument. Quoted name(s) of additional grouping variables that can be added to differentiate subdivisions of the data. 
+If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.}
 
-\item{di_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.}
+\item{di_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the di argument from milliliters to centimeters. Default: \code{FALSE}.}
 
 \item{hi_cm_to_m}{Boolean argument that, if \code{TRUE}, converts the hi argument from centimeters to meters. Default: \code{FALSE}.}
 
-\item{bt_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.}
+\item{bt_mm_to_cm}{Boolean argument that, if \code{TRUE}, converts the bt argument from milliliters to centimeters. Default: \code{FALSE}.}
 }
 \value{
-Dataframe with volume values by section.
+Data frame with volume values by section.
 }
 \description{
 Function used to calculate the volume without bark of trees using the Smalian method.

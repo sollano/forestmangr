@@ -4,7 +4,7 @@
 \name{exfm2}
 \alias{exfm2}
 \title{Stratified random inventory definite data}
-\format{A dataframe with 57 observations and 4 variables:
+\format{A data frame with 57 observations and 4 variables:
 \describe{
   \item{STRATA}{stratum number}
   \item{STRATA_AREA}{area of each strata, in hectares}

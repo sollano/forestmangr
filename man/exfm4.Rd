@@ -4,7 +4,7 @@
 \name{exfm4}
 \alias{exfm4}
 \title{Simple random inventory definite data}
-\format{A dataframe with 25 observations and 3 variables:
+\format{A data frame with 25 observations and 3 variables:
 \describe{
   \item{TOTAL_AREA}{total area, in hectares}
   \item{PLOT_AREA}{area of plots, in square meters}

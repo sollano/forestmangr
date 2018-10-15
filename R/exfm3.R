@@ -6,7 +6,7 @@
 #' data(exfm3)
 #' 
 #' @format
-#' A dataframe with 10 observations and 3 variables:
+#' A data frame with 10 observations and 3 variables:
 #' \describe{
 #'   \item{TOTAL_AREA}{total area, in hectares}
 #'   \item{PLOT_AREA}{area of plots, in square meters}

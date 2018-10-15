@@ -8,7 +8,7 @@ est_B2_clutter(df, age, basal_area, site, category, a0, a1,
   method = "average")
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{age}{A numeric vector with the desired age range to be used in the estimation, or a Quoted name for the age variable.}
 
@@ -25,12 +25,12 @@ est_B2_clutter(df, age, basal_area, site, category, a0, a1,
 \item{method}{Method used for estimating the present basal area of each class. It can either be the class' average basal area \code{"average"}, or an estimated value from a linear quadratic model of site as a function of basal area \code{"model"}. Default: \code{"average"}.}
 }
 \value{
-A dataframe with the estimated values of basal area.
+A data frame with the estimated values of basal area.
 }
 \description{
 This function estimates the present the present value of basal area for each class
 using either the class' mean, or a linear quadratic model, and then uses it's value to calculate
-the basal area from clutter's growth and yield model.
+the basal area from Clutter's growth and yield model.
 }
 \examples{
 

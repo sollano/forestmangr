@@ -5,21 +5,21 @@
 #' @details 
 #' This test is used to compare two variables, usually a proposed method,
 #' and a standard variable.This test is popular among forestry engineers, 
-#' specially because, since it considers all data in it's analysys, 
+#' specially because, since it considers all data in it's analysis, 
 #' it's usually more precise than a standard mean t-test.
 #' If the data has outliers, the mean may not represent the data correctly, so
 #' Grabyill's <i>F</i> test is specially useful for heterogeneous data.
 #'
 #' A simple model regression is applied, and it's significance is evaluated
-#' appling Graybill's <i>F</i> test for the parameters estimate,
+#' applying Graybill's <i>F</i> test for the parameters estimate,
 #' according to the methodology described by Graybill (1976).
 #' 
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param Y1 Quoted name of the standard variable.
 #' @param Yj Quoted name of the proposed variable.
-#' @param output Defines the type of output. If \code{1}, a simple dataframe is created, with only essential information about the test. If \code{2}, more information is provided, and if \code{3}, a dataframe with informations about the test and both variables is created. Default: \code{1}.
-#' @param signif Numeric value for the sifinificance level used in the test. Default: \code{0.05}.
-#' @return A dataframe. It's dimentions will vary, according to the \code{output} argument.
+#' @param output Defines the type of output. If \code{1}, a simple data frame is created, with only essential information about the test. If \code{2}, more information is provided, and if \code{3}, a data frame with informations about the test and both variables is created. Default: \code{1}.
+#' @param signif Numeric value for the significance level used in the test. Default: \code{0.05}.
+#' @return A data frame. It's dimensions will vary, according to the \code{output} argument.
 #' 
 #' @references 
 #' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
@@ -35,17 +35,17 @@
 #' 
 #' head(exfm11)
 #' 
-#' # The dataframe exfm11 contains a height variable called "TH". This will be our
-#' # standard value. We'll compare it to height estimated using different hipsometric equations.
+#' # The data frame exfm11 contains a height variable called "TH". This will be our
+#' # standard value. We'll compare it to height estimated using different hypsometric equations.
 #' # These are variables "TH_EST1" and "TH_EST2":
 #' Graybill_F( exfm11,"TH", "TH_EST1")
 #' 
-#' # TH_EST1 is statiscially different from "TH".
+#' # TH_EST1 is statistically different from "TH".
 #' 
 #' # It's possible to alter the test's significance level using the signif argument:
 #' Graybill_F( exfm11,"TH", "TH_EST1", signif = 0.01)
 #' 
-#' # Different output options are available trought the output argument:
+#' # Different output options are available through the output argument:
 #' Graybill_F( exfm11,"TH", "TH_EST2", output=2)
 #' Graybill_F( exfm11,"TH", "TH_EST2", output=3)
 #' 

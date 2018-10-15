@@ -7,7 +7,7 @@
 average_tree_curve(df, d, dbh, h, th, facet = NA)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{d}{Quoted name of the section diameter variable, in cm.}
 

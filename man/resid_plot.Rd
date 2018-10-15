@@ -10,7 +10,7 @@ resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
   legend_pos = "bottom", grey_scale = TRUE, res_table = FALSE)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{obs}{Quoted name of the observed values variable.}
 
@@ -18,7 +18,7 @@ resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
 
 \item{type}{Character object for the type of plot created, The available plots are: \code{"scatterplot"}, \code{"histogram"}, \code{"histogram_curve"} and \code{"versus"}. Default: \code{"scatterplot"}.}
 
-\item{point_size}{Numeric value for the point size in scatterplots. Default: \code{3}.}
+\item{point_size}{Numeric value for the point size in scatter plots. Default: \code{3}.}
 
 \item{color}{Quoted name of a variable. If supplied, this variable will be used to classify the data by color. Default: \code{NA}.}
 
@@ -38,10 +38,10 @@ resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
 
 \item{grey_scale}{If \code{TRUE}, the plot will be rendered in a grey scale. Default: \code{"TRUE"}.}
 
-\item{res_table}{If \code{TRUE}, the function will return a dataframe with observed, estimated, and residual values. Default: \code{FALSE}.}
+\item{res_table}{If \code{TRUE}, the function will return a data frame with observed, estimated, and residual values. Default: \code{FALSE}.}
 }
 \value{
-A ggplot object, or if \code{res_table = TRUE}, a dataframe.
+A ggplot object, or if \code{res_table = TRUE}, a data frame.
 }
 \description{
 Function for creating plots and tables for residual values from observed and estimated values.
@@ -52,11 +52,11 @@ data("exfm11")
 
 head(exfm11)
 
-# Specifying the observed and estimated variables, we get a scatterplot
-# for the percentual residuals:
+# Specifying the observed and estimated variables, we get a scatter plot
+# for the percentage residuals:
 resid_plot(exfm11, "TH", "TH_EST1")
 
-# It's possible to change the size of points in a scatterplot with point_size:
+# It's possible to change the size of points in a scatter plot with point_size:
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", point_size=1)
 
 # It's possible to get other types of plots, with the type argument:
@@ -77,17 +77,17 @@ resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", grey_scale=FALSE)
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",
 xlab="Total Height (m)", clab="Strata")
 
-# It's póssible to change the font of the plot. R natively supports
+# It's possible to change the font of the plot. R natively supports
 # sans, serif and mono, but these can be expanded using packages:
 resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="sans")
 resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="mono")
 
 # If there are more estimated values variables, they can also be used
-# in the comparisson:
+# in the comparison:
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2")
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3")
 
-# It's possible to rearange the plots with ncol and nrow:
+# It's possible to rearrange the plots with ncol and nrow:
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", ncol=1)
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", nrow=2)
 

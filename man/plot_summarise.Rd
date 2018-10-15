@@ -2,15 +2,15 @@
 % Please edit documentation in R/plot_summarise.R
 \name{plot_summarise}
 \alias{plot_summarise}
-\title{Summarise forest inventory data}
+\title{Summarize forest inventory data}
 \usage{
 plot_summarise(df, plot, plot_area, dbh, th, .groups, total_area, vwb,
   vwob, dh, age, dec_places = 4)
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
-\item{plot}{Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the dataframe will be used, If there are no groups in the data, the function will fail.}
+\item{plot}{Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the data frame will be used, If there are no groups in the data, the function will fail.}
 
 \item{plot_area}{Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
 
@@ -18,13 +18,13 @@ plot_summarise(df, plot, plot_area, dbh, th, .groups, total_area, vwb,
 
 \item{th}{Optional parameter. Quoted name of the total height variable. If supplied, will be used to calculate the mean total height, and the dominant height variable, if the \code{dh} is \code{NA}. Default \code{NA}.}
 
-\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differenciate subdivisions of the data. Default: \code{NA}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.}
 
 \item{total_area}{Optional argument. Quoted name of the total area variable, or a numeric vector with the total area value. The total area value must be in hectares. Default: \code{NA}.}
 
 \item{vwb}{Optional parameter. Quoted name of the volume with bark variable. If supplied, will be used to calculate the total vwb per plot, and vwb per hectare per plot. Default \code{NA}.}
 
-\item{vwob}{Optional parameter. Quoted name of the volume withot bark variable. If supplied, will be used to calculate the total vwob per plot, and vwob per hectare per plot. Default \code{NA}.}
+\item{vwob}{Optional parameter. Quoted name of the volume without bark variable. If supplied, will be used to calculate the total vwob per plot, and vwob per hectare per plot. Default \code{NA}.}
 
 \item{dh}{Optional parameter. Quoted name of the dominant height variable. If supplied, will be used to calculate the mean dominant height per plot. If not, the \code{ht} variable supplied will be used to calculate the average of the top two trees of each plot, and use that as dh. Default: \code{NA}.}
 
@@ -33,7 +33,7 @@ plot_summarise(df, plot, plot_area, dbh, th, .groups, total_area, vwb,
 \item{dec_places}{Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.}
 }
 \value{
-A dataframe with informations per plot.
+A data frame with informations per plot.
 }
 \description{
 Get informations about forest inventory plots, like number of individuals,

@@ -2,20 +2,20 @@
 #' Fit Clutter's model for growth and yield
 #' 
 #' @description 
-#' Fit clutter's model for growth and yield using the two stage least squares method (2SLS).
+#' Fit Clutter's model for growth and yield using the two stage least squares method (2SLS).
 #'
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param age Quoted name for the age variable.
-#' @param dh Quoted name fof the dominant height variable.
+#' @param dh Quoted name for the dominant height variable.
 #' @param basal_area Quoted name for the basal area variable.
 #' @param volume Quoted name for the volume area variable.
 #' @param site Quoted name for the site variable.
 #' @param plot Quoted name for the plot variable.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
-#' @param model Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, weere the X3 variable is excluded from the regression. Default: \code{full}.
-#' @param keep_model If \code{TRUE} a variable with the regression model will be kept in the dataframe. Default: \code{FALSE}.
+#' @param model Character variable for the type of the model fitted. If \code{"full"}, the full model will be used. if \code{"mod"}, a modified model will be fitted, where the X3 variable is excluded from the regression. Default: \code{full}.
+#' @param keep_model If \code{TRUE} a variable with the regression model will be kept in the data frame. Default: \code{FALSE}.
 #'
-#' @return A dataframe with the regressions coefficients.
+#' @return A data frame with the regressions coefficients.
 #'  
 #' @keywords Clutter, 2SLS
 #' @references 

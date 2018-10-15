@@ -4,7 +4,7 @@
 #' Get the guide curve for growth and yield analysis of inventory data
 #' using the factor method, and different statistical models.
 #' 
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param dh Quoted name for the dominant height variable.
 #' @param age Quoted name for the age variable.
 #' @param age_index Numeric value for the age index.
@@ -15,8 +15,8 @@
 #' @param round_classes If \code{TRUE}, class values will be rounded to the nearest 5. Default \code{TRUE}.
 #' @param font Type of font used in the plot. Default: \code{"serif"}.
 #' @param grey_scale If \code{TRUE}, the plot will be rendered in a grey scale. Default: \code{"TRUE"}.
-#' @param output Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a dataframe with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a dataframe with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.
-#' @return A dataframe, a ggplot object, or a list, varying according to the \code{"output"} argument.
+#' @param output Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.
+#' @return A data frame, a ggplot object, or a list, varying according to the \code{"output"} argument.
 #' 
 #' @export
 #' 

@@ -2,23 +2,23 @@
 % Please edit documentation in R/round_df.R
 \name{round_df}
 \alias{round_df}
-\title{Round all numeric variables of a dataframe to a given digit}
+\title{Round all numeric variables of a data frame to a given digit}
 \usage{
 round_df(df, digits, rf = "round")
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
 \item{digits}{Numeric vector for the desired number of digits.}
 
 \item{rf}{Type of round to be used. It can either be \code{"ceiling"}, \code{"floor"}, \code{"trunc"}, \code{"signif"}, or \code{"round"}. Default \code{"round"}.}
 }
 \value{
-A dataframe, with all the numeric variables rounded up to the number given to \code{digits}.
+A data frame, with all the numeric variables rounded up to the number given to \code{digits}.
 }
 \description{
-This function allows the user to round all numeric values of a dataframe,
-directly, even if the dataframe contains non-numeric variables
+This function allows the user to round all numeric values of a data frame,
+directly, even if the data frame contains non-numeric variables
 (which would throw an error in the \link[base]{round} function).
 }
 \examples{

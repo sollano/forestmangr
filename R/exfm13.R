@@ -6,7 +6,7 @@
 #' data(exfm13)
 #' 
 #' @format
-#' A dataframe with 36 observations and 7 variables:
+#' A data frame with 36 observations and 7 variables:
 #' \describe{
 #'   \item{species}{species common name}
 #'   \item{trat}{treatment number}

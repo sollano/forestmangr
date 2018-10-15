@@ -6,7 +6,7 @@
 #' data(exfm6)
 #' 
 #' @format
-#' A dataframe with 10 observations and 14 variables:
+#' A data frame with 10 observations and 14 variables:
 #' \describe{
 #'   \item{GENCODE}{genetic code of plots}
 #'   \item{MAP}{map numbers}

@@ -9,38 +9,38 @@ nls_table(df, model, mod_start, .groups = NA, output = "table",
   global_start, algorithm = "LM")
 }
 \arguments{
-\item{df}{A dataframe.}
+\item{df}{A data frame.}
 
-\item{model}{A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".}
+\item{model}{A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".}
 
-\item{mod_start}{A vector or dataframe, with start values for coefficients used in the model. This can be a dataframe containing the same group variables used in the .groups argument, and the start values.}
+\item{mod_start}{A vector or data frame, with start values for coefficients used in the model. This can be a data frame containing the same group variables used in the .groups argument, and the start values.}
 
 \item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.}
 
 \item{output}{Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.}
 
-\item{est.name}{Name of the estimated y value. Used only if \code{est.name = TRUE}. Padrao: \code{"est"}.}
+\item{est.name}{Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}.}
 
 \item{replace}{If \code{TRUE}, models that don't converge on a grouped regression fit will be replaced by coefficients fitted using all data. Default: \code{FALSE}.}
 
-\item{keep_model}{If \code{TRUE}, a column containg lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.}
+\item{keep_model}{If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.}
 
-\item{global_start}{Optional argument. A vector or dataframe, with start values for the global fit regression used when  \code{"replace"} is \code{TRUE}.}
+\item{global_start}{Optional argument. A vector or data frame, with start values for the global fit regression used when  \code{"replace"} is \code{TRUE}.}
 
 \item{algorithm}{Algorithm to be used in the non-linear regression. It can be \code{"LM"} (Levenberg-Marquardt, more robust) or \code{"GN"} (Gauss-Newton, less robust, uses nls default algorithm). Default: \code{"LM"}.}
 }
 \value{
-A dataframe. Different dataframe options are available using the output argument.
+A data frame. Different data frame options are available using the output argument.
 }
 \description{
-With this function it's possible to fit non-linear regressions using Levenberg-Marquardt or Gauss-Newton algorithms by a grouping variable, and get a dataframe
+With this function it's possible to fit non-linear regressions using Levenberg-Marquardt or Gauss-Newton algorithms by a grouping variable, and get a data frame
 with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 }
 \details{
 This function Levenberg-Marquardt algorithm as default for fitting non-linear regression models.
 Also, with this function there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
-It's also possible to easily make fit miltiple regressions, specifying a grouping variable.
-In addition to that, the default output sets each coeffient as a column, making it easy to call coefficients by name or position
+It's also possible to easily make fit multiple regressions, specifying a grouping variable.
+In addition to that, the default output sets each coefficient as a column, making it easy to call coefficients by name or position
 when estimating values. The Levenberg-Marquardt fit uses \code{\link[minpack.lm]{nlsLM}}.
 }
 \examples{
@@ -49,7 +49,6 @@ library(dplyr)
 data("exfm14")
 head(exfm14)
 
-# Ajustar o model nao linear de Chapman e Richards para todos os exfm14
 # Fit Chapman & Richards non-linear model for dominant Height:
 nls_table(exfm14, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
           mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
@@ -60,7 +59,7 @@ nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
           .groups = "strata") \%>\% 
           as.data.frame
           
-# ou, using group_by
+# or, using group_by
 
 exfm14 \%>\% 
 group_by(strata) \%>\% 
@@ -78,7 +77,7 @@ tab_coef
 nls_table(exfm14, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
           mod_start = tab_coef,
           .groups = "strata" )
-# mod_start needs to be a dataframe in this case.
+# mod_start needs to be a data frame in this case.
 
 # It's possible to bind the coefficients to the original data,
 # to estimate y. We'll also estimate bias and rmse for this estimation:
@@ -118,7 +117,7 @@ nls_table(dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
           mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),algorithm="GN" )
          
 # If some regressions don't converge, it's possible to fill those NAs with
-# regression coeffients from a general fit, using the entire data: 
+# regression coefficients from a general fit, using the entire data: 
 nls_table(exfm14,dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
           mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
           .groups = "strata",

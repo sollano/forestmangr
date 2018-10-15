@@ -4,7 +4,7 @@
 \name{exfm9}
 \alias{exfm9}
 \title{Inventory data of an eucalyptus forest in minas gerais, Brazil}
-\format{A dataframe with 900 observations and 14 variables:
+\format{A data frame with 900 observations and 14 variables:
 \describe{
   \item{MAP}{map numbers}
   \item{PROJECT}{project number}

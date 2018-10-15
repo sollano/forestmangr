@@ -6,7 +6,7 @@
 #' data(exfm10)
 #' 
 #' @format
-#' A dataframe with 900 observations and 14 variables:
+#' A data frame with 900 observations and 14 variables:
 #' \describe{
 #'   \item{MAP}{map numbers}
 #'   \item{PROJECT}{project number}

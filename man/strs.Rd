@@ -17,10 +17,10 @@ strs(df, Yi, plot_area, strata_area, strata, .groups = NA, age = NA,
 
 \item{strata_area}{Quoted name of the strata area variable, or a numeric vector with the plot strata values. If there are more than 1 area values, it's possible to use a vector with all area values, like so:\code{c(14.4, 16.4, 14.2)}. The strata area values must be in hectares.}
 
-\item{strata}{Quoted name of the subdivision variable(s), also known as strata. If this argument is not supplied, the defined groups in the dataframe will be used, if they exist.}
+\item{strata}{Quoted name of the subdivision variable(s), also known as strata. If this argument is not supplied, the defined groups in the data frame will be used, if they exist.}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
-If this argument is \code{NA}, the defined groups in the dataframe will be used, if they exist. Default: \code{NA}.}
+If this argument is \code{NA}, the defined groups in the data frame will be used, if they exist. Default: \code{NA}.}
 
 \item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.}
 
@@ -35,7 +35,7 @@ If this argument is \code{NA}, the defined groups in the dataframe will be used,
 \item{tidy}{Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.}
 }
 \value{
-A list containing two dataframes, one with informations for each strata, and one with the stratified sampling results.
+A list containing two data frames, one with informations for each strata, and one with the stratified sampling results.
 }
 \description{
 Function for processing forest inventory data using stratified random sampling.

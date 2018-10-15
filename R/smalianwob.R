@@ -5,17 +5,17 @@
 #' This function has integration with dplyr, so it can be used inside a pipe, along with the
 #' \code{group_by} function.
 #' 
-#' @param df A dataframe.
+#' @param df A data frame.
 #' @param di Quoted name of the section diameter  variable, in centimeters.
 #' @param hi Quoted name of the section height  variable, in meters
 #' @param bt Quoted name of the bark thickness variable, in centimeters.
-#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
-#' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differenciate subdivisions of the data. 
-#' If this argument is \code{NA}, the defined groups in the dataframe will be used. Default: \code{NA}.
-#' @param di_mm_to_cm Boolean argument that, if \code{TRUE}, converts the di argument from milimiters to centimeters. Default: \code{FALSE}.
+#' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.
+#' @param .groups Optional argument. Quoted name(s) of additional grouping variables that can be added to differentiate subdivisions of the data. 
+#' If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.
+#' @param di_mm_to_cm Boolean argument that, if \code{TRUE}, converts the di argument from milliliters to centimeters. Default: \code{FALSE}.
 #' @param hi_cm_to_m Boolean argument that, if \code{TRUE}, converts the hi argument from centimeters to meters. Default: \code{FALSE}.
-#' @param bt_mm_to_cm Boolean argument that, if \code{TRUE}, converts the bt argument from milimiters to centimeters. Default: \code{FALSE}.
-#' @return Dataframe with volume values by section.
+#' @param bt_mm_to_cm Boolean argument that, if \code{TRUE}, converts the bt argument from milliliters to centimeters. Default: \code{FALSE}.
+#' @return Data frame with volume values by section.
 #' 
 #' @references 
 #' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.

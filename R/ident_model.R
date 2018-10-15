@@ -3,9 +3,9 @@
 #' @description 
 #' Function for using the Identity of a Model test, as described by Regazzi (1999).
 #'
-#' @param df a dataframe.
+#' @param df a data frame.
 #' @param factor Quoted name of the factor variable used to differentiate the data projects in the test.
-#' @param reduced_model Quoted or unquoted reduced model used in the test.  The variables mentioned in the model must exist in the provided dataframe. X and Y sides of the model must be separated by "~".
+#' @param reduced_model Quoted or unquoted reduced model used in the test.  The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".
 #' @param filter Optional argument. If supplied with levels present in \code{factor}, only these levels will be used in the test. \code{NA}.
 #' @param output Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,
 #' if \code{"plot"} a ggplot plot/object representing the test is created,
@@ -13,9 +13,9 @@
 #' a list is provided, with details on the dummies variables created, the reduced and complete models,
 #' the anova table and the plot. Default: \code{"table"}
 #' @param grey_scale If \code{TRUE} a grey scale will be used in the plots. Default: \code{FALSE}.
-#' @param signif Numeric value for the sifinificance level used in the test. Default: \code{0.05}.
+#' @param signif Numeric value for the significance level used in the test. Default: \code{0.05}.
 #' @param font font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for Arial Unicode MS. Default: \code{serif}.
-#' @return A dataframe, a ggplot object, or a list, varying according to the \code{output} argument.
+#' @return A data frame, a ggplot object, or a list, varying according to the \code{output} argument.
 #' 
 #' @references 
 #' Regazzi, A. J. (1999) ‘Teste para verificar a identidade de modelos de regressão e a igualdade de parâmetros no caso de dados de delineamentos experimentais’, Ceres, 46(266), pp. 383–409.
@@ -26,7 +26,7 @@
 #' data("exfm13")
 #' head(exfm13, 10)
 #' 
-#' # The objective is to know if the diameter's behaviour is similar among 3 species.
+#' # The objective is to know if the diameter's behavior is similar among 3 species.
 #' # For this we'll use a quadratic model. We'll use nitrogen (N) as our X variable.
 #'
 #' ident_model(exfm13, "species", dbh ~ N + N2)
@@ -43,8 +43,8 @@
 #' # And this gives us additional information on the test:
 #' ident_model(exfm13, "species", dbh ~  N + N2, output = "full")
 #' 
-#' # Looking at the plot, it seemes that 2 species are behaving very similar, while
-#' # the Pequi species is different from the other 2. We can confirm this by runing
+#' # Looking at the plot, it seems that 2 species are behaving very similar, while
+#' # the Pequi species is different from the other 2. We can confirm this by running
 #' # the test in a paired fashion, using the filter argument:
 #'
 #' ident_model(exfm13, "species", dbh ~  N + N2,
@@ -59,7 +59,7 @@
 #' ident_model(exfm13, "species", dbh ~  N + N2, 
 #' filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
 #'
-#' # As we imagined, a single model can be used to descibre the behaviour of
+#' # As we imagined, a single model can be used to describe the behavior of
 #' # the "Sucupira-preta" and "Vinhatico" species,
 #' # and a second model is needed to explain the Pequi Variable.
 #'

@@ -6,7 +6,7 @@
 #' data(exfm7)
 #' 
 #' @format
-#' A dataframe with 11 observations and 3393 variables:
+#' A data frame with 11 observations and 3393 variables:
 #' \describe{
 #'   \item{MAP}{map numbers}
 #'   \item{PROJECT}{name of project}
@@ -18,7 +18,7 @@
 #'   \item{TH}{total height, in meters}
 #'   \item{hi}{height of sections, in meters}
 #'   \item{di_wb}{diameter of sections with bark, in centimeters}
-#'   \item{bark_t}{bark of thickness, in millimiters}
+#'   \item{bark_t}{bark of thickness, in millimeters}
 #' }
 #' @name exfm7
 #' @docType data
