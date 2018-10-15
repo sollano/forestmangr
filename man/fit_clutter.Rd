@@ -57,6 +57,11 @@ Clutter, J. L. (1963) ‘Compatible Growth For Loblolly by the Southeastern’, 
 Sullivan, A. D. and Clutter, J. L. (1972) ‘A Simultaneous Growth and Yield for Loblolly Pine’, Forest Science, 18(1), pp. 76–86.
 Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 }
+\seealso{
+other sampling functions: 
+  \code{\link{est_clutter}} for estimating Clutter's Growth and Yield model variables, and
+  \code{\link{classify_site}} for classifying data according to site.
+}
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}
 }

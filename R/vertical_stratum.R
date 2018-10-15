@@ -23,6 +23,8 @@
 #'
 vertical_stratum <- function(df, th ){
   # ####
+  vert.strat<-NULL
+  # ####
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
@@ -48,10 +50,10 @@ vertical_stratum <- function(df, th ){
   df %>%
     dplyr::mutate(vert.strat = dplyr::case_when(
       
-      !!th_sym <= (mean(!!th_sym, na.rm=T) - stats::sd(!!th_sym, na.rm=T) )  ~ "Inferior",
+      !!th_sym <= (mean(!!th_sym, na.rm=T) - stats::sd(!!th_sym, na.rm=T) )  ~ "Lower",
       !!th_sym >= (mean(!!th_sym, na.rm=T) - stats::sd(!!th_sym, na.rm=T) ) & 
-        !!th_sym < (mean(!!th_sym, na.rm=T) + stats::sd(!!th_sym, na.rm=T) ) ~ "Medium",
-      !!th_sym >= (mean(!!th_sym, na.rm=T) + stats::sd(!!th_sym, na.rm=T) ) ~ "Superior"
+        !!th_sym < (mean(!!th_sym, na.rm=T) + stats::sd(!!th_sym, na.rm=T) ) ~ "Middle",
+      !!th_sym >= (mean(!!th_sym, na.rm=T) + stats::sd(!!th_sym, na.rm=T) ) ~ "Upper"
       
     )) %>% 
     dplyr::select(vert.strat, dplyr::everything() )

@@ -56,9 +56,6 @@ head(exfm11)
 # for the percentage residuals:
 resid_plot(exfm11, "TH", "TH_EST1")
 
-# It's possible to change the size of points in a scatter plot with point_size:
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", point_size=1)
-
 # It's possible to get other types of plots, with the type argument:
 resid_plot(exfm11, "TH", "TH_EST1", type = "histogram")
 resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve")
@@ -67,20 +64,12 @@ resid_plot(exfm11, "TH", "TH_EST1", type = "versus")
 # It's possible to add a factor variable as color in the plots:
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA")
 
-# It's possible to change the color legend position: 
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", legend_pos="top")
-
 # A colored plot is also available:
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", grey_scale=FALSE)
 
 # It's possible to change xlabels and color labels:  
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",
 xlab="Total Height (m)", clab="Strata")
-
-# It's possible to change the font of the plot. R natively supports
-# sans, serif and mono, but these can be expanded using packages:
-resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="sans")
-resid_plot(exfm11, "TH", "TH_EST1", type = "histogram_curve", font="mono")
 
 # If there are more estimated values variables, they can also be used
 # in the comparison:
@@ -90,10 +79,6 @@ resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3")
 # It's possible to rearrange the plots with ncol and nrow:
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", ncol=1)
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", nrow=2)
-
-# It's possible to specify the y axis limit with lim_y:
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 80)
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", "TH_EST3", lim_y = 40)
 
 # It's possible to get the residuals table used to generate these plots, with res_table=TRUE:
 head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = TRUE) )

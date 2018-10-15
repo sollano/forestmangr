@@ -54,6 +54,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
 guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher", start_chap = c(b0=23, b1=0.03, b2 = 1.3), start_bailey = c( b0=3, b1=-130, b2 = 1.5), round_classes = FALSE, font = "serif", grey_scale = TRUE, output = "plot"){
+  # ####
+  C<-classe<-nivel<-DH_EST<-DH_CURVE<-NULL
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -121,7 +123,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     stop("Length of 'start_chap' must be 3", call.=F)
   }else if(! is.vector(start_chap) ){
     stop("'start_chap' must be a named vector following the model 'c(b0=a,b1=b,b2=c) ", call.=F)
-  }else if(all(names(start_bailey) !=c("b0","b1","b2")) ){
+  }else if(all(names(start_chap) !=c("b0","b1","b2")) ){
     stop("'start_chap' must be a named vector following the pattern 'c(b0=a,b1=b,b2=c) ", call.=F)
   }
   
@@ -223,9 +225,9 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     # ajuste do modelo
     reg <- minpack.lm::nlsLM( chapman_model, DF, start = start_chap )
 
-    B0 <- coef(reg)[[1]]
-    B1 <- coef(reg)[[2]]
-    B2 <- coef(reg)[[3]]
+    B0 <- stats::coef(reg)[[1]]
+    B1 <- stats::coef(reg)[[2]]
+    B2 <- stats::coef(reg)[[3]]
     
     
     # DH Estimado
@@ -242,9 +244,9 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     # ajuste do modelo
     reg <- minpack.lm::nlsLM( bailey_model, DF, start = start_bailey )
     
-    B0 <- coef(reg)[[1]]
-    B1 <- coef(reg)[[2]]
-    B2 <- coef(reg)[[3]]
+    B0 <- stats::coef(reg)[[1]]
+    B1 <- stats::coef(reg)[[2]]
+    B2 <- stats::coef(reg)[[3]]
     
     
     # DH Estimado
@@ -258,7 +260,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
   
   
   ## Correlacao
-  correl <- cor(DF[[DH]], DF[["DH_EST"]])
+  correl <- stats::cor(DF[[DH]], DF[["DH_EST"]])
   
   ## Bias
   bias_porc <- sum(DF[[DH]] - DF[["DH_EST"]])/nrow(DF) * 100
@@ -302,7 +304,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
   
   # os primeiros limites sao calculados separadamente do loop
   list[[1]] <- data.frame(
-    classe = as.character(as.roman(1)),
+    classe = as.character(utils::as.roman(1)),
     
     nivel = c("inf","sup"), 
     
@@ -317,7 +319,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
   for(i in 2:(NC)){
     
     list[[i]] <- data.frame(
-      classe = as.character(as.roman(i)),
+      classe = as.character(utils::as.roman(i)),
       nivel = c("inf","sup"), 
       limites = c(list[[i-1]] [[3]] [[2]],
                   list[[i-1]] [[3]] [[2]] + intervalo),

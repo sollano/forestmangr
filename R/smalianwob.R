@@ -45,6 +45,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
 smalianwob <- function(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE, bt_mm_to_cm=FALSE ){
+  # ####
+  di_wob<-CSA_WOB<-NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -162,8 +164,8 @@ smalianwob <- function(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm=FALSE, hi
   df %>% 
     dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
     dplyr::mutate(
-        di_sc = (!!di_sym)-2*(!!bt_sym),
-        CSA_WOB = (di_sc^2* pi) / 40000 , 
+        di_wob = (!!di_sym)-2*(!!bt_sym),
+        CSA_WOB = (di_wob^2* pi) / 40000 , 
         VWOB   = ((CSA_WOB + dplyr::lead(CSA_WOB) )/2 ) * (dplyr::lead(!!hi_sym) - (!!hi_sym) ) )  %>% 
     dplyr::ungroup()
 }

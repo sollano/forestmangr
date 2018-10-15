@@ -1,5 +1,5 @@
 #' @title 
-#' Estimate future and present basal area values of Clutter's Growth and Yield Model
+#' Estimate future and present basal area, volume, TCA, CMI and MMI values of Clutter's Growth and Yield Model
 #' @description 
 #' This function estimates the present the present value of basal area for each class
 #' using either the class' mean, or a linear quadratic model, and then uses it's value to calculate
@@ -10,10 +10,14 @@
 #' @param basal_area Quoted name for the basal area variable.
 #' @param site Quoted name for the average site variable.
 #' @param category Quoted name for the category variable.
-#' @param a0 Numeric value for the a0 coefficient from Clutter's growth and yield model.
-#' @param a1 Numeric value for the a1 coefficient from Clutter's growth and yield model.
+#' @param coeffs Numeric vector or a data frame with the fitted values of Clutter's growth and yield model. It must be a named vector, with b0,b1,b2,b3,a0 and a1 as names. a1 is not obligatory.
 #' @param method Method used for estimating the present basal area of each class. It can either be the class' average basal area \code{"average"}, or an estimated value from a linear quadratic model of site as a function of basal area \code{"model"}. Default: \code{"average"}.
-#' @return A data frame with the estimated values of basal area.
+#' @param output Type of output the function should return. This can either be \code{"plot"}, for the estimation plots, \code{"table"}, for a data frame with the estimated values, and \code{all} for a list with the plot and 2 more data frames. \code{"table"}.
+#' @param annual_increment If \code{TRUE}, changes the labels from Mean Monthly Increment (MMI) and Current Monthly Increment (CMI) to Mean Annual Increment (MAI) and Current Annual Increment (CAI). Default \code{FALSE}.
+#' @return A data frame, a ggplot object or a list, according to output.
+#' @seealso other sampling functions: 
+#'   \code{\link{fit_clutter}} for fitting Clutter's Growth and Yield model, and
+#'   \code{\link{classify_site}} for classifying data according to site.
 #' @export
 #' 
 #' @examples
@@ -30,22 +34,26 @@
 #' ex_class <- classify_site(exfm17, "S", 3, "plot")
 #' head(ex_class ,15)
 #' 
-#' # Estimate basal area using the average basal area as the initial basal area:
-#' ex_est<-est_B2_clutter(ex_class,20:125, "B","S","category_",clutter$a0,clutter$a1,"average")
-#' head(ex_est, 15)
+#' # Estimate basal area using the average basal area as the initial basal area,
+#' # volume,  Mean Monthly Increment (MMI) and Current Monthly Increment (CMI)
+#' # values using Clutter's model:
+#' est_clutter(ex_class,20:125, "B","S","category_",clutter,"average")
+#' 
+#' # For a more detailed output, including a plot, use output="all":
+#' est_clutter(ex_class,20:125, "B","S","category_",clutter, output="all")
+#' 
 #'
 #' # Estimate basal area using an estimated basal area as the initial basal area:
-#' ex_est<-est_B2_clutter(ex_class,20:125,"B","S","category_",clutter$a0,clutter$a1,"model") 
-#' head(ex_est, 15)
+#' est_clutter(ex_class,20:125,"B","S","category_",clutter,"model") 
 #' 
-#' #' Estimate basal area using an estimated basal area as the initial basal area:
-#' ex_est<-est_B2_clutter(ex_class,"age","B","S","category_", clutter$a0,clutter$a1,"model") 
-#' head(ex_est, 15)
-#' 
+#' # age can be a variable:
+#' est_clutter(ex_class,"age","B","S","category_", clutter,"model")  
 #'   
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
-est_B2_clutter <- function(df, age, basal_area, site, category, a0, a1, method = "average" ){
+est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "average", output="table", annual_increment=FALSE ){
+  # ####
+  LN_B2_EST<-Age<-V2_EST<-CMI<-MMI<-category_<-CAI<-MAI<-TAC<-TAC_Y<-Index<-Value<-NULL
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -65,8 +73,13 @@ est_B2_clutter <- function(df, age, basal_area, site, category, a0, a1, method =
     stop("'age' must be a numeric vector or a variable name2", call.=F)
   }else if(is.character(age) & length(age)!=1){
     stop("'age' must be a numeric vector or a variable name3", call.=F)
+  }else if(is.numeric(age)){
+    age_name <- "Age"
+    age_sym <- rlang::sym("Age")
   }else if( is.character(age)){
     if(forestmangr::check_names(df, age)==F)  stop(forestmangr::check_names(df, age, boolean=F), call.=F)
+    age_name <- age
+    age_sym <- rlang::sym(age)
     age <- df[[age]]
   }
   
@@ -93,8 +106,23 @@ est_B2_clutter <- function(df, age, basal_area, site, category, a0, a1, method =
     stop(forestmangr::check_names(df, site, boolean=F), call.=F)
   }
   
-
-   
+  # Se coeffs nao for numerico, nao for de tamanho 3, ou nao estiver dentro dos padroes, parar
+  if(!length(coeffs)%in% c(5,6)){
+    stop("Length of 'coeffs' must be 5 or 6", call.=F)
+  }else if(! is.vector(coeffs) & ! is.data.frame(coeffs) ){
+    stop("'coeffs' must be a named vector or data frame following the model 'c(b0=a,b1=b,b2=c,b3=d,a0=e,a1=f) ", call.=F)
+  }else if(length(coeffs)==5){
+    if(all(names(coeffs) !=c("b0","b1","b2","b3","a0")) ){
+      stop("'coeffs' must be a named vector or data frame following the pattern 'c(b0=a,b1=b,b2=c,b3=d,a0=e) ", call.=F)
+    }
+    # add a1 as zero, if the dataframe doesn't have it.
+    coeffs$a1 <- 0
+    
+  }else if(length(coeffs)==6){
+    if(all(names(coeffs) !=c("b0","b1","b2","b3","a0","a1")) ){
+      stop("'coeffs' must be a named vector or data frame following the pattern 'c(b0=a,b1=b,b2=c,b3=d,a0=e,a1=f) ", call.=F)
+    }
+  }
   # se category nao for fornecido nao for character, ou nao for um nome de variavel,ou nao for de tamanho 1, parar
   if(  missing(category) || is.null(category) || is.na(category) || category == "" ){  
     #stop("category not set", call. = F)
@@ -108,35 +136,35 @@ est_B2_clutter <- function(df, age, basal_area, site, category, a0, a1, method =
     stop(forestmangr::check_names(df, category, boolean=F), call.=F)
   }
   
-  # Se a0 nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
-  if(!is.numeric( a0 )){
-    stop( "'a0' must be numeric", call.=F)
-  }else if(length(a0)!=1){
-    stop("Length of 'a0' must be 1", call.=F)
-  }
-  
-  # Se 01 nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
-  if(!is.numeric( 01 )){
-    stop( "'01' must be numeric", call.=F)
-  }else if(length(01)!=1){
-    stop("Length of '01' must be 1", call.=F)
-  }
-  
   # Se method nao for character,ou nao for de tamanho 1, parar
   if(!is.character( method )){
     stop( "'method' must be character", call.=F)
   }else if(length(method)!=1){
     stop("Length of 'method' must be 1", call.=F)
   }else if(! method %in% c('model', 'average') ){ 
-  stop("'method' must be equal to 'model' ou 'average' ", call. = F) 
+    stop("'method' must be equal to 'model' ou 'average' ", call. = F) 
   }
   
+  # Se output nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( output )){
+    stop( "'output' must be character", call.=F)
+  }else if(length(output)!=1){
+    stop("Length of 'output' must be 1", call.=F)
+  }else if(! output %in% c('table', 'plot', 'all') ){ 
+    stop("'output' must be equal to 'table', 'plot' or 'all' ", call. = F) 
+  }
   
   site_sym <- rlang::sym(site)
   basal_area_sym <- rlang::sym(basal_area)
   category_sym <- rlang::sym(category)
   
-  # ####
+  # se annual_increment nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! annual_increment %in% c(TRUE, FALSE) ){ 
+    stop("'annual_increment' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(annual_increment)!=1){
+    stop("Length of 'annual_increment' must be 1", call.=F)
+  }
+  
 
   tab_site_medio <- df %>%
     dplyr::group_by(!!category_sym) %>% 
@@ -171,9 +199,9 @@ est_B2_clutter <- function(df, age, basal_area, site, category, a0, a1, method =
     
     reg_B2_inicial <- stats::lm(B ~ Site + Site_quad)
     
-    tab_coef_B2 <- data.frame(b0 = coef(reg_B2_inicial)[[1]],
-                              b1 = coef(reg_B2_inicial)[[2]],
-                              b2 = coef(reg_B2_inicial)[[3]] )
+    tab_coef_B2 <- data.frame(b0 = stats::coef(reg_B2_inicial)[[1]],
+                              b1 = stats::coef(reg_B2_inicial)[[2]],
+                              b2 = stats::coef(reg_B2_inicial)[[3]] )
     
     
     ## Em seguida, estima-se o primeiro valor de area basal,
@@ -238,8 +266,8 @@ est_B2_clutter <- function(df, age, basal_area, site, category, a0, a1, method =
     } else{
       
       list2[[i]]  <- list2[[i-1]] * (EST$Age[i] / EST$Age[i+1] )  + 
-        a0 * (1 - (EST$Age[i] / EST$Age[i+1]  ) ) + 
-        a1 * (1 - (EST$Age[i] / EST$Age[i+1]  ) ) * EST$Site[i]  
+        coeffs$a0 * (1 - (EST$Age[i] / EST$Age[i+1]  ) ) + 
+        coeffs$a1 * (1 - (EST$Age[i] / EST$Age[i+1]  ) ) * EST$Site[i]  
       
       
       
@@ -250,7 +278,79 @@ est_B2_clutter <- function(df, age, basal_area, site, category, a0, a1, method =
   ## Agora converte-se a lista em um vetor, e salva-se o vetor como
   ## uma variavel no dataframe:
   EST$LN_B2_EST <- as.vector(do.call(rbind, list2))
-  EST$B2_EST <- exp(EST$LN_B2_EST)
-  return(EST)
+  #EST$B2_EST <- exp(EST$LN_B2_EST)
+  #return(EST)
+
+  final_table <- EST %>% 
+    dplyr::group_by(!!category_sym) %>% 
+    dplyr::mutate(
+      B2_EST = exp(LN_B2_EST),
+      V2_EST = exp(coeffs$b0 + 
+                     (coeffs$b1 * 1 / Age) + 
+                     coeffs$b2 * Site + 
+                     coeffs$b3 * LN_B2_EST  ),
+      CMI = abs(V2_EST - dplyr::lag(V2_EST) ),
+      MMI = V2_EST/ Age,
+      CMI_MMI = CMI - MMI) 
+  
+  itc_table <- final_table  %>% 
+    dplyr::group_by(!!category_sym) %>% 
+    dplyr::filter(round(CMI,1) == round(MMI,1) ) %>% 
+    dplyr::summarise( 
+      TAC = mean(Age, na.rm=T),
+      TAC_Y = mean(MMI, na.rm=T)       )  
+  
+  final_table <- final_table %>%  dplyr::rename(!!age_name := Age)
+  
+  if(annual_increment){
+    
+    final_table <- final_table %>% dplyr::rename(CAI=CMI,MAI=MMI)
+    
+    suppressMessages(
+      plot_table <- dplyr::left_join(final_table,itc_table ) %>% 
+        stats::na.omit() %>% 
+        dplyr::select(Category=category_, CAI, MAI, age_name, TAC, TAC_Y) %>% 
+        tidyr::gather(Index,Value, CAI, MAI) )
+  }else if(annual_increment==FALSE){
+    
+    suppressMessages(
+      plot_table <- dplyr::left_join(final_table,itc_table ) %>% 
+        stats::na.omit() %>% 
+        dplyr::select(Category=category_, CMI, MMI, age_name, TAC, TAC_Y) %>% 
+        tidyr::gather(Index,Value, CMI, MMI) )
+  }
+  
+  
+  
+  grafico <- ggplot2::ggplot(plot_table, ggplot2::aes_string( x = age_name, color = "Index" ) ) + 
+    ggplot2::facet_wrap(~Category) + 
+    ggplot2::geom_line(ggplot2::aes_string(y = "Value"), size = 1.5) +
+    ggplot2::geom_point(ggplot2::aes_string(x = "TAC", y = "TAC_Y"), color = "black")+
+    ggplot2::geom_text(ggplot2::aes_string(x = "TAC", y = "TAC_Y", label = "TAC"),
+                       vjust = 0, 
+                       nudge_y = 0.2, 
+                       color = "black", size = 5)+
+    ggplot2::labs(y = "Production") +
+    ggthemes::theme_igray(base_family = "serif") +
+    ggplot2::theme(legend.position = "bottom",
+                   legend.title = ggplot2::element_text(size=12,face="bold"),
+                   legend.text = ggplot2::element_text(size=12),
+                   panel.grid.major = ggplot2::element_blank(), 
+                   panel.grid.minor = ggplot2::element_blank(),
+                   panel.border = ggplot2::element_blank(),
+                   axis.title   = ggplot2::element_text(size = 17), 
+                   axis.text    = ggplot2::element_text(size = 15),
+                   axis.line.x = ggplot2::element_line(color="black"),
+                   axis.line.y = ggplot2::element_line(color="black"),
+                   strip.text.x = ggplot2::element_text(size = 19) )
+  
+  
+  if(output=="table"){
+    return(final_table)
+  }else if(output=="plot"){
+    return(grafico)
+  }else if(output=="all"){
+    return(list(itc_plot=grafico,plot_table=plot_table,tac_summary=itc_table,final_table = final_table))
+  }
   
 }

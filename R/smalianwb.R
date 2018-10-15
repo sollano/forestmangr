@@ -43,6 +43,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
 smalianwb <- function(df, di, hi, tree, .groups = NA, di_mm_to_cm=FALSE, hi_cm_to_m=FALSE ){
+  # ####
+  CSA_WB <- NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

@@ -59,6 +59,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=TRUE ){
+  # ####
+  Nj<-N<-Pj<-Yj<-Pj_Sj2<-Pj_Sj<-Pj_Yj<-EPj_Sj<-Y<-nj<-EPj_Sj2<-t_rec<-n_recalc<-nj_optimal<-Sy<-Abserror<-AREA_PC<-Yhat<-Total_Error<-NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -254,7 +256,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
     dplyr::summarise(
       AGE  = mean(!!age_sym),
       AREA_PC= mean(!!plot_area_sym),
-      nj     = n() ,
+      nj     = dplyr::n() ,
       n      = nrow(x_),
       Nj     = mean(Nj),
       N      = mean(N),
@@ -271,10 +273,10 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
       EPj_Sj   =   sum(Pj_Sj), 
       Y        =   sum(Pj_Yj), # media estratificada (ponderada)     
       VC       = EPj_Sj / Y * 100, # Coeficiente de variancia
-      t        = qt(alpha/2, df = sum(nj)-1, lower.tail = FALSE),     # a seguir, o t sera calculado utilizando o n calculado, de forma direta
+      t        = stats::qt(alpha/2, df = sum(nj)-1, lower.tail = FALSE),     # a seguir, o t sera calculado utilizando o n calculado, de forma direta
       t_rec    = ifelse(pop=="inf",
-          qt(alpha/2, df = ceiling( t^2 * EPj_Sj^2 / (error*Y/100)^2 )-1, lower.tail = FALSE),
-          qt(alpha/2, df = ceiling( t^2 * EPj_Sj^2 / ( (error*Y/100)^2 + (t^2 * EPj_Sj2 / N )  ) )-1, lower.tail = FALSE)
+          stats::qt(alpha/2, df = ceiling( t^2 * EPj_Sj^2 / (error*Y/100)^2 )-1, lower.tail = FALSE),
+          stats::qt(alpha/2, df = ceiling( t^2 * EPj_Sj^2 / ( (error*Y/100)^2 + (t^2 * EPj_Sj2 / N )  ) )-1, lower.tail = FALSE)
                    ),
       n_recalc = ifelse(pop=="inf",
             ceiling( t_rec^2 * EPj_Sj^2 / (error*Y/100)^2 ),

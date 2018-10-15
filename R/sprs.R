@@ -57,6 +57,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
+  # ####
+  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-NULL
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar
@@ -192,13 +194,13 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
     dplyr::group_by(!!!.groups_syms, add=T) %>%
     dplyr::summarise(
       age        = mean(!!age_sym,na.rm=T), # usa-se media pois os valores estao repetidos
-      n            = n() , # número de amostras
+      n            = dplyr::n() , # número de amostras
       N            = mean(!!total_area_sym,na.rm=T) / ( mean(!!plot_area_sym,na.rm=T)/10000 ), 
       VC           = stats::sd(!!Yi_sym,na.rm=T) / mean(!!Yi_sym,na.rm=T) * 100, # Calculo do coeficiente de variacao
-      t            = qt(alpha/2, df = n-1, lower.tail = FALSE) ,
+      t            = stats::qt(alpha/2, df = n-1, lower.tail = FALSE) ,
       t_rec        = ifelse(pop=="inf", 
-                            qt(alpha/2, df = ceiling( t^2 * VC^2 / error^2) - 1, lower.tail = FALSE)  ,
-                            qt(alpha/2, df = ceiling( t^2 * VC^2 / ( error^2 +(t^2 * VC^2 / N) ) ) - 1, lower.tail = FALSE) ) ,
+                            stats::qt(alpha/2, df = ceiling( t^2 * VC^2 / error^2) - 1, lower.tail = FALSE)  ,
+                            stats::qt(alpha/2, df = ceiling( t^2 * VC^2 / ( error^2 +(t^2 * VC^2 / N) ) ) - 1, lower.tail = FALSE) ) ,
       n_recalc     = ifelse(pop=="inf",
                             ceiling( t_rec ^2 * VC^2 / error^2 ) ,
                             ceiling( t_rec ^2 * VC^2 / ( error^2 +(t_rec^2 * VC^2 / N) ) ) ),

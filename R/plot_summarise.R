@@ -63,6 +63,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
 plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vwb, vwob, dh, age, dec_places = 4) {
+  # ####
+  CSA<-Indv<-G<-NULL
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -261,7 +263,7 @@ plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vw
       q                 = sqrt(mean(CSA, na.rm=T) * 40000 / pi),
       !!th_name         := mean(!!th_sym, na.rm=T),
       !!dh_name         := mean(!!dh_sym),
-      Indv              = n(),
+      Indv              = dplyr::n(),
       Indvha            = Indv* 10000/(!!plot_area_sym),
       G                 = sum(CSA, na.rm=T),
       G_ha              = G * 10000/(!!plot_area_sym),

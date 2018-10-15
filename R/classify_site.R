@@ -5,11 +5,14 @@
 #' 
 #' @param df A data frame.
 #' @param site Quoted name for the site variable.
-#' @param nc number of categories used to classify the data. If \code{3}, a additional column will be created with levels Inferior, Medium and Superior, referencing the 3 categories. If not, only numbers will be used to differentiate the categories. Default: \code{3}.
+#' @param nc number of categories used to classify the data. If \code{3}, a additional column will be created with levels Lower, Middle and Upper, referencing the 3 categories. If not, only numbers will be used to differentiate the categories. Default: \code{3}.
 #' @param plot Quoted name for the plot variable.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
 #' @return A data frame classified based on the site index.
 #' 
+#' @seealso other sampling functions: 
+#'   \code{\link{fit_clutter}} for  fitting Clutter's Growth and Yield, and
+#'   \code{\link{est_clutter}} for estimating Clutter's Growth and Yield model variables.
 #' @export
 #' 
 #' @examples 
@@ -26,6 +29,7 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
 classify_site <- function(df, site, nc=3, plot, .groups=NA){
+  site_mean<-NULL
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -201,7 +205,7 @@ classify_site <- function(df, site, nc=3, plot, .groups=NA){
   # Se forem 3 categorias, adicionar os nomes baixa media e alta as classes:
   if(nc ==3) {
     
-    aux3$category_ <- car::recode(aux3$category, " 1 = 'Inferior'; 2 = 'Medium'; 3 = 'Superior' "  )
+    aux3$category_ <- car::recode(aux3$category, " 1 = 'Lower'; 2 = 'Middle'; 3 = 'Upper' "  )
     
   }
   

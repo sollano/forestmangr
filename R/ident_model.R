@@ -73,6 +73,8 @@
 
 ident_model <- function(df, factor, reduced_model, filter = NA, output = "table", grey_scale = FALSE, signif = 0.05, font="serif" ){
   # ####
+  ..eq.label..<-..rr.label..<-NULL
+  # ####
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
@@ -98,7 +100,7 @@ ident_model <- function(df, factor, reduced_model, filter = NA, output = "table"
     stop("reduced_model not set", call. = F) 
   }else if(is.character(reduced_model)){
    reduced_model <- stats::as.formula(reduced_model)
-  }else if(!is(reduced_model, "formula") ){
+  }else if(!methods::is(reduced_model, "formula") ){
     stop("'reduced_model' must be a character or a formula containing a model", call.=F)
   }
   
@@ -320,7 +322,7 @@ ident_model <- function(df, factor, reduced_model, filter = NA, output = "table"
   QMReducao <- round(SQ_reducao / reducao_gl, 4)
   QMResiduo <- round(SQRes_comp / residuo_gl, 4)
   F_regazzi <- round(QMReducao / QMResiduo, 2)
-  F_tabelado <- round(qf(p = SIGNIF, df1 = reducao_gl , df2 = residuo_gl, lower.tail = F ), 2)
+  F_tabelado <- round(stats::qf(p = SIGNIF, df1 = reducao_gl , df2 = residuo_gl, lower.tail = F ), 2)
   p_valor <- stats::pf(F_regazzi , df1 = reducao_gl , df2 = residuo_gl, lower=F)
   # resultado <- ifelse(F_tabelado > F_regazzi, "*", "ns")
   resultado <- ifelse(p_valor < SIGNIF, "*", "ns")

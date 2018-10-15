@@ -42,6 +42,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 huberwb <- function(df, di, section_length, tree, .groups = NA, di_mm_to_cm = FALSE){
+  # ####
+  CSA_WB <- NULL
   # Checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

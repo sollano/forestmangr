@@ -26,6 +26,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
 average_tree_curve <- function(df, d, dbh, h, th, facet=NA){
+  # ####
+  ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th<-NULL
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

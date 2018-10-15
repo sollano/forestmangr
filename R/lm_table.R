@@ -83,6 +83,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE){
+  # ####
+  dat<-Reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
   # Checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -99,7 +101,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     stop("model not set", call. = F) 
   }else if(is.character(model)){
     model <- stats::as.formula(model)
-  }else if(!is(model, "formula") ){
+  }else if(!methods::is(model, "formula") ){
     stop("'model' must be a character or a formula containing a model", call.=F)
   }
   
@@ -142,12 +144,14 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   # ####
   
   #Extrair o y do model
-  Y <- all.vars( formula(model)[[2]] )
+  Y <- all.vars( stats::formula(model)[[2]] )
   
   # converte model para formula
-  mod <- formula(model)
+  mod <- stats::formula(model)
   
   tidy_ <- function(x){
+    estimate<-b<-NULL
+    
     tibble::tibble(b=broom::tidy(x)$term, # criamos um data frame que tem apenas as colunas dos betas e seus valores
            estimate=broom::tidy(x)$estimate ) %>% 
       dplyr::mutate(b = factor(b, labels=0:(length(b)-1) ) ) %>% # mudamos os nomes dos coeficientes para bn
@@ -167,18 +171,18 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   x <- df %>% 
     dplyr::ungroup() %>% 
     dplyr::group_by( !!!.groups_syms ) %>% 
-    tidyr::nest()  %>% 
-    dplyr::mutate(Reg = purrr::map(data, ~stats::lm(mod, data =., na.action = na.exclude ) ),
+    tidyr::nest(.key="dat")  %>% 
+    dplyr::mutate(Reg = purrr::map(dat, ~stats::lm(mod, data =., na.action = na.exclude ) ),
            Coefs  = purrr::map(Reg, tidy_   ),
            Qualid = purrr::map(Reg, glance_ ),
-           Res = purrr::map(Reg, resid),
-           est = purrr::map2(Reg, data, predict) ) %>% 
+           Res = purrr::map(Reg, stats::resid),
+           est = purrr::map2(Reg, dat, stats::predict) ) %>% 
     dplyr::ungroup()
   
   x$A <- NULL 
   
   # tirar o ln do est se o y do model tiver ln
-  if( any( grepl("^LN|LOG", formula(model)[2], ignore.case = T ) ) ){
+  if( any( grepl("^LN|LOG", stats::formula(model)[2], ignore.case = T ) ) ){
     
     x <- x %>% dplyr::mutate(est = purrr::map(est, exp) ) 
     
@@ -190,14 +194,14 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     # table ira resultar em uma tabela com os coeficientes e as variaveis de qualidade
     y <-  x %>% 
       tidyr::unnest(Coefs, Qualid, .drop = F) %>% 
-      dplyr::select(-data,-Res,-est)
+      dplyr::select(-dat,-Res,-est)
     
     
   }else if(output == "merge"){
     
     # Merge ira unir os coeficientes aos dados originais
     y <- x %>% 
-      tidyr::unnest(data, .drop = F) %>% 
+      tidyr::unnest(dat, .drop = F) %>% 
       tidyr::unnest(Coefs, Qualid ) %>% 
       dplyr::select(-est, -Res)
     
@@ -205,7 +209,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     
     #est ou estimate ira estimar a variavel y e uni-la aos dados originais
     y <- x %>% 
-      tidyr::unnest(data, est, .drop = F) %>% 
+      tidyr::unnest(dat, est, .drop = F) %>% 
       dplyr::select(- dplyr::one_of( c("Coefs", "Qualid", "Res", "est" )), est )   # passar est para final da tabela
     
   }else if( output == "nest" ){

@@ -53,6 +53,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
 diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, species=NA, volume=NA, NI_label="NI", cc_to_column=FALSE, G_to_cc=FALSE, cctc_ha=TRUE, keep_unused_classes=FALSE){
+  # ####
+  AREA<-A<-CC<-NumIndv<-g<-.<-G_f<-NI<-VOL<-NULL
   # checagem de variaveis ####
 
   # ci precisa ser numerico e de tamanho 1
@@ -211,7 +213,7 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
       g = pi * (!!dbh_sym)^2 / 40000   ) %>%  # Calcular area seccional
     dplyr::group_by(!!!species_sym, CC ) %>% # Agrupar e calcular o numero de individuos, e n de individuos por ha
     dplyr::summarise(
-      NumIndv=n(),
+      NumIndv=dplyr::n(),
       IndvHA = round( NumIndv / (plot_area_num/10000 * nplot ),  1 ),
       G = sum(g),
       G_ha = sum(g) / (plot_area_num/10000 * nplot ),

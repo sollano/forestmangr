@@ -108,6 +108,8 @@
 
 
 nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.name = "est", replace = FALSE, keep_model = FALSE, global_start, algorithm="LM") {
+  # ####
+  dat<-Reg<-Coefs<-B<-.<-est<-data_n<-est_n<-data_na<-NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -124,7 +126,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     stop("model not set", call. = F) 
   }else if(is.character(model)){
     model <- stats::as.formula(model)
-  }else if(!is(model, "formula") ){
+  }else if(!methods::is(model, "formula") ){
     stop("'model' must be a character or a formula containing a model", call.=F)
   }
   
@@ -199,6 +201,8 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
   
   # Criar funcao customizada que retira os betas colocando cada um em uma coluna
   tidy_ <- function(x) {
+    estimate<-b<-NULL
+    
     tibble::tibble(b = broom::tidy(x)$term, estimate = broom::tidy(x)$estimate) %>% 
       dplyr::mutate(b = factor(b, labels = 0:(length(b) - 1))) %>% 
       tidyr::spread(b, estimate, sep = "")
@@ -260,9 +264,9 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
       dplyr::ungroup() %>% 
       dplyr::mutate(B = "dummy") %>% 
       dplyr::group_by(!!rlang::sym("B")) %>% 
-      tidyr::nest() %T>% #%>% 
+      tidyr::nest(.key="dat") %T>% #%>% 
       {options(warn=-1)} %>% 
-      dplyr::mutate(Reg = purrr::map(data, ~safe_nls( mod, ., mod_start_mean, na.action=na.exclude )[[1]]  )  #,
+      dplyr::mutate(Reg = purrr::map(dat, ~safe_nls( mod, ., mod_start_mean, na.action=na.exclude )[[1]]  )  #,
                     #  Coefs = purrr::map(Reg, tidy_)
       )  %T>% 
       {options(warn=0)}
@@ -333,9 +337,9 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
         dplyr::ungroup() %>% 
         dplyr::full_join(mod_start) %>% 
         dplyr::group_by(!!!.groups_syms) %>% 
-        tidyr::nest() %T>% #%>% 
+        tidyr::nest(.key="dat") %T>% #%>% 
         {options(warn=-1)} %>% 
-        dplyr::mutate(Reg = purrr::map(data,  ~pos_nls( mod, ., c( b0  = .[[ mod_start_names[01] ]][1], 
+        dplyr::mutate(Reg = purrr::map(dat,  ~pos_nls( mod, ., c( b0  = .[[ mod_start_names[01] ]][1], 
                                                                    b1  = .[[ mod_start_names[02] ]][1], 
                                                                    b2  = .[[ mod_start_names[03] ]][1], 
                                                                    b3  = .[[ mod_start_names[04] ]][1], 
@@ -357,7 +361,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
                                                                    b19 = .[[ mod_start_names[20] ]][1], 
                                                                    b20 = .[[ mod_start_names[21] ]][1]   ), na.action=na.exclude   ) ), 
                       Coefs = purrr::map(Reg, pos_tidy),
-                      est = purrr::map2(Reg, data, pos_predict) ) %T>% 
+                      est = purrr::map2(Reg, dat, pos_predict) ) %T>% 
                       {options(warn=0)}
       
     ) #suppressMessages
@@ -367,11 +371,11 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     x <-   df %>%
       dplyr::ungroup() %>% 
       dplyr::group_by(!!!.groups_syms) %>% 
-      tidyr::nest() %T>% #%>% 
+      tidyr::nest(.key="dat") %T>% #%>% 
       {options(warn=-1)} %>% 
-      dplyr::mutate(Reg = purrr::map(data, ~pos_nls( mod, ., mod_start, na.action=na.exclude ) ),
+      dplyr::mutate(Reg = purrr::map(dat, ~pos_nls( mod, ., mod_start, na.action=na.exclude ) ),
                     Coefs = purrr::map(Reg, pos_tidy),
-                    est = purrr::map2(Reg, data, pos_predict) ) %T>% 
+                    est = purrr::map2(Reg, dat, pos_predict) ) %T>% 
                     {options(warn=0)}
   }
   
@@ -379,7 +383,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     
     x <- x %>% 
       dplyr::mutate( est_n =  purrr::map(est, nrow  ),
-                     data_n =  purrr::map(data, nrow  ),
+                     data_n =  purrr::map(dat, nrow  ),
                      data_na = purrr::map2(NA,data_n,rep_ )  ) %>% 
       tidyr::unnest(est_n,data_n) %>% 
       dplyr::mutate(est = ifelse(est_n == 1, data_na, est) ) %>% 
@@ -399,13 +403,13 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
   
   if (output == "table") {
     y <- tidyr::unnest(x, Coefs, .drop = F) %>% 
-      dplyr::select(-data, -est) 
+      dplyr::select(-dat, -est) 
     
   }
   else if (output == "merge") {
     
     # desninhar o dado e remover os chutes iniciais
-    x <- x %>% tidyr::unnest(data, .drop = F) 
+    x <- x %>% tidyr::unnest(dat, .drop = F) 
     x[c("b0","b1","b2","b3","b4","b5","b6","b7","b8","b9","b10","b11","b12","b13","b14","b15","b16","b17","b18","b19","b20")] <- NULL
     
     # unir os coeficientes aos dados
@@ -417,7 +421,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     
     #est ou estimate ira estimar a variavel y e uni-la aos dados originais
     y <- x %>% 
-      tidyr::unnest(data, est, .drop = F) %>% 
+      tidyr::unnest(dat, est, .drop = F) %>% 
       dplyr::select(-est, est )   # passar est para final da tabela
     
     y[c("A","Coefs", "b0","b1","b2","b3","b4","b5","b6","b7","b8","b9","b10","b11","b12","b13","b14","b15","b16","b17","b18","b19","b20")] <- NULL

@@ -56,7 +56,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, tidy=TRUE ) {
-  
+  # ####
+  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-NULL
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar
@@ -183,11 +184,11 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
     dplyr::group_by(!!!.groups_syms, add=T) %>%
     dplyr::summarise(
       age        = mean(!!age_sym,na.rm=T), # usa-se média pois os valores estão repetidos
-      n            = n() , # número de amostras
+      n            = dplyr::n() , # número de amostras
       N            = mean(!!total_area_sym,na.rm=T) / ( mean(!!plot_area_sym,na.rm=T)/10000 ), 
       VC           = stats::sd(!!Yi_sym,na.rm=T) / mean(!!Yi_sym,na.rm=T) * 100, # Cálculo do coeficiente de variação
-      t            = qt(alpha/2, df = n-1, lower.tail = FALSE) ,
-      t_rec        = qt(alpha/2, df = ceiling( t^2 * VC^2 / error^2) - 1, lower.tail = FALSE),
+      t            = stats::qt(alpha/2, df = n-1, lower.tail = FALSE) ,
+      t_rec        = stats::qt(alpha/2, df = ceiling( t^2 * VC^2 / error^2) - 1, lower.tail = FALSE),
       n_recalc     = ceiling( t_rec ^2 * VC^2 / error^2 ) ,
       Y            = mean(!!Yi_sym, na.rm=T), # Média do volume
       Sy           = sqrt( (sum(diff(!!Yi_sym)^2,na.rm=T) / (2 * n * (n-1) ) ) * ((N-n)/N) ),

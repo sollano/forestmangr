@@ -17,6 +17,10 @@
 #'
 #' @return A data frame with the regressions coefficients.
 #'  
+#' @seealso other sampling functions: 
+#'   \code{\link{est_clutter}} for estimating Clutter's Growth and Yield model variables, and
+#'   \code{\link{classify_site}} for classifying data according to site.
+#'   
 #' @keywords Clutter, 2SLS
 #' @references 
 #' Clutter, J. L. (1963) ‘Compatible Growth For Loblolly by the Southeastern’, Forest Science, 9(3), pp. 354–371.
@@ -44,6 +48,8 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
 fit_clutter <- function(df, age, dh, basal_area, volume, site, plot, .groups=NA, model = "full", keep_model = FALSE){
+  # ####
+  basal_area2<-basal_area1<-I1<-I2<-volume2<-.<-Reg<-NULL
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

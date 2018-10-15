@@ -47,6 +47,7 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
 vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
+  CSA<-FFWB<-FFWOB<-NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

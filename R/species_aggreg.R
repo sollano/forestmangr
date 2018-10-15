@@ -91,8 +91,8 @@ species_aggreg <- function(df, species, plot, NI_label = ""){
   nplots = length(unique(df[,PLOTS]))
   
   # Qui-quadrado tabelado para indice de Hazen
-  chisq75 = qchisq(0.75, nplots - 1)
-  chisq99 = qchisq(0.99, nplots - 1)
+  chisq75 = stats::qchisq(0.75, nplots - 1)
+  chisq99 = stats::qchisq(0.99, nplots - 1)
   
   for (i in levels(df[,PLOTS])){
     tableFreq = data.frame(table(df[df[PLOTS] == i,SPECIES]))
@@ -103,7 +103,7 @@ species_aggreg <- function(df, species, plot, NI_label = ""){
   agreg = pivot[1]
   if(nplots > 3){
     for (i in seq(1, length(pivot[,1]))){ 
-      Si = var(as.numeric(pivot[i, seq(3, (2 + nplots), 1)]))
+      Si = stats::var(as.numeric(pivot[i, seq(3, (2 + nplots), 1)]))
       Mi = mean(as.numeric(pivot[i, seq(3, (2 + nplots), 1)]))
       agreg[i,"Payandeh"] = round(Si/Mi, 1)
       if(round(Si/Mi, 1) == 1){
