@@ -10,7 +10,7 @@
 #' @return a matrix object with a similarity matrix, or a list with two similarity matrices, one for each index, according to the index argument.
 #' 
 #' @references 
-#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinâmica e manejo. Viçosa: UFV.
+#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
 #' 
 #' @export
 #' 
