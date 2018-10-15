@@ -14,7 +14,7 @@
 #' @param dbhmin Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be disconsidered from the classification. Default: \code{5}.
 #' @param species Optional parameter. Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.
 #' @param volume Optional parameter. Quoted name of the volume variable. If supplied, will be used classify the volume variable in the different diameter classes. Also, if \code{cc_to_column} is \code{TRUE}, the center of class columns will be filled with volume values, instead of number of individuals. Default \code{NA}.
-#' @param NI_label Species not identified label. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.
+#' @param NI_label Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.
 #' @param cc_to_column If \code{TRUE}, will spread the center class column as multiple columns, one for each class. The value that fills these columns, by default is the number of individuals found in each class, but this can be changed by using other arguments. Default \code{FALSE}.
 #' @param G_to_cc If \code{TRUE}, and \code{cc_to_column} is also \code{TRUE}, will fill the center of class columns with basal area values, instead of number of individuals. Default \code{FALSE}.
 #' @param cctc_ha  If \code{TRUE}, will calculate values per hectare for number of individuals per class, basal area per class and volume per class (if supplied). These values will also be used to fill the center of class columns, if cc_to_column is \code{TRUE}. Default \code{TRUE}.
@@ -112,6 +112,13 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
   }else{
     volume_sym <- rlang::sym(volume)
     
+  }
+  
+  # Se NI_label nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( NI_label )){
+    stop( "'NI_label' must be character", call.=F)
+  }else if(length(NI_label)!=1){
+    stop("Length of 'NI_label' must be 1", call.=F)
   }
   
   # Se species nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro

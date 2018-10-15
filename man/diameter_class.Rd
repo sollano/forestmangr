@@ -25,7 +25,7 @@ diameter_class(df, dbh, plot = NA, plot_area, ci = 5, dbhmin = 5,
 
 \item{volume}{Optional parameter. Quoted name of the volume variable. If supplied, will be used classify the volume variable in the different diameter classes. Also, if \code{cc_to_column} is \code{TRUE}, the center of class columns will be filled with volume values, instead of number of individuals. Default \code{NA}.}
 
-\item{NI_label}{Species not identified label. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.}
+\item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.}
 
 \item{cc_to_column}{If \code{TRUE}, will spread the center class column as multiple columns, one for each class. The value that fills these columns, by default is the number of individuals found in each class, but this can be changed by using other arguments. Default \code{FALSE}.}
 

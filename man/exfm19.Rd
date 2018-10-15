@@ -20,8 +20,8 @@
   \item{CSA_WB}{cross section area with bark, in square meters}
   \item{VWB}{volume with bark, in cubic meters}
   \item{di_sc}{diameter of sections without bark, in centimeters}
-  \item{CSA_WB}{cross section area without bark, in square meters}
-  \item{VWB}{volume without bark, in cubic meters}
+  \item{CSA_WOB}{cross section area without bark, in square meters}
+  \item{VWOB}{volume without bark, in cubic meters}
 }}
 \usage{
 data(exfm19)

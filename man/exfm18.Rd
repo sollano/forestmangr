@@ -10,8 +10,8 @@
   \item{Species}{species scientific name}
   \item{Tree}{tree number}
   \item{Trunk}{trunk number}
-  \item{cbh}{circumference at breast height, in meters}
-  \item{dbh}{diameter at breast height, in meters}
+  \item{CBH}{circumference at breast height, in meters}
+  \item{DBH}{diameter at breast height, in meters}
 }}
 \usage{
 data(exfm18)
