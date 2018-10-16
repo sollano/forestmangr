@@ -1,10 +1,16 @@
 #' @title
-#' Get the forest's horizontal, vertical and internal structure
+#' Get the forest horizontal, vertical and internal structure
+#' @description 
+#' This function calculates the horizontal structure of a given forest inventory data,
+#' with information like absolute frequency, relative frequency, absolute density,
+#' relative density, absolute dominance, relative dominance, importance value index, and coverage
+#' value index. If additional variables are supplied, the vertical and internal strucures are
+#' also provided.
 #' 
 #' @param df A data frame.
 #' @param species Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data.
 #' @param dbh Quoted name of the diameter at breast hight variable, in cm.
-#' @param plot Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots.
+#' @param plot Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param vertical_est Optional argument. Quoted name of the vertical strata variable, or the height variable. If this is a factor variable, it's levels will be used to classify the forest vertically. If it's a height variable, the vertical strata will be created based on it's mean and standard deviation values. Default: \code{NA}.
 #' @param internal_est Optional argument. Quoted name of the internal strata variable. Default: \code{NA}.
@@ -12,7 +18,7 @@
 #' @return a data frame with the forest's structure.
 #'
 #' @references 
-#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
+#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 #' 
 #' @export
 #' 

@@ -11,7 +11,7 @@
 #' Grabyill's <i>F</i> test is specially useful for heterogeneous data.
 #'
 #' A simple model regression is applied, and it's significance is evaluated
-#' applying Graybill's <i>F</i> test for the parameters estimate,
+#' by applying Graybill <i>F</i> test for the parameters estimate,
 #' according to the methodology described by Graybill (1976).
 #' 
 #' @param df A data frame.
@@ -22,7 +22,7 @@
 #' @return A data frame. It's dimensions will vary, according to the \code{output} argument.
 #' 
 #' @references 
-#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 #'
 #' Graybill, F. A. (1976) Theory and application of the linear model. Massachusets: Ouxburg 239 Press.
 #' 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/bdq_meyer.R
 \name{bdq_meyer}
 \alias{bdq_meyer}
-\title{Clasify a forest using Meyer's BDq method}
+\title{Classify a forest for selective cutting using the Meyer BDq method}
 \usage{
 bdq_meyer(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
   licourt_index = 2, output = "table")
@@ -10,7 +10,7 @@ bdq_meyer(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
 \arguments{
 \item{df}{A data frame.}
 
-\item{plot}{Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots.}
+\item{plot}{Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.}
 
 \item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
 
@@ -28,7 +28,8 @@ bdq_meyer(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
 a data frame, a lm object, a vector or a list, according to the output argument.
 }
 \description{
-Clasify a forest using Meyer's BDq method
+This function can be used to plan and execute selective cuttings of a native
+forest, without damaging the forest's natural structure.
 }
 \examples{
 library(forestmangr)
@@ -48,7 +49,7 @@ bdq_meyer(exfm20, "transect", "dbh", 1000, output="all")
 
 }
 \references{
-Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
+Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 }
 \author{
 Eric Bastos Gorgens \email{e.gorgens@gmail.com}

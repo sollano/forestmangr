@@ -2,7 +2,7 @@
 % Please edit documentation in R/species_diversity.R
 \name{species_diversity}
 \alias{species_diversity}
-\title{Get the species diversity indices}
+\title{Get the species diversity indexes}
 \usage{
 species_diversity(df, species, plot = NA, NI_label = "",
   index = "all")
@@ -12,28 +12,28 @@ species_diversity(df, species, plot = NA, NI_label = "",
 
 \item{species}{Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data.}
 
-\item{plot}{Optional parameter. Quoted name of the plot variable. used to differentiate the plots, and calculate the indices by plot, or other subdivision variable.}
+\item{plot}{Optional parameter. Quoted name of the plot variable. used to differentiate the plots, and calculate the indexes by plot, or other subdivision variable.}
 
 \item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.}
 
-\item{index}{Character value for the desired index to be used. Can be either \code{"H"} for Shannon's diversity index, \code{"S"} for Total number of species in the community, \code{"Hmax"} for the maximum equitability, \code{"J"} for Pielou's evenness, \code{"QM"} for the mixture coefficient of Jentsch, or \code{"all"}, to get all indices. Default: \code{"all"}.}
+\item{index}{Character value for the desired index to be used. Can be either \code{"H"} for Shannon's diversity index, \code{"S"} for Total number of species in the community, \code{"Hmax"} for the maximum equitability, \code{"J"} for Pielou's evenness, \code{"QM"} for the mixture coefficient of Jentsch, or \code{"all"}, to get all indexes. Default: \code{"all"}.}
 }
 \value{
-a data frame with the indices, or a numeric value of the desired index specified in the index argument.
+a data frame with the indexes, or a numeric value of the desired index specified in the index argument.
 }
 \description{
-Calculate the diversity of species for the following indices:
+Calculate the diversity of species for the following indexes:
 Shannon, Simpson, Equitability, Pielou and Jentsch.
 }
 \examples{
 library(forestmangr)
 data(exfm20)
 
-# By default, the function returns all indices:
+# By default, the function returns all indexes:
 species_diversity(exfm20, "scientific.name")
 
 # It's possible to use a subdivision variable, like plot, to get
-# the indices for each subdivision:
+# the indexes for each subdivision:
 species_diversity(exfm20, "scientific.name", "transect") 
 
 # To only get one specific index, use the index argument:

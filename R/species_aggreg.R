@@ -1,7 +1,7 @@
 #' @title
 #' Get the aggregation state of species
 #' @description 
-#' Get the aggregation state of species according to Payandeh, Hazen and Morista's methods.
+#' Get the aggregation state of species according to the Payandeh, Hazen and Morista methods.
 #' 
 #' @param df A data frame.
 #' @param species Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data.
@@ -10,7 +10,7 @@
 #' @return a data frame with the aggregation classification.
 #' 
 #' @references 
-#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinâmica e manejo. Viçosa: UFV.
+#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 #' 
 #' @export
 #' 

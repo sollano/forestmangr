@@ -22,9 +22,9 @@
 #' 
 #' @keywords Simple Random Sampling
 #' @references 
-#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Vicosa: UFV.
 #' 
-#' Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventário Florestal. 2nd edn. Viçosa: UFV.
+#' Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventario Florestal. 2nd edn. Viçosa: UFV.
 #' 
 #' @seealso other sampling functions: 
 #'   \code{\link{strs}} for stratified random sampling, and

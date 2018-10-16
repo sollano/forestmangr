@@ -18,12 +18,12 @@
 #' @return Data frame with volume values by section.
 #' 
 #' @references 
-#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Vicosa: UFV.
 #'
 #' @seealso Complementary functions:
-#'   \code{\link{smalianwb}}, For calculation of volume with bark using Smalian's method,
-#'   \code{\link{huberwb}}, for calculation of volume with bark using Huber's method,
-#'   \code{\link{huberwob}}, for calculation of volume without bark Huber's method.
+#'   \code{\link{smalianwb}}, For calculation of volume with bark using the Smalian method,
+#'   \code{\link{huberwb}}, for calculation of volume with bark using the Huber method,
+#'   \code{\link{huberwob}}, for calculation of volume without bark the Huber method.
 #'   
 #' @export
 #' @examples

@@ -37,7 +37,7 @@ data("exfm7")
 
 head(exfm7)
 
-# Calculate the volume with bark using Smalian's method:
+# Calculate the volume with bark using the Smalian method:
 smalianwb(exfm7,"di_wb", "hi", "TREE")
 
 # Using pipes:
@@ -53,9 +53,9 @@ Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Res
 }
 \seealso{
 Complementary functions:
-  \code{\link{smalianwob}}, For calculation of volume without bark using Smalian's method,
-  \code{\link{huberwb}}, for calculation of volume with bark using Huber's method,
-  \code{\link{huberwob}}, for calculation of volume without bark Huber's method.
+  \code{\link{smalianwob}}, For calculation of volume without bark using the Smalian method,
+  \code{\link{huberwb}}, for calculation of volume with bark using the Huber method,
+  \code{\link{huberwob}}, for calculation of volume without bark the Huber method.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

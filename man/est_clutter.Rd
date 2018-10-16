@@ -2,7 +2,7 @@
 % Please edit documentation in R/est_clutter.R
 \name{est_clutter}
 \alias{est_clutter}
-\title{Estimate future and present basal area, volume, TCA, CMI and MMI values of Clutter's Growth and Yield Model}
+\title{Estimate future and present basal area, volume, TCA, CMI and MMI values of the Clutter Growth and Yield Model}
 \usage{
 est_clutter(df, age, basal_area, site, category, coeffs,
   method = "average", output = "table", annual_increment = FALSE)
@@ -31,7 +31,7 @@ A data frame, a ggplot object or a list, according to output.
 }
 \description{
 This function estimates the present the present value of basal area for each class
-using either the class' mean, or a linear quadratic model, and then uses it's value to calculate
+using either the class mean, or a linear quadratic model, and then uses it's value to calculate
 the basal area from Clutter's growth and yield model.
 }
 \examples{
@@ -66,7 +66,7 @@ est_clutter(ex_class,"age","B","S","category_", clutter,"model")
 }
 \seealso{
 other sampling functions: 
-  \code{\link{fit_clutter}} for fitting Clutter's Growth and Yield model, and
+  \code{\link{fit_clutter}} for fitting the Clutter Growth and Yield model, and
   \code{\link{classify_site}} for classifying data according to site.
 }
 \author{

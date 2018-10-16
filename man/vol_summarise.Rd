@@ -35,7 +35,7 @@ data("exfm7")
 head(exfm7)
 
 # In order to calculate the volume of each tree, first we
-# Calculate the volume by tree section using Smalian's method:
+# Calculate the volume by tree section using the Smalian method:
 sec_data_vol <- exfm7 \%>\% 
 smalianwb("di_wb", "hi", "TREE") \%>\% 
 smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = TRUE)
@@ -55,10 +55,10 @@ vol_summarise("DBH", "TH", "VWB", "TREE", "STRATA", "VWOB")
 }
 \seealso{
 Complementary functions:
-  \code{\link{smalianwb}}, For calculation of volume with bark using Smalian's method,
-  \code{\link{smalianwob}}, For calculation of volume without bark using Smalian's method,
-  \code{\link{huberwb}}, for calculation of volume with bark using Huber's method,
-  \code{\link{huberwob}}, for calculation of volume without bark Huber's method.
+  \code{\link{smalianwb}}, For calculation of volume with bark using the Smalian method,
+  \code{\link{smalianwob}}, For calculation of volume without bark using the Smalian method,
+  \code{\link{huberwb}}, for calculation of volume with bark using the Huber method,
+  \code{\link{huberwob}}, for calculation of volume without bark the Huber method.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_clutter.R
 \name{fit_clutter}
 \alias{fit_clutter}
-\title{Fit Clutter's model for growth and yield}
+\title{Fit the Clutter model for growth and yield}
 \usage{
 fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
   model = "full", keep_model = FALSE)
@@ -32,7 +32,7 @@ fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
 A data frame with the regressions coefficients.
 }
 \description{
-Fit Clutter's model for growth and yield using the two stage least squares method (2SLS).
+Fit the Clutter model for growth and yield using the two stage least squares method (2SLS).
 }
 \examples{
 
@@ -41,7 +41,7 @@ data("exfm17")
 
 head(exfm17)
 
-# To fit Clutter's model we just need to define the data, and age, dominant height,
+# To fit the Clutter model we just need to define the data, and age, dominant height,
 # basal area, volume, site and plot variables:
 fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
 
@@ -55,11 +55,11 @@ fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot", keep_model=TRUE)
 \references{
 Clutter, J. L. (1963) ‘Compatible Growth For Loblolly by the Southeastern’, Forest Science, 9(3), pp. 354–371.
 Sullivan, A. D. and Clutter, J. L. (1972) ‘A Simultaneous Growth and Yield for Loblolly Pine’, Forest Science, 18(1), pp. 76–86.
-Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
+Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Vicosa: UFV.
 }
 \seealso{
 other sampling functions: 
-  \code{\link{est_clutter}} for estimating Clutter's Growth and Yield model variables, and
+  \code{\link{est_clutter}} for estimating the Clutter Growth and Yield model variables, and
   \code{\link{classify_site}} for classifying data according to site.
 }
 \author{

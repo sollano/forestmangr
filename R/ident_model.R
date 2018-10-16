@@ -18,7 +18,7 @@
 #' @return A data frame, a ggplot object, or a list, varying according to the \code{output} argument.
 #' 
 #' @references 
-#' Regazzi, A. J. (1999) ‘Teste para verificar a identidade de modelos de regressão e a igualdade de parâmetros no caso de dados de delineamentos experimentais’, Ceres, 46(266), pp. 383–409.
+#' Regazzi, A. J. (1999) ‘Teste para verificar a identidade de modelos de regressao e a igualdade de parametros no caso de dados de delineamentos experimentais’, Ceres, 46(266), pp. 383–409.
 #'
 #' @export
 #' @examples

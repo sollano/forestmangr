@@ -1,8 +1,8 @@
 #' @title 
-#' Estimate future and present basal area, volume, TCA, CMI and MMI values of Clutter's Growth and Yield Model
+#' Estimate future and present basal area, volume, TCA, CMI and MMI values of the Clutter Growth and Yield Model
 #' @description 
 #' This function estimates the present the present value of basal area for each class
-#' using either the class' mean, or a linear quadratic model, and then uses it's value to calculate
+#' using either the class mean, or a linear quadratic model, and then uses it's value to calculate
 #' the basal area from Clutter's growth and yield model.
 #'
 #' @param df A data frame.
@@ -16,7 +16,7 @@
 #' @param annual_increment If \code{TRUE}, changes the labels from Mean Monthly Increment (MMI) and Current Monthly Increment (CMI) to Mean Annual Increment (MAI) and Current Annual Increment (CAI). Default \code{FALSE}.
 #' @return A data frame, a ggplot object or a list, according to output.
 #' @seealso other sampling functions: 
-#'   \code{\link{fit_clutter}} for fitting Clutter's Growth and Yield model, and
+#'   \code{\link{fit_clutter}} for fitting the Clutter Growth and Yield model, and
 #'   \code{\link{classify_site}} for classifying data according to site.
 #' @export
 #' 

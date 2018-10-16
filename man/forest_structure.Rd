@@ -2,7 +2,7 @@
 % Please edit documentation in R/forest_structure.R
 \name{forest_structure}
 \alias{forest_structure}
-\title{Get the forest's horizontal, vertical and internal structure}
+\title{Get the forest horizontal, vertical and internal structure}
 \usage{
 forest_structure(df, species, dbh, plot, plot_area, vertical_est = NA,
   internal_est = NA, NI_label = "")
@@ -14,7 +14,7 @@ forest_structure(df, species, dbh, plot, plot_area, vertical_est = NA,
 
 \item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
 
-\item{plot}{Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots.}
+\item{plot}{Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.}
 
 \item{plot_area}{Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
 
@@ -28,7 +28,11 @@ forest_structure(df, species, dbh, plot, plot_area, vertical_est = NA,
 a data frame with the forest's structure.
 }
 \description{
-Get the forest's horizontal, vertical and internal structure
+This function calculates the horizontal structure of a given forest inventory data,
+with information like absolute frequency, relative frequency, absolute density,
+relative density, absolute dominance, relative dominance, importance value index, and coverage
+value index. If additional variables are supplied, the vertical and internal strucures are
+also provided.
 }
 \examples{
 library(forestmangr)
@@ -50,7 +54,7 @@ forest_structure(exfm20, "scientific.name", "dbh", "transect", 10000, "canopy.po
 
 }
 \references{
-Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
+Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 }
 \author{
 Eric Bastos Gorgens \email{e.gorgens@gmail.com}

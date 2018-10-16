@@ -19,7 +19,7 @@ species_aggreg(df, species, plot, NI_label = "")
 a data frame with the aggregation classification.
 }
 \description{
-Get the aggregation state of species according to Payandeh, Hazen and Morista's methods.
+Get the aggregation state of species according to the Payandeh, Hazen and Morista methods.
 }
 \examples{
 library(forestmangr)
@@ -29,7 +29,7 @@ species_aggreg(exfm20, "scientific.name", "transect")
 
 }
 \references{
-Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinâmica e manejo. Viçosa: UFV.
+Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 }
 \author{
 Eric Bastos Gorgens \email{e.gorgens@gmail.com}

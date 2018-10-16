@@ -1,8 +1,11 @@
 #' @title
-#' Clasify a forest using Meyer's BDq method
+#' Classify a forest for selective cutting using the Meyer BDq method
+#' @description 
+#' This function can be used to plan and execute selective cuttings of a native
+#' forest, without damaging the forest's natural structure.
 #' 
 #' @param df A data frame.
-#' @param plot Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots.
+#' @param plot Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.
 #' @param dbh Quoted name of the diameter at breast hight variable, in cm.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param class_interval Numeric value for the class interval used to classify the data. Default: \code{5}.
@@ -12,7 +15,7 @@
 #' @return a data frame, a lm object, a vector or a list, according to the output argument.
 #' 
 #' @references 
-#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
+#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 #' 
 #' @export
 #' 

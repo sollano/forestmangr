@@ -28,7 +28,7 @@ With this function it's possible to fit linear regressions by a grouping variabl
 with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 }
 \details{
-With this function there no more need to use the \code{do} function when fitting a linear regression in a pipe line.
+With this function there's no more need to use the \code{do} function when fitting a linear regression in a pipe line.
 It's also possible to easily make fit multiple regressions, specifying a grouping variable.
 In addition to that, the default output sets each coefficient as a column, making it easy to call coefficients by name or position
 when estimating values. 
