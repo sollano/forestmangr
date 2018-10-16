@@ -2,7 +2,7 @@
 % Please edit documentation in R/Graybill_F.R
 \name{Graybill_F}
 \alias{Graybill_F}
-\title{Graybill's <i>F</i> Test}
+\title{Graybill <i>F</i> Test}
 \usage{
 Graybill_F(df, Y1, Yj, output = 1, signif = 0.05)
 }
@@ -29,7 +29,7 @@ and a standard variable.This test is popular among forestry engineers,
 specially because, since it considers all data in it's analysis, 
 it's usually more precise than a standard mean t-test.
 If the data has outliers, the mean may not represent the data correctly, so
-Grabyill's <i>F</i> test is specially useful for heterogeneous data.
+Graybill <i>F</i> test is specially useful for heterogeneous data.
 
 A simple model regression is applied, and it's significance is evaluated
 by applying Graybill <i>F</i> test for the parameters estimate,
@@ -61,7 +61,7 @@ Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respo
 
 Graybill, F. A. (1976) Theory and application of the linear model. Massachusets: Ouxburg 239 Press.
 
-Leite, H. G. and Oliveira, F. H. T. (2006) ‘Statistical procedure to test identity between analytical methods’, Communications in Soil Science and Plant Analysis, 33(7–8), pp. 1105–1118. doi: http://dx.doi.org/10.1081/CSS-120003875.
+Leite, H. G. and Oliveira, F. H. T. (2006) ‘Statistical procedure to test identity between analytical methods’, Communications in Soil Science and Plant Analysis, 33(7–8), pp. 1105–1118.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

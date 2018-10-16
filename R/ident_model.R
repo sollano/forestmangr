@@ -12,7 +12,7 @@
 #' if \code{"table_plot"}, both anova table and plot are provided, and if \code{"full"},
 #' a list is provided, with details on the dummies variables created, the reduced and complete models,
 #' the anova table and the plot. Default: \code{"table"}
-#' @param grey_scale If \code{TRUE} a grey scale will be used in the plots. Default: \code{FALSE}.
+#' @param gray_scale If \code{TRUE} a gray scale will be used in the plots. Default: \code{FALSE}.
 #' @param signif Numeric value for the significance level used in the test. Default: \code{0.05}.
 #' @param font font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for Arial Unicode MS. Default: \code{serif}.
 #' @return A data frame, a ggplot object, or a list, varying according to the \code{output} argument.
@@ -63,15 +63,15 @@
 #' # the "Sucupira-preta" and "Vinhatico" species,
 #' # and a second model is needed to explain the Pequi Variable.
 #'
-#' # It's possible to apply a grey scale to the plots, and also change it's font to arial:
+#' # It's possible to apply a gray scale to the plots, and also change it's font to arial:
 #' 
-#' ident_model(exfm13, "species", dbh ~  N + N2,output="plot",grey_scale=TRUE,font="sans")
+#' ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=TRUE,font="sans")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' @author Marcio leles Romarco de Oliveira \email{marcioromarco@@gmail.com}
 
 
-ident_model <- function(df, factor, reduced_model, filter = NA, output = "table", grey_scale = FALSE, signif = 0.05, font="serif" ){
+ident_model <- function(df, factor, reduced_model, filter = NA, output = "table", gray_scale = FALSE, signif = 0.05, font="serif" ){
   # ####
   ..eq.label..<-..rr.label..<-NULL
   # ####
@@ -120,11 +120,11 @@ ident_model <- function(df, factor, reduced_model, filter = NA, output = "table"
       df <- df[ df[[factor]] %in% filter, ]
     }
   
-  # se grey_scale nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
-  if(! grey_scale %in% c(TRUE, FALSE) ){ 
-    stop("'grey_scale' must be equal to TRUE or FALSE", call. = F) 
-  }else  if(length(grey_scale)!=1){
-    stop("Length of 'grey_scale' must be 1", call.=F)
+  # se gray_scale nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! gray_scale %in% c(TRUE, FALSE) ){ 
+    stop("'gray_scale' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(gray_scale)!=1){
+    stop("Length of 'gray_scale' must be 1", call.=F)
   }
   
   # Se signif nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
@@ -470,9 +470,9 @@ ident_model <- function(df, factor, reduced_model, filter = NA, output = "table"
     
   }
   
-  if(grey_scale == T){
+  if(gray_scale == T){
     
-    graph <- graph + ggplot2::scale_color_grey()
+    graph <- graph + ggplot2::scale_color_gray()
     
   }
   

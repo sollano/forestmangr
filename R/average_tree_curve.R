@@ -5,7 +5,7 @@
 #'  
 #' @param df A data frame.
 #' @param d Quoted name of the section diameter variable, in cm.
-#' @param dbh Quoted name of the diameter at breast hight variable, in cm.
+#' @param dbh Quoted name of the diameter at breast height variable, in cm.
 #' @param h Quoted name of the section height variable, in meters.
 #' @param th Quoted name of the total height variable, in meters.
 #' @param facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: NA.

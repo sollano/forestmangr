@@ -14,7 +14,7 @@
 #' @param start_bailey Numeric vector with the start values for the Bailey-Clutter model. This must be a named vector, with b0, b1 and b2 as parameter names. Default: \code{c( b0=3, b1=-130, b2 = 1.5)}.
 #' @param round_classes If \code{TRUE}, class values will be rounded to the nearest 5. Default \code{TRUE}.
 #' @param font Type of font used in the plot. Default: \code{"serif"}.
-#' @param grey_scale If \code{TRUE}, the plot will be rendered in a grey scale. Default: \code{"TRUE"}.
+#' @param gray_scale If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.
 #' @param output Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.
 #' @return A data frame, a ggplot object, or a list, varying according to the \code{"output"} argument.
 #' 
@@ -46,7 +46,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
-guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher", start_chap = c(b0=23, b1=0.03, b2 = 1.3), start_bailey = c( b0=3, b1=-130, b2 = 1.5), round_classes = FALSE, font = "serif", grey_scale = TRUE, output = "plot"){
+guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher", start_chap = c(b0=23, b1=0.03, b2 = 1.3), start_bailey = c( b0=3, b1=-130, b2 = 1.5), round_classes = FALSE, font = "serif", gray_scale = TRUE, output = "plot"){
   # ####
   C<-classe<-nivel<-DH_EST<-DH_CURVE<-NULL
   # checagem de variaveis ####
@@ -145,11 +145,11 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     stop("Length of 'font' must be 1", call.=F)
   }
   
-  # se grey_scale nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
-  if(! grey_scale %in% c(TRUE, FALSE) ){ 
-    stop("'grey_scale' must be equal to TRUE or FALSE", call. = F) 
-  }else  if(length(grey_scale)!=1){
-    stop("Length of 'grey_scale' must be 1", call.=F)
+  # se gray_scale nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! gray_scale %in% c(TRUE, FALSE) ){ 
+    stop("'gray_scale' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(gray_scale)!=1){
+    stop("Length of 'gray_scale' must be 1", call.=F)
   }
     
   # Se output nao for character,ou nao for de tamanho 1, parar
@@ -352,7 +352,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     ggthemes::theme_igray(base_family = "serif") +
     ggplot2::guides(color= ggplot2::guide_legend( nrow = 1) ) + 
     {
-      if(grey_scale) ggplot2::scale_colour_grey(start = 0.8, end = 0.2)
+      if(gray_scale) ggplot2::scale_colour_gray(start = 0.8, end = 0.2)
      }+
     ggplot2::theme(
       legend.position = "bottom",

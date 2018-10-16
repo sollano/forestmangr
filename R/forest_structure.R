@@ -4,7 +4,7 @@
 #' This function calculates the horizontal structure of a given forest inventory data,
 #' with information like absolute frequency, relative frequency, absolute density,
 #' relative density, absolute dominance, relative dominance, importance value index, and coverage
-#' value index. If additional variables are supplied, the vertical and internal strucures are
+#' value index. If additional variables are supplied, the vertical and internal structures are
 #' also provided.
 #' 
 #' @param df A data frame.

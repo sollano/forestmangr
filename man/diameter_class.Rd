@@ -11,7 +11,7 @@ diameter_class(df, dbh, plot = NA, plot_area, ci = 5, dbhmin = 5,
 \arguments{
 \item{df}{A data frame.}
 
-\item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
+\item{dbh}{Quoted name of the diameter at breast height variable, in cm.}
 
 \item{plot}{Optional parameter.Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots. Default \code{NA}.}
 
@@ -19,7 +19,7 @@ diameter_class(df, dbh, plot = NA, plot_area, ci = 5, dbhmin = 5,
 
 \item{ci}{Numeric value for the class interval used to classify the data. Default: \code{5}.}
 
-\item{dbhmin}{Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be disconsidered from the classification. Default: \code{5}.}
+\item{dbhmin}{Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be dismissed from the classification. Default: \code{5}.}
 
 \item{species}{Optional parameter. Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.}
 

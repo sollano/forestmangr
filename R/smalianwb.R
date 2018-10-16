@@ -16,7 +16,7 @@
 #' @return Data frame with volume values by section.
 #' 
 #' @references 
-#' Campos, J. C. C. and Leite, H. G. (2017) Mensuração Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
+#' Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
 #'
 #' @seealso Complementary functions:
 #'   \code{\link{smalianwob}}, For calculation of volume without bark using the Smalian method,

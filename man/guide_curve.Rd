@@ -7,7 +7,7 @@
 guide_curve(df, dh, age, age_index, n_class = 4, model = "Schumacher",
   start_chap = c(b0 = 23, b1 = 0.03, b2 = 1.3), start_bailey = c(b0 =
   3, b1 = -130, b2 = 1.5), round_classes = FALSE, font = "serif",
-  grey_scale = TRUE, output = "plot")
+  gray_scale = TRUE, output = "plot")
 }
 \arguments{
 \item{df}{A data frame.}
@@ -30,7 +30,7 @@ guide_curve(df, dh, age, age_index, n_class = 4, model = "Schumacher",
 
 \item{font}{Type of font used in the plot. Default: \code{"serif"}.}
 
-\item{grey_scale}{If \code{TRUE}, the plot will be rendered in a grey scale. Default: \code{"TRUE"}.}
+\item{gray_scale}{If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.}
 
 \item{output}{Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.}
 }

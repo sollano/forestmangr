@@ -7,11 +7,11 @@
 #' It's also possible to spread the diameter classes as columns.
 #'
 #' @param df A data frame.
-#' @param dbh Quoted name of the diameter at breast hight variable, in cm.
+#' @param dbh Quoted name of the diameter at breast height variable, in cm.
 #' @param plot Optional parameter.Quoted name of the plot variable. used to differentiate the plots trees, and calculate the number of sampled plots. Default \code{NA}.
 #' @param plot_area Optional parameter. Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters. Default \code{NA}.
 #' @param ci Numeric value for the class interval used to classify the data. Default: \code{5}.
-#' @param dbhmin Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be disconsidered from the classification. Default: \code{5}.
+#' @param dbhmin Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be dismissed from the classification. Default: \code{5}.
 #' @param species Optional parameter. Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data. If supplied, will be used to classify the species in the diameter data. Default \code{NA}.
 #' @param volume Optional parameter. Quoted name of the volume variable. If supplied, will be used classify the volume variable in the different diameter classes. Also, if \code{cc_to_column} is \code{TRUE}, the center of class columns will be filled with volume values, instead of number of individuals. Default \code{NA}.
 #' @param NI_label Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{"NI"}.

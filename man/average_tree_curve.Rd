@@ -11,7 +11,7 @@ average_tree_curve(df, d, dbh, h, th, facet = NA)
 
 \item{d}{Quoted name of the section diameter variable, in cm.}
 
-\item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
+\item{dbh}{Quoted name of the diameter at breast height variable, in cm.}
 
 \item{h}{Quoted name of the section height variable, in meters.}
 

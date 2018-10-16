@@ -1,5 +1,5 @@
 #' @title 
-#' Graybill's <i>F</i> Test
+#' Graybill <i>F</i> Test
 #' @description 
 #' Hypothesis test as described by Graybill (1976).
 #' @details 
@@ -8,7 +8,7 @@
 #' specially because, since it considers all data in it's analysis, 
 #' it's usually more precise than a standard mean t-test.
 #' If the data has outliers, the mean may not represent the data correctly, so
-#' Grabyill's <i>F</i> test is specially useful for heterogeneous data.
+#' Graybill <i>F</i> test is specially useful for heterogeneous data.
 #'
 #' A simple model regression is applied, and it's significance is evaluated
 #' by applying Graybill <i>F</i> test for the parameters estimate,
@@ -26,7 +26,7 @@
 #'
 #' Graybill, F. A. (1976) Theory and application of the linear model. Massachusets: Ouxburg 239 Press.
 #' 
-#' Leite, H. G. and Oliveira, F. H. T. (2006) ‘Statistical procedure to test identity between analytical methods’, Communications in Soil Science and Plant Analysis, 33(7–8), pp. 1105–1118. doi: http://dx.doi.org/10.1081/CSS-120003875.
+#' Leite, H. G. and Oliveira, F. H. T. (2006) ‘Statistical procedure to test identity between analytical methods’, Communications in Soil Science and Plant Analysis, 33(7–8), pp. 1105–1118.
 #'  
 #' @export
 #' @examples

@@ -12,7 +12,7 @@
   \item{VWB}{volume with bark, in cubic meters}
 }}
 \source{
-Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventário Florestal. 2nd edn. Viçosa: UFV.
+Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventario Florestal. 2nd edn. Vicosa: UFV.
 }
 \usage{
 data(exfm1)

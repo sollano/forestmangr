@@ -12,13 +12,13 @@ bdq_meyer(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
 
 \item{plot}{Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.}
 
-\item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
+\item{dbh}{Quoted name of the diameter at breast height variable, in cm.}
 
 \item{plot_area}{Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
 
 \item{class_interval}{Numeric value for the class interval used to classify the data. Default: \code{5}.}
 
-\item{dbh_min}{Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be disconsidered from the classification. Default: \code{5}.}
+\item{dbh_min}{Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be dismissed from the classification. Default: \code{5}.}
 
 \item{licourt_index}{Numeric value for the start licourt index used. Default: \code{2}.}
 

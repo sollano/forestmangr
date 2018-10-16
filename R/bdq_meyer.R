@@ -6,10 +6,10 @@
 #' 
 #' @param df A data frame.
 #' @param plot Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.
-#' @param dbh Quoted name of the diameter at breast hight variable, in cm.
+#' @param dbh Quoted name of the diameter at breast height variable, in cm.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param class_interval Numeric value for the class interval used to classify the data. Default: \code{5}.
-#' @param dbh_min Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be disconsidered from the classification. Default: \code{5}.
+#' @param dbh_min Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be dismissed from the classification. Default: \code{5}.
 #' @param licourt_index Numeric value for the start licourt index used. Default: \code{2}.
 #' @param output Character value for the desired output. Can be either \code{"table"} for the classified data table, \code{"model"} to get a lm object with the linear model fitted, \code{"coefs"} to get a vector with the Meyer coefficients, or \code{"all"}, to get a list with all restuls. Default: \code{"table"}.
 #' @return a data frame, a lm object, a vector or a list, according to the output argument.

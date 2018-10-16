@@ -1,14 +1,14 @@
 Package: forestmangr
 Type: Package
 Version: 0.9.0
-Title: Functions for forest mensuration and management using R
+Title: Functions for Forest Mensuration and Management
 Description: Set of functions for processing forest inventory and surveying
     calculations. There are also functions for yield and growth predictions and model fitting (Clutter), linear and
-    nonlinear grouped data fitting functions, and statistical tests such as Graybill F and indentity model test.
+    nonlinear grouped data fitting functions, and statistical tests such as graybill F and identity model test.
 Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com",role = c("aut", "cre", "cph")), 
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
               person(c("Eric", "Bastos","Gorgens"),email= "e.gorgensgmail.com", role =  "aut") )
-Author: Sollano Rabelo Braga [aut, cre, cph]
+Author: Sollano Rabelo Braga [aut, cre, cph], Marcio Leles Romarco de Oliveira [aut], Eric Bastos Gorgens [aut]
 Maintainer: Sollano Rabelo Braga <sollanorb@gmail.com>
 Depends: R(>= 3.3)
 Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, scales(>= 0.4.1), psych, purrr, plyr, tibble, systemfit, htmltools, ggpmisc, rlang, graphics, utils, covr, rmarkdown, curl, car, stats, methods,magrittr,minpack.lm  

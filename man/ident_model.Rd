@@ -5,7 +5,7 @@
 \title{Identity of a Model Test}
 \usage{
 ident_model(df, factor, reduced_model, filter = NA, output = "table",
-  grey_scale = FALSE, signif = 0.05, font = "serif")
+  gray_scale = FALSE, signif = 0.05, font = "serif")
 }
 \arguments{
 \item{df}{a data frame.}
@@ -22,7 +22,7 @@ if \code{"table_plot"}, both anova table and plot are provided, and if \code{"fu
 a list is provided, with details on the dummies variables created, the reduced and complete models,
 the anova table and the plot. Default: \code{"table"}}
 
-\item{grey_scale}{If \code{TRUE} a grey scale will be used in the plots. Default: \code{FALSE}.}
+\item{gray_scale}{If \code{TRUE} a gray scale will be used in the plots. Default: \code{FALSE}.}
 
 \item{signif}{Numeric value for the significance level used in the test. Default: \code{0.05}.}
 
@@ -76,9 +76,9 @@ filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
 # the "Sucupira-preta" and "Vinhatico" species,
 # and a second model is needed to explain the Pequi Variable.
 
-# It's possible to apply a grey scale to the plots, and also change it's font to arial:
+# It's possible to apply a gray scale to the plots, and also change it's font to arial:
 
-ident_model(exfm13, "species", dbh ~  N + N2,output="plot",grey_scale=TRUE,font="sans")
+ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=TRUE,font="sans")
 
 }
 \references{

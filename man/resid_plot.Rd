@@ -7,7 +7,7 @@
 resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
   color = NA, nrow = NA, ncol = NA, lim_y = NA,
   xlab = "Observed values", clab = NA, font = "serif",
-  legend_pos = "bottom", grey_scale = TRUE, res_table = FALSE)
+  legend_pos = "bottom", gray_scale = TRUE, res_table = FALSE)
 }
 \arguments{
 \item{df}{A data frame.}
@@ -36,7 +36,7 @@ resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
 
 \item{legend_pos}{Position of legend, when a color variable is supplied. This can either be \code{"left"}, \code{"right"}, \code{"top"} or \code{"bottom"}. Default: \code{"bottom"}.}
 
-\item{grey_scale}{If \code{TRUE}, the plot will be rendered in a grey scale. Default: \code{"TRUE"}.}
+\item{gray_scale}{If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.}
 
 \item{res_table}{If \code{TRUE}, the function will return a data frame with observed, estimated, and residual values. Default: \code{FALSE}.}
 }
@@ -65,7 +65,7 @@ resid_plot(exfm11, "TH", "TH_EST1", type = "versus")
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA")
 
 # A colored plot is also available:
-resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", grey_scale=FALSE)
+resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA", gray_scale=FALSE)
 
 # It's possible to change xlabels and color labels:  
 resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", color="STRATA",
