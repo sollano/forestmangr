@@ -27,7 +27,7 @@ vertical_stratum(exfm10, "TH" )
 
 }
 \references{
-Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
+Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 }
 \author{
 Eric Bastos Gorgens \email{e.gorgens@gmail.com}

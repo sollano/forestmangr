@@ -26,7 +26,7 @@ the anova table and the plot. Default: \code{"table"}}
 
 \item{signif}{Numeric value for the significance level used in the test. Default: \code{0.05}.}
 
-\item{font}{font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for Arial Unicode MS. Default: \code{serif}.}
+\item{font}{font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for arial unicode MS. Default: \code{"serif"}.}
 }
 \value{
 A data frame, a ggplot object, or a list, varying according to the \code{output} argument.
@@ -82,7 +82,7 @@ ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=TRUE,font=
 
 }
 \references{
-Regazzi, A. J. (1999) ‘Teste para verificar a identidade de modelos de regressao e a igualdade de parametros no caso de dados de delineamentos experimentais’, Ceres, 46(266), pp. 383–409.
+Regazzi, A. J. (1999) Teste para verificar a identidade de modelos de regressao e a igualdade de parametros no caso de dados de delineamentos experimentais, Ceres, 46(266), pp. 383–409.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

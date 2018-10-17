@@ -3,7 +3,7 @@
 \docType{data}
 \name{exfm21}
 \alias{exfm21}
-\title{Inventory data of an eucalyptus forest in Minas Gerais, Brazil}
+\title{Inventory data of an eucalyptus forest in Brazil}
 \format{A data frame with 900 observations and 13 variables:
 \describe{
   \item{STRATA}{stratum number}

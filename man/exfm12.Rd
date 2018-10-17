@@ -3,7 +3,7 @@
 \docType{data}
 \name{exfm12}
 \alias{exfm12}
-\title{Inventory data of an eucalyptus forest in minas gerais, with age and site variables}
+\title{Inventory data of an eucalyptus forest in Brazil, with age and site variables}
 \format{A data frame with 139 observations and 8 variables:
 \describe{
   \item{strata}{stratum number}
@@ -19,7 +19,7 @@
 data(exfm12)
 }
 \description{
-In this data, each observation is a plot. The site was estimated using Chapman & Richards' model.
+In this data, each observation is a plot. The site was estimated using the Chapman & Richards model.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

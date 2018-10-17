@@ -3,7 +3,7 @@
 \docType{data}
 \name{exfm10}
 \alias{exfm10}
-\title{Inventory data of an eucalyptus forest in minas gerais, Brazil with dominant height variable}
+\title{Inventory data of an eucalyptus forest Brazil with dominant height variable}
 \format{A data frame with 900 observations and 14 variables:
 \describe{
   \item{MAP}{map numbers}

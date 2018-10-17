@@ -35,7 +35,7 @@ average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH", fa
 
 }
 \references{
-Kozak, A., Munro, D. D. and Smith, J. H. G. (1969) ‘Taper Functions and their Application in Forest Inventory’, The Forestry Chronicle, 45, pp. 278–283.
+Kozak, A., Munro, D. D. and Smith, J. H. G. (1969) Taper Functions and their Application in Forest Inventory, The Forestry Chronicle, 45, pp. 278–283.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

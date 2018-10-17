@@ -45,7 +45,7 @@ tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
 
 }
 \references{
-Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventario Florestal. 2nd edn. Viçosa: UFV.
+Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventario Florestal. 2nd ed. Vicosa: UFV.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

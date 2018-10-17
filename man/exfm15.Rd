@@ -3,7 +3,7 @@
 \docType{data}
 \name{exfm15}
 \alias{exfm15}
-\title{Simplified Inventory data of an eucalyptus forest in Minas Gerais, Brazil}
+\title{Simplified Inventory data of an eucalyptus forest in Brazil}
 \format{A data frame with 900 observations and 7 variables:
 \describe{
   \item{STRATA}{stratum number}

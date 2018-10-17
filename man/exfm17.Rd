@@ -3,7 +3,7 @@
 \docType{data}
 \name{exfm17}
 \alias{exfm17}
-\title{Inventory data of an eucalyptus forest in Minas Gerais, with age and site variables}
+\title{Inventory data of an eucalyptus forest in Brazil, with age and site variables}
 \format{A data frame with 139 observations and 8 variables:
 \describe{
   \item{strata}{stratum number}
@@ -19,7 +19,7 @@
 data(exfm17)
 }
 \description{
-In this data, each observation is a plot. The site was estimated using Schumacher's model.
+In this data, each observation is a plot. The site was estimated using the Schumacher model.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

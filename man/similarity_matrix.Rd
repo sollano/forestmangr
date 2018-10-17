@@ -16,7 +16,7 @@ similarity_matrix(df, species, comparison, NI_label = "",
 
 \item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.}
 
-\item{index}{Character value for the desired index to be used. Can be either \code{Jaccard}, for a matrix based on the Jaccard index of similarity, \code{"Sorensen"}, for a matrix based Sorensen's index of similarity, or \code{"all"}, for a list with matrices for both indexes. Default: \code{"Sorensen"}.}
+\item{index}{Character value for the desired index to be used. Can be either \code{Jaccard}, for a matrix based on the Jaccard index of similarity, \code{"Sorensen"}, for a matrix based the Sorensen index of similarity, or \code{"all"}, for a list with matrices for both indexes. Default: \code{"Sorensen"}.}
 }
 \value{
 a matrix object with a similarity matrix, or a list with two similarity matrices, one for each index, according to the index argument.

@@ -3,7 +3,7 @@
 \docType{data}
 \name{exfm14}
 \alias{exfm14}
-\title{Inventory data of an eucalyptus forest in Minas Gerais, with age and dominant height variables}
+\title{Inventory data of an eucalyptus forest in Brazil, with age and dominant height variables}
 \format{A data frame with 859 observations and 4 variables:
 \describe{
   \item{strata}{stratum number}
@@ -15,7 +15,7 @@
 data(exfm14)
 }
 \description{
-In this data, each observation is a plot
+In this data, each observation is a plot.
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

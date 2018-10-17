@@ -16,7 +16,7 @@ species_diversity(df, species, plot = NA, NI_label = "",
 
 \item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.}
 
-\item{index}{Character value for the desired index to be used. Can be either \code{"H"} for Shannon's diversity index, \code{"S"} for Total number of species in the community, \code{"Hmax"} for the maximum equitability, \code{"J"} for Pielou's evenness, \code{"QM"} for the mixture coefficient of Jentsch, or \code{"all"}, to get all indexes. Default: \code{"all"}.}
+\item{index}{Character value for the desired index to be used. Can be either \code{"H"} for Shannon's diversity index, \code{"S"} for Total number of species in the community, \code{"Hmax"} for the maximum equitability, \code{"J"} for Pielou evenness, \code{"QM"} for the mixture coefficient of Jentsch, or \code{"all"}, to get all indexes. Default: \code{"all"}.}
 }
 \value{
 a data frame with the indexes, or a numeric value of the desired index specified in the index argument.
@@ -45,7 +45,7 @@ species_diversity(exfm20, "scientific.name", index = "J")
 
 }
 \references{
-Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
+Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 }
 \author{
 Eric Bastos Gorgens \email{e.gorgens@gmail.com}
