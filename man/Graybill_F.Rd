@@ -57,7 +57,7 @@ Graybill_F( exfm11,"TH", "TH_EST2", output=3)
 
 }
 \references{
-Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Viçosa: UFV.
+Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Vicosa: UFV.
 
 Graybill, F. A. (1976) Theory and application of the linear model. Massachusets: Ouxburg 239 Press.
 
