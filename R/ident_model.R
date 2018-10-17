@@ -472,7 +472,7 @@ ident_model <- function(df, factor, reduced_model, filter = NA, output = "table"
   
   if(gray_scale == T){
     
-    graph <- graph + ggplot2::scale_color_gray()
+    graph <- graph + ggplot2::scale_color_grey()
     
   }
   

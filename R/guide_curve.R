@@ -352,7 +352,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     ggthemes::theme_igray(base_family = "serif") +
     ggplot2::guides(color= ggplot2::guide_legend( nrow = 1) ) + 
     {
-      if(gray_scale) ggplot2::scale_colour_gray(start = 0.8, end = 0.2)
+      if(gray_scale) ggplot2::scale_color_grey(start = 0.8, end = 0.2)
      }+
     ggplot2::theme(
       legend.position = "bottom",

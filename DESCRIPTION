@@ -2,9 +2,8 @@ Package: forestmangr
 Type: Package
 Version: 0.9.0
 Title: Functions for Forest Mensuration and Management
-Description: Set of functions for processing forest inventory and surveying
-    calculations. There are also functions for yield and growth predictions and model fitting (Clutter), linear and
-    nonlinear grouped data fitting functions, and statistical tests such as graybill F and identity model test.
+Description: Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sanpling and sistematic sampling.
+There are also functions for yield and growth predictions and model fitting, linear and non linear grouped data fitting functions, and statistical tests.
 Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com",role = c("aut", "cre", "cph")), 
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
               person(c("Eric", "Bastos","Gorgens"),email= "e.gorgensgmail.com", role =  "aut") )

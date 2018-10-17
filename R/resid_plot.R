@@ -280,10 +280,10 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
     }else if(gray_scale==FALSE){
       
     }else if(is.numeric(DF[[COLOR]]) )ggplot2::scale_colour_gradient(low = "light gray", high = "gray20")
-    else( ggplot2::scale_colour_gray(start = 0.8, end = 0.2) )
+    else( ggplot2::scale_colour_grey(start = 0.8, end = 0.2) )
     
   }  +{
-    if(gray_scale) ggplot2::scale_fill_gray(start = 0.8, end = 0.2) 
+    if(gray_scale) ggplot2::scale_fill_grey(start = 0.8, end = 0.2) 
   }+
     ggthemes::theme_igray(base_family = font) +
     ggplot2::theme(
