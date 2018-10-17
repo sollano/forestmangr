@@ -9,7 +9,7 @@
 #' 
 #' @param df A data frame.
 #' @param species Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data.
-#' @param dbh Quoted name of the diameter at breast hight variable, in cm.
+#' @param dbh Quoted name of the diameter at breast height variable, in cm.
 #' @param plot Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param vertical_est Optional argument. Quoted name of the vertical strata variable, or the height variable. If this is a factor variable, it's levels will be used to classify the forest vertically. If it's a height variable, the vertical strata will be created based on it's mean and standard deviation values. Default: \code{NA}.

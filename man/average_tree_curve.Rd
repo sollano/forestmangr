@@ -2,7 +2,7 @@
 % Please edit documentation in R/average_tree_curve.R
 \name{average_tree_curve}
 \alias{average_tree_curve}
-\title{Generate the curve of a forest's average tree using Kozak's taper model}
+\title{Generate the curve of a forest's average tree using the Kozak taper model}
 \usage{
 average_tree_curve(df, d, dbh, h, th, facet = NA)
 }
@@ -23,7 +23,7 @@ average_tree_curve(df, d, dbh, h, th, facet = NA)
 A ggplot object.
 }
 \description{
-Generate a ggplot curve of a forest's average tree using Kozak's taper model (Kozak, Munro and Smith, 1969).
+Generate a ggplot curve of a forest's average tree using the Kozak taper model (Kozak, Munro and Smith, 1969).
 }
 \examples{
 library(forestmangr)

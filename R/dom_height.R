@@ -11,7 +11,7 @@
 #' @param obs Quoted name of the observations variable. This will be used to tell which trees are dominant, i.e. it's the variable that tells the type of tree; if it is normal, dominant, suppressed, etc. If this argument is not supplied, the function will calculate the average value of 2 trees with bigger height values in each plot, and use that as the dominant value.
 #' @param dom Character value for the dominant tree code used in the observations variable variable supplied  in the \code{obs} argument. This is used alongside the \code{obs} argument to differentiate dominant trees from the others.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.
-#' @param merge_data If \code{TRUE}, will merge the original data frame with the dominant hight table. Default: \code{FALSE}.
+#' @param merge_data If \code{TRUE}, will merge the original data frame with the dominant height table. Default: \code{FALSE}.
 #' @param dh_name Character value for the name of the dominant height variable created. Default: \code{"DH"}
 #' @return A data frame with the the dominant height values by plot.
 #' 

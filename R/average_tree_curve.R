@@ -1,7 +1,7 @@
 #' @title
-#' Generate the curve of a forest's average tree using Kozak's taper model
+#' Generate the curve of a forest's average tree using the Kozak taper model
 #' @description 
-#' Generate a ggplot curve of a forest's average tree using Kozak's taper model (Kozak, Munro and Smith, 1969).
+#' Generate a ggplot curve of a forest's average tree using the Kozak taper model (Kozak, Munro and Smith, 1969).
 #'  
 #' @param df A data frame.
 #' @param d Quoted name of the section diameter variable, in cm.

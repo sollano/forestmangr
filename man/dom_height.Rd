@@ -22,7 +22,7 @@ dom_height(df, th, dbh, plot, obs, dom, .groups, merge_data = FALSE,
 
 \item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.}
 
-\item{merge_data}{If \code{TRUE}, will merge the original data frame with the dominant hight table. Default: \code{FALSE}.}
+\item{merge_data}{If \code{TRUE}, will merge the original data frame with the dominant height table. Default: \code{FALSE}.}
 
 \item{dh_name}{Character value for the name of the dominant height variable created. Default: \code{"DH"}}
 }

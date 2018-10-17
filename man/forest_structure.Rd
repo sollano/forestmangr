@@ -12,7 +12,7 @@ forest_structure(df, species, dbh, plot, plot_area, vertical_est = NA,
 
 \item{species}{Quoted name of the scientific names variable, or any variable used to differentiate the different species found in data.}
 
-\item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
+\item{dbh}{Quoted name of the diameter at breast height variable, in cm.}
 
 \item{plot}{Quoted name of the plot variable. used to differentiate the plot's trees, and calculate the number of sampled plots.}
 

@@ -5,7 +5,7 @@
 #' of trees in a data frame.
 #'
 #' @param df A data frame.
-#' @param dbh Quoted name of the diameter at breast hight variable, in cm.
+#' @param dbh Quoted name of the diameter at breast height variable, in cm.
 #' @param th Quoted name of the total height variable, in meters.
 #' @param vwb Quoted name of the volume with bark variable, in cubic meters.
 #' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is \code{NA}, the defined groups in the data frame will be used. Default: \code{NA}.

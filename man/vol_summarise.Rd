@@ -9,7 +9,7 @@ vol_summarise(df, dbh, th, vwb, tree, .groups = NA, vwob = NA)
 \arguments{
 \item{df}{A data frame.}
 
-\item{dbh}{Quoted name of the diameter at breast hight variable, in cm.}
+\item{dbh}{Quoted name of the diameter at breast height variable, in cm.}
 
 \item{th}{Quoted name of the total height variable, in meters.}
 
