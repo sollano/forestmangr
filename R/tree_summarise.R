@@ -17,7 +17,7 @@
 #' @return A data frame with the the equivalent diameter calculated.
 #' 
 #' @references 
-#' Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventario Florestal. 2nd edn. Viçosa: UFV.
+#' Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventario Florestal. 2nd ed. Vicosa: UFV.
 #'
 #' @export
 #' 

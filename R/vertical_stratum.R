@@ -8,7 +8,7 @@
 #' @return a data frame.
 #' 
 #' @references 
-#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Viçosa: UFV.
+#' Souza, A. L. and Soares, C. P. B. (2013) Florestas Nativas: estrutura, dinamica e manejo. Vicosa: UFV.
 #' 
 #' @export
 #' 

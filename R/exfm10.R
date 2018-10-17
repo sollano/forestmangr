@@ -1,5 +1,5 @@
 #' @title 
-#' Inventory data of an eucalyptus forest in minas gerais, Brazil with dominant height variable
+#' Inventory data of an eucalyptus forest Brazil with dominant height variable
 #' @description 
 #' In this data, each observation is a tree.
 #' @usage 

@@ -1,7 +1,7 @@
 #' @title 
-#' Inventory data of an eucalyptus forest in minas gerais, with age and site variables
+#' Inventory data of an eucalyptus forest in Brazil, with age and site variables
 #' @description 
-#' In this data, each observation is a plot. The site was estimated using Chapman & Richards' model.
+#' In this data, each observation is a plot. The site was estimated using the Chapman & Richards model.
 #' @usage 
 #' data(exfm12)
 #' 

@@ -26,7 +26,7 @@
 #'
 #' Graybill, F. A. (1976) Theory and application of the linear model. Massachusets: Ouxburg 239 Press.
 #' 
-#' Leite, H. G. and Oliveira, F. H. T. (2006) ‘Statistical procedure to test identity between analytical methods’, Communications in Soil Science and Plant Analysis, 33(7–8), pp. 1105–1118.
+#' Leite, H. G. and Oliveira, F. H. T. (2006) Statistical procedure to test identity between analytical methods, Communications in Soil Science and Plant Analysis, 33(7–8), pp. 1105–1118.
 #'  
 #' @export
 #' @examples

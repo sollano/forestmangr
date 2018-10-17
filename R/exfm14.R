@@ -1,7 +1,7 @@
 #' @title 
-#' Inventory data of an eucalyptus forest in Minas Gerais, with age and dominant height variables
+#' Inventory data of an eucalyptus forest in Brazil, with age and dominant height variables
 #' @description 
-#' In this data, each observation is a plot
+#' In this data, each observation is a plot.
 #' @usage 
 #' data(exfm14)
 #' 

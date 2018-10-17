@@ -1,5 +1,5 @@
 #' @title 
-#' Simplified Inventory data of an eucalyptus forest in Minas Gerais, Brazil
+#' Simplified Inventory data of an eucalyptus forest in Brazil
 #' @description 
 #' In this data, each observation is a tree.
 #' @usage 

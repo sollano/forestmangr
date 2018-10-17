@@ -1,5 +1,5 @@
 #' @title 
-#' Inventory data of an eucalyptus forest in Minas Gerais, with age variable
+#' Inventory data of an eucalyptus forest in Brazil, with age variable
 #' @description 
 #' In this data, each observation is a plot.
 #' @usage 

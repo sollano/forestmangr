@@ -12,7 +12,7 @@
 #' @return A ggplot object.
 #' 
 #' @references 
-#' Kozak, A., Munro, D. D. and Smith, J. H. G. (1969) ‘Taper Functions and their Application in Forest Inventory’, The Forestry Chronicle, 45, pp. 278–283.
+#' Kozak, A., Munro, D. D. and Smith, J. H. G. (1969) Taper Functions and their Application in Forest Inventory, The Forestry Chronicle, 45, pp. 278–283.
 #' 
 #' @export
 #' @examples 
