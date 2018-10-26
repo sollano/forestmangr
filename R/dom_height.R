@@ -1,5 +1,5 @@
 #' @title 
-#' Calculate the Dominant Height of forest inventory data plots
+#' Calculate the dominant height of forest inventory data plots
 #' @description 
 #' This function is used to get a data frame with Dominant height values for each plot
 #' in an forest inventory data.
@@ -19,8 +19,8 @@
 #' 
 #' @examples 
 #' library(forestmangr)
-#' data(exfm9)
-#' head(exfm9)
+#' data("exfm9")
+#' exfm9
 #'
 #' # Let's say we need to get the dominant height (DH) values for a forest inventory data.
 #' # If we don't have a variable that tells which trees are dominant, it's ok. We can
@@ -35,7 +35,7 @@
 #' 
 #' levels(as.factor(exfm9$OBS))
 #' 
-#' # So, the "D" level must be the one that tells which trees are dominant. Let's use it:#' 
+#' # So, the "D" level must be the one that tells which trees are dominant. Let's use it: 
 #' dom_height(df=exfm9,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D")
 #' 
 #' # If there are subdivisions of the data, like different strata, they can be included in the

@@ -1,15 +1,17 @@
-Package: forestmangr
 Type: Package
-Version: 0.9.0
+Package: forestmangr
 Title: Functions for Forest Mensuration and Management
-Description: Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and non linear grouped data fitting functions, and statistical tests.
+Version: 0.9.1
 Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com",role = c("aut", "cre", "cph")), 
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
               person(c("Eric", "Bastos","Gorgens"),email= "e.gorgensgmail.com", role =  "aut") )
 Author: Sollano Rabelo Braga [aut, cre, cph], Marcio Leles Romarco de Oliveira [aut], Eric Bastos Gorgens [aut]
+Description: Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and non linear grouped data fitting, and statistical tests.
 Maintainer: Sollano Rabelo Braga <sollanorb@gmail.com>
+URL: https://github.com/sollano/forestmangr#readme
+BugReports: https://github.com/sollano/forestmangr/issues
 Depends: R(>= 3.3)
-Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, scales(>= 0.4.1), psych, purrr, plyr, tibble, systemfit, htmltools, ggpmisc, rlang, graphics, utils, covr, rmarkdown, curl, car, stats, methods,magrittr,minpack.lm  
+Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, purrr, plyr, tibble, systemfit, ggpmisc, rlang, utils, car, stats, methods, magrittr, minpack.lm  
 Suggests:
 Date: 2018-10-15
 Encoding: UTF-8

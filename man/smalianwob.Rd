@@ -38,8 +38,7 @@ This function has integration with dplyr, so it can be used inside a pipe, along
 \examples{
 library(forestmangr)
 data("exfm7")
-
-head(exfm7)
+exfm7
 
 # Calculate the volume without bark using Smalian's method:
 smalianwob(exfm7,"di_wb", "hi", "bark_t", "TREE")

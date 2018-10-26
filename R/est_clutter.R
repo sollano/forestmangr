@@ -12,11 +12,12 @@
 #' @param category Quoted name for the category variable.
 #' @param coeffs Numeric vector or a data frame with the fitted values of Clutter's growth and yield model. It must be a named vector, with b0,b1,b2,b3,a0 and a1 as names. a1 is not obligatory.
 #' @param method Method used for estimating the present basal area of each class. It can either be the class' average basal area \code{"average"}, or an estimated value from a linear quadratic model of site as a function of basal area \code{"model"}. Default: \code{"average"}.
-#' @param output Type of output the function should return. This can either be \code{"plot"}, for the estimation plots, \code{"table"}, for a data frame with the estimated values, and \code{all} for a list with the plot and 2 more data frames. \code{"table"}.
 #' @param annual_increment If \code{TRUE}, changes the labels from Mean Monthly Increment (MMI) and Current Monthly Increment (CMI) to Mean Annual Increment (MAI) and Current Annual Increment (CAI). Default \code{FALSE}.
+#' @param gray_scale If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.
+#' @param output Type of output the function should return. This can either be \code{"plot"}, for the estimation plots, \code{"table"}, for a data frame with the estimated values, and \code{"full"} for a list with the plot and 2 more data frames. \code{"table"}.
 #' @return A data frame, a ggplot object or a list, according to output.
 #' @seealso other sampling functions: 
-#'   \code{\link{fit_clutter}} for fitting the Clutter Growth and Yield model, and
+#'   \code{\link{fit_clutter}} for fitting the clutter growth and Yield model, and
 #'   \code{\link{classify_site}} for classifying data according to site.
 #' @export
 #' 
@@ -24,8 +25,7 @@
 #' 
 #' library(forestmangr)
 #' data("exfm17")
-#' 
-#' head(exfm17)
+#' exfm17
 #' 
 #' clutter <- fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
 #' clutter
@@ -39,9 +39,8 @@
 #' # values using Clutter's model:
 #' est_clutter(ex_class,20:125, "B","S","category_",clutter,"average")
 #' 
-#' # For a more detailed output, including a plot, use output="all":
-#' est_clutter(ex_class,20:125, "B","S","category_",clutter, output="all")
-#' 
+#' # For a more detailed output, including a plot, use output="full":
+#' est_clutter(ex_class,20:125, "B","S","category_",clutter, output="full")
 #'
 #' # Estimate basal area using an estimated basal area as the initial basal area:
 #' est_clutter(ex_class,20:125,"B","S","category_",clutter,"model") 
@@ -51,7 +50,7 @@
 #'   
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
-est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "average", output="table", annual_increment=FALSE ){
+est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "average", annual_increment=FALSE, gray_scale=TRUE, output="table"){
   # ####
   LN_B2_EST<-Age<-V2_EST<-CMI<-MMI<-category_<-CAI<-MAI<-TAC<-TAC_Y<-Index<-Value<-NULL
   # checagem de variaveis ####
@@ -150,8 +149,8 @@ est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "a
     stop( "'output' must be character", call.=F)
   }else if(length(output)!=1){
     stop("Length of 'output' must be 1", call.=F)
-  }else if(! output %in% c('table', 'plot', 'all') ){ 
-    stop("'output' must be equal to 'table', 'plot' or 'all' ", call. = F) 
+  }else if(! output %in% c("plot", "table", "table_plot", "full") ){ 
+    stop("'output' must be equal to 'plot', 'table', 'table_plot' or 'full' ", call. = F) 
   }
   
   site_sym <- rlang::sym(site)
@@ -164,7 +163,7 @@ est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "a
   }else  if(length(annual_increment)!=1){
     stop("Length of 'annual_increment' must be 1", call.=F)
   }
-  
+  # ####
 
   tab_site_medio <- df %>%
     dplyr::group_by(!!category_sym) %>% 
@@ -329,8 +328,11 @@ est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "a
     ggplot2::geom_text(ggplot2::aes_string(x = "TAC", y = "TAC_Y", label = "TAC"),
                        vjust = 0, 
                        nudge_y = 0.2, 
-                       color = "black", size = 5)+
+                       color = "black", size = 5) +
     ggplot2::labs(y = "Production") +
+    {
+      if(gray_scale) ggplot2::scale_color_grey(start = 0.6, end = 0.2)
+    } +
     ggthemes::theme_igray(base_family = "serif") +
     ggplot2::theme(legend.position = "bottom",
                    legend.title = ggplot2::element_text(size=12,face="bold"),
@@ -349,7 +351,12 @@ est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "a
     return(final_table)
   }else if(output=="plot"){
     return(grafico)
-  }else if(output=="all"){
+  }else if(output == "table_plot"){
+    
+    print(grafico)
+    return(final_table)
+    
+  }else if(output=="full"){
     return(list(itc_plot=grafico,plot_table=plot_table,tac_summary=itc_table,final_table = final_table))
   }
   

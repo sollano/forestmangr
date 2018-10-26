@@ -2,7 +2,7 @@
 #' Summarize forest inventory data
 #' @description 
 #' Get informations about forest inventory plots, like number of individuals,
-#' mean DBH, q, Height, basal area, volume, etc.
+#' mean DBH, q, height, basal area, volume, etc.
 #' 
 #' @param df A data frame.
 #' @param plot Quoted name of the plot variable. used to differentiate the data's plots. If this argument is missing, the defined groups in the data frame will be used, If there are no groups in the data, the function will fail.
@@ -23,7 +23,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm21")
-#' head(exfm21)
+#' exfm21
 #' 
 #' # Obligatory arguments. Basic informations about the plot.
 #' plot_summarise(exfm21, "PLOT", 810)

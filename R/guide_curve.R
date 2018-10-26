@@ -15,13 +15,12 @@
 #' @param round_classes If \code{TRUE}, class values will be rounded to the nearest 5. Default \code{TRUE}.
 #' @param font Type of font used in the plot. Default: \code{"serif"}.
 #' @param gray_scale If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.
-#' @param output Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.
+#' @param output Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{"full"} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.
 #' @return A data frame, a ggplot object, or a list, varying according to the \code{"output"} argument.
 #' 
 #' @export
 #' 
 #' @examples 
-#' 
 #' data("exfm14")
 #' exfm14
 #' 
@@ -157,8 +156,8 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     stop( "'output' must be character", call.=F)
   }else if(length(output)!=1){
     stop("Length of 'output' must be 1", call.=F)
-  }else if(! output %in% c("plot", "table", "full") ){ 
-  stop("'output' must be equal to 'plot', 'table' or 'full' ", call. = F) 
+  }else if(! output %in% c("plot", "table", "table_plot", "full") ){ 
+  stop("'output' must be equal to 'plot', 'table', 'table_plot' or 'full' ", call. = F) 
   }
   
   DF <- as.data.frame(df)
@@ -353,7 +352,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     ggplot2::guides(color= ggplot2::guide_legend( nrow = 1) ) + 
     {
       if(gray_scale) ggplot2::scale_color_grey(start = 0.8, end = 0.2)
-     }+
+     } +
     ggplot2::theme(
       legend.position = "bottom",
       panel.grid.major = ggplot2::element_blank(), 
@@ -382,6 +381,11 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     
     return(tab_curva_cor)
     
+  }else if(output == "table_plot"){
+    
+    print(graph)
+    return(tab_curva_cor)
+    
   }else if(output == "full"){
     return(
       list(
@@ -398,7 +402,7 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
     
   }else{
     
-    stop("Please use 'plot', 'table' or 'full' output ",.call=F)
+    stop("Please use 'plot', 'table' 'table_plot' or 'full' output ",.call=F)
     
   }
   

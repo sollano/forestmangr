@@ -5,7 +5,8 @@
 \title{Estimate future and present basal area, volume, TCA, CMI and MMI values of the Clutter Growth and Yield Model}
 \usage{
 est_clutter(df, age, basal_area, site, category, coeffs,
-  method = "average", output = "table", annual_increment = FALSE)
+  method = "average", annual_increment = FALSE, gray_scale = TRUE,
+  output = "table")
 }
 \arguments{
 \item{df}{A data frame.}
@@ -22,9 +23,11 @@ est_clutter(df, age, basal_area, site, category, coeffs,
 
 \item{method}{Method used for estimating the present basal area of each class. It can either be the class' average basal area \code{"average"}, or an estimated value from a linear quadratic model of site as a function of basal area \code{"model"}. Default: \code{"average"}.}
 
-\item{output}{Type of output the function should return. This can either be \code{"plot"}, for the estimation plots, \code{"table"}, for a data frame with the estimated values, and \code{all} for a list with the plot and 2 more data frames. \code{"table"}.}
-
 \item{annual_increment}{If \code{TRUE}, changes the labels from Mean Monthly Increment (MMI) and Current Monthly Increment (CMI) to Mean Annual Increment (MAI) and Current Annual Increment (CAI). Default \code{FALSE}.}
+
+\item{gray_scale}{If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.}
+
+\item{output}{Type of output the function should return. This can either be \code{"plot"}, for the estimation plots, \code{"table"}, for a data frame with the estimated values, and \code{"full"} for a list with the plot and 2 more data frames. \code{"table"}.}
 }
 \value{
 A data frame, a ggplot object or a list, according to output.
@@ -38,8 +41,7 @@ the basal area from Clutter's growth and yield model.
 
 library(forestmangr)
 data("exfm17")
-
-head(exfm17)
+exfm17
 
 clutter <- fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
 clutter
@@ -53,9 +55,8 @@ head(ex_class ,15)
 # values using Clutter's model:
 est_clutter(ex_class,20:125, "B","S","category_",clutter,"average")
 
-# For a more detailed output, including a plot, use output="all":
-est_clutter(ex_class,20:125, "B","S","category_",clutter, output="all")
-
+# For a more detailed output, including a plot, use output="full":
+est_clutter(ex_class,20:125, "B","S","category_",clutter, output="full")
 
 # Estimate basal area using an estimated basal area as the initial basal area:
 est_clutter(ex_class,20:125,"B","S","category_",clutter,"model") 
@@ -66,7 +67,7 @@ est_clutter(ex_class,"age","B","S","category_", clutter,"model")
 }
 \seealso{
 other sampling functions: 
-  \code{\link{fit_clutter}} for fitting the Clutter Growth and Yield model, and
+  \code{\link{fit_clutter}} for fitting the clutter growth and Yield model, and
   \code{\link{classify_site}} for classifying data according to site.
 }
 \author{

@@ -28,8 +28,7 @@
 #' @examples
 #' library(forestmangr)
 #' data("exfm8")
-#' 
-#' head(exfm8)
+#' exfm8
 #' 
 #' # Calculate the volume without bark using the Huber method:
 #' huberwob(exfm8,"di_wb", "sec_length", "bark_t", "TREE")

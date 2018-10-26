@@ -32,7 +32,7 @@ of trees in a data frame.
 \examples{
 library(forestmangr)
 data("exfm7")
-head(exfm7)
+exfm7
 
 # In order to calculate the volume of each tree, first we
 # Calculate the volume by tree section using the Smalian method:

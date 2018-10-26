@@ -11,7 +11,7 @@
 #' @param class_interval Numeric value for the class interval used to classify the data. Default: \code{5}.
 #' @param dbh_min Numeric value for minimum diameter value to be considered in the classifications. dbh values smaller than this will be dismissed from the classification. Default: \code{5}.
 #' @param licourt_index Numeric value for the start licourt index used. Default: \code{2}.
-#' @param output Character value for the desired output. Can be either \code{"table"} for the classified data table, \code{"model"} to get a lm object with the linear model fitted, \code{"coefs"} to get a vector with the Meyer coefficients, or \code{"all"}, to get a list with all restuls. Default: \code{"table"}.
+#' @param output Character value for the desired output. Can be either \code{"table"} for the classified data table, \code{"model"} to get a lm object with the linear model fitted, \code{"coefs"} to get a vector with the Meyer coefficients, or \code{"full"}, to get a list with all restuls. Default: \code{"table"}.
 #' @return a data frame, a lm object, a vector or a list, according to the output argument.
 #' 
 #' @references 
@@ -21,7 +21,8 @@
 #' 
 #' @examples 
 #' library(forestmangr)
-#' data(exfm20)
+#' data("exfm20")
+#' exfm20
 #' 
 #' # To get the table with the regulated forest:
 #' bdq_meyer(exfm20, "transect", "dbh", 1000)
@@ -32,7 +33,7 @@
 #' # It's possible to get different outputs:
 #' bdq_meyer(exfm20, "transect", "dbh", 1000, output="model")
 #' bdq_meyer(exfm20, "transect", "dbh", 1000, output="coefs")
-#' bdq_meyer(exfm20, "transect", "dbh", 1000, output="all")
+#' bdq_meyer(exfm20, "transect", "dbh", 1000, output="full")
 #'
 #' 
 #' @author Eric Bastos Gorgens \email{e.gorgens@@gmail.com}
@@ -117,8 +118,8 @@ bdq_meyer <- function(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
     stop( "'output' must be character", call.=F)
   }else if(length(output)!=1){
     stop("Length of 'output' must be 1", call.=F)
-  }else if(! output %in% c('table', 'model', 'coefs', 'all') ){ 
-  stop("'output' must be equal to 'table', 'model', 'coefs' or 'all' ", call. = F) 
+  }else if(! output %in% c('table', 'model', 'coefs', 'full') ){ 
+  stop("'output' must be equal to 'table', 'model', 'coefs' or 'full' ", call. = F) 
   }
   # ####
   df <- as.data.frame(df)
@@ -189,7 +190,7 @@ bdq_meyer <- function(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
     return(meyer)
   }else if(output=="coefs"){
     return(c(b0, b1))
-  }else if(output=="all"){
+  }else if(output=="full"){
     list(table=DD, model=meyer,coefs=c(b0, b1))
   }
 }

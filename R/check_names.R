@@ -14,11 +14,11 @@
 #' @examples 
 #' library(forestmangr)
 #'
-#'check_names(iris, "Species")
-#'check_names(iris, "Species", boolean = FALSE )
+#' check_names(iris, "Species")
+#' check_names(iris, "Species", boolean = FALSE )
 #'
-#'check_names(iris, c("Especies", "Setal.Width") )
-#'check_names(iris, c("Especies", "Setal.Width"), boolean = FALSE)
+#' check_names(iris, c("Especies", "Setal.Width") )
+#' check_names(iris, c("Especies", "Setal.Width"), boolean = FALSE)
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 

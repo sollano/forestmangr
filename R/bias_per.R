@@ -8,8 +8,7 @@
 #' @param df a data frame.
 #' @param y Quoted name of the variable representing the observed values in the data frame. If a data frame is not provided, \code{y} can also be a numeric vector.
 #' @param yhat Quoted name of the variable representing the estimated values in the data frame. If a data frame is not provided, \code{yhat} can also be a numeric vector.
-#' @return 
-#' Numeric vector with the bias value, in percentage.
+#' @return Numeric vector with the bias value, in percentage.
 #' 
 #' @keywords bias
 #' 
@@ -18,8 +17,8 @@
 #' @export
 #' @examples 
 #' library(forestmangr)
-#' data(exfm11)
-#' head(exfm11)
+#' data("exfm11")
+#' exfm11
 #'
 #' # Bias of an estimator, given the data frame and quoted variable names:
 #' bias_per(exfm11, "TH", "TH_EST3")

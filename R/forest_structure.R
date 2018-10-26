@@ -24,7 +24,8 @@
 #' 
 #' @examples 
 #' library(forestmangr)
-#' data(exfm20)
+#' data("exfm20")
+#' exfm20
 #' 
 #' # Get the forest's horizontal structure:
 #' forest_structure(exfm20, "scientific.name", "dbh", "transect", 10000)

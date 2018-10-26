@@ -16,8 +16,10 @@
 #' 
 #' @examples 
 #' library(forestmangr)
-#' data(exfm20)
+#' data("exfm20")
+#' exfm20
 #' 
+#' # Get the aggregation indexes of species:
 #' species_aggreg(exfm20, "scientific.name", "transect")
 #' 
 #' @author Eric Bastos Gorgens \email{e.gorgens@@gmail.com}

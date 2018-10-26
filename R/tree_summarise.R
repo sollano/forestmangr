@@ -25,7 +25,7 @@
 #' 
 #' library(forestmangr)
 #' data("exfm18")
-#' head(exfm18)
+#' exfm18
 #' 
 #' # Calculate the equivalent diameter of trees with more than one trunk:
 #' tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )

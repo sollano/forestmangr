@@ -25,7 +25,7 @@ of a given numeric vector inside the model, without the need to create a new var
 \examples{
 library(forestmangr)
 data("exfm15")
-head(exfm15)
+exfm15
 
 # Get the inverse of a vector
 inv(iris$Petal.Length)

@@ -1,5 +1,5 @@
 #' @title 
-#' Graybill <i>F</i> Test
+#' Graybill F Test
 #' @description 
 #' Hypothesis test as described by Graybill (1976).
 #' @details 
@@ -8,18 +8,18 @@
 #' specially because, since it considers all data in it's analysis, 
 #' it's usually more precise than a standard mean t-test.
 #' If the data has outliers, the mean may not represent the data correctly, so
-#' Graybill <i>F</i> test is specially useful for heterogeneous data.
+#' Graybill F test is specially useful for heterogeneous data.
 #'
 #' A simple model regression is applied, and it's significance is evaluated
-#' by applying Graybill <i>F</i> test for the parameters estimate,
+#' by applying Graybill F test for the parameters estimate,
 #' according to the methodology described by Graybill (1976).
 #' 
 #' @param df A data frame.
 #' @param Y1 Quoted name of the standard variable.
 #' @param Yj Quoted name of the proposed variable.
-#' @param output Defines the type of output. If \code{1}, a simple data frame is created, with only essential information about the test. If \code{2}, more information is provided, and if \code{3}, a data frame with informations about the test and both variables is created. Default: \code{1}.
 #' @param signif Numeric value for the significance level used in the test. Default: \code{0.05}.
-#' @return A data frame. It's dimensions will vary, according to the \code{output} argument.
+#' @param output Defines the type of output. If \code{"simple"}, a simple data frame is created, with only essential information about the test. If \code{"table"}, more information is provided, and if \code{"full"}, a data frame with informations about the test and both variables is created. Default: \code{"simple"}.
+#' @return A data frame. Its dimensions will vary, according to the \code{output} argument.
 #' 
 #' @references 
 #' Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respostas. 5a. Vicosa: UFV.
@@ -32,26 +32,25 @@
 #' @examples
 #' library(forestmangr)
 #' data("exfm11")
-#' 
-#' head(exfm11)
+#' exfm11
 #' 
 #' # The data frame exfm11 contains a height variable called "TH". This will be our
 #' # standard value. We'll compare it to height estimated using different hypsometric equations.
 #' # These are variables "TH_EST1" and "TH_EST2":
-#' Graybill_F( exfm11,"TH", "TH_EST1")
+#' graybill_f( exfm11,"TH", "TH_EST1")
 #' 
 #' # TH_EST1 is statistically different from "TH".
 #' 
 #' # It's possible to alter the test's significance level using the signif argument:
-#' Graybill_F( exfm11,"TH", "TH_EST1", signif = 0.01)
+#' graybill_f( exfm11,"TH", "TH_EST1", signif = 0.01)
 #' 
 #' # Different output options are available through the output argument:
-#' Graybill_F( exfm11,"TH", "TH_EST2", output=2)
-#' Graybill_F( exfm11,"TH", "TH_EST2", output=3)
+#' graybill_f( exfm11,"TH", "TH_EST2", output="table")
+#' graybill_f( exfm11,"TH", "TH_EST2", output="full")
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-Graybill_F <- function(df, Y1, Yj, output = 1, signif = 0.05) {
+graybill_f <- function(df, Y1, Yj, signif = 0.05, output = "simple") {
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
@@ -83,9 +82,16 @@ Graybill_F <- function(df, Y1, Yj, output = 1, signif = 0.05) {
   }else if(forestmangr::check_names(df, Yj)==F){
     stop(forestmangr::check_names(df, Yj, boolean=F), call.=F)
   }
-    
-  if( !output %in% c(1,2,3) ){stop("ouput argument must be 1, 2 or 3")}
   
+  # Se output nao for character,ou nao for de tamanho 1, parar
+  if(!is.character( output )){
+    stop( "'output' must be character", call.=F)
+  }else if(length(output)!=1){
+    stop("Length of 'output' must be 1", call.=F)
+  }else if(! output %in% c('simple', 'table', 'full') ){ 
+  stop("'output' must be equal to 'simple', 'table' or 'full' ", call. = F) 
+  }
+
   # Se signif nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
   if(!is.numeric( signif )){
     stop( "'signif' must be numeric", call.=F)
@@ -111,7 +117,7 @@ Graybill_F <- function(df, Y1, Yj, output = 1, signif = 0.05) {
   if(FH0 > Ftab){Conclusion <- "Yj is statistically different from Y1, at the stablished significance level"}else{Conclusion <- "Yj is statistically equal to Y1, at the stablished significance level"}
 
    
-  if(output==1)
+  if(output=="simple")
   {
     Tab_Res_Simp <-  data.frame("F_H0"    = FH0, 
                                 "F_crit"  = Ftab, 
@@ -122,7 +128,7 @@ Graybill_F <- function(df, Y1, Yj, output = 1, signif = 0.05) {
     
     return(Tab_Res_Simp)
   } 
-  else if(output==2)
+  else if(output=="table")
   {
     Tab_Res_Med <- data.frame(Results = rbind(mean(Y1), mean(Yj), stats::var(Y1), stats::var(Yj), stats::sd(Y1), stats::sd(Yj), length(Y1), 2, fit$df.residual, Ftab, FH0, signif, round(pvalor , 9)),
                               row.names = c("Mean_Y1", "Mean_Yj", "Variance_Y1", "Variance_Yj", "Standard_deviation_Y1", "Standard_deviation_Yj", "N_Observations", "d.f.1", "d.f.2", "F_crit", "F_H0", "Significance_level",  "p-value"), 
@@ -130,7 +136,7 @@ Graybill_F <- function(df, Y1, Yj, output = 1, signif = 0.05) {
     
     return(Tab_Res_Med)
   }
-  else if(output==3){
+  else if(output=="full"){
     aux1 <- c(round(mean(Y1),2), round(stats::var(Y1),2), round(stats::sd(Y1),2),  length(Y1), 2, Ftab, FH0, signif, pvalor, Results, Conclusion)
     aux2 <- c(round(mean(Yj),2), round(stats::var(Yj),2), round(stats::sd(Yj),2), length(Yj), fit$df.residual, " ", " ", " ", " ", " ", " ")
     

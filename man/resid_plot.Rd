@@ -41,7 +41,7 @@ resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
 \item{res_table}{If \code{TRUE}, the function will return a data frame with observed, estimated, and residual values. Default: \code{FALSE}.}
 }
 \value{
-A ggplot object, or if \code{res_table = TRUE}, a data frame.
+A ggplot object, or, if \code{res_table = TRUE}, a data frame.
 }
 \description{
 Function for creating plots and tables for residual values from observed and estimated values.
@@ -49,8 +49,7 @@ Function for creating plots and tables for residual values from observed and est
 \examples{
 library(forestmangr)
 data("exfm11")
-
-head(exfm11)
+exfm11
 
 # Specifying the observed and estimated variables, we get a scatter plot
 # for the percentage residuals:

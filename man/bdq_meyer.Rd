@@ -22,7 +22,7 @@ bdq_meyer(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
 
 \item{licourt_index}{Numeric value for the start licourt index used. Default: \code{2}.}
 
-\item{output}{Character value for the desired output. Can be either \code{"table"} for the classified data table, \code{"model"} to get a lm object with the linear model fitted, \code{"coefs"} to get a vector with the Meyer coefficients, or \code{"all"}, to get a list with all restuls. Default: \code{"table"}.}
+\item{output}{Character value for the desired output. Can be either \code{"table"} for the classified data table, \code{"model"} to get a lm object with the linear model fitted, \code{"coefs"} to get a vector with the Meyer coefficients, or \code{"full"}, to get a list with all restuls. Default: \code{"table"}.}
 }
 \value{
 a data frame, a lm object, a vector or a list, according to the output argument.
@@ -33,7 +33,8 @@ forest, without damaging the forest's natural structure.
 }
 \examples{
 library(forestmangr)
-data(exfm20)
+data("exfm20")
+exfm20
 
 # To get the table with the regulated forest:
 bdq_meyer(exfm20, "transect", "dbh", 1000)
@@ -44,7 +45,7 @@ bdq_meyer(exfm20, "transect", "dbh", 1000, class_interval = 10)
 # It's possible to get different outputs:
 bdq_meyer(exfm20, "transect", "dbh", 1000, output="model")
 bdq_meyer(exfm20, "transect", "dbh", 1000, output="coefs")
-bdq_meyer(exfm20, "transect", "dbh", 1000, output="all")
+bdq_meyer(exfm20, "transect", "dbh", 1000, output="full")
 
 
 }

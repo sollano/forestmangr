@@ -4,8 +4,8 @@
 \alias{ident_model}
 \title{Identity of a Model Test}
 \usage{
-ident_model(df, factor, reduced_model, filter = NA, output = "table",
-  gray_scale = FALSE, signif = 0.05, font = "serif")
+ident_model(df, factor, reduced_model, filter = NA, gray_scale = TRUE,
+  signif = 0.05, font = "serif", output = "table")
 }
 \arguments{
 \item{df}{a data frame.}
@@ -16,17 +16,17 @@ ident_model(df, factor, reduced_model, filter = NA, output = "table",
 
 \item{filter}{Optional argument. If supplied with levels present in \code{factor}, only these levels will be used in the test. \code{NA}.}
 
-\item{output}{Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,
-if \code{"plot"} a ggplot plot/object representing the test is created,
-if \code{"table_plot"}, both anova table and plot are provided, and if \code{"full"},
-a list is provided, with details on the dummies variables created, the reduced and complete models,
-the anova table and the plot. Default: \code{"table"}}
-
 \item{gray_scale}{If \code{TRUE} a gray scale will be used in the plots. Default: \code{FALSE}.}
 
 \item{signif}{Numeric value for the significance level used in the test. Default: \code{0.05}.}
 
 \item{font}{font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for arial unicode MS. Default: \code{"serif"}.}
+
+\item{output}{Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,
+if \code{"plot"} a ggplot plot/object representing the test is created,
+if \code{"table_plot"}, both anova table and plot are provided, and if \code{"full"},
+a list is provided, with details on the dummies variables created, the reduced and complete models,
+the anova table and the plot. Default: \code{"table"}}
 }
 \value{
 A data frame, a ggplot object, or a list, varying according to the \code{output} argument.
@@ -37,7 +37,7 @@ Function for using the Identity of a Model test, as described by Regazzi (1999).
 \examples{
 library(forestmangr)
 data("exfm13")
-head(exfm13, 10)
+exfm13
 
 # The objective is to know if the diameter's behavior is similar among 3 species.
 # For this we'll use a quadratic model. We'll use nitrogen (N) as our X variable.
@@ -76,9 +76,9 @@ filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
 # the "Sucupira-preta" and "Vinhatico" species,
 # and a second model is needed to explain the Pequi Variable.
 
-# It's possible to apply a gray scale to the plots, and also change it's font to arial:
+# It's possible to apply a color scale to the plots, and also change it's font to arial:
 
-ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=TRUE,font="sans")
+ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=FALSE,font="sans")
 
 }
 \references{

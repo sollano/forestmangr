@@ -37,12 +37,12 @@ A data frame with informations per plot.
 }
 \description{
 Get informations about forest inventory plots, like number of individuals,
-mean DBH, q, Height, basal area, volume, etc.
+mean DBH, q, height, basal area, volume, etc.
 }
 \examples{
 library(forestmangr)
 data("exfm21")
-head(exfm21)
+exfm21
 
 # Obligatory arguments. Basic informations about the plot.
 plot_summarise(exfm21, "PLOT", 810)

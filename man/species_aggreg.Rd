@@ -23,8 +23,10 @@ Get the aggregation state of species according to the Payandeh, Hazen and Morist
 }
 \examples{
 library(forestmangr)
-data(exfm20)
+data("exfm20")
+exfm20
 
+# Get the aggregation indexes of species:
 species_aggreg(exfm20, "scientific.name", "transect")
 
 }

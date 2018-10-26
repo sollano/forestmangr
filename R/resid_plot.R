@@ -19,14 +19,13 @@
 #' @param legend_pos Position of legend, when a color variable is supplied. This can either be \code{"left"}, \code{"right"}, \code{"top"} or \code{"bottom"}. Default: \code{"bottom"}.
 #' @param gray_scale If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.
 #' @param res_table If \code{TRUE}, the function will return a data frame with observed, estimated, and residual values. Default: \code{FALSE}.
-#' @return A ggplot object, or if \code{res_table = TRUE}, a data frame.
+#' @return A ggplot object, or, if \code{res_table = TRUE}, a data frame.
 #' 
 #' @export
 #' @examples 
 #' library(forestmangr)
 #' data("exfm11")
-#'
-#' head(exfm11)
+#' exfm11
 #'
 #' # Specifying the observed and estimated variables, we get a scatter plot
 #' # for the percentage residuals:

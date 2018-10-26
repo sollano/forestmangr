@@ -29,7 +29,7 @@ fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
 \item{keep_model}{If \code{TRUE} a variable with the regression model will be kept in the data frame. Default: \code{FALSE}.}
 }
 \value{
-A data frame with the regressions coefficients.
+A data frame with the regression coefficients.
 }
 \description{
 Fit the Clutter model for growth and yield using the two stage least squares method (2SLS).
@@ -38,8 +38,7 @@ Fit the Clutter model for growth and yield using the two stage least squares met
 
 library(forestmangr)
 data("exfm17")
-
-head(exfm17)
+exfm17
 
 # To fit the Clutter model we just need to define the data, and age, dominant height,
 # basal area, volume, site and plot variables:
@@ -59,7 +58,7 @@ Campos, J. C. C. and Leite, H. G. (2017) Mensuracao Florestal: Perguntas e Respo
 }
 \seealso{
 other sampling functions: 
-  \code{\link{est_clutter}} for estimating the Clutter Growth and Yield model variables, and
+  \code{\link{est_clutter}} for estimating the Clutter growth and yield model variables, and
   \code{\link{classify_site}} for classifying data according to site.
 }
 \author{

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 
 # forestmangr
 
-Set of functions for processing forest inventory and surveying calculations. There are also functions for yield and growth predictions and model fitting (Clutter), linear and nonlinear grouped data fitting functions, and statistical tests such as Graybill's F and indentity model test.
+Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and non linear grouped data fitting, and statistical tests.
 
 ## Installation
 

@@ -19,14 +19,15 @@ similarity_matrix(df, species, comparison, NI_label = "",
 \item{index}{Character value for the desired index to be used. Can be either \code{Jaccard}, for a matrix based on the Jaccard index of similarity, \code{"Sorensen"}, for a matrix based the Sorensen index of similarity, or \code{"all"}, for a list with matrices for both indexes. Default: \code{"Sorensen"}.}
 }
 \value{
-a matrix object with a similarity matrix, or a list with two similarity matrices, one for each index, according to the index argument.
+a matrix object with a similarity matrix, or a list with two similarity matri ces, one for each index, according to the \code{"index"} argument.
 }
 \description{
 Calculates the Jaccard similarity index and Sorensen similarity index.
 }
 \examples{
 library(forestmangr)
-data(exfm20)
+data("exfm20")
+exfm20
 
 # To get the similarity matrix of an area, we simply need to provide
 # the species variable name, and a subdivision variable name, like

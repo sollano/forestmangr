@@ -29,7 +29,7 @@
 #' library(dplyr)
 #' 
 #' data("exfm19")
-#' head(exfm19)
+#' exfm19
 #' 
 #' # Fit Schumacher and Hall model for volume estimation, and get
 #' # coefficient, R2 and error values:

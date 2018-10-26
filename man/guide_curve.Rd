@@ -32,7 +32,7 @@ guide_curve(df, dh, age, age_index, n_class = 4, model = "Schumacher",
 
 \item{gray_scale}{If \code{TRUE}, the plot will be rendered in a gray scale. Default: \code{"TRUE"}.}
 
-\item{output}{Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{full} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.}
+\item{output}{Type of output the function should return. This can either be \code{"plot"}, for the guide curve plot, \code{"table"}, for a data frame with the data used on the guide curve plot, and \code{"full"} for a list with 2 ggplot2 objects, one for residual plot and other for plot curves, a lm object for the regression, a data frame with quality of fit variables, the dominant height index, the class table used, and the table used for the guide curve plot. Default \code{"plot"}.}
 }
 \value{
 A data frame, a ggplot object, or a list, varying according to the \code{"output"} argument.
@@ -42,7 +42,6 @@ Get the guide curve for growth and yield analysis of inventory data
 using the factor method, and different statistical models.
 }
 \examples{
-
 data("exfm14")
 exfm14
 

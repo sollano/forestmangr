@@ -17,8 +17,8 @@
 #' @export
 #' @examples 
 #' library(forestmangr)
-#' data(exfm11)
-#' head(exfm11)
+#' data("exfm11")
+#' exfm11
 #'
 #' # RMSE of an estimator, given the data frame and quoted variable names:
 #' rmse_per(exfm11, "TH", "TH_EST3")
