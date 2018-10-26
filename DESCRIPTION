@@ -15,5 +15,5 @@ Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, purrr, plyr, 
 Suggests:
 Date: 2018-10-15
 Encoding: UTF-8
-License: GPL-2
+License: MIT + file LICENSE
 RoxygenNote: 6.1.0
