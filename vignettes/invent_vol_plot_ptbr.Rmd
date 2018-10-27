@@ -1,0 +1,89 @@
+---
+title: "Inventário: estimativa de altura e totalização de parcelas"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Inventário: estimativa de altura e totalização de parcelas}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+library(dplyr)
+```
+
+Vamos utilizar dados de inventário, e calcular o volume, e demais variávies por parcela.
+
+```{r}
+library(forestmangr)
+library(dplyr)
+data(exfm9)
+dados <- exfm9
+head(dados)
+```
+
+
+O primeiro passo é estimar a altura das árvores não medidas. Vamos avaliar dois modelos. O de Henricksen:
+$$ Ln(H) = \beta_0 + \beta_1*Ln(H) $$ 
+
+E o de Campos & Leite, com altura dominante:
+$$ Ln(H) = \beta_0 + \beta_1*\frac{1}{dbh} + \beta_2*Ln(DH) $$ 
+Para utilizar este modelo, primeiro precisamos calcular a altura dominante de cada parcela. Para isso vamos utilizar a função `dom_height`. Nela informamos o dataframe, e as variáveis altura, dap, parcela, e observação. A variável observação é referente à qualidade da árvore, se ela é normal, dominante, bifurcada, etc. Além disso, fornecemos o código utilizado para definir as variáveis dominantes. Neste caso, o código utilziado foi `"dom"`:
+```{r}
+dom_height(df=dados,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D")
+```
+Agora que conhecemos o valor da altura dominante, podemos rodar a função novamente, porém utilizando o argumento `merge_data` como `TRUE`, para unir a variável aos dados diretamente:
+```{r}
+dados <- dom_height(dados,"TH","DBH","PLOT","OBS","D",merge_data = TRUE)
+head(dados)
+```
+
+Agora podemos ajustar os modelos hipsométricos. Vamos ajustá-los utilizando `lm_table`. A função `forestmangr::inv` nos permite ajustar o modelo de Campos & Leite sem a necessidade de criar novas variáveis:
+```{r}
+dados <- dados %>% 
+  lm_table(log(TH) ~ inv(DBH) + log(DH),output="merge_est",est.name="CL") %>% 
+  lm_table(log(TH) ~ log(DBH), output="merge_est",est.name="Henricksen") 
+head(dados)
+```
+
+Vamos verificar a qualidade dos ajustes utilizando a função `resid_plot`. Utilizamos `na.omit`
+para ocultar as árvores não medidas:
+```{r}
+resid_plot(na.omit(dados), "TH", "CL","Henricksen")
+```
+O modelo de campos & leite foi melhor, portanto vamos utilizá-lo.
+
+Agora podemos estimar a altura das árvores não medidas, utilizando `dplyr::mutate` e `ifelse`:
+```{r}
+ dados <- dados %>% 
+  mutate( TH_EST = ifelse(is.na(TH), CL, TH ), CL=NULL,Henricksen=NULL )
+head(dados)
+```
+
+
+Para estimar o volume, vamos utilizar uma equação ajustada previamente, com dados de cubagem:
+```{r}
+tabcoef_vwb <- data.frame(b0=-9.595863,b1=1.889372,b2=0.9071631)
+tabcoef_vwb
+```
+
+Agora vamos estimar área basal, idade, e volume:
+```{r}
+dados <- dados %>% 
+    mutate(CSA = pi*DBH^2/40000,
+         AGE = as.numeric(MEASUREMENT_DATE - PLANTING_DATE) / 30,
+         VWB = exp(tabcoef_vwb$b0 + tabcoef_vwb$b1*log(DBH) + tabcoef_vwb$b2*log(TH_EST) ) )
+head(dados)
+```
+
+Agora, para totalizar as parcelas, utlizamos `plot_summarise`, informando as variáveis
+parcela, área da parcela, dap, altura,área total,volume com casca, altura dominante e idade.
+Iremos obter com isso as variáveis dap, diâmetro quadrático, altura e altura dominante média por parcela. Além de número de indivíduos, volume total, e área basal por parcela e por hectare.
+```{r}
+tab_invt <- plot_summarise(df=dados,plot="PLOT",plot_area="PLOT_AREA",dbh="DBH",                           th="TH_EST",total_area="STRATA_AREA",vwb="VWB",dh="DH",age="AGE")
+tab_invt   
+```
+

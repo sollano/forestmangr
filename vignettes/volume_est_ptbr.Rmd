@@ -1,0 +1,92 @@
+---
+title: "Cubagem e modelos volumétricos"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Cubagem e modelos volumétricos}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+```
+
+Vamos calcular o volume da seção de dados cubados pelo método de Smalian, conforme a fórmula:
+$$ V_{secao} = \frac{AS_{i} + AS_{i+1}}{2} . L $$
+
+Vamos utilizar como exemplo os dado exfm7:
+```{r}
+library(forestmangr)
+data(exfm7)
+dados <- exfm7
+head(dados)
+```
+
+Primeiro, calculamos o volume com casca por seção, com a função `smalianwb`.
+Inserimos nela o dataframe, o diametro com casca, a altura da seção,
+e a variável árvore:
+```{r}
+dados_sma <- smalianwb(dados,"di_wb", "hi","TREE")
+head(as.data.frame(dados_sma))
+```
+
+Primeiro, calculamos o volume sem casca por seção, utilizamos a função `smalianwb`. Fornecemos as mesmas variáveis de antes, e a variável correspondente à espessura da casca. Como essa variável está em milímetros, utilizamos o argumento `bt_mm_to_cm` como verdadeiro, para converte-la para centímetros:
+```{r}
+dados_sma <- smalianwob(dados_sma, "di_wb", "hi", "bark_t","TREE", bt_mm_to_cm = T)
+head(as.data.frame(dados_sma))
+```
+
+Esse processo pode ser feito de forma direta, utilizando pipes (`%>%`)
+```{r}
+dados_sma <- dados %>% 
+  smalianwb("di_wb", "hi", "TREE") %>% 
+  smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T)
+head(as.data.frame(dados_sma))
+```
+
+
+Podemos visualizar a curva média das árvores desta área, utilizando o modelo de Kozak, com a função `average_tree_curve`:
+```{r}
+average_tree_curve(df = dados_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+```
+
+Para calcular o volume por árvore, utilizamos a função `vol_summarise`.
+Informamos as variáveis dap, altura, volume com casca e sem casca, e árvore:
+```{r}
+dados_vol_arvore <- vol_summarise(dados_sma, dbh = "DBH", th = "TH", 
+                                  vwb="VWB",tree = "TREE",vwob="VWOB")
+head(dados_vol_arvore)
+```
+
+Agora, para determinar o modelo volumétrico mais adequado para os dados, vamos ajustar dois modelos, e compará-los utilizando `resid_plot`.
+
+Modelo volumétrico de Schumacher:
+$$ Ln(V) = \beta_0 + \beta_1*Ln(dbh) + \beta_2*Ln(H) $$ 
+
+Modelo volumétrico de Husch:
+$$ Ln(V) = \beta_0 + \beta_1*Ln(dbh) $$ 
+
+
+Vamos utilizar o o output `merge_est` da função `lm_table`. Isso irá estimar o volume para os dados observados automaticamente. Em seguida, iremos utilizar a função `resid_plot`, e comparar a variável observada com as estimadas:
+
+```{r}
+dados_vol_arvore %>% 
+  lm_table(log(VWB) ~  log(DBH) + log(TH),output="merge_est",est.name="Schumacher") %>%
+  lm_table(log(VWB) ~  log(DBH),output="merge_est",est.name="Husch") %>%
+resid_plot("VWB", "Schumacher", "Husch")
+```
+O modelo de schumacher foi mais simétrico, portanto vamos utilizá-lo. Para salvar os coeficientes em um dataframe, ajustamos o modelo novamente, e utilizamos o output padrão:
+```{r}
+tabcoef_vwb <- lm_table(dados_vol_arvore, log(VWB) ~  log(DBH) + log(TH) )
+tabcoef_vwb
+```
+
+Fazemos o mesmo para o volume sem casca:
+```{r}
+tabcoef_vwob <- lm_table(dados_vol_arvore, log(VWOB) ~  log(DBH) + log(TH) )
+tabcoef_vwob
+```
+

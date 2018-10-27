@@ -1,0 +1,96 @@
+---
+title: "Avaliando crescimento e produção"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Avaliando crescimento e produção}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+library(dplyr)
+```
+
+Primeiro Carregamos os pacotes e dados:
+
+```{r}
+library(forestmangr)
+library(dplyr)
+data(exfm16)
+
+dados <- exfm16
+head(dados)
+```
+
+O objetivo aqui é estimar volume e área basal futuros, utilizando o modelo de Clutter.
+
+ $$   \left\{
+                \begin{array}{ll}
+                  Ln(B_2) = LnB_1\begin{pmatrix}  \frac{I_1}{I_2} \end{pmatrix} +  \alpha_0\begin{pmatrix} 1 - \frac{I_1}{I_2} \end{pmatrix} + \alpha_1\begin{pmatrix} 1 - \frac{I_1}{I_2} \end{pmatrix} S + ln(\varepsilon_2)\\
+                  Ln(V_2) = \beta_0 + \beta_1 \begin{pmatrix} \frac{1}{I_2}\end{pmatrix} + \beta_2 S + \beta_3 Ln(B_2) + Ln(\varepsilon_1)
+                \end{array}
+              \right. $$
+
+Para isso, primeiro precisamos estimar o site. Vamos utilizar o modelo de Chapman & Richards: 
+
+$$ DH = \beta_0 * (1 - exp^{-\beta_1 * Age})^{\beta_2}  $$
+
+Este modelo é não linear, portanto, vamos estima-lo com a função `nls_table`,obter os seus coeficientes e estimar o site utilizando a equação para site, considerando a idade índice:
+
+$$ S = DH* \frac{(1 - exp^{- \frac{ \beta_1}{Age} })^{\beta_2}}
+{(1 - exp^{- \frac{ \beta_1}{IndexAge}})^{\beta_2}}  $$
+
+
+Vamos utilizar uma idade índice de `64` meses.
+```{r}
+index_age <- 64
+dados <-  dados %>% 
+  nls_table(DH ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+            mod_start = c( b0=23, b1=0.03, b2 = 1.3), 
+            output = "merge" ) %>% 
+  mutate(S = DH *( (  (1- exp( -b1/age ))^b2   ) / 
+                     (( 1 - exp(-b1/index_age))^b2 ))  ) %>% 
+  select(-b0,-b1,-b2)
+head(dados)
+```
+
+Com o site estimado, podemos ajustar o modelo de Clutter:
+
+```{r}
+coefs_clutter <- fit_clutter(dados, "age", "DH", "B", "V", "S", "plot")
+coefs_clutter
+```
+
+Agora, podemos dividir a área em classes, e verificar a produção de cada classe com o modelo.
+
+Primeiro, vamos classificar os dados:
+
+```{r}
+dados_class <- classify_site(dados, "S", 3, "plot")
+head(dados_class)
+```
+
+Agora, estimamos área basal e volume com a função `est_clutter`. Também iremos calcular os valores de Incremento Médio Mensal (MMI) e Incremento Corrente Mensal (CMI).
+
+Fornecemos a ela os dados, um vetor com a idade desejada, as variáveis área basal inicial,
+site e de classificação (criada anteriormente), e um dataframe com os coeficientes do ajuste
+de clutter (criado anteriormente):
+
+```{r}
+dados_est <- est_clutter(dados_class, 20:125,"B", "S", "category_", coefs_clutter) 
+dados_est
+```
+
+Podemos também gerar um gráfico com a idade técnica de corte de cada classe:
+
+```{r}
+est_clutter(dados_class, 20:125,"B", "S", "category_", coefs_clutter,output="plot")
+```
+
+
+
+
