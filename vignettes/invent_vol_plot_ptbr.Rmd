@@ -69,21 +69,27 @@ Para estimar o volume, vamos utilizar uma equação ajustada previamente, com da
 tabcoef_vwb <- data.frame(b0=-9.595863,b1=1.889372,b2=0.9071631)
 tabcoef_vwb
 ```
+Agora para volume sem cascsa:
+```{r}
+tabcoef_vwob <- data.frame(b0=-9.808975,b1=1.918007,b2=0.908154)
+tabcoef_vwob
+```
 
 Agora vamos estimar área basal, idade, e volume:
 ```{r}
 dados <- dados %>% 
     mutate(CSA = pi*DBH^2/40000,
          AGE = as.numeric(MEASUREMENT_DATE - PLANTING_DATE) / 30,
-         VWB = exp(tabcoef_vwb$b0 + tabcoef_vwb$b1*log(DBH) + tabcoef_vwb$b2*log(TH_EST) ) )
+         VWB = exp(tabcoef_vwb$b0 + tabcoef_vwb$b1*log(DBH) + tabcoef_vwb$b2*log(TH_EST) ),
+         VWOB = exp(tabcoef_vwob$b0 + tabcoef_vwob$b1*log(DBH) + tabcoef_vwob$b2*log(TH_EST) ) )
 head(dados)
 ```
 
 Agora, para totalizar as parcelas, utlizamos `plot_summarise`, informando as variáveis
 parcela, área da parcela, dap, altura,área total,volume com casca, altura dominante e idade.
-Iremos obter com isso as variáveis dap, diâmetro quadrático, altura e altura dominante média por parcela. Além de número de indivíduos, volume total, e área basal por parcela e por hectare.
+Iremos obter com isso as variáveis dap, diâmetro quadrático, altura e altura dominante média por parcela. Além de número de indivíduos, volume totalcom e sem casca, e área basal por parcela e por hectare.
 ```{r}
-tab_invt <- plot_summarise(df=dados,plot="PLOT",plot_area="PLOT_AREA",dbh="DBH",                           th="TH_EST",total_area="STRATA_AREA",vwb="VWB",dh="DH",age="AGE")
-tab_invt   
+tab_invt <- plot_summarise(df=dados,plot="PLOT",plot_area="PLOT_AREA",dbh="DBH",                           th="TH_EST",total_area="STRATA_AREA",vwb="VWB",vwob="VWOB",dh="DH",age="AGE")
+head(as.data.frame(tab_invt))   
 ```
 
