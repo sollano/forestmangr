@@ -160,7 +160,7 @@ vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
       FFWOB        = (!!rlang::sym(vwob_name)) / (CSA * (!!rlang::sym(th_name)) )   ) %>%     # Fator de forma sem casca
     dplyr::mutate_at(                                # Funcao que cria novas variaveis utilizando as variaveis
       dplyr::vars(FFWB, FFWOB),                   # especificadas por vars
-      dplyr::funs(medio = mean)    ) %>%             # Fator de forma medio
+      dplyr::funs("mean" = mean)    ) %>%             # Fator de forma medio
     dplyr::na_if(0) %>%                              # Se vwob nao for informado, variaveis que o utilizam serao 0, portanto, deve-se converte-las para NA, para depois remove-las
     dplyr::select_if(Negate(anyNA)) %>%              # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     dplyr::ungroup()

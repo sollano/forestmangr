@@ -49,7 +49,7 @@ head(as.data.frame(dados_sma))
 
 
 Podemos visualizar a curva média das árvores desta área, utilizando o modelo de Kozak, com a função `average_tree_curve`:
-```{r}
+```{r, warning=FALSE, message=FALSE}
 average_tree_curve(df = dados_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
 ```
 
@@ -72,7 +72,7 @@ $$ Ln(V) = \beta_0 + \beta_1*Ln(dbh) $$
 
 Vamos utilizar o o output `merge_est` da função `lm_table`. Isso irá estimar o volume para os dados observados automaticamente. Em seguida, iremos utilizar a função `resid_plot`, e comparar a variável observada com as estimadas:
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 dados_vol_arvore %>% 
   lm_table(log(VWB) ~  log(DBH) + log(TH),output="merge_est",est.name="Schumacher") %>%
   lm_table(log(VWB) ~  log(DBH),output="merge_est",est.name="Husch") %>%

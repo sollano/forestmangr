@@ -61,39 +61,18 @@ exfm19 \%>\%
   
 # It's possible to merge the original data with the table containg the coefficients
 # using the output parameter:
-lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA", output = "merge")
+fit <- lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH), "STRATA", output = "merge")
+head(fit)
 
 # It's possible to merge the original data with the table,
 # and get the estimated values for this model:
-lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA",
- output = "merge_est", est.name = "VWB_EST") \%>\% head(15)
-   
+fit <- lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA",
+ output = "merge_est", est.name = "VWB_EST") 
+head(fit)
+       
 # It's possible to further customize the output,
 # unnesting the nested variables provided when output is defined as "nest":
 lm_table(exfm19, log(VWB) ~  log(DBH) + log(TH),"STRATA", output = "nest")
- 
- 
-# In the following example, the objective is to estimate non-measured height
-# values in a forest inventory data.
-
-# To do this, we'll fit a hypsometric model. The non-measured trees will 
-# be automatically ignored in this step. We'll define the argument output as
-# "merge_est", so that we can get the estimated height values as a separate column.
-# Then, we'll use mutate to create a new variable, that will contain measured
-# height values, along with estimated ones. To do this we'll use ifelse, 
-# and check for NAs inside the Height column. When it finds it, 
-# it will basically fill them with estimated values.
-library(forestmangr)
-library(dplyr)
-
-data("exfm15")
-head(exfm15, 20)
-
-ex_th_est <- exfm15 \%>\%  
-  lm_table(log(TH) ~ inv(DBH),output = "merge_est" ) \%>\% 
-  mutate( TH_EST = ifelse(is.na(TH), est, TH ) )
-# Now we can see that the values were estimated successfully.
-head(ex_th_est, 20)
 
 }
 \author{

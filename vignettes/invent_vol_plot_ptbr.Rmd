@@ -48,6 +48,7 @@ dados <- dados %>%
   lm_table(log(TH) ~ log(DBH), output="merge_est",est.name="Henricksen") 
 head(dados)
 ```
+Obs: a função lm_table verifica se o modelo possui log na variável y, e caso possua, ele o retira automaticamente. Por isso, não há a necessidade de calcular a exponencial dos dados estimados.
 
 Vamos verificar a qualidade dos ajustes utilizando a função `resid_plot`. Utilizamos `na.omit`
 para ocultar as árvores não medidas:

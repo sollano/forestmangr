@@ -20,6 +20,14 @@
 
 * vol_summarise now outputs ungrouped data
 
+* fixed vol_summarise name for average form factor value
+
+* fixed the example of lm_table
+
+* changed exfm19 to a data by tree
+
+* added 4 vignettes in portuguese
+
 # forestmangr 0.9.0
 
 * release

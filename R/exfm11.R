@@ -1,5 +1,5 @@
 #' @title 
-#' Observed and estimated values of height of trees, using 3 different models
+#' Observed hieght values of trees, and estimated values using 3 different models
 #' @description 
 #' In this data, each observation is a tree.
 #' @usage 

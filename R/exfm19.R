@@ -1,5 +1,5 @@
 #' @title 
-#' Data of felled trees sections, measured in the Smalian method
+#' Volume of felled trees, measured in the Smalian method
 #' @description 
 #' In this data, each observation is a section of a tree.
 #' @usage 
@@ -8,22 +8,14 @@
 #' @format
 #' A data frame with 16 observations and 3393 variables:
 #' \describe{
-#'   \item{MAP}{map numbers}
-#'   \item{PROJECT}{name of project}
-#'   \item{SPACING}{Spacing used in the plots, in meters}
 #'   \item{STRATA}{stratum number}
-#'   \item{GENCODE}{genetic code of plots}
 #'   \item{TREE}{number of trees}
 #'   \item{DBH}{diameter at breast height, in meters}
 #'   \item{TH}{total height, in meters}
-#'   \item{hi}{height of sections, in meters}
-#'   \item{di_wb}{diameter of sections with bark, in centimeters}
-#'   \item{bark_t}{bark of thickness, in millimeters}
-#'   \item{CSA_WB}{cross section area with bark, in square meters}
+#'   \item{CSA}{cross section area with bark, in square meters}
 #'   \item{VWB}{volume with bark, in cubic meters}
-#'   \item{di_sc}{diameter of sections without bark, in centimeters}
-#'   \item{CSA_WOB}{cross section area without bark, in square meters}
-#'   \item{VWOB}{volume without bark, in cubic meters}
+#'   \item{FFWB}{form factor for each section}
+#'   \item{FFWB_mean}{average form vactor value}
 #' }
 #' @name exfm19
 #' @docType data
