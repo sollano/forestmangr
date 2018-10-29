@@ -1,0 +1,70 @@
+---
+title: "Análise fitossociológica"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Análise fitossociológica}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+```
+
+Vamos utilizar dados de inventário da amazônia, e fazer uma análise fitossociológica da área.
+```{r}
+library(forestmangr)
+data(exfm20)
+dados <- exfm20
+
+head(dados)
+```
+
+Primeiro, vamos calcular os índices de diversidade da área, com a função `species_diversity`. Basta fornecer o nome da coluna referente às espécies:
+```{r}
+species_diversity(dados, "scientific.name")
+```
+
+Podemos verificar a similaridade entre parcelas pelo índice de Jaccard, utlizando a função `similarity_matrix`:
+```{r}
+similarity_matrix(dados, "scientific.name", "transect", index = "Jaccard")
+```
+
+Para avaliar o nível de agregação das espécies área, podemos utilizar a função `species_aggreg`:
+```{r}
+species_aggreg(dados, "scientific.name", "transect")
+```
+
+Podemos também avaliar a estrutura horizontal da floresta. Para isso, utilizamos a função `forest_structure`:
+
+```{r}
+forest_structure(dados, "scientific.name", "dbh", "transect", 10000)
+```
+
+Também é possível calcular a estrutura vertical e interna:
+```{r}
+forest_structure(dados, "scientific.name", "dbh", "transect", 10000, "canopy.pos", "light") 
+```
+
+É possível também verificar se a floresta está regulada, pelo método BDq:
+```{r}
+bdq_meyer(dados, "transect", "dbh", 1000,licourt_index = 2)
+```
+
+Com a função diameter_class é possível dividir os dados em classes de diâmetro, e verificar o número de indivíduos por espécie em cada classe:
+```{r}
+classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10, "scientific.name") 
+
+head(classed)
+```
+
+Uma outra forma de visualizar esta tabela é com o centro de classe na coluna. Podemos fazer isso com o argumento `cc_to_column`:
+```{r}
+classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10,
+               "scientific.name", cc_to_column=TRUE)
+head(classed)
+```
+
