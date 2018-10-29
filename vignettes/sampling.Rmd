@@ -1,0 +1,120 @@
+---
+title: "Amostragem"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Amostragem}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+```
+
+Primeiro carregamos o pacote e os dados:
+```{r}
+library(forestmangr)
+data("exfm1")
+data("exfm2")
+data("exfm3")
+data("exfm4")
+data("exfm5")
+
+dados_acs_piloto <- as.data.frame(exfm3)
+dados_acs_def <- as.data.frame(exfm4)
+dados_ace_piloto <- as.data.frame(exfm1)
+dados_ace_def <- as.data.frame(exfm2)
+dados_as <- as.data.frame(exfm5)
+
+```
+
+# Amostragem Casual Simples
+
+O objetivo deste exemplo é realizar uma amostragem casual simples de uma área, de 46,8 ha com um erro de 20%. Foram lançadas 10 parcelas de 3000 m² para um inventário piloto. Os dados são o seguinte:
+
+```{r}
+dados_acs_piloto
+```
+
+Agora, rodamos o inventário piloto considerando um erro de 20% e a população como finita. Lembrando que os valores de área da parcela devem ser inseridos em metros quadrados, e os valores de hectare devem ser inseridos em hectare:
+```{r}
+sprs(dados_acs_piloto, "VWB", 3000, 46.8,error = 20, pop = "fin")
+```
+
+Com esses resultados, percebe-se que para atingirmos o erro desejado, precisaremos de mais 15 amostras. Após uma nova amostragem, os novos dados são os seguintes:
+```{r}
+dados_acs_def
+```
+Agora o inventário definitivo será realizado, com 20% de erro e considerando uma população finita:
+```{r}
+sprs(dados_acs_def, "VWB", 3000, 46.8, error = 20, pop = "fin")
+```
+
+O erro foi atingido.
+
+Os valores de área podem ser inseridos também como colunas:
+```{r}
+sprs(dados_acs_def, "VWB", "PLOT_AREA", "TOTAL_AREA", 
+     error = 20, pop = "fin")
+```
+
+
+Também é possível realizar vários inventários casuais simples. Para demonstrar isso vamos utilizar o dado de exemplo para inventário estratificado, porém, vamos utilizar as estatísticas de acs. Utilizamos a função `sprs`, e indicamos a variável de grupo no argumento `.groups`. Neste caso, como temos várias áreas, a área total deve ser informada como uma coluna:
+```{r}
+sprs(dados_ace_def, "VWB", "PLOT_AREA", "STRATA_AREA",
+     .groups = "STRATA" ,error = 20, pop = "fin")
+
+```
+
+
+# Amostragem Casual Estratificada
+
+O objetivo deste exemplo é realizar uma amostragem casual sistemática de uma área, com um erro de 5%. A área foi dividida em 3 estratos: 1 com 14,4 ha e 7 parcelas, um com 16,4 ha e 8 parcelas, e outro com 14,2 ha e 7 parcelas. As parcelas tem uma área de 1000 m². Ao total foram 22 parcelas para o inventário piloto. Os dados são o seguinte:
+```{r}
+dados_ace_piloto
+```
+
+Agora realizamos o inventário com um um erro almejado de 5%, considerando a população como finita. Os valores de área podem ser inseridos como números, ou como variáveis. No caso da área dos estratos, um vetor numérico pode ser utilizado. A área da parcela deve ser inserida em metros quadrados, e a área dos estratos em hectares:
+```{r}
+strs(dados_ace_piloto, "VWB", 3000, c(14.4, 16.4, 14.2), 
+     strata = "STRATA", error = 5, pop = "fin")
+```
+
+Analisando a tabela 1, vemos que para atingir o erro de 5%, precisaremos amostrar mais 24 parcelas. 4 no estrato 1, 8 no estrato 2, e 12 no estrato 3.
+
+Com as parcelas lançadas, os dados para o inventário definitivo são esses:
+```{r}
+dados_ace_def
+```
+
+Agora, realizamos o inventário novamente, dessa vez para os dados definitivos. Consideramos novamente um erro de 5% e a população como finita:
+
+```{r}
+strs(dados_ace_def, "VWB", "PLOT_AREA", "STRATA_AREA", 
+     strata = "STRATA", error = 5, pop = "fin")
+```
+
+O erro desejado foi atingido.
+
+# Amostragem Sistemática
+
+Agora iremos amostrar uma área de 18 hecatres em que 18 parcelas de 200 m² foram lançadas sistematicamente:
+```{r}
+dados_as
+```
+
+Primeiro, vamos ver qual seria o erro atingido, caso utilizássemos o método da amostragem casual simples:
+```{r}
+sprs(dados_as, "VWB", 200, 18)
+```
+
+O erro obtido foi de 22,2%. Agora iremos calcular o erro utilizando o método das diferenças sucessivas. Lembrando que valores de área da parcela são inseridos em metros quadrados, e valores de área total, em hectares.
+```{r}
+ss_diffs(dados_as, "VWB", 200, 18)
+```
+
+O erro obtido foi de 4,2%. Houve uma redução significativa no erro.
+

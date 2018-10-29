@@ -57,8 +57,8 @@ exfm1
 
 strs(exfm1, "VWB", "PLOT_AREA", "STRATA_AREA", strata = "STRATA", error = 5, pop = "fin")
 
-# With these results, in order to meet the desired error of 5\%, we'll need to sample 59 more plots,
-# 14 in stratum 1, 21 in stratum 2, and 24 in stratum 3.
+# With these results, in order to meet the desired error of 5\%, we'll need to sample 24 more plots,
+# 4 in stratum 1, 8 in stratum 2, and 12 in stratum 3.
 # After sampling the necessary plots, we now run a definitive inventory,
 # considering an 5\% error and a finite population:
 exfm2

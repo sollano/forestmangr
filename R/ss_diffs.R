@@ -48,7 +48,7 @@
 #' 
 #' ss_diffs(exfm5, "VWB", "PLOT_AREA", "TOTAL_AREA")
 #'
-#' # The error was significantly lowered,
+#' # The error was significantly lowered.
 #' 
 #' # Area Values can be numeric;
 #' ss_diffs(exfm5, "VWB", 200, 18)
