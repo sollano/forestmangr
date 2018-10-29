@@ -4,25 +4,28 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "README-"
 )
+library(forestmangr)
+library(dplyr)
 ```
 
 [![Travis-CI Build Status](https://travis-ci.org/sollano/forestmangr.svg?branch=master)](https://travis-ci.org/sollano/forestmangr)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/forestmangr)](https://cran.r-project.org/package=forestmangr)
 [![Coverage Status](https://codecov.io/gh/sollano/forestmangr/branch/master/graph/badge.svg)](https://codecov.io/gh/sollano/forestmangr?branch=master)
+[![](https://cranlogs.r-pkg.org/badges/forestmangr)](https://cran.rstudio.com/web/packages/forestmangr/index.html)
 
 # forestmangr
 
 Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and non linear grouped data fitting, and statistical tests.
 
 ## Installation
-You can get the CRAN version with:
-```{r gh-installation, eval = FALSE}
+To install the stable CRAN version, use:
+```{r eval = FALSE}
 install.packages("forestmangr")
 ```
 
@@ -37,6 +40,7 @@ devtools::install_github("sollano/forestmangr")
 
 ```{r}
 library(forestmangr)
+library(dplyr)
 data("exfm17")
 head(exfm17)
 ```
@@ -46,11 +50,11 @@ the original data in one line. Here we'll use Chapman & Richards model:
 
 ```{r}
 age_i <- 64
-exfm16_fit <- exfm17 %>%
+exfm17_fit <- exfm17 %>%
   nls_table(DH ~ b0 * (1-exp(-b1* age))^b2, mod_start = c( b0=23, b1=0.03, b2 = 1.3), output="merge") %>% 
   mutate(site = DH *( ( (1- exp( -b1/age ))^b2 ) / (( 1 - exp(-b1/age_i))^b2 ))) %>% 
   select(-b0,-b1,-b2)
-head(exfm16_fit)
+head(exfm17_fit)
 ```
 
 Now, to fit Clutter's model, we can use the fit_clutter function, indicating the DH, B, V, S and Plot variable names:
