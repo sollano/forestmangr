@@ -37,17 +37,17 @@ devtools::install_github("sollano/forestmangr")
 ``` r
 library(forestmangr)
 library(dplyr)
-data("exfm17")
-head(exfm17)
-#> # A tibble: 6 x 8
-#>   strata  plot   age    DH     N     V     B     S
-#>    <int> <int> <dbl> <dbl> <int> <dbl> <dbl> <dbl>
-#> 1      1     1  26.4  12.4  1020  19.7   5.7  19.0
-#> 2      1     1  38.4  17.2  1020  60.8   9.8  21.0
-#> 3      1     1  51.6  19.1  1020 103.   13.9  20.5
-#> 4      1     1  63.6  21.8  1020 136.   15.3  21.8
-#> 5      1     2  26.4  15     900  27.3   6    23.0
-#> 6      1     2  38.4  20.3   900  80    10.5  24.8
+data("exfm16")
+head(exfm16)
+#> # A tibble: 6 x 7
+#>   strata  plot   age    DH     N     V     B
+#>    <int> <int> <dbl> <dbl> <int> <dbl> <dbl>
+#> 1      1     1  26.4  12.4  1020  19.7   5.7
+#> 2      1     1  38.4  17.2  1020  60.8   9.8
+#> 3      1     1  51.6  19.1  1020 103.   13.9
+#> 4      1     1  63.6  21.8  1020 136.   15.3
+#> 5      1     2  26.4  15     900  27.3   6  
+#> 6      1     2  38.4  20.3   900  80    10.5
 ```
 
 Now, we can fit a model for S estimatation. With nls\_table, we can fit
@@ -56,18 +56,18 @@ original data in one line. Here we’ll use Chapman & Richards model:
 
 ``` r
 age_i <- 64
-exfm17_fit <- exfm17 %>%
+exfm16_fit <- exfm16 %>%
   nls_table(DH ~ b0 * (1-exp(-b1* age))^b2, mod_start = c( b0=23, b1=0.03, b2 = 1.3), output="merge") %>% 
   mutate(site = DH *( ( (1- exp( -b1/age ))^b2 ) / (( 1 - exp(-b1/age_i))^b2 ))) %>% 
   select(-b0,-b1,-b2)
-head(exfm17_fit)
-#>   strata plot  age   DH    N     V    B        S     site
-#> 1      1    1 26.4 12.4 1020  19.7  5.7 18.97327 22.48027
-#> 2      1    1 38.4 17.2 1020  60.8  9.8 20.98908 24.24290
-#> 3      1    1 51.6 19.1 1020 103.4 13.9 20.52111 22.07375
-#> 4      1    1 63.6 21.8 1020 136.5 15.3 21.84098 21.89203
-#> 5      1    2 26.4 15.0  900  27.3  6.0 22.95153 27.19388
-#> 6      1    2 38.4 20.3  900  80.0 10.5 24.77199 28.61226
+head(exfm16_fit)
+#>   strata plot  age   DH    N     V    B     site
+#> 1      1    1 26.4 12.4 1020  19.7  5.7 22.48027
+#> 2      1    1 38.4 17.2 1020  60.8  9.8 24.24290
+#> 3      1    1 51.6 19.1 1020 103.4 13.9 22.07375
+#> 4      1    1 63.6 21.8 1020 136.5 15.3 21.89203
+#> 5      1    2 26.4 15.0  900  27.3  6.0 27.19388
+#> 6      1    2 38.4 20.3  900  80.0 10.5 28.61226
 ```
 
 Now, to fit Clutter’s model, we can use the fit\_clutter function,
@@ -75,7 +75,7 @@ indicating the DH, B, V, S and Plot variable
 names:
 
 ``` r
-coefs_clutter <- fit_clutter(exfm17_fit, "age", "DH", "B", "V", "site", "plot")
+coefs_clutter <- fit_clutter(exfm16_fit, "age", "DH", "B", "V", "site", "plot")
 coefs_clutter
 #>         b0        b1        b2       b3       a0         a1
 #> 1 1.398861 -28.84038 0.0251075 1.241779 1.883471 0.05012873
