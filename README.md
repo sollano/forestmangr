@@ -6,6 +6,7 @@ Status](https://travis-ci.org/sollano/forestmangr.svg?branch=master)](https://tr
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/forestmangr)](https://cran.r-project.org/package=forestmangr)
 [![Coverage
 Status](https://codecov.io/gh/sollano/forestmangr/branch/master/graph/badge.svg)](https://codecov.io/gh/sollano/forestmangr?branch=master)
+[![](https://cranlogs.r-pkg.org/badges/grand-total/forestmangr)](https://cran.rstudio.com/web/packages/forestmangr/index.html)
 [![](https://cranlogs.r-pkg.org/badges/forestmangr)](https://cran.rstudio.com/web/packages/forestmangr/index.html)
 
 # forestmangr
