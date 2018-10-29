@@ -28,7 +28,7 @@
 
 * changed exfm19 to a data by tree;
 
-* added 5 vignettes in portuguese.
+* added 6 vignettes in portuguese.
 
 # forestmangr 0.9.0
 
