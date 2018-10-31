@@ -46,7 +46,7 @@ data("exfm16")
 head(exfm16)
 ```
 
-Now, we can fit a model for S estimatation. With nls_table, we can fit a non-linear model, extract it's coefficients, and merge it with
+Now, we can fit a model for S estimatation. With `nls_table`, we can fit a non-linear model, extract it's coefficients, and merge it with
 the original data in one line. Here we'll use Chapman & Richards model:
 
 ```{r}
@@ -58,7 +58,7 @@ exfm16_fit <- exfm16 %>%
 head(exfm16_fit)
 ```
 
-Now, to fit Clutter's model, we can use the fit_clutter function, indicating the DH, B, V, S and Plot variable names:
+Now, to fit Clutter's model, we can use the `fit_clutter` function, indicating the DH, B, V, S and Plot variable names:
 
 ```{r}
 coefs_clutter <- fit_clutter(exfm16_fit, "age", "DH", "B", "V", "site", "plot")
@@ -87,15 +87,14 @@ The exfm4 data has new samples, that we now can use to run a definitive inventor
 sprs(exfm4, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 ```
 
-The exfm2 data has a strata variable. Say we wanted to run a SRS inventory for every stand. We can do this with the
-grupos argument:
+The exfm2 data has a strata variable. Say we wanted to run a SRS inventory for every stand. We can do this with the .groups argument:
 
 ```{r}
 head(exfm2,10)
 sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin")
 ```
-We can also run a stratified random sampling inventory with this data:
 
+We can also run a stratified random sampling inventory with this data:
 ```{r}
 strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin")
 ```
@@ -103,7 +102,7 @@ strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin"
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 * This project is being done on the Forest Management Lab, DEF, UFVJM - Diamantina/Minas Gerais - Brazil.

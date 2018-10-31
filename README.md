@@ -51,7 +51,7 @@ head(exfm16)
 #> 6      1     2  38.4  20.3   900  80    10.5
 ```
 
-Now, we can fit a model for S estimatation. With nls\_table, we can fit
+Now, we can fit a model for S estimatation. With `nls_table`, we can fit
 a non-linear model, extract it’s coefficients, and merge it with the
 original data in one line. Here we’ll use Chapman & Richards model:
 
@@ -71,7 +71,7 @@ head(exfm16_fit)
 #> 6      1    2 38.4 20.3  900  80.0 10.5 28.61226
 ```
 
-Now, to fit Clutter’s model, we can use the fit\_clutter function,
+Now, to fit Clutter’s model, we can use the `fit_clutter` function,
 indicating the DH, B, V, S and Plot variable
 names:
 
@@ -161,7 +161,7 @@ sprs(exfm4, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 ```
 
 The exfm2 data has a strata variable. Say we wanted to run a SRS
-inventory for every stand. We can do this with the grupos argument:
+inventory for every stand. We can do this with the .groups argument:
 
 ``` r
 head(exfm2,10)
@@ -274,7 +274,7 @@ strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin"
 ## License
 
 This project is licensed under the MIT License - see the
-[LICENSE.md](LICENSE.md) file for details
+[LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
