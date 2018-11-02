@@ -271,6 +271,23 @@ strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin"
 #> 13 Superior Total Confidence Interval (m3) 5002.0018
 ```
 
+## Citation
+
+To cite this package in publications, use:
+
+ABNT:
+
+BRAGA S. R., OLIVEIRA, M. L. R., GORGENS, E. B. forestmangr: Functions
+for Forest Mensuration and Management. R package version 0.9.0, 2018.
+Disponível em: <https://CRAN.R-project.org/package=forestmangr>
+
+APA:
+
+Sollano Rabelo Braga, Marcio Leles Romarco de Oliveira and Eric Bastos
+Gorgens (2018). forestmangr: Functions for Forest Mensuration and
+Management. R package version 0.9.0.
+<https://CRAN.R-project.org/package=forestmangr>
+
 ## License
 
 This project is licensed under the MIT License - see the
@@ -285,4 +302,4 @@ This project is licensed under the MIT License - see the
     engeneer a little easier and pratical. We’d like to thank everyone
     at UFVJM that has in anyway helped this project grow.
 
-  - We’d like to thank UFVJM, FAPEMIG, CNPq e CAPES fo rthe support.
+  - We’d like to thank UFVJM, FAPEMIG, CNPq e CAPES for the support.
