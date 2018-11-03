@@ -87,11 +87,12 @@ The exfm4 data has new samples, that we now can use to run a definitive inventor
 sprs(exfm4, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 ```
 
-The exfm2 data has a strata variable. Say we wanted to run a SRS inventory for every stand. We can do this with the .groups argument:
+The desired error was met.
 
+The exfm2 data has a strata variable. Say we wanted to run a SRS inventory for every stand. We can do this with the .groups argument:
 ```{r}
 head(exfm2,10)
-sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin")
+sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups="STRATA", error = 20, pop = "fin")
 ```
 
 We can also run a stratified random sampling inventory with this data:
@@ -116,7 +117,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-* This project is being done on the Forest Management Lab, DEF, UFVJM - Diamantina/Minas Gerais - Brazil.
+* This project was developed on the Forest Management Lab, DEF, UFVJM, Diamantina/Minas Gerais - Brazil.
 
 * This project came to be as a mean to make the life of a forestry engeneer a little easier and pratical. 
 We'd like to thank everyone at UFVJM that has in anyway helped this project grow.

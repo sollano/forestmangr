@@ -160,6 +160,8 @@ sprs(exfm4, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 #> 18       Superior Total Confidence Interval (m3) 6055.1755
 ```
 
+The desired error was met.
+
 The exfm2 data has a strata variable. Say we wanted to run a SRS
 inventory for every stand. We can do this with the .groups argument:
 
@@ -178,27 +180,45 @@ head(exfm2,10)
 #>  8      1        14.4      1000  6.6 
 #>  9      1        14.4      1000  7.4 
 #> 10      1        14.4      1000  5.35
-sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin")
-#>                                        Variables    Values
-#> 1                                            Age    2.1579
-#> 2              Total number of sampled plots (n)   57.0000
-#> 3                    Number of maximum plots (N)  150.2105
-#> 4                      Variance Quoeficient (VC)   32.5358
-#> 5                                      t-student    2.0032
-#> 6                         recalculated t-student    2.2622
-#> 7  Number of samples regarding the admited error   13.0000
-#> 8                                       Mean (Y)   11.2439
-#> 9                Standard error of the mean (Sy)    0.3817
-#> 10                                Absolute Error    0.7646
-#> 11                            Relative Error (%)    6.8005
-#> 12                  Estimated Total Value (Yhat) 1688.9461
-#> 13                                   Total Error  114.8566
-#> 14             Inferior Confidence Interval (m3)   10.4792
-#> 15             Superior Confidence Interval (m3)   12.0085
-#> 16          Inferior Confidence Interval (m3/ha)  104.7922
-#> 17          Superior Confidence Interval (m3/ha)  120.0850
-#> 18       inferior Total Confidence Interval (m3) 1574.0895
-#> 19       Superior Total Confidence Interval (m3) 1803.8026
+sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups="STRATA", error = 20, pop = "fin")
+#>                                        Variables  STRATA1   STRATA2
+#> 1              Total number of sampled plots (n)  14.0000   20.0000
+#> 2                    Number of maximum plots (N) 144.0000  164.0000
+#> 3                      Variance Quoeficient (VC)  24.4785   15.8269
+#> 4                                      t-student   2.1604    2.0930
+#> 5                         recalculated t-student   2.4469    4.3027
+#> 6  Number of samples regarding the admited error   9.0000   11.0000
+#> 7                                       Mean (Y)   6.0357   12.0150
+#> 8                Standard error of the mean (Sy)   0.3752    0.3984
+#> 9                                 Absolute Error   0.8105    0.8339
+#> 10                            Relative Error (%)  13.4288    6.9409
+#> 11                  Estimated Total Value (Yhat) 869.1429 1970.4600
+#> 12                                   Total Error 116.7157  136.7670
+#> 13             Inferior Confidence Interval (m3)   5.2252   11.1811
+#> 14             Superior Confidence Interval (m3)   6.8462   12.8489
+#> 15          Inferior Confidence Interval (m3/ha)  52.2519  111.8105
+#> 16          Superior Confidence Interval (m3/ha)  68.4624  128.4895
+#> 17       inferior Total Confidence Interval (m3) 752.4271 1833.6930
+#> 18       Superior Total Confidence Interval (m3) 985.8586 2107.2270
+#>      STRATA3
+#> 1    23.0000
+#> 2   142.0000
+#> 3    16.7813
+#> 4     2.0739
+#> 5     4.3027
+#> 6    12.0000
+#> 7    13.7435
+#> 8     0.4402
+#> 9     0.9130
+#> 10    6.6431
+#> 11 1951.5739
+#> 12  129.6455
+#> 13   12.8305
+#> 14   14.6565
+#> 15  128.3048
+#> 16  146.5647
+#> 17 1821.9284
+#> 18 2081.2194
 ```
 
 We can also run a stratified random sampling inventory with this
@@ -295,8 +315,8 @@ This project is licensed under the MIT License - see the
 
 ## Acknowledgments
 
-  - This project is being done on the Forest Management Lab, DEF, UFVJM
-    - Diamantina/Minas Gerais - Brazil.
+  - This project was developed on the Forest Management Lab, DEF, UFVJM,
+    Diamantina/Minas Gerais - Brazil.
 
   - This project came to be as a mean to make the life of a forestry
     engeneer a little easier and pratical. We’d like to thank everyone
