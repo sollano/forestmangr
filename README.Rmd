@@ -46,7 +46,7 @@ data("exfm16")
 head(exfm16)
 ```
 
-Now, we can fit a model for S estimatation. With `nls_table`, we can fit a non-linear model, extract it's coefficients, and merge it with
+Now, we can fit a model for Site estimatation. With `nls_table`, we can fit a non-linear model, extract it's coefficients, and merge it with
 the original data in one line. Here we'll use Chapman & Richards model:
 
 ```{r}
@@ -58,14 +58,14 @@ exfm16_fit <- exfm16 %>%
 head(exfm16_fit)
 ```
 
-Now, to fit Clutter's model, we can use the `fit_clutter` function, indicating the DH, B, V, S and Plot variable names:
+Now, to fit Clutter's model, we can use the `fit_clutter` function, indicating the DH, B, V, site and Plot variable names:
 
 ```{r}
 coefs_clutter <- fit_clutter(exfm16_fit, "age", "DH", "B", "V", "site", "plot")
 coefs_clutter
 ```
 
-Now let's say we wanted to do a Simple Random Sampling Forest Inventory, with 20% as a accepted error. 
+Now, say we wanted to do a Simple Random Sampling Forest Inventory, with 20% as a accepted error. 
 First, let's load the package and some data:
 
 ```{r}
