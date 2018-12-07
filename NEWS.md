@@ -28,7 +28,9 @@
 
 * changed exfm19 to a data by tree;
 
-* added 6 vignettes in portuguese.
+* added 6 vignettes in portuguese;
+
+* tree_summarise is now improved, and keeps all variables from data.
 
 # forestmangr 0.9.0
 

@@ -17,4 +17,4 @@ VignetteBuilder: knitr
 Date: 2018-10-15
 Encoding: UTF-8
 License: MIT + file LICENSE
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

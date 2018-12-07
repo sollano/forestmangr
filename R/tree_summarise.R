@@ -28,11 +28,12 @@
 #' exfm18
 #' 
 #' # Calculate the equivalent diameter of trees with more than one trunk:
-#' tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
+#' eq_diam <- tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
+#' head(eq_diam, 10)
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-tree_summarise <- function(df,  dbh, tree, th=NA, vwb=NA, vwob=NA, plot_area=NA, total_area=NA, .groups=NA){
+tree_summarise <- function(df,  dbh, tree, .groups=NA){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -89,106 +90,32 @@ tree_summarise <- function(df,  dbh, tree, th=NA, vwb=NA, vwob=NA, plot_area=NA,
     .groups_syms <- rlang::syms(.groups) 
   }
   
-  # se plot_area nao for fornecido, nao for numerico nem character, ou nao existir no dataframe,ou nao for de tamanho 1, criar variavel vazia
-  # se for fornecido numero ou noem de variavel, reagir de acordo
-  if(  missing(plot_area) || is.null(plot_area) || is.na(plot_area) || plot_area == "" ){  
-    df $ plot_area <- NA
-    plot_area <- "plot_area"
-  }else if(is.numeric(plot_area) & length(plot_area)==1){
-    df $ plot_area <- plot_area
-    plot_area <- "plot_area"
-  }else if(!is.character(plot_area)){
-    stop("'plot_area' must be a character containing a variable name or a numeric value", call.=F)
-  }else if(length(plot_area)!=1){
-    stop("Length of 'plot_area' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, plot_area)==F){
-    stop(forestmangr::check_names(df, plot_area, boolean = F), call.=F)
-  }
-  
-  # se total_area nao for fornecido, nao for numerico nem character, ou nao existir no dataframe,ou nao for de tamanho 1, criar variavel vazia
-  # se for fornecido numero ou noem de variavel, reagir de acordo
-  if(  missing(total_area) || is.null(total_area) || is.na(total_area) || total_area == "" ){  
-    df $ total_area <- NA
-    total_area <- "total_area"
-  }else if(is.numeric(total_area) & length(total_area)==1){
-    df $ total_area <- total_area
-    total_area <- "total_area"
-  }else if(!is.character(total_area)){
-    stop("'total_area' must be a character containing a variable name or a numeric value", call.=F)
-  }else if(length(total_area)!=1){
-    stop("Length of 'total_area' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, total_area)==F){
-    stop(forestmangr::check_names(df, total_area, boolean = F), call.=F)
-  }
-  
-  # se th nao for fornecido, for igual "", nulo ou NA, criar variavel vazia 
-  # se existir e nao for character,  parar
-  if(missing(th) || is.null(th) || is.na(th) || th == "" ){
-    df $ th <- NA
-    th <- "th"
-  }else if(!is.character(th)){
-    stop("'th' must be a character containing a variable name", call.=F)
-  }else if(length(th)!=1){
-    stop("Length of 'th' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, th)==F){
-    stop(forestmangr::check_names(df, th, boolean=F), call.=F)
-  }
-  
-  # se vwb nao for fornecido, for igual "", nulo ou NA, criar variavel vazia 
-  # se existir e nao for character,  parar
-  if(missing(vwb) || is.null(vwb) || is.na(vwb) || vwb == "" ){
-    df $ vwb <- NA
-    vwb <- "vwb"
-  }else if(!is.character(vwb)){
-    stop("'vwb' must be a character containing a variable name", call.=F)
-  }else if(length(vwb)!=1){
-    stop("Length of 'vwb' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, vwb)==F){
-    stop(forestmangr::check_names(df, vwb, boolean=F), call.=F)
-  }
-  
-  # se vwob nao for fornecido, for igual "", nulo ou NA, criar variavel vazia 
-  # se existir e nao for character,  parar
-  if(missing(vwob) || is.null(vwob) || is.na(vwob) || vwob == "" ){
-    df $ vwob <- NA
-    vwob <- "vwob"
-  }else if(!is.character(vwob)){
-    stop("'vwob' must be a character containing a variable name", call.=F)
-  }else if(length(vwob)!=1){
-    stop("Length of 'vwob' must be 1", call.=F)
-  }else if(forestmangr::check_names(df, vwob)==F){
-    stop(forestmangr::check_names(df, vwob, boolean=F), call.=F)
-  }
-  
   dbh_name <- dbh
-  th_name <- th
   tree_name <- tree
-  plot_area_name <- plot_area
-  total_area_name <- total_area
-  vwb_name <- vwb
-  vwob_name <- vwob
-  
-  dbh_sym          <- rlang::sym(dbh)
-  th_sym           <- rlang::sym(th)
-  plot_area        <- rlang::sym(plot_area)
-  total_area_sym   <- rlang::sym(total_area)
-  vwb_sym          <- rlang::sym(vwb)
-  vwob_sym          <- rlang::sym(vwob)
-  
+  dbh_sym <- rlang::sym(dbh)
+
   # ####
   
-  df %>% 
+  x <- df %>% 
     dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
-    dplyr::summarise(
-      !!plot_area_name  := mean((!!plot_area), na.rm = TRUE),
-      !!total_area_name := mean((!!total_area_sym), na.rm = TRUE),
-      !!dbh_name        := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ),
-      !!th_name         := mean((!!th_sym), na.rm = TRUE),
-      !!vwb_name        := mean((!!vwb_sym), na.rm = TRUE),
-      !!vwob_name       := mean((!!vwob_sym), na.rm = TRUE) ) %>% 
+    dplyr::summarise( !!dbh_name := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ) ) %>% 
     dplyr::na_if(0) %>% 
     as.data.frame() %>% 
-    dplyr::select_if( function(x) !all(is.nan(x)) ) %>% # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NaN)
     dplyr::ungroup()
+  
+  # Remove data from other boles, keep only the first one
+  df <- df %>% 
+    dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
+    dplyr::mutate(nn=seq(1,dplyr::n())) %>% 
+    dplyr::filter(nn==1) %>% 
+    dplyr::select(-nn, -(!!dbh_sym) ) %>% 
+    dplyr::ungroup()
+  
+  # Bind new dbh with original data and return
+  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+    return(as.data.frame(dplyr::left_join(df,x, by=tree)) ) 
+  }else{
+    return(as.data.frame(dplyr::left_join(df,x, by=c(.groups,tree) )) )
+  }
   
 }

@@ -4,8 +4,7 @@
 \alias{tree_summarise}
 \title{Calculate the equivalent diameter of trees with more than one trunk}
 \usage{
-tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
-  plot_area = NA, total_area = NA, .groups = NA)
+tree_summarise(df, dbh, tree, .groups = NA)
 }
 \arguments{
 \item{df}{A data frame.}
@@ -13,6 +12,8 @@ tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
 \item{dbh}{Quoted name of the diameter at breast height variable.}
 
 \item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the data frame will be used. If there are no groups in the data, the function will fail.}
+
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.}
 
 \item{th}{Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.}
 
@@ -23,8 +24,6 @@ tree_summarise(df, dbh, tree, th = NA, vwb = NA, vwob = NA,
 \item{plot_area}{Optional argument. Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
 
 \item{total_area}{Optional argument. Quoted name of the total area variable, or a numeric vector with the total area value. The total area value must be in hectares. Default: \code{NA}.}
-
-\item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.}
 }
 \value{
 A data frame with the the equivalent diameter calculated.
@@ -41,7 +40,8 @@ data("exfm18")
 exfm18
 
 # Calculate the equivalent diameter of trees with more than one trunk:
-tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
+eq_diam <- tree_summarise(exfm18, "DBH",tree="Tree", .groups=c("Plot", "Species") )
+head(eq_diam, 10)
 
 }
 \references{
