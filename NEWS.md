@@ -30,7 +30,9 @@
 
 * added 6 vignettes in portuguese;
 
-* tree_summarise is now improved, and keeps all variables from data.
+* tree_summarise is now improved, and keeps all variables from data;
+
+* strs can now handle special characters
 
 # forestmangr 0.9.0
 
