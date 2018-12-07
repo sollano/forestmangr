@@ -14,16 +14,6 @@ tree_summarise(df, dbh, tree, .groups = NA)
 \item{tree}{Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the data frame will be used. If there are no groups in the data, the function will fail.}
 
 \item{.groups}{Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.}
-
-\item{th}{Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.}
-
-\item{vwb}{Optional argument. Quoted name of the volume with bark variable, in cubic meters. Default: \code{NA}.}
-
-\item{vwob}{Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.}
-
-\item{plot_area}{Optional argument. Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
-
-\item{total_area}{Optional argument. Quoted name of the total area variable, or a numeric vector with the total area value. The total area value must be in hectares. Default: \code{NA}.}
 }
 \value{
 A data frame with the the equivalent diameter calculated.

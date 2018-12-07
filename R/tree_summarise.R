@@ -8,11 +8,6 @@
 #' @param df A data frame.
 #' @param dbh Quoted name of the diameter at breast height variable.
 #' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the data frame will be used. If there are no groups in the data, the function will fail.
-#' @param th Optional argument. Quoted name of the total height variable, in meters. Default: \code{NA}.
-#' @param vwb Optional argument. Quoted name of the volume with bark variable, in cubic meters. Default: \code{NA}.
-#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
-#' @param plot_area Optional argument. Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters. 
-#' @param total_area Optional argument. Quoted name of the total area variable, or a numeric vector with the total area value. The total area value must be in hectares. Default: \code{NA}.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.
 #' @return A data frame with the the equivalent diameter calculated.
 #' 
@@ -35,7 +30,7 @@
 #' 
 tree_summarise <- function(df,  dbh, tree, .groups=NA){
   # Checagem de variaveis ####
-  
+  nn <- NULL
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
