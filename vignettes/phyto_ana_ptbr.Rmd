@@ -49,12 +49,12 @@ Também é possível calcular a estrutura vertical e interna:
 forest_structure(dados, "scientific.name", "dbh", "transect", 10000, "canopy.pos", "light") 
 ```
 
-É possível também verificar se a floresta está regulada, pelo método BDq:
+É possível também verificar se a floresta está regulada, pelo método BDq, utilizando a função `bdq_meyer`:
 ```{r}
 bdq_meyer(dados, "transect", "dbh", 1000,licourt_index = 2)
 ```
 
-Com a função diameter_class é possível dividir os dados em classes de diâmetro, e verificar o número de indivíduos por espécie em cada classe:
+Com a função `diameter_class` é possível dividir os dados em classes de diâmetro, e verificar o número de indivíduos por espécie em cada classe:
 ```{r}
 classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10, "scientific.name") 
 

@@ -1,0 +1,94 @@
+---
+title: "Evaluating yield and growth"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Evaluating yield and growth}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+library(dplyr)
+```
+
+First we load the packages and data:
+
+```{r}
+library(forestmangr)
+library(dplyr)
+data(exfm16)
+
+data_ex <- exfm16
+head(data_ex)
+```
+
+The objetive of this vignette is to estimate future basal area and volume, using Clutter's model.
+
+ $$   \left\{
+                \begin{array}{ll}
+                  Ln(B_2) = LnB_1\begin{pmatrix}  \frac{I_1}{I_2} \end{pmatrix} +  \alpha_0\begin{pmatrix} 1 - \frac{I_1}{I_2} \end{pmatrix} + \alpha_1\begin{pmatrix} 1 - \frac{I_1}{I_2} \end{pmatrix} S + ln(\varepsilon_2)\\
+                  Ln(V_2) = \beta_0 + \beta_1 \begin{pmatrix} \frac{1}{I_2}\end{pmatrix} + \beta_2 S + \beta_3 Ln(B_2) + Ln(\varepsilon_1)
+                \end{array}
+              \right. $$
+
+
+To achieve this, first we need to estimate site. Let's use Chapman & Richards' model for this:
+
+$$ DH = \beta_0 * (1 - exp^{-\beta_1 * Age})^{\beta_2}  $$
+
+This is a non-linear model, thus, we'll use the `nls_table` function to fit it, obtain it's coefficients and estimate the site using it's equation and the index age:
+
+$$ S = DH* \frac{(1 - exp^{- \frac{ \beta_1}{Age} })^{\beta_2}}
+{(1 - exp^{- \frac{ \beta_1}{IndexAge}})^{\beta_2}}  $$
+
+
+We'll use an index age of `64` months.
+```{r}
+index_age <- 64
+data_ex <-  data_ex %>% 
+  nls_table(DH ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+            mod_start = c( b0=23, b1=0.03, b2 = 1.3), 
+            output = "merge" ) %>% 
+  mutate(S = DH *( (  (1- exp( -b1/age ))^b2   ) / 
+                     (( 1 - exp(-b1/index_age))^b2 ))  ) %>% 
+  select(-b0,-b1,-b2)
+head(data_ex)
+```
+
+Now that we've estimated the site variable, we can fit Clutter's model:
+```{r}
+coefs_clutter <- fit_clutter(data_ex, "age", "DH", "B", "V", "S", "plot")
+coefs_clutter
+```
+
+Now we can divide the data into classes, and calculate the production for each class with this model:
+
+First, we classfy the data:
+
+```{r}
+data_ex_class <- classify_site(data_ex, "S", 3, "plot")
+head(data_ex_class)
+```
+
+Now, we estimate basal area and volume with the `est_clutter` function. We'll also calculate the Monthly Mean Increment (MMI) and Current Monthly Increment (CMI) values.
+
+We input the data, a vector for the desired age range, and the basal area, site classification variables, and a vector with the Clutter function fitted coefficients, created previously:
+
+
+```{r}
+data_ex_est <- est_clutter(data_ex_class, 20:125,"B", "S", "category_", coefs_clutter) 
+data_ex_est
+```
+
+We can also create a plot for the technical age of cutting for each class:
+```{r}
+est_clutter(data_ex_class, 20:125,"B", "S", "category_", coefs_clutter,output="plot")
+```
+
+
+
+

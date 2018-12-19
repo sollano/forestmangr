@@ -1,0 +1,69 @@
+---
+title: "Phytosociological analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Phytosociological analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+```
+
+For this example we'll use a database of forestry inventories done in the amazon forest, and make a phytosociological analysis of the area.
+```{r}
+library(forestmangr)
+data(exfm20)
+dados <- exfm20
+
+head(dados)
+```
+
+First we'll calculate the diversity indexes of the area, with the `species_diversity` function. It just needs the data and column name for species:
+```{r}
+species_diversity(dados, "scientific.name")
+```
+
+We can evaluate similarity between plots by the Jaccard index, using the `similarity_matrix` function:
+```{r}
+similarity_matrix(dados, "scientific.name", "transect", index = "Jaccard")
+```
+
+To evaluate the level of aggregation among species in the area, we can use the `species_aggreg` function:
+```{r}
+species_aggreg(dados, "scientific.name", "transect")
+```
+
+We can also evaluate the horizontal structure of the forest. To do this, we can use the `forest_structure` function:
+```{r}
+forest_structure(dados, "scientific.name", "dbh", "transect", 10000)
+```
+
+It's also possible to calculate the vertical and internal structures:
+```{r}
+forest_structure(dados, "scientific.name", "dbh", "transect", 10000, "canopy.pos", "light") 
+```
+
+To check if the forest is regulated, we can use the BDq method, with the `bdq_meyer` function:
+```{r}
+bdq_meyer(dados, "transect", "dbh", 1000,licourt_index = 2)
+```
+
+With the `diameter_class` function it's possible to divide the data in diameter classes, and get the number of individuals per species in each class:
+```{r}
+classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10, "scientific.name") 
+
+head(classed)
+```
+
+Another way of visualizing this table is to spread the center of class to columns. We can do this with the `cc_to_column` argument:
+```{r}
+classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10,
+               "scientific.name", cc_to_column=TRUE)
+head(classed)
+```
+
