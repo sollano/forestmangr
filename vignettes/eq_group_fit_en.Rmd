@@ -40,7 +40,7 @@ mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
 mod2
 ```
 
-If we wanted to fit one model of each strata, we can use the `.groups` argument:
+If we wanted to fit one model of each stratum, we can use the `.groups` argument:
 ```{r}
 mod1 <- lm_table(dados, log(dh) ~ inv(age), .groups = "strata")
 mod1
@@ -54,7 +54,7 @@ mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
 mod2
 ```
 
-If the fit is not ideal, it's possible to use a dataframe with starting values for each strata, and use it as an input for `mod_start`:
+If the fit is not ideal, it's possible to use a dataframe with starting values for each stratum, and use it as an input for `mod_start`:
 ```{r}
 tab_start <- data.frame(strata = c(1:10), 
               rbind(

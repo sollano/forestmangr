@@ -39,7 +39,7 @@ O objetivo deste exemplo é realizar uma amostragem casual simples de uma área,
 dados_acs_piloto
 ```
 
-Agora, rodamos o inventário piloto considerando um erro de 20% e a população como finita. Lembrando que os valores de área da parcela devem ser inseridos em metros quadrados, e os valores de hectare devem ser inseridos em hectare:
+Agora, rodamos o inventário piloto considerando um erro de 20% e a população como finita com a função `sprs`. Lembrando que os valores de área da parcela devem ser inseridos em metros quadrados, e os valores de área total devem ser inseridos em hectare:
 ```{r}
 sprs(dados_acs_piloto, "VWB", 3000, 46.8,error = 20, pop = "fin")
 ```
@@ -77,7 +77,7 @@ O objetivo deste exemplo é realizar uma amostragem casual sistemática de uma �
 dados_ace_piloto
 ```
 
-Agora realizamos o inventário com um um erro almejado de 5%, considerando a população como finita. Os valores de área podem ser inseridos como números, ou como variáveis. No caso da área dos estratos, um vetor numérico pode ser utilizado. A área da parcela deve ser inserida em metros quadrados, e a área dos estratos em hectares:
+Agora realizamos o inventário com um um erro almejado de 5%, considerando a população como finita utilizando a função `strs`. Os valores de área podem ser inseridos como números, ou como variáveis. No caso da área dos estratos, um vetor numérico pode ser utilizado. A área da parcela deve ser inserida em metros quadrados, e a área dos estratos em hectares:
 ```{r}
 strs(dados_ace_piloto, "VWB", 3000, c(14.4, 16.4, 14.2), 
      strata = "STRATA", error = 5, pop = "fin")
@@ -111,7 +111,7 @@ Primeiro, vamos ver qual seria o erro atingido, pelo método da amostragem casua
 sprs(dados_as, "VWB", 200, 18)
 ```
 
-O erro obtido foi de 22,2%. Agora iremos calcular o erro utilizando o método das diferenças sucessivas. Lembrando que valores de área da parcela são inseridos em metros quadrados, e valores de área total, em hectares.
+O erro obtido foi de 22,2%. Agora iremos calcular o erro utilizando o método das diferenças sucessivas com a função `ss_diffs`. Lembrando que os dados devem ser inseridos na ordem de medição, valores de área da parcela devem ser inseridos em metros quadrados, e valores de área total, em hectares.
 ```{r}
 ss_diffs(dados_as, "VWB", 200, 18)
 ```

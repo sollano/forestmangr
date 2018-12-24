@@ -1,0 +1,119 @@
+---
+title: "Sampling"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Sampling}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+  
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+knitr::opts_chunk$set(fig.width=7, fig.height=5)
+options(tibble.print_min = 6L, tibble.print_max = 6L)
+library(forestmangr)
+```
+
+First we'll load up the package and some data:
+```{r}
+library(forestmangr)
+data("exfm1")
+data("exfm2")
+data("exfm3")
+data("exfm4")
+data("exfm5")
+
+dados_acs_piloto <- as.data.frame(exfm3)
+dados_acs_def <- as.data.frame(exfm4)
+dados_ace_piloto <- as.data.frame(exfm1)
+dados_ace_def <- as.data.frame(exfm2)
+dados_as <- as.data.frame(exfm5)
+
+```
+
+## Simple Random Sampling
+
+The objective of this example is to survey an area of 46.8 ha using the simple random sampling method. The aimed error is 20%. 10 plots of 3000 m² each were measured for a pilot inventory. The data collected is shown below:
+```{r}
+dados_acs_piloto
+```
+
+Now we'll calculate the inventory variables for a 20% error, considering a finite population with the `sprs` function. Area values must be inserted in square meters, and total area values must be in hectares:
+```{r}
+sprs(dados_acs_piloto, "VWB", 3000, 46.8,error = 20, pop = "fin")
+```
+
+With these results, we can see that in order to meet the desired error, we'll need 15 more samples. After a new survey was done, this are the new data:
+```{r}
+dados_acs_def
+```
+
+Now the definitive inventory can be done:
+```{r}
+sprs(dados_acs_def, "VWB", 3000, 46.8, error = 20, pop = "fin")
+```
+
+The desired error was met.
+
+The area values can also be inserted as variables:
+```{r}
+sprs(dados_acs_def, "VWB", "PLOT_AREA", "TOTAL_AREA", 
+     error = 20, pop = "fin")
+```
+
+
+It's also possible to run multiple simple random sampling inventories. To demonstrate this, we'll use the example dataset for stratified sampling, but running simple random statistics. We'll still use the `sprs` function, but use the `.groups` argument to run a simple random sampling inventory for each stratum:
+```{r}
+sprs(dados_ace_def, "VWB", "PLOT_AREA", "STRATA_AREA",
+     .groups = "STRATA" ,error = 20, pop = "fin")
+
+```
+
+
+## Stratified Random Sampling
+
+The objective of this example is to survey an area using the stratified random sampling method. The area was divided into 3 strata: one with 14.4 ha and 7 plots, another with 16.4 ha and 8 plots, and another with 14.2 ha and 7 plots. The plots have an area of 1000 squared meters. In total, 22 plots were sampled for the pilot inventory. The data is shown below:
+```{r}
+dados_ace_piloto
+```
+
+We'll calculate the statitics with an aimed error of 5%, considering a finite population using the `strs` function. Area values can be inserted as a numeric vector, or as a variable. The plot area must be inserted in squared meters, and strata area must be in hectares:
+```{r}
+strs(dados_ace_piloto, "VWB", 3000, c(14.4, 16.4, 14.2), 
+     strata = "STRATA", error = 5, pop = "fin")
+```
+
+Analysing the first table, we can see that in order to achieve the desired error, we must sample 24 additional plots. 4 in stratum 1, 8 in stratum 2 and 12 in stratum 3.
+
+After a new survey, the new data is shown below:
+```{r}
+dados_ace_def
+```
+
+Now we'll run the inventory again, this time with the definitve data:
+```{r}
+strs(dados_ace_def, "VWB", "PLOT_AREA", "STRATA_AREA", 
+     strata = "STRATA", error = 5, pop = "fin")
+```
+
+The desired error was met.
+
+## Systematic Sampling
+
+Now we'll survey an area of 18 hectares in which 18 plots of 200 m² each were systematically sampled:
+```{r}
+dados_as
+```
+
+First, let's see what error we would get, if we used the simple random sampling method:
+```{r}
+sprs(dados_as, "VWB", 200, 18)
+```
+
+We got a 22.2% error. Now, let's calculate the sampling error using the method of successive differences, with the `ss_diffs` function. To use this function, the data must be set in the measured order, the plot area must be in squared meters, and the total area value must be in hectares.
+```{r}
+ss_diffs(dados_as, "VWB", 200, 18)
+```
+We got a 4.2% error, which is significantly lower than before.
+
+

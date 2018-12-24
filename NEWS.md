@@ -30,6 +30,8 @@
 
 * added 6 vignettes in portuguese;
 
+* added 6 vignettes in english;
+
 * tree_summarise is now improved, and keeps all variables from data;
 
 * strs can now handle special characters
