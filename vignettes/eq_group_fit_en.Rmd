@@ -1,8 +1,8 @@
 ---
-title: "Ajuste de equações lineares e não lineares por grupo"
+title: "Fitting linear and non-linear equations by group"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Ajuste de equações lineares e não lineares por grupo}
+  %\VignetteIndexEntry{Fitting linear and non-linear equations by group}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -16,7 +16,7 @@ library(dplyr)
 library(tidyr)
 ```
 
-Vamos ajustar alguns modelos para estimar a altura dominante, lineares e não-lineares, e compará-los em seguida. Vamos utilizar os primeiros 10 talhões do dado de exmplo exfm16.
+We'll fit some linear and non-linear models for dominant height, and compare them. We'll use the first 10 strata of the exemple dataset exfm16.
 ```{r}
 library(forestmangr)
 library(dplyr)
@@ -27,22 +27,20 @@ dados <- exfm14 %>% filter(strata%in%1:10)
 head(dados)
 ```
 
-Para ajustar o modelo de Schumacher para altura dominante em função da idade, podemos utilizar `lm_table`. Observe que, não há a necessidade de criar novas variáveis para realizar o ajuste, graças às funções `log` e `inv`:
-
+In order to fit Schumacher's dominant height model, we can use `lm_table`. Thanks to the `log` and `inv` functions, there is no need to create new variables:
 ```{r}
 mod1 <- lm_table(dados, log(dh) ~ inv(age))
 mod1
 ```
 
-Para ajustar um modelo não linear, como o de Chapman-Richards, podemos utilizar a função `nls_table`. Esta utiliza o algoritimo Levenberg-Marquardt por padrão, garantindo um ótimo ajuste. Por ser um ajuste não linear, valores iniciais para os coeficientes devem ser informados:
+To fit a non-linear model, like Chapman-Richards' we can use the `nls_table` function. This function uses Levenberg-Marquardt's algorithm by default, in order to assure a good fit. Since this is a non-linear fit, we have to input initial values for all coefficients:
 ```{r}
 mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
           mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
 mod2
 ```
 
-Se quisermos fazer esses ajustes por estrato, basta utilizar o argumento `.groups`:
-
+If we wanted to fit one model of each strata, we can use the `.groups` argument:
 ```{r}
 mod1 <- lm_table(dados, log(dh) ~ inv(age), .groups = "strata")
 mod1
@@ -56,7 +54,7 @@ mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
 mod2
 ```
 
-Se o ajuste não ficar adequado, é possível utilizar um dataframe com chutes específicos para cada grupo, e utilizá-lo como start:
+If the fit is not ideal, it's possible to use a dataframe with starting values for each strata, and use it as an input for `mod_start`:
 ```{r}
 tab_start <- data.frame(strata = c(1:10), 
               rbind(
@@ -72,7 +70,7 @@ mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2,
 mod2
 ```
 
-Agora vamos ajustar mais alguns modelos. Os modelos utilizados serão:
+Now we're going to fit some other models. These are:
 
 Schumacher:
 $$ Ln(DH) = \beta_0 + \beta_1 * \frac{1}{age} $$
@@ -86,8 +84,7 @@ $$ Ln(DH) = \beta_0 + \beta_1 * \begin{pmatrix} \frac{1}{age} \end{pmatrix} ^{\b
 Curtis:
 $$ DH = \beta_0 + \beta_1 * \frac{1}{age} $$
 
-E iremos adicionar os valores estimados aos dados originais, utilizando o output `merge_est`, nomeando as variáveis estimadas utilizando `est.name`:
-
+We'll fit these models and add their estimated values to the original data using the `merge_est` output and naming each estimated variable with the `est_name` argument:
 ```{r}
 dados_est <- dados %>% 
   lm_table(log(dh) ~ inv(age), .groups = "strata",
@@ -107,9 +104,9 @@ dados_est <- dados %>%
 head(dados_est)  
   
 ```
-Obs: as funções lm_table e nls_table verificam se o modelo possui log na variável y, e caso possua, ele o retira automaticamente. Por isso, não há a necessidade de calcular a exponencial dos dados estimados.
+Ps: The `lm_table` function checks if the model has log in the y variable, and if it does, it removes it automatically when estimating variables. Because of that, there's no need to calculate the exponential for the estimated variables.
 
-Para comparar os modelos, podemos calcular a raiz qudrada do erro médio, e o bias de todos os modelos. Para isso, vamos unir as variáveis estimadas em uma única coluna com `tidyr::gather`, agrupar por variável, e utilizar as funções `rmse_per` e `bias_per`:
+In order to compare these models, we'll calculate the root mean square error and bias for all models. To do this, we'll gather all estimated variables in a single column using `tidyr::gather`, group by model, and use the `rmse_per` and `bias_per` functions:
 ```{r}
 dados_est %>% 
   gather(Model, Value, 
@@ -120,18 +117,18 @@ dados_est %>%
     BIAS = bias_per(y = dh, yhat = Value) )
 ```
 
-Outra forma de avaliar estes modelos é utilizando gráficos de resíduos. Para isso, podemos utilizar a função `resid_plot`:
+Another way of comparing and evaluating these models is using residual graphical analysis. The function `resid_plot` can help us with that:
 ```{r, warning=FALSE, message=FALSE}
 resid_plot(dados_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis")
 ```
 
-Podemos utlizar outros tipos de gráficos, como histogramas:
+There are other types of plots avaiable, such as histogram:
 ```{r, warning=FALSE, message=FALSE}
 resid_plot(dados_est, "dh", "Schumacher","Chapman-Richards","Bailey-Clutter", "Curtis",
            type = "histogram_curve")
 ```
 
-E gráfico de verus:
+And versus:
 ```{r, warning=FALSE, message=FALSE}
 resid_plot(dados_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis",
            type = "versus")
