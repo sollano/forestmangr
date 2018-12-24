@@ -50,10 +50,9 @@ head(dados)
 ```
 Obs: a função lm_table verifica se o modelo possui log na variável y, e caso possua, ele o retira automaticamente. Por isso, não há a necessidade de calcular a exponencial dos dados estimados.
 
-Vamos verificar a qualidade dos ajustes utilizando a função `resid_plot`. Utilizamos `na.omit`
-para ocultar as árvores não medidas:
+Vamos verificar a qualidade dos ajustes utilizando a função `resid_plot`. Árvores não medidas serão removidas automaticamente:
 ```{r}
-resid_plot(na.omit(dados), "TH", "CL","Henricksen")
+resid_plot(dados, "TH", "CL","Henricksen")
 ```
 O modelo de campos & leite foi melhor, portanto vamos utilizá-lo.
 
@@ -65,12 +64,12 @@ head(dados)
 ```
 
 
-Para estimar o volume, vamos utilizar uma equação ajustada previamente, com dados de cubagem:
+Para estimar o volume, vamos pegar uma equação ajustada previamente com dados de cubagem, e salvá-la em um dataframe:
 ```{r}
 tabcoef_vwb <- data.frame(b0=-9.595863,b1=1.889372,b2=0.9071631)
 tabcoef_vwb
 ```
-Agora para volume sem cascsa:
+Agora para volume sem casca:
 ```{r}
 tabcoef_vwob <- data.frame(b0=-9.808975,b1=1.918007,b2=0.908154)
 tabcoef_vwob
@@ -87,8 +86,8 @@ head(dados)
 ```
 
 Agora, para totalizar as parcelas, utlizamos `plot_summarise`, informando as variáveis
-parcela, área da parcela, dap, altura,área total,volume com casca, altura dominante e idade.
-Iremos obter com isso as variáveis dap, diâmetro quadrático, altura e altura dominante média por parcela. Além de número de indivíduos, volume totalcom e sem casca, e área basal por parcela e por hectare.
+parcela, área da parcela, dap, altura,área total,volume com casca, volume without bark, altura dominante e idade.
+Iremos obter com isso as variáveis dap, diâmetro quadrático, altura e altura dominante média por parcela. Além de número de indivíduos, volume total com e sem casca, e área basal por parcela e por hectare.
 ```{r}
 tab_invt <- plot_summarise(df=dados,plot="PLOT",plot_area="PLOT_AREA",dbh="DBH",                           th="TH_EST",total_area="STRATA_AREA",vwb="VWB",vwob="VWOB",dh="DH",age="AGE")
 head(as.data.frame(tab_invt))   

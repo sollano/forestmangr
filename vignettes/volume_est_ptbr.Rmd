@@ -33,7 +33,7 @@ dados_sma <- smalianwb(dados,"di_wb", "hi","TREE")
 head(as.data.frame(dados_sma))
 ```
 
-Primeiro, calculamos o volume sem casca por seção, utilizamos a função `smalianwb`. Fornecemos as mesmas variáveis de antes, e a variável correspondente à espessura da casca. Como essa variável está em milímetros, utilizamos o argumento `bt_mm_to_cm` como verdadeiro, para converte-la para centímetros:
+Agora, calculamos o volume sem casca por seção, utilizamos a função `smalianwb`. Fornecemos as mesmas variáveis de antes, e a variável correspondente à espessura da casca. Como essa variável está em milímetros, utilizamos o argumento `bt_mm_to_cm` como verdadeiro, para converte-la para centímetros:
 ```{r}
 dados_sma <- smalianwob(dados_sma, "di_wb", "hi", "bark_t","TREE", bt_mm_to_cm = T)
 head(as.data.frame(dados_sma))
@@ -54,7 +54,7 @@ average_tree_curve(df = dados_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH"
 ```
 
 Para calcular o volume por árvore, utilizamos a função `vol_summarise`.
-Informamos as variáveis dap, altura, volume com casca e sem casca, e árvore:
+Informamos o dataframe e as variáveis dap, altura, volume com casca e sem casca, e árvore:
 ```{r}
 dados_vol_arvore <- vol_summarise(dados_sma, dbh = "DBH", th = "TH", 
                                   vwb="VWB",tree = "TREE",vwob="VWOB")
