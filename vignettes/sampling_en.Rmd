@@ -72,25 +72,25 @@ sprs(data_ace_def, "VWB", "PLOT_AREA", "STRATA_AREA",
 
 ## Stratified Random Sampling
 
-The objective of this example is to survey an area using the stratified random sampling method. The area was divided into 3 strata: one with 14.4 ha and 7 plots, another with 16.4 ha and 8 plots, and another with 14.2 ha and 7 plots. The plots have an area of 1000 squared meters. In total, 22 plots were sampled for the pilot inventory. The data is shown below:
+The objective of this example is to survey an area using the stratified random sampling method. The area was divided into 3 strata: one with 14.4 ha and 7 plots, another with 16.4 ha and 8 plots, and another with 14.2 ha and 7 plots. The plots have an area of 1000 square meters. In total, 22 plots were sampled for the pilot inventory. The data is shown below:
 ```{r}
 data_ace_pilot
 ```
 
-We'll calculate the statitics with an aimed error of 5%, considering a finite population using the `strs` function. Area values can be inserted as a numeric vector, or as a variable. The plot area must be inserted in squared meters, and strata area must be in hectares:
+We'll calculate the statistics with an aimed error of 5%, considering a finite population using the `strs` function. Area values can be inserted as a numeric vector, or as a variable. The plot area must be inserted in square meters, and strata area must be in hectares:
 ```{r}
 strs(data_ace_pilot, "VWB", 3000, c(14.4, 16.4, 14.2), 
      strata = "STRATA", error = 5, pop = "fin")
 ```
 
-Analysing the first table, we can see that in order to achieve the desired error, we must sample 24 additional plots. 4 in stratum 1, 8 in stratum 2 and 12 in stratum 3.
+Analyzing the first table, we can see that in order to achieve the desired error, we must sample 24 additional plots. 4 in stratum 1, 8 in stratum 2 and 12 in stratum 3.
 
 After a new survey, the new data is shown below:
 ```{r}
 data_ace_def
 ```
 
-Now we'll run the inventory again, this time with the definitve data:
+Now we'll run the inventory again, this time with the definitive data:
 ```{r}
 strs(data_ace_def, "VWB", "PLOT_AREA", "STRATA_AREA", 
      strata = "STRATA", error = 5, pop = "fin")
@@ -110,7 +110,7 @@ First, let's see what error we would get, if we used the simple random sampling 
 sprs(data_as, "VWB", 200, 18)
 ```
 
-We got a 22.2% error. Now, let's calculate the sampling error using the method of successive differences, with the `ss_diffs` function. To use this function, the data must be set in the measured order, the plot area must be in squared meters, and the total area value must be in hectares.
+We got a 22.2% error. Now, let's calculate the sampling error using the method of successive differences, with the `ss_diffs` function. To use this function, the data must be set in the measured order, the plot area must be in square meters, and the total area value must be in hectares.
 ```{r}
 ss_diffs(data_as, "VWB", 200, 18)
 ```
