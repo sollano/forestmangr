@@ -20,7 +20,7 @@ library(forestmangr)
 data(exfm20)
 dados <- exfm20
 
-head(dados)
+dados
 ```
 
 Primeiro, vamos calcular os índices de diversidade da área, com a função `species_diversity`. Basta fornecer o nome da coluna referente às espécies:
@@ -56,15 +56,15 @@ bdq_meyer(dados, "transect", "dbh", 1000,licourt_index = 2)
 
 Com a função `diameter_class` é possível dividir os dados em classes de diâmetro, e verificar o número de indivíduos por espécie em cada classe:
 ```{r}
-classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10, "scientific.name") 
+classified <- diameter_class(dados,"dbh", "transect", 10000, 10, 10, "scientific.name") 
 
-head(classed)
+head(classified)
 ```
 
 Uma outra forma de visualizar esta tabela é com o centro de classe na coluna. Podemos fazer isso com o argumento `cc_to_column`:
 ```{r}
-classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10,
+classified <- diameter_class(dados,"dbh", "transect", 10000, 10, 10,
                "scientific.name", cc_to_column=TRUE)
-head(classed)
+head(classified)
 ```
 

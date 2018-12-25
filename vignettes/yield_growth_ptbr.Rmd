@@ -23,7 +23,7 @@ library(dplyr)
 data(exfm16)
 
 dados <- exfm16
-head(dados)
+dados
 ```
 
 O objetivo aqui é estimar volume e área basal futuros, utilizando o modelo de Clutter.

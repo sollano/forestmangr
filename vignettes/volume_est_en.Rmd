@@ -21,40 +21,40 @@ We'll use the exfm7 dataframe as an exemple:
 ```{r}
 library(forestmangr)
 data(exfm7)
-dados <- exfm7
-head(dados)
+data_ex <- exfm7
+data_ex
 ```
 
 First we'll calculate the volume with bark of each section with the `smalianwb` function. In it we input the dataframe, and names for the section diameter with bark, section height and tree variables:
 ```{r}
-dados_sma <- smalianwb(dados,"di_wb", "hi","TREE")
-head(as.data.frame(dados_sma))
+data_ex_sma <- smalianwb(data_ex,"di_wb", "hi","TREE")
+head(as.data.frame(data_ex_sma))
 ```
 
 Now, we'll calculate the volume without bark per secction, using the `smalianwb` function. We'll input the same variables as before, and the variable name for the bark thickness. In our data, this variable is in millimeters, so, we'll use the `bt_mm_to_cm` as `TRUE` to convert it to centimeters:
 ```{r}
-dados_sma <- smalianwob(dados_sma, "di_wb", "hi", "bark_t","TREE", bt_mm_to_cm = T)
-head(as.data.frame(dados_sma))
+data_ex_sma <- smalianwob(data_ex_sma, "di_wb", "hi", "bark_t","TREE", bt_mm_to_cm = T)
+head(as.data.frame(data_ex_sma))
 ```
 
 This can be done directly using pipes (`%>%`):
 ```{r}
-dados_sma <- dados %>% 
+data_ex_sma <- data_ex %>% 
   smalianwb("di_wb", "hi", "TREE") %>% 
   smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T)
-head(as.data.frame(dados_sma))
+head(as.data.frame(data_ex_sma))
 ```
 
 We can also visualize the mean curve form of the trees in the area, using Kozak's model with the `average_tree_curve` function:
 ```{r, warning=FALSE, message=FALSE}
-average_tree_curve(df = dados_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+average_tree_curve(df = data_ex_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
 ```
 
 To calculate the volume of each tree, we'll use the `vol_summarise` function. We input the data, and dbhm height, volume with bark, volume without bark and tree variables:
 ```{r}
-dados_vol_arvore <- vol_summarise(dados_sma, dbh = "DBH", th = "TH", 
+data_ex_vol_arvore <- vol_summarise(data_ex_sma, dbh = "DBH", th = "TH", 
                                   vwb="VWB",tree = "TREE",vwob="VWOB")
-head(dados_vol_arvore)
+data_ex_vol_arvore
 ```
 
 Now to determine the most adequate volumetric model for this data, we'll fit two models, and compare them using plots for their residuals with the `resid_plot` function.
@@ -68,7 +68,7 @@ $$ Ln(V) = \beta_0 + \beta_1*Ln(dbh) $$
 
 We'll use the output "merge_est" from the `lm_table` function. This will estimate the volume for the observed data automatically. Then, we'll use `resid_plot` to compare the observed variable with the estimated ones:
 ```{r, warning=FALSE, message=FALSE}
-dados_vol_arvore %>% 
+data_ex_vol_arvore %>% 
   lm_table(log(VWB) ~  log(DBH) + log(TH),output="merge_est",est.name="Schumacher") %>%
   lm_table(log(VWB) ~  log(DBH),output="merge_est",est.name="Husch") %>%
 resid_plot("VWB", "Schumacher", "Husch")
@@ -76,13 +76,13 @@ resid_plot("VWB", "Schumacher", "Husch")
 
 Schumacher's model was more symmetrical, and can be considered the better model for this dataset. To safe it's coefficients in a dataframe, we'll fit the model again, but with the standard output:
 ```{r}
-tabcoef_vwb <- lm_table(dados_vol_arvore, log(VWB) ~  log(DBH) + log(TH) )
+tabcoef_vwb <- lm_table(data_ex_vol_arvore, log(VWB) ~  log(DBH) + log(TH) )
 tabcoef_vwb
 ```
 
 And do the same for the volume without bark:
 ```{r}
-tabcoef_vwob <- lm_table(dados_vol_arvore, log(VWOB) ~  log(DBH) + log(TH) )
+tabcoef_vwob <- lm_table(data_ex_vol_arvore, log(VWOB) ~  log(DBH) + log(TH) )
 tabcoef_vwob
 ```
 

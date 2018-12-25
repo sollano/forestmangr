@@ -17,11 +17,11 @@ library(forestmangr)
 Primeiro carregamos o pacote e os dados:
 ```{r}
 library(forestmangr)
-data("exfm1")
-data("exfm2")
-data("exfm3")
-data("exfm4")
-data("exfm5")
+data(exfm1)
+data(exfm2)
+data(exfm3)
+data(exfm4)
+data(exfm5)
 
 dados_acs_piloto <- as.data.frame(exfm3)
 dados_acs_def <- as.data.frame(exfm4)

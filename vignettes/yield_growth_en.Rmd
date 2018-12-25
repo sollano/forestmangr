@@ -23,7 +23,7 @@ library(dplyr)
 data(exfm16)
 
 data_ex <- exfm16
-head(data_ex)
+data_ex
 ```
 
 The objetive of this vignette is to estimate future basal area and volume, using Clutter's model.

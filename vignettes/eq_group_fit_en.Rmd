@@ -22,33 +22,33 @@ library(forestmangr)
 library(dplyr)
 library(tidyr)
 
-data("exfm14")
-dados <- exfm14 %>% filter(strata%in%1:10)
-head(dados)
+data(exfm14)
+data_ex <- exfm14 %>% filter(strata%in%1:10)
+data_ex
 ```
 
 In order to fit Schumacher's dominant height model, we can use `lm_table`. Thanks to the `log` and `inv` functions, there is no need to create new variables:
 ```{r}
-mod1 <- lm_table(dados, log(dh) ~ inv(age))
+mod1 <- lm_table(data_ex, log(dh) ~ inv(age))
 mod1
 ```
 
 To fit a non-linear model, like Chapman-Richards' we can use the `nls_table` function. This function uses Levenberg-Marquardt's algorithm by default, in order to assure a good fit. Since this is a non-linear fit, we have to input initial values for all coefficients:
 ```{r}
-mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+mod2 <- nls_table(data_ex, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
           mod_start = c( b0=23, b1=0.03, b2 = 1.3  ) )
 mod2
 ```
 
 If we wanted to fit one model of each stratum, we can use the `.groups` argument:
 ```{r}
-mod1 <- lm_table(dados, log(dh) ~ inv(age), .groups = "strata")
+mod1 <- lm_table(data_ex, log(dh) ~ inv(age), .groups = "strata")
 mod1
 ```
 
 
 ```{r}
-mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+mod2 <- nls_table(data_ex, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
           mod_start = c( b0=23, b1=0.03, b2 = 1.3  ),
           .groups = "strata" )
 mod2
@@ -64,7 +64,7 @@ tab_start
 ```
 
 ```{r}
-mod2 <- nls_table(dados, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
+mod2 <- nls_table(data_ex, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 
           mod_start = tab_start,
           .groups = "strata" )
 mod2
@@ -86,7 +86,7 @@ $$ DH = \beta_0 + \beta_1 * \frac{1}{age} $$
 
 We'll fit these models and add their estimated values to the original data using the `merge_est` output and naming each estimated variable with the `est_name` argument:
 ```{r}
-dados_est <- dados %>% 
+data_ex_est <- data_ex %>% 
   lm_table(log(dh) ~ inv(age), .groups = "strata",
            output = "merge_est", est.name = "Schumacher") %>% 
   
@@ -101,14 +101,14 @@ dados_est <- dados %>%
   lm_table(dh ~ inv(age), .groups = "strata",
            output = "merge_est", est.name = "Curtis") 
 
-head(dados_est)  
+head(data_ex_est)  
   
 ```
 Ps: The `lm_table` function checks if the model has log in the y variable, and if it does, it removes it automatically when estimating variables. Because of that, there's no need to calculate the exponential for the estimated variables.
 
 In order to compare these models, we'll calculate the root mean square error and bias for all models. To do this, we'll gather all estimated variables in a single column using `tidyr::gather`, group by model, and use the `rmse_per` and `bias_per` functions:
 ```{r}
-dados_est %>% 
+data_ex_est %>% 
   gather(Model, Value, 
          Schumacher, `Chapman-Richards`, `Bailey-Clutter`, Curtis) %>% 
   group_by(Model) %>% 
@@ -119,17 +119,17 @@ dados_est %>%
 
 Another way of comparing and evaluating these models is using residual graphical analysis. The function `resid_plot` can help us with that:
 ```{r, warning=FALSE, message=FALSE}
-resid_plot(dados_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis")
+resid_plot(data_ex_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis")
 ```
 
 There are other types of plots avaiable, such as histogram:
 ```{r, warning=FALSE, message=FALSE}
-resid_plot(dados_est, "dh", "Schumacher","Chapman-Richards","Bailey-Clutter", "Curtis",
+resid_plot(data_ex_est, "dh", "Schumacher","Chapman-Richards","Bailey-Clutter", "Curtis",
            type = "histogram_curve")
 ```
 
 And versus:
 ```{r, warning=FALSE, message=FALSE}
-resid_plot(dados_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis",
+resid_plot(data_ex_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis",
            type = "versus")
 ```

@@ -22,7 +22,7 @@ library(forestmangr)
 library(dplyr)
 data(exfm9)
 dados <- exfm9
-head(dados)
+dados
 ```
 
 
@@ -38,7 +38,7 @@ dom_height(df=dados,th="TH",dbh="DBH",plot="PLOT",obs="OBS",dom="D")
 Agora que conhecemos o valor da altura dominante, podemos rodar a função novamente, porém utilizando o argumento `merge_data` como `TRUE`, para unir a variável aos dados diretamente:
 ```{r}
 dados <- dom_height(dados,"TH","DBH","PLOT","OBS","D",merge_data = TRUE)
-head(dados)
+head(as.data.frame(dados))
 ```
 
 Agora podemos ajustar os modelos hipsométricos. Vamos ajustá-los utilizando `lm_table`. A função `forestmangr::inv` nos permite ajustar o modelo de Campos & Leite sem a necessidade de criar novas variáveis:
@@ -51,7 +51,7 @@ head(dados)
 Obs: a função lm_table verifica se o modelo possui log na variável y, e caso possua, ele o retira automaticamente. Por isso, não há a necessidade de calcular a exponencial dos dados estimados.
 
 Vamos verificar a qualidade dos ajustes utilizando a função `resid_plot`. Árvores não medidas serão removidas automaticamente:
-```{r}
+```{r, warning=FALSE}
 resid_plot(dados, "TH", "CL","Henricksen")
 ```
 O modelo de campos & leite foi melhor, portanto vamos utilizá-lo.
@@ -90,6 +90,6 @@ parcela, área da parcela, dap, altura,área total,volume com casca, volume with
 Iremos obter com isso as variáveis dap, diâmetro quadrático, altura e altura dominante média por parcela. Além de número de indivíduos, volume total com e sem casca, e área basal por parcela e por hectare.
 ```{r}
 tab_invt <- plot_summarise(df=dados,plot="PLOT",plot_area="PLOT_AREA",dbh="DBH",                           th="TH_EST",total_area="STRATA_AREA",vwb="VWB",vwob="VWOB",dh="DH",age="AGE")
-head(as.data.frame(tab_invt))   
+head(as.data.frame(tab_invt))
 ```
 

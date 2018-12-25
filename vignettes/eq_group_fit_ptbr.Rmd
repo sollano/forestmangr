@@ -22,9 +22,9 @@ library(forestmangr)
 library(dplyr)
 library(tidyr)
 
-data("exfm14")
+data(exfm14)
 dados <- exfm14 %>% filter(strata%in%1:10)
-head(dados)
+dados
 ```
 
 Para ajustar o modelo de Schumacher para altura dominante em função da idade, podemos utilizar `lm_table`. Observe que, não há a necessidade de criar novas variáveis para realizar o ajuste, graças às funções `log` e `inv`:

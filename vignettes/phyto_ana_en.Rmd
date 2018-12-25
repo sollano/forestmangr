@@ -18,52 +18,52 @@ For this example we'll use a database of forestry inventories done in the amazon
 ```{r}
 library(forestmangr)
 data(exfm20)
-dados <- exfm20
+data_ex <- exfm20
 
-head(dados)
+data_ex
 ```
 
 First we'll calculate the diversity indexes of the area, with the `species_diversity` function. It just needs the data and column name for species:
 ```{r}
-species_diversity(dados, "scientific.name")
+species_diversity(data_ex, "scientific.name")
 ```
 
 We can evaluate similarity between plots by the Jaccard index, using the `similarity_matrix` function:
 ```{r}
-similarity_matrix(dados, "scientific.name", "transect", index = "Jaccard")
+similarity_matrix(data_ex, "scientific.name", "transect", index = "Jaccard")
 ```
 
 To evaluate the level of aggregation among species in the area, we can use the `species_aggreg` function:
 ```{r}
-species_aggreg(dados, "scientific.name", "transect")
+species_aggreg(data_ex, "scientific.name", "transect")
 ```
 
 We can also evaluate the horizontal structure of the forest. To do this, we can use the `forest_structure` function:
 ```{r}
-forest_structure(dados, "scientific.name", "dbh", "transect", 10000)
+forest_structure(data_ex, "scientific.name", "dbh", "transect", 10000)
 ```
 
 It's also possible to calculate the vertical and internal structures:
 ```{r}
-forest_structure(dados, "scientific.name", "dbh", "transect", 10000, "canopy.pos", "light") 
+forest_structure(data_ex, "scientific.name", "dbh", "transect", 10000, "canopy.pos", "light") 
 ```
 
 To check if the forest is regulated, we can use the BDq method, with the `bdq_meyer` function:
 ```{r}
-bdq_meyer(dados, "transect", "dbh", 1000,licourt_index = 2)
+bdq_meyer(data_ex, "transect", "dbh", 1000,licourt_index = 2)
 ```
 
 With the `diameter_class` function it's possible to divide the data in diameter classes, and get the number of individuals per species in each class:
 ```{r}
-classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10, "scientific.name") 
+classified <- diameter_class(data_ex,"dbh", "transect", 10000, 10, 10, "scientific.name") 
 
-head(classed)
+head(classified)
 ```
 
 Another way of visualizing this table is to spread the center of class to columns. We can do this with the `cc_to_column` argument:
 ```{r}
-classed <- diameter_class(dados,"dbh", "transect", 10000, 10, 10,
+classified <- diameter_class(data_ex,"dbh", "transect", 10000, 10, 10,
                "scientific.name", cc_to_column=TRUE)
-head(classed)
+head(classified)
 ```
 

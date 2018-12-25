@@ -22,7 +22,7 @@ Vamos utilizar como exemplo os dado exfm7:
 library(forestmangr)
 data(exfm7)
 dados <- exfm7
-head(dados)
+dados
 ```
 
 Primeiro, calculamos o volume com casca por seção, com a função `smalianwb`.
@@ -58,7 +58,7 @@ Informamos o dataframe e as variáveis dap, altura, volume com casca e sem casca
 ```{r}
 dados_vol_arvore <- vol_summarise(dados_sma, dbh = "DBH", th = "TH", 
                                   vwb="VWB",tree = "TREE",vwob="VWOB")
-head(dados_vol_arvore)
+dados_vol_arvore
 ```
 
 Agora, para determinar o modelo volumétrico mais adequado para os dados, vamos ajustar dois modelos, e compará-los utilizando `resid_plot`.
