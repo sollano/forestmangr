@@ -34,7 +34,11 @@
 
 * tree_summarise is now improved, and keeps all variables from data;
 
-* strs can now handle special characters
+* strs can now handle special characters;
+
+* added a new example data, with revenue values for a eucalyptus forest;
+
+* added a new function, npv_irr, for net present value and irr calculation.
 
 # forestmangr 0.9.0
 
