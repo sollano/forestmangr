@@ -59,7 +59,6 @@ head(dados)
 ```
 
 Com o site estimado, podemos ajustar o modelo de Clutter:
-
 ```{r}
 coefs_clutter <- fit_clutter(dados, "age", "DH", "B", "V", "S", "plot")
 coefs_clutter
@@ -68,7 +67,6 @@ coefs_clutter
 Agora, podemos dividir a área em classes, e verificar a produção de cada classe com o modelo.
 
 Primeiro, vamos classificar os dados:
-
 ```{r}
 dados_class <- classify_site(dados, "S", 3, "plot")
 head(dados_class)
@@ -79,18 +77,13 @@ Agora, estimamos área basal e volume com a função `est_clutter`. Também irem
 Fornecemos a ela os dados, um vetor com a idade desejada, as variáveis área basal inicial,
 site e de classificação (criada anteriormente), e um dataframe com os coeficientes do ajuste
 de clutter (criado anteriormente):
-
 ```{r}
 dados_est <- est_clutter(dados_class, 20:125,"B", "S", "category_", coefs_clutter) 
 dados_est
 ```
 
 Podemos também gerar um gráfico com a idade técnica de corte de cada classe:
-
 ```{r}
 est_clutter(dados_class, 20:125,"B", "S", "category_", coefs_clutter,output="plot")
 ```
-
-
-
 

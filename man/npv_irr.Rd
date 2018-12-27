@@ -4,8 +4,8 @@
 \alias{npv_irr}
 \title{Calculate Net Present Value and other economic variables}
 \usage{
-npv_irr(df, year, cost, revenue, rate, output = "vertical",
-  big_mark = ",", dec_mark = ".")
+npv_irr(df, year, cost, revenue, rate, output = "full", big_mark = ",",
+  dec_mark = ".", prefix = "$")
 }
 \arguments{
 \item{df}{A data frame.}
@@ -18,11 +18,16 @@ npv_irr(df, year, cost, revenue, rate, output = "vertical",
 
 \item{rate}{Numeric value of the yearly rate to be used.}
 
-\item{output}{Selects different output options. It can be either \code{"horizontal"} for a data frame with a single observation and one column for each variable, or \code{vertical} for a two column data frame with one observation for each calculated variable. Default: \code{"vertical"}.}
+\item{output}{Selects different output options. It can be either \code{"full"} for a list containing a sensibility plot and a data frame with a single observation and one column for each variable, or \code{"simple"} for a two column data frame with one observation for each calculated variable. Default: \code{"simple"}.}
 
-\item{big_mark}{Selects thousands separator. Can be either \code{"."}, \code{" "} or \code{","}. Default: \code{,}.}
+\item{big_mark}{Selects thousands separator. Can be either \code{"."}, \code{" "} or \code{","}. Default: \code{","}.}
 
-\item{dec_mark}{Selects decimal separator. Can be either \code{","} or \code{"."}. Default: \code{.}.}
+\item{dec_mark}{Selects decimal separator. Can be either \code{","} or \code{"."}. Default: \code{"."}.}
+
+\item{prefix}{selects the prefix for the y axis in the sensibility plot. Can be either \code{"$"} or \code{"R$"}. Default: \code{"$"}.}
+}
+\value{
+A data frame, or a list, according to output.
 }
 \description{
 Get the net present value, internal rate of return, and other 
@@ -34,8 +39,6 @@ library(forestmangr)
 data(exfm22)
 
 npv_irr(exfm22,"year","cost","revenue",rate=8.75)
-
-npv_irr(exfm22,"year","cost","revenue",rate=8.75, "horizontal")
 
 }
 \author{

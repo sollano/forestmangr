@@ -131,8 +131,9 @@ resid_plot(dados_est, "dh", "Schumacher","Chapman-Richards","Bailey-Clutter", "C
            type = "histogram_curve")
 ```
 
-E gráfico de verus:
+E gráfico de versus:
 ```{r, warning=FALSE, message=FALSE}
 resid_plot(dados_est, "dh", "Schumacher", "Chapman-Richards", "Bailey-Clutter", "Curtis",
            type = "versus")
 ```
+

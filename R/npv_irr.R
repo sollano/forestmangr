@@ -9,10 +9,11 @@
 #' @param cost Quoted name of the costs variable.
 #' @param revenue Quoted name of the revenue variable.
 #' @param rate Numeric value of the yearly rate to be used.
-#' @param output Selects different output options. It can be either \code{"horizontal"} for a data frame with a single observation and one column for each variable, or \code{vertical} for a two column data frame with one observation for each calculated variable. Default: \code{"vertical"}.
-#' @param big_mark Selects thousands separator. Can be either \code{"."}, \code{" "} or \code{","}. Default: \code{,}.
-#' @param dec_mark Selects decimal separator. Can be either \code{","} or \code{"."}. Default: \code{.}.
-#'
+#' @param output Selects different output options. It can be either \code{"full"} for a list containing a sensibility plot and a data frame with a single observation and one column for each variable, or \code{"simple"} for a two column data frame with one observation for each calculated variable. Default: \code{"simple"}.
+#' @param big_mark Selects thousands separator. Can be either \code{"."}, \code{" "} or \code{","}. Default: \code{","}.
+#' @param dec_mark Selects decimal separator. Can be either \code{","} or \code{"."}. Default: \code{"."}.
+#' @param prefix selects the prefix for the y axis in the sensibility plot. Can be either \code{"$"} or \code{"R$"}. Default: \code{"$"}.
+#' @return A data frame, or a list, according to output.
 #' @export
 #' @examples 
 #' library(forestmangr)
@@ -20,14 +21,12 @@
 #' data(exfm22)
 #' 
 #' npv_irr(exfm22,"year","cost","revenue",rate=8.75)
-#' 
-#' npv_irr(exfm22,"year","cost","revenue",rate=8.75, "horizontal")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-npv_irr <- function(df, year, cost, revenue, rate,output="vertical", big_mark=",",dec_mark="."){
+npv_irr <- function(df, year, cost, revenue, rate, output="full", big_mark=",", dec_mark=".", prefix="$"){
   # ####
-  . <- VoCT_total <- VoRT_total <- VnCT_total <- VnRT_total <- n <- IRR <- Value <- Variable <- NULL
+  . <- VoCT_total <- VoRT_total <- VnCT_total <- VnRT_total <- n <- IRR <- Value <- Variable <- x_axis <- VPR <- VPC <- VFR <- VFC <- VPL <- VET <- NPV <- ELV <- facet_var <- y_axis <- red_y2_axis <- red_y_axis <- NULL
   # ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -86,8 +85,8 @@ npv_irr <- function(df, year, cost, revenue, rate,output="vertical", big_mark=",
     stop( "'output' must be character", call.=F)
   }else if(length(output)!=1){
     stop("Length of 'output' must be 1", call.=F)
-  }else if(! output %in% c('horizontal', 'vertical') ){ 
-    stop("'output' must be equal to 'horizontal' or 'vertical' ", call. = F) 
+  }else if(! output %in% c('full', 'simple') ){ 
+    stop("'output' must be equal to 'full' or 'simple' ", call. = F) 
   }
   
   # Se big_mark nao for character,ou nao for de tamanho 1, parar
@@ -144,11 +143,11 @@ npv_irr <- function(df, year, cost, revenue, rate,output="vertical", big_mark=",
                   YNPV = ((VnRT_total - VnCT_total)*rate/100) / ((1+rate/100)^n - 1 ), # Yearly Net Present Value
                   IRR  = formattable::percent(irr,decimal.mark=dec_mark)  ) #Internal Rate of Return
   
-  if(output=="horizontal"){
+  if(output=="simple"){
     
     return(dplyr::select(tab2, -dplyr::contains("total"), -n) )
     
-  }else if(output=="vertical"){
+  }else if(output=="full"){
     suppressWarnings(
       
       tab2_mod <- tab2 %>% 
@@ -172,7 +171,48 @@ npv_irr <- function(df, year, cost, revenue, rate,output="vertical", big_mark=",
                            "Yearly Net Present Value (YNPV)",
                            "Internal Rate of Return (IRR)")
     
-    return(tab2_mod)
+    
+    # sensibilidade ####
+    plot_data <- data.frame(x_axis = seq(0.01, round(rate/100*10)/10 +0.2, 0.01) ) %>%
+      dplyr::mutate(
+        VPR = purrr::map_dbl(x_axis, ~sum(df[[revenue]] / (1 + .x)^df[[year]],na.rm=T)),
+        VPC = purrr::map_dbl(x_axis, ~sum(df[[cost]] / (1 + .x)^df[[year]],na.rm=T)),
+        VFR = purrr::map_dbl(x_axis, ~sum(df[[revenue]] * (1 + .x)^df[[year]],na.rm=T)),
+        VFC = purrr::map_dbl(x_axis, ~sum(df[[cost]] * (1 + .x)^df[[year]],na.rm=T)),
+        VPL = VPR - VPC,
+        VET = (VFR - VFC)/((1+x_axis)^(length(df[[year]])-1)-1) ) %>% 
+      dplyr::select(x_axis,NPV=VPL, ELV=VET) %>% 
+      tidyr::gather("facet_var", "y_axis", NPV, ELV,factor_key = TRUE) %>% 
+      dplyr::group_by(facet_var) %>% 
+      dplyr::mutate(red_y_axis = ifelse(y_axis<0, y_axis, NA ),
+                    red_y2_axis = any(y_axis < 0),
+                    red_y2_axis = ifelse(red_y2_axis, 0, NA )
+                    
+      ) %>% as.data.frame()
+    
+    
+    plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x_axis, y_axis) ) + 
+      ggplot2::geom_line(size=1)+
+      ggplot2::geom_line(ggplot2::aes(y=red_y_axis), color="red",size=1,na.rm=T )+
+      ggplot2::geom_line(ggplot2::aes(y=red_y2_axis), color="red",size=1,na.rm=T )+
+      ggplot2::facet_wrap(~facet_var, scales="free_y",ncol=1,strip.position = "right") +
+      ggplot2::scale_x_continuous(labels=scales::percent) +
+      ggplot2::scale_y_continuous(labels=scales::dollar_format(big.mark=big_mark,decimal.mark = dec_mark,prefix=paste(prefix," ",sep="")))+
+      ggplot2::labs(x="Rate",y=NULL) +
+      ggthemes::theme_igray(base_family = "serif") +
+      ggplot2::theme(
+        axis.title       = ggplot2::element_text(size = 22), 
+        axis.text        = ggplot2::element_text(size = 20),
+        plot.title       = ggplot2::element_text(size = 22, face = "bold"),
+        legend.title     = ggplot2::element_text(size = 20),
+        legend.text      = ggplot2::element_text(size = 18),
+        plot.caption     = ggplot2::element_text(size = 20),
+        strip.text.y     = ggplot2::element_text(size = 18, face = "bold",angle=0),
+        strip.background = ggplot2::element_blank() ) 
+    
+    # ####
+    
+    return(list(Sensibility=plot,Result=tab2_mod))
     
   }
   

@@ -34,7 +34,6 @@ dados_as <- as.data.frame(exfm5)
 ## Amostragem Casual Simples
 
 O objetivo deste exemplo é realizar uma amostragem casual simples de uma área, de 46,8 ha com um erro de 20%. Foram lançadas 10 parcelas de 3000 m² para um inventário piloto. Os dados são o seguinte:
-
 ```{r}
 dados_acs_piloto
 ```
@@ -48,6 +47,7 @@ Com esses resultados, percebe-se que para atingirmos o erro desejado, precisarem
 ```{r}
 dados_acs_def
 ```
+
 Agora o inventário definitivo será realizado, com 20% de erro e considerando uma população finita:
 ```{r}
 sprs(dados_acs_def, "VWB", 3000, 46.8, error = 20, pop = "fin")
@@ -91,7 +91,6 @@ dados_ace_def
 ```
 
 Agora, realizamos o inventário novamente, dessa vez para os dados definitivos. Consideramos novamente um erro de 5% e a população como finita:
-
 ```{r}
 strs(dados_ace_def, "VWB", "PLOT_AREA", "STRATA_AREA", 
      strata = "STRATA", error = 5, pop = "fin")
@@ -116,5 +115,4 @@ O erro obtido foi de 22,2%. Agora iremos calcular o erro utilizando o método da
 ss_diffs(dados_as, "VWB", 200, 18)
 ```
 O erro obtido foi de 4,2%. Houve uma redução significativa no erro.
-
 
