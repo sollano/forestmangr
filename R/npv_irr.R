@@ -192,7 +192,17 @@ npv_irr <- function(df, year, cost, revenue, rate, output="full", big_mark=",", 
     
     
     plot <- ggplot2::ggplot(plot_data, ggplot2::aes(x_axis, y_axis) ) + 
-      ggplot2::geom_line(size=1)+
+      ggplot2::geom_line(size=1)+{
+        
+        if(!all(is.na(plot_data$red_y_axis)))
+          ggplot2::geom_line(ggplot2::aes(y=red_y_axis), color="red",size=1,na.rm=T )
+        
+      }+{
+        
+        if(!all(is.na(plot_data$red_y2_axis)))
+          ggplot2::geom_line(ggplot2::aes(y=red_y2_axis), color="red",size=1,na.rm=T )  
+        
+      }+
       ggplot2::geom_line(ggplot2::aes(y=red_y_axis), color="red",size=1,na.rm=T )+
       ggplot2::geom_line(ggplot2::aes(y=red_y2_axis), color="red",size=1,na.rm=T )+
       ggplot2::facet_wrap(~facet_var, scales="free_y",ncol=1,strip.position = "right") +
