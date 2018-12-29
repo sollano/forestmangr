@@ -38,7 +38,7 @@
 
 * added a new example data, with revenue values for a eucalyptus forest;
 
-* added a new function, npv_irr, for net present value and irr calculation.
+* added a new function, npv_irr, for net present value, irr calculation and sensibility evaluation.
 
 # forestmangr 0.9.0
 
