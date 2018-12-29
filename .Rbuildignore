@@ -7,3 +7,6 @@
 ^cran-comments\.md$
 ^.travis.yml
 ^\.travis\.yml$
+^.git
+^.gitattributes
+^.gitignore
