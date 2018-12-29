@@ -8,7 +8,7 @@ It also fixes the check notes on CRAN.
 * local Windows install, R 3.5.2
 * ubuntu 14.04.5 (on travis-ci), R 3.5.1
 * win-builder (devel and release)
-*R-hub
+*R-hub  
 
 ## R CMD check results
 
