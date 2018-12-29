@@ -33,6 +33,11 @@ We can evaluate similarity between plots by the Jaccard index, using the `simila
 similarity_matrix(data_ex, "scientific.name", "transect", index = "Jaccard")
 ```
 
+We can also generate a dendrogram for this analysis:
+```{r}
+similarity_matrix(exfm20, "scientific.name", "transect", index = "Jaccard", dendrogram = TRUE, n_groups = 3)
+```
+
 To evaluate the level of aggregation among species in the area, we can use the `species_aggreg` function:
 ```{r}
 species_aggreg(data_ex, "scientific.name", "transect")

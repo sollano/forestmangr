@@ -10,6 +10,7 @@
 #' @param revenue Quoted name of the revenue variable.
 #' @param rate Numeric value of the yearly rate to be used.
 #' @param output Selects different output options. It can be either \code{"full"} for a list containing a sensibility plot and a data frame with a single observation and one column for each variable, or \code{"simple"} for a two column data frame with one observation for each calculated variable. Default: \code{"simple"}.
+#' @param sens_limits Selects the rate rage used in the sensibility plot. This is a numeric vector with two elements, the initial and final rate to be used as range. These can vary between 0 and 100. Default: \code{c(1,30)}.
 #' @param big_mark Selects thousands separator. Can be either \code{"."}, \code{" "} or \code{","}. Default: \code{","}.
 #' @param dec_mark Selects decimal separator. Can be either \code{","} or \code{"."}. Default: \code{"."}.
 #' @param prefix selects the prefix for the y axis in the sensibility plot. Can be either \code{"$"} or \code{"R$"}. Default: \code{"$"}.
@@ -24,7 +25,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-npv_irr <- function(df, year, cost, revenue, rate, output="full", big_mark=",", dec_mark=".", prefix="$"){
+npv_irr <- function(df, year, cost, revenue, rate, output="full", sens_limits = c(1,30), big_mark=",", dec_mark=".", prefix="$"){
   # ####
   . <- VoCT_total <- VoRT_total <- VnCT_total <- VnRT_total <- n <- IRR <- Value <- Variable <- x_axis <- VPR <- VPC <- VFR <- VFC <- VPL <- VET <- NPV <- ELV <- facet_var <- y_axis <- red_y2_axis <- red_y_axis <- NULL
   # ####
@@ -87,6 +88,19 @@ npv_irr <- function(df, year, cost, revenue, rate, output="full", big_mark=",", 
     stop("Length of 'output' must be 1", call.=F)
   }else if(! output %in% c('full', 'simple') ){ 
     stop("'output' must be equal to 'full' or 'simple' ", call. = F) 
+  }
+  
+  # Se sens_limits nao for numerico, nao for de tamanho 1, ou nao estiver dentro dos limites, parar
+  if(!is.numeric( sens_limits )){
+    stop( "'sens_limits' must be numeric", call.=F)
+  }else if(length(sens_limits)!=2){
+    stop("length of 'sens_limits' must be 2", call.=F)
+  }else if(! sens_limits[1] >= 0 | ! sens_limits[1] <= 100){
+    stop("'sens_limits' first element must be a number between 0 and 100", call.=F)
+  }else if(! sens_limits[2] >= 0 | ! sens_limits[2] <= 100){
+    stop("'sens_limits' second element must be a number between 0 and 100", call.=F)
+  }else if(sens_limits[1] > sens_limits[2]){
+    stop("'sens_limits' first element cannot be greater than the second", call.=F)
   }
   
   # Se big_mark nao for character,ou nao for de tamanho 1, parar
@@ -173,7 +187,7 @@ npv_irr <- function(df, year, cost, revenue, rate, output="full", big_mark=",", 
     
     
     # sensibilidade ####
-    plot_data <- data.frame(x_axis = seq(0.01, round(rate/100*10)/10 +0.2, 0.01) ) %>%
+    plot_data <- data.frame(x_axis = seq(sens_limits[1]/100, sens_limits[2]/100, 0.01) ) %>%
       dplyr::mutate(
         VPR = purrr::map_dbl(x_axis, ~sum(df[[revenue]] / (1 + .x)^df[[year]],na.rm=T)),
         VPC = purrr::map_dbl(x_axis, ~sum(df[[cost]] / (1 + .x)^df[[year]],na.rm=T)),
@@ -203,8 +217,6 @@ npv_irr <- function(df, year, cost, revenue, rate, output="full", big_mark=",", 
           ggplot2::geom_line(ggplot2::aes(y=red_y2_axis), color="red",size=1,na.rm=T )  
         
       }+
-      ggplot2::geom_line(ggplot2::aes(y=red_y_axis), color="red",size=1,na.rm=T )+
-      ggplot2::geom_line(ggplot2::aes(y=red_y2_axis), color="red",size=1,na.rm=T )+
       ggplot2::facet_wrap(~facet_var, scales="free_y",ncol=1,strip.position = "right") +
       ggplot2::scale_x_continuous(labels=scales::percent) +
       ggplot2::scale_y_continuous(labels=scales::dollar_format(big.mark=big_mark,decimal.mark = dec_mark,prefix=paste(prefix," ",sep="")))+

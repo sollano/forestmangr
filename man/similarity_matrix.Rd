@@ -5,7 +5,7 @@
 \title{Get the similarity matrix of an area}
 \usage{
 similarity_matrix(df, species, comparison, NI_label = "",
-  index = "Sorensen")
+  index = "Sorensen", dendrogram = FALSE, n_groups = 3)
 }
 \arguments{
 \item{df}{A data frame.}
@@ -16,10 +16,14 @@ similarity_matrix(df, species, comparison, NI_label = "",
 
 \item{NI_label}{Label used for Species not identified. This parameter works along with species. The level supplied here will not be considered in the classification. Default \code{""}.}
 
-\item{index}{Character value for the desired index to be used. Can be either \code{Jaccard}, for a matrix based on the Jaccard index of similarity, \code{"Sorensen"}, for a matrix based the Sorensen index of similarity, or \code{"all"}, for a list with matrices for both indexes. Default: \code{"Sorensen"}.}
+\item{index}{Character value for the desired index to be used. Can be either \code{"Jaccard"}, for a matrix based on the Jaccard index of similarity, \code{"Sorensen"}, for a matrix based the Sorensen index of similarity, or \code{"all"}, for a list with matrices for both indexes. Default: \code{"Sorensen"}.}
+
+\item{dendrogram}{If \code{TRUE}, a dendrogram will also be created. Default: \code{FALSE}.}
+
+\item{n_groups}{Number of groups in the dendrogram. Default \code{3}.}
 }
 \value{
-a matrix object with a similarity matrix, or a list with two similarity matri ces, one for each index, according to the \code{"index"} argument.
+a matrix object with a similarity matrix, or a list, according to the \code{"index"} and \code{"dendrogram"} arguments.
 }
 \description{
 Calculates the Jaccard similarity index and Sorensen similarity index.
@@ -36,6 +40,9 @@ similarity_matrix(exfm20, "scientific.name", "transect")
 
 # To get the similarity matrix of Jaccard, use the index argument:
 similarity_matrix(exfm20, "scientific.name", "transect", index = "Jaccard")
+
+# To get a dendrogram with the matrix, use dendrogram=TRUE:
+similarity_matrix(exfm20, "scientific.name", "transect", index = "Jaccard", dendrogram = TRUE)
 
 # To get a list with both matrices, use index="all":
 similarity_matrix(exfm20, "scientific.name", "transect", index = "all")

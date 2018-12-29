@@ -4,8 +4,9 @@
 \alias{npv_irr}
 \title{Calculate Net Present Value and other economic variables}
 \usage{
-npv_irr(df, year, cost, revenue, rate, output = "full", big_mark = ",",
-  dec_mark = ".", prefix = "$")
+npv_irr(df, year, cost, revenue, rate, output = "full",
+  sens_limits = c(1, 30), big_mark = ",", dec_mark = ".",
+  prefix = "$")
 }
 \arguments{
 \item{df}{A data frame.}
@@ -19,6 +20,8 @@ npv_irr(df, year, cost, revenue, rate, output = "full", big_mark = ",",
 \item{rate}{Numeric value of the yearly rate to be used.}
 
 \item{output}{Selects different output options. It can be either \code{"full"} for a list containing a sensibility plot and a data frame with a single observation and one column for each variable, or \code{"simple"} for a two column data frame with one observation for each calculated variable. Default: \code{"simple"}.}
+
+\item{sens_limits}{Selects the rate rage used in the sensibility plot. This is a numeric vector with two elements, the initial and final rate to be used as range. These can vary between 0 and 100. Default: \code{c(1,30)}.}
 
 \item{big_mark}{Selects thousands separator. Can be either \code{"."}, \code{" "} or \code{","}. Default: \code{","}.}
 

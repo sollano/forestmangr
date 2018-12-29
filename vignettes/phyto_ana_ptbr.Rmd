@@ -33,6 +33,11 @@ Podemos verificar a similaridade entre parcelas pelo índice de Jaccard, utlizan
 similarity_matrix(dados, "scientific.name", "transect", index = "Jaccard")
 ```
 
+Podemos também gerar um dendrograma desta análise:
+```{r}
+similarity_matrix(exfm20, "scientific.name", "transect", index = "Jaccard", dendrogram = TRUE, n_groups = 3)
+```
+
 Para avaliar o nível de agregação das espécies área, podemos utilizar a função `species_aggreg`:
 ```{r}
 species_aggreg(dados, "scientific.name", "transect")
