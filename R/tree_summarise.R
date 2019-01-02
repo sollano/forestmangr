@@ -107,7 +107,7 @@ tree_summarise <- function(df,  dbh, tree, .groups=NA){
     dplyr::ungroup()
   
   # Bind new dbh with original data and return
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     return(as.data.frame(dplyr::left_join(df,x, by=tree)) ) 
   }else{
     return(as.data.frame(dplyr::left_join(df,x, by=c(.groups,tree) )) )
