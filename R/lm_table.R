@@ -85,9 +85,9 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if((missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups=="") && !is.null(dplyr::groups(df))){
+  if((missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="") ) && !is.null(dplyr::groups(df))){
     .groups_syms <- rlang::syms(dplyr::groups(df))
-  }else if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  }else if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="")){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){

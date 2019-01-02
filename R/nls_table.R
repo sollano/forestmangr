@@ -139,7 +139,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     stop("'output' must be equal to 'table', 'merge', 'merge_est', or 'nest' ", call. = F) 
   }
   
-  if(  missing(mod_start) || mod_start == "" || is.null(mod_start) ){  
+  if(  missing(mod_start) || any(mod_start == "") || any(is.null(mod_start)) ){  
     stop("mod_start not set. Please insert start up values for the model's parameters", call. = F) 
   }else if( is.vector(mod_start) ){
     
@@ -169,9 +169,9 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if((missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups=="") && !is.null(dplyr::groups(df))){
+  if((missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="") ) && !is.null(dplyr::groups(df))){
     .groups_syms <- rlang::syms(dplyr::groups(df))
-  }else if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  }else if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="")){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){

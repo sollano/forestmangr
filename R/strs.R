@@ -108,7 +108,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   # se strata_area nao for fornecido, nao for numerico nem character, ou nao existir no dataframe,ou nao for de tamanho 1, parar
   if(  missing(strata_area) ){  
     stop("strata_area not set", call. = F) 
-  }else if( is.null(strata_area) || is.na(strata_area) || strata_area == "" ){
+  }else if( any(is.null(strata_area)) || any(is.na(strata_area)) || all(strata_area == "") ){
     stop("'strata_area' must be a character containing a variable name or a numeric value", call.=F)
   }else if(is.numeric(strata_area) & length(strata_area)==1){
     df $ strata_area <- strata_area
@@ -170,7 +170,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){ 

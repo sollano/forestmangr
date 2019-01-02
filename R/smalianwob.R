@@ -107,7 +107,7 @@ smalianwob <- function(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm=FALSE, hi
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){ 

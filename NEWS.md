@@ -42,7 +42,7 @@
 
 * fixed a bug in huberwob, which made a wrong call to df;
 
-* fixed a bug in ident_model, a call for is.na with a 2 length vector.
+* fixed bugs in various functions, with a call for is.na with a 2 length vector.
 
 # forestmangr 0.9.0
 

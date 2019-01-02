@@ -129,7 +129,7 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(.groups)||is.null(.groups)||is.na(.groups)||.groups==F||.groups==""){
+  if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
     .groups_syms <- character()
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){
