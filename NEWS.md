@@ -38,7 +38,9 @@
 
 * added a new example data, with revenue values for a eucalyptus forest;
 
-* added a new function, npv_irr, for net present value, irr calculation and sensibility evaluation.
+* added a new function, npv_irr, for net present value, irr calculation and sensibility evaluation;
+
+* fixed a bug in huberwob, which made a wrong call to df.
 
 # forestmangr 0.9.0
 

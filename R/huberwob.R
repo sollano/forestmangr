@@ -48,7 +48,7 @@ huberwob <- function(df, di, section_length, bt, tree, .groups = NA, di_mm_to_cm
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
-  if(  missing(df) || is.null(df) || is.na(df) ){  
+  if(  missing(df) ){  
     stop("df not set", call. = F) 
   }else if(!is.data.frame(df)){
     stop("df must be a dataframe", call.=F)
