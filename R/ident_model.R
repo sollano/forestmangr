@@ -105,7 +105,7 @@ ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRU
   }
   
   # Se filter nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
-  if(missing(filter)||is.null(filter)||is.na(filter)||filter==F||filter==""){
+  if(missing(filter)||all(is.null(filter))||all(is.na(filter))||all(filter==F)||all(filter=="")){
     filter <- NULL
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(filter)){ 

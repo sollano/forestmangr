@@ -40,7 +40,9 @@
 
 * added a new function, npv_irr, for net present value, irr calculation and sensibility evaluation;
 
-* fixed a bug in huberwob, which made a wrong call to df.
+* fixed a bug in huberwob, which made a wrong call to df;
+
+* fixed a bug in ident_model, a call for is.na with a 2 length vector.
 
 # forestmangr 0.9.0
 
