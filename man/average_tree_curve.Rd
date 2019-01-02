@@ -17,7 +17,7 @@ average_tree_curve(df, d, dbh, h, th, facet = NA)
 
 \item{th}{Quoted name of the total height variable, in meters.}
 
-\item{facet}{Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: NA.}
+\item{facet}{Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: \code{NA}.}
 }
 \value{
 A ggplot object.
