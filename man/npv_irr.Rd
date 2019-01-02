@@ -37,12 +37,16 @@ Get the net present value, internal rate of return, and other
 economic variables, given cost and revenue values.
 }
 \examples{
+\dontrun{
 library(forestmangr)
-
 data(exfm22)
 
 npv_irr(exfm22,"year","cost","revenue",rate=8.75)
 
+# To also get a sensibility plot, use
+
+npv_irr(exfm22,"year","cost","revenue",rate=8.75, output="full")
+} 
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}

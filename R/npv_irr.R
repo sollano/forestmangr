@@ -17,12 +17,16 @@
 #' @return A data frame, or a list, according to output.
 #' @export
 #' @examples 
+#' \dontrun{
 #' library(forestmangr)
-#' 
 #' data(exfm22)
 #' 
 #' npv_irr(exfm22,"year","cost","revenue",rate=8.75)
 #'
+#' # To also get a sensibility plot, use
+#' 
+#' npv_irr(exfm22,"year","cost","revenue",rate=8.75, output="full")
+#' } 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 npv_irr <- function(df, year, cost, revenue, rate, output="full", sens_limits = c(1,30), big_mark=",", dec_mark=".", prefix="$"){

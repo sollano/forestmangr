@@ -40,9 +40,9 @@
 #' 
 #' # Or, to get more information on the analysis, such as details on the regression,
 #' # bias, rmse, plot for residuals and more (cpu taxing):
-#' # do not run
-#' # guide_curve(exfm14, "dh", "age", 72, 5, output = "full")
-#'
+#' \dontrun{
+#' guide_curve(exfm14, "dh", "age", 72, 5, output = "full")
+#' }
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
 guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher", start_chap = c(b0=23, b1=0.03, b2 = 1.3), start_bailey = c( b0=3, b1=-130, b2 = 1.5), round_classes = FALSE, font = "serif", gray_scale = TRUE, output = "plot"){

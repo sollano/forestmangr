@@ -61,9 +61,9 @@ guide_curve(exfm14, "dh", "age", 72, 5,
 
 # Or, to get more information on the analysis, such as details on the regression,
 # bias, rmse, plot for residuals and more (cpu taxing):
-# do not run
-# guide_curve(exfm14, "dh", "age", 72, 5, output = "full")
-
+\dontrun{
+guide_curve(exfm14, "dh", "age", 72, 5, output = "full")
+}
 }
 \author{
 Sollano Rabelo Braga \email{sollanorb@gmail.com}
