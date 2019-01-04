@@ -300,14 +300,14 @@ To cite this package in publications, use:
 ABNT:
 
 BRAGA S. R.; OLIVEIRA, M. L. R.; GORGENS, E. B. forestmangr: Functions
-for Forest Mensuration and Management. R package version 0.9.0, 2018.
+for Forest Mensuration and Management. R package version 0.9.1, 2019.
 Disponível em: <https://CRAN.R-project.org/package=forestmangr>
 
 APA:
 
 Sollano Rabelo Braga, Marcio Leles Romarco de Oliveira and Eric Bastos
-Gorgens (2018). forestmangr: Functions for Forest Mensuration and
-Management. R package version 0.9.0.
+Gorgens (2019). forestmangr: Functions for Forest Mensuration and
+Management. R package version 0.9.1.
 <https://CRAN.R-project.org/package=forestmangr>
 
 ## License
