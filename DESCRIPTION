@@ -6,7 +6,7 @@ Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com"
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
               person(c("Eric", "Bastos","Gorgens"),email= "e.gorgensgmail.com", role =  "aut") )
 Author: Sollano Rabelo Braga [aut, cre, cph], Marcio Leles Romarco de Oliveira [aut], Eric Bastos Gorgens [aut]
-Description: Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and non linear grouped data fitting, and statistical tests.
+Description: Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and nonlinear grouped data fitting, and statistical tests.
 Maintainer: Sollano Rabelo Braga <sollanorb@gmail.com>
 URL: https://github.com/sollano/forestmangr#readme
 BugReports: https://github.com/sollano/forestmangr/issues
