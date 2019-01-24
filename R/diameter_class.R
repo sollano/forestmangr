@@ -209,7 +209,7 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
   df_final <- df %>% 
     dplyr::filter(!is.na( !!dbh_sym ) ) %>% # remover NA
     dplyr::mutate(
-      CC = ceiling(( !!dbh_sym )/ci) * ci - ci/2, # Calcular Centro de classe
+      CC = trunc(( !!dbh_sym )/ci) * ci + ci/2, # Calcular Centro de classe
       g = pi * (!!dbh_sym)^2 / 40000   ) %>%  # Calcular area seccional
     dplyr::group_by(!!!species_sym, CC ) %>% # Agrupar e calcular o numero de individuos, e n de individuos por ha
     dplyr::summarise(
