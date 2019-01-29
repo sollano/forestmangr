@@ -9,6 +9,8 @@
 #' @param dbh Quoted name of the diameter at breast height variable.
 #' @param tree Quoted name of the tree variable. used to differentiate the trees' sections. If this argument is missing, the defined groups in the data frame will be used. If there are no groups in the data, the function will fail.
 #' @param .groups Optional argument. Quoted name(s) of grouping variables that can be added to differentiate subdivisions of the data. Default: \code{NA}.
+#' @param vwb Optional argument. Quoted name of the volume with bark variable, in cubic meters. Default: \code{NA}.
+#' @param vwob Optional argument. Quoted name of the volume without bark variable, in cubic meters. Default: \code{NA}.
 #' @return A data frame with the the equivalent diameter calculated.
 #' 
 #' @references 
@@ -28,7 +30,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-tree_summarise <- function(df,  dbh, tree, .groups=NA){
+tree_summarise <- function(df,  dbh, tree, .groups=NA, vwb=NA, vwob=NA){
   # Checagem de variaveis ####
   nn <- NULL
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
@@ -85,32 +87,67 @@ tree_summarise <- function(df,  dbh, tree, .groups=NA){
     .groups_syms <- rlang::syms(.groups) 
   }
   
-  dbh_name <- dbh
+  # se vwob nao for fornecido, for igual "", nulo ou NA, criar variavel vazia 
+  # se existir e nao for character,  parar
+  if(missing(vwb) || is.null(vwb) || is.na(vwb) || vwb == "" ){
+    df $ vwb <- NA
+    vwb <- "vwb"
+  }else if(!is.character(vwb)){
+    stop("'vwb' must be a character containing a variable name", call.=F)
+  }else if(length(vwb)!=1){
+    stop("Length of 'vwb' must be 1", call.=F)
+  }else if(forestmangr::check_names(df, vwb)==F){
+    stop(forestmangr::check_names(df, vwb, boolean=F), call.=F)
+  }
+  
+  # se vwob nao for fornecido, for igual "", nulo ou NA, criar variavel vazia 
+  # se existir e nao for character,  parar
+  if(missing(vwob) || is.null(vwob) || is.na(vwob) || vwob == "" ){
+    df $ vwob <- NA
+    vwob <- "vwob"
+  }else if(!is.character(vwob)){
+    stop("'vwob' must be a character containing a variable name", call.=F)
+  }else if(length(vwob)!=1){
+    stop("Length of 'vwob' must be 1", call.=F)
+  }else if(forestmangr::check_names(df, vwob)==F){
+    stop(forestmangr::check_names(df, vwob, boolean=F), call.=F)
+  }
+  
+  dbh_name  <- dbh
   tree_name <- tree
-  dbh_sym <- rlang::sym(dbh)
-
+  vwb_name  <- vwb
+  vwob_name <- vwob
+  
+  dbh_sym  <- rlang::sym(dbh)
+  vwb_sym  <- rlang::sym(vwb)
+  vwob_sym <- rlang::sym(vwob)
+  
   # ####
   
   x <- df %>% 
     dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
-    dplyr::summarise( !!dbh_name := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ) ) %>% 
+    dplyr::summarise(
+      !!dbh_name := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ),
+      !!vwb_name := sum( (!!vwb_sym), na.rm=T),
+      !!vwob_name := sum( (!!vwob_sym), na.rm=T) ) %>% 
     dplyr::na_if(0) %>% 
     as.data.frame() %>% 
+    dplyr::select_if(~!all(is.na(.))) %>% # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     dplyr::ungroup()
   
   # Remove data from other boles, keep only the first one
-  df <- df %>% 
+  y <- df %>% 
     dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
     dplyr::mutate(nn=seq(1,dplyr::n())) %>% 
     dplyr::filter(nn==1) %>% 
-    dplyr::select(-nn, -(!!dbh_sym) ) %>% 
+    dplyr::select(-nn, -(!!dbh_sym), -(!!vwb_sym), -(!!vwob_sym) ) %>% 
     dplyr::ungroup()
   
   # Bind new dbh with original data and return
   if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||any(.groups=="") ){
-    return(as.data.frame(dplyr::left_join(df,x, by=tree)) ) 
+    return(as.data.frame(dplyr::left_join(y,x, by=tree)) ) 
   }else{
-    return(as.data.frame(dplyr::left_join(df,x, by=c(.groups,tree) )) )
+    return(as.data.frame(dplyr::left_join(y,x, by=c(.groups,tree) )) )
   }
   
 }
