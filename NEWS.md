@@ -4,7 +4,9 @@
 
 * updated tree_summarise to sum volume with and without bark using 2 new arguments
 
-* fixed vol_summarise handlying of optional variables
+* fixed vol_summarise handlying of optional variables;
+
+* diameter_class can now handle all values of class intervals.
 
 # forestmangr 0.9.1
 

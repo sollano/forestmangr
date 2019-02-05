@@ -55,6 +55,7 @@
 diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, species=NA, volume=NA, NI_label="NI", cc_to_column=FALSE, G_to_cc=FALSE, cctc_ha=TRUE, keep_unused_classes=FALSE){
   # ####
   AREA<-A<-CC<-NumIndv<-g<-.<-G_f<-NI<-VOL<-NULL
+  
   # checagem de variaveis ####
 
   # ci precisa ser numerico e de tamanho 1
@@ -94,8 +95,8 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
     stop("'dbh' must be a character containing a variable name", call.=F)
   }else if(length(dbh)!=1){
     stop("Length of 'dbh' must be 1", call.=F)
-  }else if(check_names(df, dbh)==F){
-    stop(check_names(df, dbh, boolean=F), call.=F)
+  }else if(forestmangr::check_names(df, dbh)==F){
+    stop(forestmangr::check_names(df, dbh, boolean=F), call.=F)
   }
   
   
@@ -109,8 +110,8 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
     stop("'volume' must be a character containing a variable name", call.=F)
   }else if(length(volume)!=1){
     stop("Length of 'volume' must be 1", call.=F)
-  }else if(check_names(df, volume)==F){
-    stop(check_names(df, volume, boolean=F), call.=F)
+  }else if(forestmangr::check_names(df, volume)==F){
+    stop(forestmangr::check_names(df, volume, boolean=F), call.=F)
   }else{
     volume_sym <- rlang::sym(volume)
     
@@ -131,9 +132,9 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
     stop("species must be a character", call. = F)
   }else if(! length(species)%in% 1:10){ 
     stop("Length of 'species' must be between 1 and 10", call.=F)
-  }else if(check_names(df,species)==F){
+  }else if(forestmangr::check_names(df,species)==F){
     # Parar se algum nome nao existir, e avisar qual nome nao existe
-    stop(check_names(df,species, boolean=F), call.=F) 
+    stop(forestmangr::check_names(df,species, boolean=F), call.=F) 
     # se os grupos forem fornecidos e forem nomes dos dados
     # Transformar o objeto em simbolo, para que dplyr entenda
     # e procure o nome das variaveis dentro dos objetos
@@ -161,8 +162,8 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
     stop("'plot' must be a character containing a variable name or a numeric value", call.=F)
   }else if(length(plot)!=1){
     stop("Length of 'plot' must be 1", call.=F)
-  }else if(check_names(df, plot)==F){
-    stop(check_names(df, plot, boolean = F), call.=F)
+  }else if(forestmangr::check_names(df, plot)==F){
+    stop(forestmangr::check_names(df, plot, boolean = F), call.=F)
   }else{
     plot_sym <- rlang::sym(plot)
     nplot <- df %>% 
@@ -185,8 +186,8 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
     stop("'plot_area' must be a character containing a variable name or a numeric value", call.=F)
   }else if(length(plot_area)!=1){
     stop("Length of 'plot_area' must be 1", call.=F)
-  }else if(check_names(df, plot_area)==F){
-    stop(check_names(df, plot_area, boolean = F), call.=F)
+  }else if(forestmangr::check_names(df, plot_area)==F){
+    stop(forestmangr::check_names(df, plot_area, boolean = F), call.=F)
   }else{
     plot_area_sym <- rlang::sym(plot_area)
     
@@ -205,11 +206,14 @@ diameter_class <- function(df, dbh, plot=NA, plot_area, ci = 5, dbhmin = 5, spec
   dbh_sym <- rlang::sym(dbh)
   
   # ####
-  
+
+  # Se o reminder de diam e ci for zero, nao corrigir, se nao for zero, corrigir pelo reminder - ci
+  if(dbhmin%%ci==0) crtion <- 0 else crtion <- dbhmin%%ci - ci
+    
   df_final <- df %>% 
     dplyr::filter(!is.na( !!dbh_sym ) ) %>% # remover NA
     dplyr::mutate(
-      CC = trunc(( !!dbh_sym )/ci) * ci + ci/2, # Calcular Centro de classe
+      CC = (trunc(( !!dbh_sym )/ci) * ci + ci/2) + crtion, # Calcular Centro de classe
       g = pi * (!!dbh_sym)^2 / 40000   ) %>%  # Calcular area seccional
     dplyr::group_by(!!!species_sym, CC ) %>% # Agrupar e calcular o numero de individuos, e n de individuos por ha
     dplyr::summarise(
