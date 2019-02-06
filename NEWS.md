@@ -6,7 +6,7 @@
 
 * fixed vol_summarise handlying of optional variables;
 
-* diameter_class can now handle all values of class intervals.
+* diameter_class and bdq_meyer can now handle all values of class intervals correctly.
 
 # forestmangr 0.9.1
 

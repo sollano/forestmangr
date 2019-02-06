@@ -272,7 +272,7 @@ forest_structure <- function(df, species, dbh, plot, plot_area, vertical_est = N
       vert = cbind(vert, daVert[which(daVert[,1] %in% espList),2])
     }
     names(vert)[-1] = levels(df[,VERTICAL])
-    
+    #valor fitossociologico pag 49
     VFj = data.frame()
     for (j in levels(df[,VERTICAL])){
       VFj[1,j] = sum(vert[, j]) / sum(vert[, seq(2,length(levels(df[,VERTICAL]))+1,1)]) * 100
