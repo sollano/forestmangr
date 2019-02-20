@@ -2,7 +2,7 @@
 
 # forestmangr 0.9.2
 
-* updated tree_summarise to sum volume with and without bark using 2 new arguments
+* updated tree_summarise to sum volume with and without bark using 2 new arguments;
 
 * fixed vol_summarise handlying of optional variables;
 
