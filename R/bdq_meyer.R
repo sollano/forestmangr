@@ -136,20 +136,8 @@ bdq_meyer <- function(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
   nplots = length(unique(df[,PLOTS]))
   
   # Estrutura diametrica
-  if(DBH.MIN%%INTERVALO.CLASSE==0) crtion <- 0 else crtion <- DBH.MIN%%INTERVALO.CLASSE - INTERVALO.CLASSE
-  
-  df[,"Class"] = trunc(df[,DBH] /  INTERVALO.CLASSE)
-  df[, "Class_Center"] = df[,"Class"] * INTERVALO.CLASSE + (INTERVALO.CLASSE / 2)
-  
-  freq = data.frame(table(df[,"Class"]))
-  DD = data.frame(Class = as.numeric(as.character(freq[,1])) ) # correcao fator para numerico
-  DD$Class_Center =( DD$Class * INTERVALO.CLASSE - (INTERVALO.CLASSE / 2)) + crtion
-  DD$NumIndv = freq[,2]
-  # Alterei aqui para a area poder ser inserida em m2
-  DD$IndvHectare = round(DD$NumIndv / ((AREA.PLOT/10000) * nplots), 1)
-  DD = DD[DD$Class_Center >= DBH.MIN,]
-  DD = DD[DD$IndvHectare > 0,]
-  rm(freq)
+  DD <- forestmangr::diameter_class(df, DBH,PLOTS,plot_area, INTERVALO.CLASSE,DBH.MIN) %>% 
+    dplyr::select(Class_Center=CC,NumIndv,IndvHectare=IndvHA)
   
   # Meyer
   meyer = stats::lm(log(DD$IndvHectare) ~ DD$Class_Center)
