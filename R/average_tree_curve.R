@@ -9,6 +9,9 @@
 #' @param h Quoted name of the section height variable, in meters.
 #' @param th Quoted name of the total height variable, in meters.
 #' @param facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: \code{NA}.
+#' @param mirror if \code{TRUE}, the plot will be mirrored, to resemble the shape of a tree. Default: \code{TRUE}
+#' @param eq if \code{TRUE}, Kozak's taper model is adjusted and the equation is shown on the plot. Default \code{TRUE}
+#' 
 #' @return A ggplot object.
 #' 
 #' @references 
@@ -29,11 +32,11 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-average_tree_curve <- function(df, d, dbh, h, th, facet=NA){
+average_tree_curve <- function(df, d, dbh, h, th, facet=NA,mirror=TRUE,eq=TRUE){
   # ####
-  ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th<-NULL
+  ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th <- d_sob_dbh_negative <- d_sob_dbh_positive <-NULL
   # checagem de variaveis ####
-
+  
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
@@ -98,36 +101,64 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA){
     stop(forestmangr::check_names(df,facet, boolean=F), call.=F)
   }
   
+  # se mirror nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! mirror %in% c(TRUE, FALSE) ){ 
+    stop("'mirror' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(mirror)!=1){
+    stop("Length of 'mirror' must be 1", call.=F)
+  }
+  
+  # se eq nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! eq %in% c(TRUE, FALSE) ){ 
+    stop("'eq' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(eq)!=1){
+    stop("Length of 'eq' must be 1", call.=F)
+  }
+  
   d_sym <- rlang::sym(d)
   dbh_sym <- rlang::sym(dbh)
   h_sym <- rlang::sym(h)
   th_sym <- rlang::sym(th)
   
-  # se facet nao for fornecido, for igual "", nulo, ou  nao existir no dataframe, definir como nulo
-  if(  missing(facet) || is.null(facet) || is.na(facet) || facet == "" || is.null(df[facet]) ){  
-    facet <- NULL
+  # ####
+  
+  df_plot <- df %>% 
+    dplyr::mutate(d_sob_dbh = (!!d_sym)/(!!dbh_sym),
+                  h_sob_th = (!!h_sym)/(!!th_sym), 
+                  h_sob_th_quad = h_sob_th^2 )
+  
+  if(mirror==TRUE){
+    
+    df_plot <- df_plot %>% 
+      dplyr::rename(d_sob_dbh_positive = d_sob_dbh) %>% 
+      dplyr::mutate(d_sob_dbh_negative = d_sob_dbh_positive-d_sob_dbh_positive*2) %>% 
+      tidyr::gather(mirror,d_sob_dbh,d_sob_dbh_positive, d_sob_dbh_negative)
+    
+  }else{
+    df_plot$mirror <- "d_sob_dbh_positive"
   }
   
- # ####
   
- p <- df %>% 
-    dplyr::mutate(d_sob_dbh = (!!d_sym)/(!!dbh_sym),
-           h_sob_th = (!!h_sym)/(!!th_sym), 
-           h_sob_th_quad = h_sob_th^2 ) %>% 
-    ggplot2::ggplot(ggplot2::aes(x=d_sob_dbh, y=h_sob_th)) + 
+  p <- ggplot2::ggplot(df_plot, ggplot2::aes(x=d_sob_dbh, y=h_sob_th)) + 
     ggplot2::geom_point(size = 2, alpha = .4) + 
     # coord_fixed(ratio=2) +
     ggplot2::labs(x=expression(italic(frac(d,DBH))), 
-         y=expression(italic(frac(h,TH)))
-    ) +
-    ggpmisc::stat_poly_eq(
-      formula = x ~ stats::poly(y, 2, raw=T),
-      size = 3,
-      eq.x.rhs    = "italic(frac(h,TH))",
-      eq.with.lhs = "italic(hat(frac(d,DBH)))~`=`~", 
-      ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")),
-      label.x.npc="right",
-      parse = TRUE  ) +
+                  y=expression(italic(frac(h,TH)))
+    ) + {
+      if(eq==TRUE)
+        
+        ggpmisc::stat_poly_eq(data=df_plot[df_plot$mirror=="d_sob_dbh_positive",],
+                              formula = x ~ stats::poly(y, 2, raw=T),
+                              size = 3,
+                              eq.x.rhs    = "italic(frac(h,TH))",
+                              eq.with.lhs = "italic(hat(frac(d,DBH)))~`=`~", 
+                              ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")),
+                              label.x.npc="right",
+                              parse = TRUE  )
+      
+    } + {
+      if(mirror==TRUE) ggplot2::geom_vline(xintercept=0)
+    } + 
     ggthemes::theme_igray(base_family = "serif") +
     ggplot2::theme(
       axis.title.y     = ggplot2::element_text(angle = 0, vjust =.5),
@@ -140,7 +171,7 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA){
       axis.line.y      = ggplot2::element_line(color="black"),
       strip.text.x     = ggplot2::element_text(size = 14)   )
   
- if(!is.null(facet) ){p <- p + ggplot2::facet_wrap(facet) }
-
- return(p)  
+  if(!is.null(facet) ){p <- p + ggplot2::facet_wrap(facet) }
+  
+  return(p)  
 }

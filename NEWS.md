@@ -2,6 +2,8 @@
 
 # forestmangr 0.9.2
 
+* average_tree_curve now plots the a mirrored plot, as to resemble a tree (mirror argument) and has an argument to remove the equation from the plot;
+
 * rmse_perc and bias_perc now have a na.rm argument (which is TRUE by default);
 
 * updated tree_summarise to sum volume with and without bark using 2 new arguments;
