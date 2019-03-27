@@ -4,7 +4,7 @@
 \alias{bias_per}
 \title{Bias of an estimator in percentage}
 \usage{
-bias_per(df, y, yhat)
+bias_per(df, y, yhat, na.rm = TRUE)
 }
 \arguments{
 \item{df}{a data frame.}
@@ -12,6 +12,8 @@ bias_per(df, y, yhat)
 \item{y}{Quoted name of the variable representing the observed values in the data frame. If a data frame is not provided, \code{y} can also be a numeric vector.}
 
 \item{yhat}{Quoted name of the variable representing the estimated values in the data frame. If a data frame is not provided, \code{yhat} can also be a numeric vector.}
+
+\item{na.rm}{a logical value indicating whether NA values should be stripped before the computation proceeds. default: \code{TRUE}}
 }
 \value{
 Numeric vector with the bias value, in percentage.

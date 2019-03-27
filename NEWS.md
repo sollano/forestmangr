@@ -2,6 +2,8 @@
 
 # forestmangr 0.9.2
 
+* rmse_perc and bias_perc now have a na.rm argument (which is TRUE by default);
+
 * updated tree_summarise to sum volume with and without bark using 2 new arguments;
 
 * fixed vol_summarise handlying of optional variables;

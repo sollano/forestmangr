@@ -8,6 +8,7 @@
 #' @param df a data frame.
 #' @param y Quoted name of the variable representing the observed values in the data frame. If a data frame is not provided, \code{y} can also be a numeric vector.
 #' @param yhat Quoted name of the variable representing the estimated values in the data frame. If a data frame is not provided, \code{yhat} can also be a numeric vector.
+#' @param na.rm a logical value indicating whether NA values should be stripped before the computation proceeds. default: \code{TRUE}
 #' @return Numeric vector with the bias value, in percentage.
 #' 
 #' @keywords bias
@@ -28,12 +29,16 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-bias_per <- function(df, y, yhat){
+bias_per <- function(df, y, yhat, na.rm = TRUE){
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,tratar como vetores
   if(  missing(df) ){  
-    return(sum(y - yhat)/sum(y) * 100)
+    
+    df <- data.frame("y"=y,"yhat"=yhat)
+    y <- "y"
+    yhat <- "yhat"
+    
   }else if(!is.data.frame(df)){
     stop("df must be a dataframe", call.=F)
   }else if(length(df)<=1 | nrow(df)<=1){
@@ -63,6 +68,8 @@ bias_per <- function(df, y, yhat){
 # ####  
   y_sym <- rlang::sym(y)
   yhat_sym <- rlang::sym(yhat)
+  
+  if(na.rm==TRUE) df <- df %>% dplyr::select(!!y_sym, !!yhat_sym) %>% stats::na.omit()
   
   y_vec <- df %>% dplyr::pull(!!y_sym)
   yhat_vec <- df %>% dplyr::pull(!!yhat_sym)

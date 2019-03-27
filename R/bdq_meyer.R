@@ -40,6 +40,9 @@
 #'
 bdq_meyer <- function(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5, licourt_index = 2, output="table"){
   # #####
+  
+  CC <- IndvHA <- NumIndv <- NULL
+  
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
