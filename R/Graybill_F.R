@@ -53,7 +53,14 @@
 graybill_f <- function(df, Y1, Yj, signif = 0.05, output = "simple") {
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
-  if(  missing(df) ){  
+  
+  if(missing(df) & !missing(Y1) & !missing(Yj) ){
+    
+    df <- data.frame("Y1"=Y1,"Yj"=Yj)
+    Y1 <- "Y1"
+    Yj <- "Yj"
+    
+  }else if(  missing(df) ){  
     stop("df not set", call. = F) 
   }else if(!is.data.frame(df)){
     stop("df must be a dataframe", call.=F)
