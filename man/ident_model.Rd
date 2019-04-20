@@ -67,9 +67,6 @@ ident_model(exfm13, "species", dbh ~  N + N2,
 filter = c("PEQUI", "VINHATICO"), output = "table_plot")
 
 ident_model(exfm13, "species", dbh ~  N + N2, 
-filter = c("SUCUPIRA-PRETA", "PEQUI"), output = "table_plot")
-
-ident_model(exfm13, "species", dbh ~  N + N2, 
 filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
 
 # As we imagined, a single model can be used to describe the behavior of
