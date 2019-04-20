@@ -133,7 +133,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     
     tibble::tibble(b=broom::tidy(x)$term, # criamos um data frame que tem apenas as colunas dos betas e seus valores
            estimate=broom::tidy(x)$estimate ) %>% 
-      dplyr::mutate(b = factor(b, labels=0:(length(b)-1) ) ) %>% # mudamos os nomes dos coeficientes para bn
+      dplyr::mutate(b = factor(0:(length(b)-1) , labels=0:(length(b)-1) ) ) %>% # mudamos os nomes dos coeficientes para bn
       tidyr::spread( b, estimate,sep="" )     # com spread deixamos a tabela horizontal, colocando cada coeficiente em uma coluna
     
   }

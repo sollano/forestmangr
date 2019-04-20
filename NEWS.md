@@ -2,6 +2,8 @@
 
 # forestmangr 0.9.2
 
+* fixed a bug where lm_table and nls_table would sometimes change the order of coefficients;
+
 * graybill_f now accepts vectors as input;
 
 * average_tree_curve now plots the a mirrored plot, as to resemble a tree (mirror argument) and has an argument to remove the equation from the plot;

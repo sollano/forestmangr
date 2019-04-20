@@ -204,7 +204,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     estimate<-b<-NULL
     
     tibble::tibble(b = broom::tidy(x)$term, estimate = broom::tidy(x)$estimate) %>% 
-      dplyr::mutate(b = factor(b, labels = 0:(length(b) - 1))) %>% 
+      dplyr::mutate(b = factor(0:(length(b)-1) , labels=0:(length(b)-1) ) ) %>% # mudamos os nomes dos coeficientes para bn
       tidyr::spread(b, estimate, sep = "")
   }
   
