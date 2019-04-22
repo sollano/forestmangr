@@ -2,6 +2,10 @@
 
 # forestmangr 0.9.2
 
+* added a new dependency, forcats;
+
+* new function: ident_model_full; this function runs the complete identity model test;
+
 * fixed a bug where lm_table and nls_table would sometimes change the order of coefficients;
 
 * graybill_f now accepts vectors as input;
