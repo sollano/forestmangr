@@ -3,7 +3,7 @@ title: "Sampling"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Sampling}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   \usepackage[utf8]{inputenc}
 ---
   
@@ -13,6 +13,7 @@ knitr::opts_chunk$set(fig.width=7, fig.height=5)
 options(tibble.print_min = 6L, tibble.print_max = 6L)
 library(forestmangr)
 ```
+
 
 First we'll load up the package and some data:
 ```{r}
@@ -115,5 +116,4 @@ We got a 22.2% error. Now, let's calculate the sampling error using the method o
 ss_diffs(data_as, "VWB", 200, 18)
 ```
 We got a 4.2% error, which is significantly lower than before.
-
 

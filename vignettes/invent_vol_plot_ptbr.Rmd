@@ -93,3 +93,4 @@ tab_invt <- plot_summarise(df=dados,plot="PLOT",plot_area="PLOT_AREA",dbh="DBH",
 head(as.data.frame(tab_invt))
 ```
 
+
