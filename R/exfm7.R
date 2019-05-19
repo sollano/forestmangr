@@ -9,7 +9,7 @@
 #' A data frame with 11 observations and 3393 variables:
 #' \describe{
 #'   \item{MAP}{map numbers}
-#'   \item{PROJECT}{name of project}
+#'   \item{PROJECT}{Project's name}
 #'   \item{SPACING}{Spacing used in the plots, in meters}
 #'   \item{STRATA}{stratum number}
 #'   \item{GENCODE}{genetic code of plots}

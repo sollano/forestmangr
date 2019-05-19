@@ -9,6 +9,7 @@
 #' @param h Quoted name of the section height variable, in meters.
 #' @param th Quoted name of the total height variable, in meters.
 #' @param facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: \code{NA}.
+#' @param color Quoted name of a variable. If supplied, this variable will be used to classify the data by color. Default: \code{NA}.
 #' @param mirror if \code{TRUE}, the plot will be mirrored, to resemble the shape of a tree. Default: \code{TRUE}
 #' @param eq if \code{TRUE}, Kozak's taper model is adjusted and the equation is shown on the plot. Default \code{TRUE}
 #' 
@@ -27,12 +28,13 @@
 #' # and dbh variables: 
 #' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
 #' 
-#' # It's possible to get the average tree curve of each strata with the facet argument:
-#' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH", facet = "STRATA")
+#' # It's possible to get the average tree curve of each strata with the facet argument,
+#' # and divide the data by color with the color argument:
+#' average_tree_curve(df=exfm7,d="di_wb",dbh="DBH",h="hi",th="TH",facet="STRATA",color="GENCODE")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-average_tree_curve <- function(df, d, dbh, h, th, facet=NA,mirror=TRUE,eq=TRUE){
+average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,eq=TRUE){
   # ####
   ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th <- d_sob_dbh_negative <- d_sob_dbh_positive <-NULL
   # checagem de variaveis ####
@@ -115,6 +117,21 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA,mirror=TRUE,eq=TRUE){
     stop("Length of 'eq' must be 1", call.=F)
   }
   
+  if(missing(color) || is.null(color) || is.na(color) || color == "" ){
+    df$COLOR <- NULL
+    COLORgg <- NULL
+  }else if(!is.character(color)){
+    stop("'color' must be a character containing a variable name", call.=F)
+  }else if(length(color)!=1){
+    stop("Length of 'color' must be 1", call.=F)
+  }else if(forestmangr::check_names(df, color)==F){
+    stop(forestmangr::check_names(df, color, boolean=F), call.=F)
+  }else{
+    COLOR <- color
+    COLORgg <- paste("`",COLOR,"`",sep="")
+  }
+  
+  
   d_sym <- rlang::sym(d)
   dbh_sym <- rlang::sym(dbh)
   h_sym <- rlang::sym(h)
@@ -139,7 +156,7 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA,mirror=TRUE,eq=TRUE){
   }
   
   
-  p <- ggplot2::ggplot(df_plot, ggplot2::aes(x=d_sob_dbh, y=h_sob_th)) + 
+  p <- ggplot2::ggplot(df_plot, ggplot2::aes_string(x="d_sob_dbh", y="h_sob_th",color=COLORgg)) + 
     ggplot2::geom_point(size = 2, alpha = .4) + 
     # coord_fixed(ratio=2) +
     ggplot2::labs(x=expression(italic(frac(d,DBH))), 

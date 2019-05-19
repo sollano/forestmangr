@@ -10,7 +10,9 @@
 
 * graybill_f now accepts vectors as input;
 
-* average_tree_curve now plots the a mirrored plot, as to resemble a tree (mirror argument) and has an argument to remove the equation from the plot;
+* average_tree_curve now has a color argument, that allows variables to be mapped as colors;
+
+* average_tree_curve now plots a mirrored plot, as to resemble a tree (mirror argument) and has an argument to remove the equation from the plot;
 
 * rmse_perc and bias_perc now have a na.rm argument (which is TRUE by default);
 
