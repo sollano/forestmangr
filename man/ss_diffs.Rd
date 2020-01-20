@@ -4,8 +4,18 @@
 \alias{ss_diffs}
 \title{Systematic Sampling}
 \usage{
-ss_diffs(df, Yi, plot_area, total_area, age = NA, .groups = NA,
-  alpha = 0.05, error = 10, dec_places = 4, tidy = TRUE)
+ss_diffs(
+  df,
+  Yi,
+  plot_area,
+  total_area,
+  age = NA,
+  .groups = NA,
+  alpha = 0.05,
+  error = 10,
+  dec_places = 4,
+  tidy = TRUE
+)
 }
 \arguments{
 \item{df}{a data frame.}

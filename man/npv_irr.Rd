@@ -4,9 +4,18 @@
 \alias{npv_irr}
 \title{Calculate Net Present Value and other economic variables}
 \usage{
-npv_irr(df, year, cost, revenue, rate, output = "full",
-  sens_limits = c(1, 30), big_mark = ",", dec_mark = ".",
-  prefix = "$")
+npv_irr(
+  df,
+  year,
+  cost,
+  revenue,
+  rate,
+  output = "full",
+  sens_limits = c(1, 30),
+  big_mark = ",",
+  dec_mark = ".",
+  prefix = "$"
+)
 }
 \arguments{
 \item{df}{A data frame.}

@@ -4,8 +4,16 @@
 \alias{bdq_meyer}
 \title{Classify a forest for selective cutting using the Meyer BDq method}
 \usage{
-bdq_meyer(df, plot, dbh, plot_area, class_interval = 5, dbh_min = 5,
-  licourt_index = 2, output = "table")
+bdq_meyer(
+  df,
+  plot,
+  dbh,
+  plot_area,
+  class_interval = 5,
+  dbh_min = 5,
+  licourt_index = 2,
+  output = "table"
+)
 }
 \arguments{
 \item{df}{A data frame.}

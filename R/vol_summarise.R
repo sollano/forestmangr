@@ -162,7 +162,8 @@ vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
       dplyr::vars(FFWB, FFWOB),                   # especificadas por vars
       dplyr::funs("mean" = mean)    ) %>%             # Fator de forma medio
     dplyr::na_if(0) %>%                              # Se vwob nao for informado, variaveis que o utilizam serao 0, portanto, deve-se converte-las para NA, para depois remove-las
-    dplyr::select_if(~!all(is.na(.))) %>% # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
+    #dplyr::select_if(~!all(is.na(.))) %>% 
+    rm_empty_col %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     dplyr::ungroup()
   
   if(suppressWarnings(all(is.na(df$vwob)))) out$BARK_PERC <- NULL

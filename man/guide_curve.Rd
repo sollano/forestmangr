@@ -4,10 +4,20 @@
 \alias{guide_curve}
 \title{Get the guide curve plot for growth and yield analysis of inventory data}
 \usage{
-guide_curve(df, dh, age, age_index, n_class = 4, model = "Schumacher",
-  start_chap = c(b0 = 23, b1 = 0.03, b2 = 1.3), start_bailey = c(b0 =
-  3, b1 = -130, b2 = 1.5), round_classes = FALSE, font = "serif",
-  gray_scale = TRUE, output = "plot")
+guide_curve(
+  df,
+  dh,
+  age,
+  age_index,
+  n_class = 4,
+  model = "Schumacher",
+  start_chap = c(b0 = 23, b1 = 0.03, b2 = 1.3),
+  start_bailey = c(b0 = 3, b1 = -130, b2 = 1.5),
+  round_classes = FALSE,
+  font = "serif",
+  gray_scale = TRUE,
+  output = "plot"
+)
 }
 \arguments{
 \item{df}{A data frame.}

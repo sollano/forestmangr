@@ -4,9 +4,18 @@
 \alias{nls_table}
 \title{Fit non-linear regressions by group, using LM algorithm and get different output options.}
 \usage{
-nls_table(df, model, mod_start, .groups = NA, output = "table",
-  est.name = "est", replace = FALSE, keep_model = FALSE,
-  global_start, algorithm = "LM")
+nls_table(
+  df,
+  model,
+  mod_start,
+  .groups = NA,
+  output = "table",
+  est.name = "est",
+  replace = FALSE,
+  keep_model = FALSE,
+  global_start,
+  algorithm = "LM"
+)
 }
 \arguments{
 \item{df}{A data frame.}

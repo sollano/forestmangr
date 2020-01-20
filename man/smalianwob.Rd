@@ -4,8 +4,17 @@
 \alias{smalianwob}
 \title{Calculate the volume without bark of trees using the Smalian method}
 \usage{
-smalianwob(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm = FALSE,
-  hi_cm_to_m = FALSE, bt_mm_to_cm = FALSE)
+smalianwob(
+  df,
+  di,
+  hi,
+  bt,
+  tree,
+  .groups = NA,
+  di_mm_to_cm = FALSE,
+  hi_cm_to_m = FALSE,
+  bt_mm_to_cm = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}

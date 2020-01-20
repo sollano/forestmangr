@@ -4,8 +4,7 @@
 \alias{huberwb}
 \title{Calculate the volume with bark of trees using the Huber method}
 \usage{
-huberwb(df, di, section_length, tree, .groups = NA,
-  di_mm_to_cm = FALSE)
+huberwb(df, di, section_length, tree, .groups = NA, di_mm_to_cm = FALSE)
 }
 \arguments{
 \item{df}{A data frame.}

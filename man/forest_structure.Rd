@@ -4,8 +4,16 @@
 \alias{forest_structure}
 \title{Get the forest horizontal, vertical and internal structure}
 \usage{
-forest_structure(df, species, dbh, plot, plot_area, vertical_est = NA,
-  internal_est = NA, NI_label = "")
+forest_structure(
+  df,
+  species,
+  dbh,
+  plot,
+  plot_area,
+  vertical_est = NA,
+  internal_est = NA,
+  NI_label = ""
+)
 }
 \arguments{
 \item{df}{A data frame.}

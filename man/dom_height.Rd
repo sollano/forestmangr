@@ -4,8 +4,17 @@
 \alias{dom_height}
 \title{Calculate the dominant height of forest inventory data plots}
 \usage{
-dom_height(df, th, dbh, plot, obs, dom, .groups, merge_data = FALSE,
-  dh_name = "DH")
+dom_height(
+  df,
+  th,
+  dbh,
+  plot,
+  obs,
+  dom,
+  .groups,
+  merge_data = FALSE,
+  dh_name = "DH"
+)
 }
 \arguments{
 \item{df}{A data frame.}

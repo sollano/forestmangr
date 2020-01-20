@@ -292,8 +292,8 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
       n_optimal  = sum(nj_optimal), # n calculado total
       Yhatj    = Nj * Yj )  %>% # producao total por estrato
     dplyr::na_if(0) %>% # substitui 0 por NA
-    dplyr::select_if(Negate(anyNA) ) # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
-  
+    rm_empty_col  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
+    
   
   x <- x_ %>% 
     plyr::rename(

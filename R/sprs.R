@@ -225,7 +225,7 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
       CI_Total_inf = Yhat - Total_Error, # Intervalo de confianca total inferior
       CI_Total_Sup = Yhat + Total_Error) %>% # Intervalo de confianca total superior
     dplyr::na_if(0) %>% # substitui 0 por NA
-    dplyr::select_if(Negate(anyNA) ) %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
+    rm_empty_col %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     forestmangr::round_df(dec_places)
   
   

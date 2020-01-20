@@ -4,9 +4,21 @@
 \alias{diameter_class}
 \title{Divide data into diameter classes, and get number of observations}
 \usage{
-diameter_class(df, dbh, plot = NA, plot_area, ci = 5, dbhmin = 5,
-  species = NA, volume = NA, NI_label = "NI", cc_to_column = FALSE,
-  G_to_cc = FALSE, cctc_ha = TRUE, keep_unused_classes = FALSE)
+diameter_class(
+  df,
+  dbh,
+  plot = NA,
+  plot_area,
+  ci = 5,
+  dbhmin = 5,
+  species = NA,
+  volume = NA,
+  NI_label = "NI",
+  cc_to_column = FALSE,
+  G_to_cc = FALSE,
+  cctc_ha = TRUE,
+  keep_unused_classes = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}

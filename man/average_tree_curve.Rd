@@ -4,8 +4,17 @@
 \alias{average_tree_curve}
 \title{Generate the curve of a forest's average tree using the Kozak taper model}
 \usage{
-average_tree_curve(df, d, dbh, h, th, facet = NA, color = NA,
-  mirror = TRUE, eq = TRUE)
+average_tree_curve(
+  df,
+  d,
+  dbh,
+  h,
+  th,
+  facet = NA,
+  color = NA,
+  mirror = TRUE,
+  eq = TRUE
+)
 }
 \arguments{
 \item{df}{A data frame.}

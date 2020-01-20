@@ -4,9 +4,19 @@
 \alias{sprs}
 \title{Simple Random Sampling}
 \usage{
-sprs(df, Yi, plot_area, total_area, age = NA, .groups = NA,
-  alpha = 0.05, error = 10, dec_places = 4, pop = "inf",
-  tidy = TRUE)
+sprs(
+  df,
+  Yi,
+  plot_area,
+  total_area,
+  age = NA,
+  .groups = NA,
+  alpha = 0.05,
+  error = 10,
+  dec_places = 4,
+  pop = "inf",
+  tidy = TRUE
+)
 }
 \arguments{
 \item{df}{a data frame.}

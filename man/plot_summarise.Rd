@@ -4,8 +4,20 @@
 \alias{plot_summarise}
 \title{Summarize forest inventory data}
 \usage{
-plot_summarise(df, plot, plot_area, dbh, th, .groups, total_area, vwb,
-  vwob, dh, age, dec_places = 4)
+plot_summarise(
+  df,
+  plot,
+  plot_area,
+  dbh,
+  th,
+  .groups,
+  total_area,
+  vwb,
+  vwob,
+  dh,
+  age,
+  dec_places = 4
+)
 }
 \arguments{
 \item{df}{A data frame.}

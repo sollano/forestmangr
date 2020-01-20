@@ -4,8 +4,16 @@
 \alias{ident_model}
 \title{Identity of a Model Test}
 \usage{
-ident_model(df, factor, reduced_model, filter = NA, gray_scale = TRUE,
-  signif = 0.05, font = "serif", output = "table")
+ident_model(
+  df,
+  factor,
+  reduced_model,
+  filter = NA,
+  gray_scale = TRUE,
+  signif = 0.05,
+  font = "serif",
+  output = "table"
+)
 }
 \arguments{
 \item{df}{a data frame.}

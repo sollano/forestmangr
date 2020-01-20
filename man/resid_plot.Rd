@@ -4,10 +4,23 @@
 \alias{resid_plot}
 \title{Calculate residual values and create plots}
 \usage{
-resid_plot(df, obs, ..., type = "scatterplot", point_size = 3,
-  color = NA, nrow = NA, ncol = NA, lim_y = NA,
-  xlab = "Observed values", clab = NA, font = "serif",
-  legend_pos = "bottom", gray_scale = TRUE, res_table = FALSE)
+resid_plot(
+  df,
+  obs,
+  ...,
+  type = "scatterplot",
+  point_size = 3,
+  color = NA,
+  nrow = NA,
+  ncol = NA,
+  lim_y = NA,
+  xlab = "Observed values",
+  clab = NA,
+  font = "serif",
+  legend_pos = "bottom",
+  gray_scale = TRUE,
+  res_table = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}

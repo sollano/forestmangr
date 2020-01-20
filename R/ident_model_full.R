@@ -35,7 +35,7 @@
 #' # SUcupira-Preta and Vinhatico are equal, and different from Pequi.
 #' # Thus there should be 2 equations, one for pequi, and othe for Sucupira-Preta and Vinhatico.
 #' 
-ident_model_full <- function(df, factor, reduced_model, gray_scale = TRUE, signif = 0.05, font="serif", output = "table_plot" ){
+ident_model_full_ <- function(df, factor, reduced_model, gray_scale = TRUE, signif = 0.05, font="serif", output = "table_plot" ){
   # ####
   ..eq.label..<-..rr.label..<-equacao<-NULL
 
@@ -108,8 +108,8 @@ ident_model_full <- function(df, factor, reduced_model, gray_scale = TRUE, signi
   SIGNIF <- signif
   
   # Conversao da variavel utilizada como fator, para fator
-  FACTOR <- as.factor( DF[[factor]] )
-  DF[factor] <- FACTOR
+  FACTOR <-forcats::as_factor( as.character(DF[[factor]]) )
+  DF[[factor]] <- FACTOR
   
   # Definicao dos niveis do fator utilizado
   FACTOR_LEVELS <- levels(FACTOR)
@@ -138,7 +138,7 @@ ident_model_full <- function(df, factor, reduced_model, gray_scale = TRUE, signi
   
   
   # Rodar o teste
-  test <- ident_model(DF, factor, MODELO_REDUZIDO,output = "table",gray_scale = gray_scale,signif = SIGNIF, font = font)
+  test <- forestmangr::ident_model(DF, factor, MODELO_REDUZIDO,output = "table",gray_scale = gray_scale,signif = SIGNIF, font = font)
   
   # captirar o resultado
   resultado <- as.character(test[[3,"Result"]])
@@ -235,12 +235,12 @@ ident_model_full <- function(df, factor, reduced_model, gray_scale = TRUE, signi
     # do fator
     DF_F[[factor]] <- NULL
     names(DF_F)[names(DF_F)=="equacao"] <- factor
-    
-    graph <- ident_model(DF_F, factor, MODELO_REDUZIDO, output = "plot",gray_scale = gray_scale,signif = signif, font = font)
+    return(DF_F)
+    graph <- forestmangr::ident_model(DF_F, factor, MODELO_REDUZIDO, output = "plot",gray_scale = gray_scale,signif = signif, font = font)
     
     if(output == "table_plot"){
       
-      print(ident_model(DF, factor, MODELO_REDUZIDO,output = "plot",gray_scale = gray_scale,signif = signif, font = font))
+      print(forestmangr::ident_model(DF, factor, MODELO_REDUZIDO,output = "plot",gray_scale = gray_scale,signif = signif, font = font))
       print(graph)
       return(lista_testes)
       
@@ -250,7 +250,7 @@ ident_model_full <- function(df, factor, reduced_model, gray_scale = TRUE, signi
       
     }else if(output == "plots"){
       
-      print(ident_model(DF, factor, MODELO_REDUZIDO,output = "plot",gray_scale = gray_scale,signif = signif, font = font))
+      print(forestmangr::ident_model(DF, factor, MODELO_REDUZIDO,output = "plot",gray_scale = gray_scale,signif = signif, font = font))
       return(graph)
       
     }else{

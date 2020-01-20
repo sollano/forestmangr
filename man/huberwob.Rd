@@ -4,8 +4,16 @@
 \alias{huberwob}
 \title{Calculate the volume without bark of trees using the Huber method}
 \usage{
-huberwob(df, di, section_length, bt, tree, .groups = NA,
-  di_mm_to_cm = FALSE, bt_mm_to_cm = FALSE)
+huberwob(
+  df,
+  di,
+  section_length,
+  bt,
+  tree,
+  .groups = NA,
+  di_mm_to_cm = FALSE,
+  bt_mm_to_cm = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}

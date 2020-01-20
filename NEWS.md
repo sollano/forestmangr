@@ -2,6 +2,8 @@
 
 # forestmangr 0.9.2
 
+* new function: rm_empty_cols; this function is used internally to better handle optional variables;
+
 * added a new dependency, forcats;
 
 * new function: ident_model_full; this function runs the complete identity model test;

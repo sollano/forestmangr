@@ -4,8 +4,15 @@
 \alias{smalianwb}
 \title{Calculate the volume with bark of trees using the Smalian method}
 \usage{
-smalianwb(df, di, hi, tree, .groups = NA, di_mm_to_cm = FALSE,
-  hi_cm_to_m = FALSE)
+smalianwb(
+  df,
+  di,
+  hi,
+  tree,
+  .groups = NA,
+  di_mm_to_cm = FALSE,
+  hi_cm_to_m = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}

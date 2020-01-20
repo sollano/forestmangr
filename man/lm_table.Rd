@@ -4,8 +4,14 @@
 \alias{lm_table}
 \title{Fit linear regressions by group, and get different output options.}
 \usage{
-lm_table(df, model, .groups = NA, output = "table", est.name = "est",
-  keep_model = FALSE)
+lm_table(
+  df,
+  model,
+  .groups = NA,
+  output = "table",
+  est.name = "est",
+  keep_model = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}

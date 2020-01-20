@@ -4,9 +4,18 @@
 \alias{est_clutter}
 \title{Estimate future and present basal area, volume, TCA, CMI and MMI values of the Clutter Growth and Yield Model}
 \usage{
-est_clutter(df, age, basal_area, site, category, coeffs,
-  method = "average", annual_increment = FALSE, gray_scale = TRUE,
-  output = "table")
+est_clutter(
+  df,
+  age,
+  basal_area,
+  site,
+  category,
+  coeffs,
+  method = "average",
+  annual_increment = FALSE,
+  gray_scale = TRUE,
+  output = "table"
+)
 }
 \arguments{
 \item{df}{A data frame.}

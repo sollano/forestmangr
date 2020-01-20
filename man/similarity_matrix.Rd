@@ -4,8 +4,15 @@
 \alias{similarity_matrix}
 \title{Get the similarity matrix of an area}
 \usage{
-similarity_matrix(df, species, comparison, NI_label = "",
-  index = "Sorensen", dendrogram = FALSE, n_groups = 3)
+similarity_matrix(
+  df,
+  species,
+  comparison,
+  NI_label = "",
+  index = "Sorensen",
+  dendrogram = FALSE,
+  n_groups = 3
+)
 }
 \arguments{
 \item{df}{A data frame.}

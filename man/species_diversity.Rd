@@ -4,8 +4,7 @@
 \alias{species_diversity}
 \title{Get the species diversity indexes}
 \usage{
-species_diversity(df, species, plot = NA, NI_label = "",
-  index = "all")
+species_diversity(df, species, plot = NA, NI_label = "", index = "all")
 }
 \arguments{
 \item{df}{A data frame.}

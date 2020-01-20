@@ -4,8 +4,18 @@
 \alias{fit_clutter}
 \title{Fit the Clutter model for growth and yield}
 \usage{
-fit_clutter(df, age, dh, basal_area, volume, site, plot, .groups = NA,
-  model = "full", keep_model = FALSE)
+fit_clutter(
+  df,
+  age,
+  dh,
+  basal_area,
+  volume,
+  site,
+  plot,
+  .groups = NA,
+  model = "full",
+  keep_model = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}
