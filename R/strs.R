@@ -341,7 +341,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
       
       VC       = EPj_Sj / Y * 100, # Coeficiente de variancia
 
-      Abserror      = Sy * t, # Erro Absoluto
+      Abserror      = Sy * t_rec, # Erro Absoluto
       Percerror     = Abserror / Y * 100, # Erro percentual
       Yhat         = sum(Nj) * Y, # Volume Total
       Total_Error   = Abserror * sum(Nj), # Erro Total
