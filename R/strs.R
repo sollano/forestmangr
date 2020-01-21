@@ -277,8 +277,8 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
     dplyr::mutate(
       EPj_Sj2  =   sum(Pj_Sj2), 
       EPj_Sj   =   sum(Pj_Sj), 
+      VC       = EPj_Sj / sum(Pj_Yj) * 100, # Coeficiente de variancia
       Y        =   sum(Pj_Yj), # media estratificada (ponderada)     
-      VC       = EPj_Sj / Y * 100, # Coeficiente de variancia
       t        = stats::qt(alpha/2, df = sum(nj)-1, lower.tail = FALSE),     # a seguir, o t sera calculado utilizando o n calculado, de forma direta
       t_rec    = ifelse(pop=="inf",
           stats::qt(alpha/2, df = ceiling( t^2 * EPj_Sj^2 / (error*Y/100)^2 )-1, lower.tail = FALSE),
@@ -310,28 +310,37 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
         "Pj_Sj2"     = "PjSj2", 
         "Pj_Sj"      = "PjSj", 
         "Pj_Yj"      = "PjYj",
-        "EPj_Sj2"    = "Stratified Variance",
-        "EPj_Sj"     = "Stratified Standard Deviation", 
-        "VC"         = "Variance Quoeficient (VC)", 
-        "Y"          = "Stratified mean (Y)",
-        "t"          = "t-student", 
-        "t_rec"      = "recalculated t-student", 
+       # "EPj_Sj2"    = "Stratified Variance",
+       # "EPj_Sj"     = "Stratified Standard Deviation", 
+      #  "VC"         = "Variance Quoeficient (VC)", 
+     #   "Y"          = "Stratified mean (Y)",
+     #   "t"          = "t-student", 
+     #   "t_rec"      = "recalculated t-student", 
         "n_recalc"   = "Number of samples regarding the admited error",
         "nj_optimal" = "Optimal number of samples per stratum (nj optimal)", 
         "n_optimal"  = "Optimal number of samples (n optimal)", 
         "Yhatj"      = "Total value of Y per stratum (Yhatj)"  ),
       warn_missing = F) %>% 
+    dplyr::select(-EPj_Sj2,-EPj_Sj,-VC,-Y,-t,-t_rec) %>% #remover variaveis comuns aos estratos
     forestmangr::round_df(dec_places)  
   
   
   y_ <- x_ %>%
     dplyr::summarise(
       t     = mean(t),
+      t_rec = mean(t_rec),
       Sy           = ifelse(pop=="inf",
             sqrt(sum(Pj_Sj)^2 / sum(nj) ),
             sqrt(sum(Pj_Sj) ^2 / sum(nj) - (mean(EPj_Sj2) / mean(N) )  )
                      ), # Erro-padrao da media
+      
+      EPj_Sj2  =   sum(Pj_Sj2), 
+      EPj_Sj   =   sum(Pj_Sj), 
+      
       Y            = sum(Pj_Yj), # media de Yi estratificada (ponderada) 
+      
+      VC       = EPj_Sj / Y * 100, # Coeficiente de variancia
+
       Abserror      = Sy * t, # Erro Absoluto
       Percerror     = Abserror / Y * 100, # Erro percentual
       Yhat         = sum(Nj) * Y, # Volume Total
@@ -348,6 +357,11 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   y <- y_ %>% 
     plyr::rename(
       c("t"            = "t-student",
+        "t_rec"      = "recalculated t-student",
+        "EPj_Sj2"    = "Stratified Variance",
+        "EPj_Sj"     = "Stratified Standard Deviation", 
+        "VC"         = "Variance Quoeficient (VC)", 
+        
         "Y"            = "Stratified Mean (Y)",
         "Sy"           = "Standard error of the mean (Sy)",
         "Abserror"     = "Absolute Error" ,
