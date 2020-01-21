@@ -1,6 +1,6 @@
 #' @title Quasiquotation
 #' 
-#' @description See \code{\link[rlang]{quasiquotation}} for more details.
+#' @description Search for quasiquotation for more details.
 #' 
 #' @importFrom rlang :=
 #' 
