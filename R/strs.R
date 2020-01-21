@@ -357,7 +357,6 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
         "EPj_Sj2"    = "Stratified Variance",
         "EPj_Sj"     = "Stratified Standard Deviation", 
         "VC"         = "Variance Quoeficient (VC)", 
-        
         "Y"            = "Stratified Mean (Y)",
         "Sy"           = "Standard error of the mean (Sy)",
         "Abserror"     = "Absolute Error" ,
