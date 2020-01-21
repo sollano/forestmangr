@@ -196,6 +196,8 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
       t            = stats::qt(alpha/2, df = n-1, lower.tail = FALSE) ,
       t_rec        = stats::qt(alpha/2, df = ceiling( t^2 * VC^2 / error^2) - 1, lower.tail = FALSE),
       n_recalc     = ceiling( t_rec ^2 * VC^2 / error^2 ) ,
+      S2           = stats::var(!!Yi_sym,na.rm=T), #Variancia
+      sd           = sd(!!Yi_sym,na.rm=T), # desvio padrao
       Y            = mean(!!Yi_sym, na.rm=T), # Média do volume
       Sy           = sqrt( (sum(diff(!!Yi_sym)^2,na.rm=T) / (2 * n * (n-1) ) ) * ((N-n)/N) ),
       Abserror      = Sy * t , # Erro Absoluto
@@ -217,10 +219,12 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
     plyr::rename(c( "age"          = "Age"                  , 
                     "n"            = "Total number of sampled plots (n)",
                     "N"            = "Number of maximum plots (N)", 
-                    "VC"           = "Variance Quoeficient (VC)", 
                     "t"            = "t-student"                      ,
                     "t_rec"        = "recalculated t-student", 
                     "n_recalc"     = "Number of samples regarding the admited error",
+                    "S2"           = "Variance (s²)",
+                    "sd"           = "Standard deviation (sd)",
+                    "VC"           = "Variance Quoeficient (VC)", 
                     "Y"            = "Mean (Y)"                ,
                     "Sy"           = "Standard error of the mean (Sy)",
                     "Abserror"     = "Absolute Error" ,
