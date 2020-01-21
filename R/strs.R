@@ -333,14 +333,10 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
             sqrt(sum(Pj_Sj)^2 / sum(nj) ),
             sqrt(sum(Pj_Sj) ^2 / sum(nj) - (mean(EPj_Sj2) / mean(N) )  )
                      ), # Erro-padrao da media
-      
       EPj_Sj2  =   sum(Pj_Sj2), 
       EPj_Sj   =   sum(Pj_Sj), 
-      
+      VC       = EPj_Sj / sum(Pj_Yj) * 100, # Coeficiente de variancia
       Y            = sum(Pj_Yj), # media de Yi estratificada (ponderada) 
-      
-      VC       = EPj_Sj / Y * 100, # Coeficiente de variancia
-
       Abserror      = Sy * t_rec, # Erro Absoluto
       Percerror     = Abserror / Y * 100, # Erro percentual
       Yhat         = sum(Nj) * Y, # Volume Total
