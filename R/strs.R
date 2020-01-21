@@ -314,21 +314,21 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
        # "EPj_Sj"     = "Stratified Standard Deviation", 
       #  "VC"         = "Variance Quoeficient (VC)", 
      #   "Y"          = "Stratified mean (Y)",
-     #   "t"          = "t-student", 
-     #   "t_rec"      = "recalculated t-student", 
+        "t"          = "t-student", 
+        "t_rec"      = "recalculated t-student", 
         "n_recalc"   = "Number of samples regarding the admited error",
         "nj_optimal" = "Optimal number of samples per stratum (nj optimal)", 
         "n_optimal"  = "Optimal number of samples (n optimal)", 
         "Yhatj"      = "Total value of Y per stratum (Yhatj)"  ),
       warn_missing = F) %>% 
-    dplyr::select(-EPj_Sj2,-EPj_Sj,-VC,-Y,-t,-t_rec) %>% #remover variaveis comuns aos estratos
+    dplyr::select(-EPj_Sj2,-EPj_Sj,-VC,-Y) %>% #remover variaveis comuns aos estratos
     forestmangr::round_df(dec_places)  
   
   
   y_ <- x_ %>%
     dplyr::summarise(
       t     = mean(t),
-      t_rec = mean(t_rec),
+      #t_rec = mean(t_rec),
       Sy           = ifelse(pop=="inf",
             sqrt(sum(Pj_Sj)^2 / sum(nj) ),
             sqrt(sum(Pj_Sj) ^2 / sum(nj) - (mean(EPj_Sj2) / mean(N) )  )
@@ -337,7 +337,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
       EPj_Sj   =   sum(Pj_Sj),  # desvio padrao estratificado
       VC       = EPj_Sj / sum(Pj_Yj) * 100, # Coeficiente de variancia
       Y            = sum(Pj_Yj), # media de Yi estratificada (ponderada) 
-      Abserror      = Sy * t_rec, # Erro Absoluto
+      Abserror      = Sy * t, # Erro Absoluto
       Percerror     = Abserror / Y * 100, # Erro percentual
       Yhat         = sum(Nj) * Y, # Volume Total
       Total_Error   = Abserror * sum(Nj), # Erro Total
@@ -353,7 +353,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
   y <- y_ %>% 
     plyr::rename(
       c("t"            = "t-student",
-        "t_rec"      = "recalculated t-student",
+        #"t_rec"      = "recalculated t-student",
         "EPj_Sj2"    = "Stratified Variance",
         "EPj_Sj"     = "Stratified Standard Deviation", 
         "VC"         = "Variance Quoeficient (VC)", 
