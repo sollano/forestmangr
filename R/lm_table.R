@@ -88,6 +88,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   # se nao for fornecido, criar tambem variavel com todos os nomes, para usar em nest
   if((missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="") ) && !is.null(dplyr::groups(df))){
     .groups_syms <- rlang::syms(dplyr::groups(df))
+    notgpvars <- names(df)[!names(df)%in% dplyr::groups(df) ]
   }else if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="")){
     .groups_syms <- character()
     notgpvars <- names(df)

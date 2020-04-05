@@ -159,10 +159,13 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
   }
   
   # Se .groups nao for fornecido, criar objeto que dplyr::group_by ignora, sem causar erro
+  # se nao for fornecido, criar tambem variavel com todos os nomes, para usar em nest
   if((missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="") ) && !is.null(dplyr::groups(df))){
     .groups_syms <- rlang::syms(dplyr::groups(df))
+    notgpvars <- names(df)[!names(df)%in% dplyr::groups(df) ]
   }else if(missing(.groups)||any(is.null(.groups))||any(is.na(.groups))||any(.groups==F)||all(.groups=="")){
     .groups_syms <- character()
+    notgpvars <- names(df)
     # Se groups for fornecido verificar se todos os nomes de variaveis fornecidos existem no dado  
   }else if(!is.character(.groups)){
     stop(".groups must be a character", call. = F)
@@ -176,6 +179,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     # e procure o nome das variaveis dentro dos objetos
   }else{
     .groups_syms <- rlang::syms(.groups)
+    notgpvars <- names(df)[!names(df)%in%.groups]
   }
   
   # Se algorithm nao for character,ou nao for de tamanho 1, parar
@@ -217,13 +221,13 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
   # Transformar nls em uma funcao segura, que gera erros silenciosamente
   safe_nls <- purrr::safely(nls)
   
-  # A seguir sera calculado a media dos coeficientes, que pdoera ser utilizada
+  # A seguir sera calculado a media dos coeficientes, que podera ser utilizada
   # e converte-se mod_start para vetor, caso ele seja uma lista
   if(is.data.frame(mod_start)){
     
     # calcular a media e converter para vetor
-    mod_start_mean <-  mod_start[, - which(names(mod_start) %in% .groups ) ]
-    mod_start_mean <- mod_start_mean[ , sapply(mod_start_mean , is.numeric) ]
+    mod_start_mean <-  mod_start[, - which(names(mod_start) %in% .groups ) ] # tira coluna de grupo
+    mod_start_mean <- mod_start_mean[ , sapply(mod_start_mean , is.numeric) ] # filtra apenas colunas numericas
     mod_start_mean <- mod_start_mean %>% dplyr::summarise_all(mean,na.rm=T) %>% unlist
     
   }else if(is.vector(mod_start)){
@@ -254,7 +258,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
       dplyr::ungroup() %>% 
       dplyr::mutate(B = "dummy") %>% 
       dplyr::group_by(!!rlang::sym("B")) %>% 
-      tidyr::nest(.key="dat") %T>% #%>% 
+      tidyr::nest(dat= -any_of("B")) %T>% #%>% 
       {options(warn=-1)} %>% 
       dplyr::mutate(Reg = purrr::map(dat, ~safe_nls( mod, ., mod_start_mean, na.action=na.exclude )[[1]]  )  #,
                     #  Coefs = purrr::map(Reg, tidy_)
@@ -268,9 +272,10 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     
     #return(aux)
     # betas auxiliares
+    # drop era TRUE aqui
     aux1 <- aux %>% 
-      tidyr::unnest(Coefs, .drop = T) %>% 
-      dplyr::select(-B) %>% 
+      dplyr::select(-Coefs) %>% 
+      tidyr::unnest(Coefs) %>% 
       as.data.frame
     
     # Regressao auxiliar
@@ -314,12 +319,31 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
   # Se o chute inicial for um dataframe, unir os coeficientes aos dados
   if(is.data.frame(mod_start) ){
     
+    # Não tem problema tentar colocar chutes iniciais que nao estejam no model,
+    # desde que eles sejam NULL
+    # nem tentar colocar nomes que nao existam.groups Por isso o model pode rodar com 2 coefs
+    # ou 20
+    emptybetas <- data.frame(matrix(ncol=21,nrow=1))
+    # pra criar uma coluna com NULLs, tem que ser com a funcao I e uma lista
+    emptybetas[is.na(emptybetas)] <- I(list(NULL))
+    
+    
+    names(emptybetas) <- paste("b",0:20,sep="")
+    emptybetas
+    
+    # pegar so os betas que nao estao no dataframe
+    emptybetas <- emptybetas[,!names(emptybetas)%in%names(mod_start) ]
+    
+    # adicionar os betas com NULL no dataframe
+    # assim teremos um dataframe  com os chutes, mais as colunas
+    # vazias. 
+    # ja que na funcao abaixo sao chamados os 20 betas,
+    # nesse dataframe tem que ter os 20.
+    mod_start <- cbind(mod_start,emptybetas)
+    
     # Pegar os nomes dos betas
     mod_start_names <- names( mod_start[, - which(names(mod_start) %in% .groups ) ] )
     
-    # Não tem problema tentar colocar chutes iniciais que nao estejam no model,
-    # nem tentar colocar nomes que nao existam.groups Por isso o model pode rodar com 2 coefs
-    # ou 20
     
     suppressMessages(
       
@@ -327,29 +351,30 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
         dplyr::ungroup() %>% 
         dplyr::full_join(mod_start) %>% 
         dplyr::group_by(!!!.groups_syms) %>% 
-        tidyr::nest(.key="dat") %T>% #%>% 
+        tidyr::nest(dat = tidyselect::any_of(c(notgpvars,mod_start_names)) ) %T>% #%>% 
         {options(warn=-1)} %>% 
-        dplyr::mutate(Reg = purrr::map(dat,  ~pos_nls( mod, ., c( b0  = .[[ mod_start_names[01] ]][1], 
-                                                                   b1  = .[[ mod_start_names[02] ]][1], 
-                                                                   b2  = .[[ mod_start_names[03] ]][1], 
-                                                                   b3  = .[[ mod_start_names[04] ]][1], 
-                                                                   b4  = .[[ mod_start_names[05] ]][1], 
-                                                                   b5  = .[[ mod_start_names[06] ]][1], 
-                                                                   b6  = .[[ mod_start_names[07] ]][1], 
-                                                                   b7  = .[[ mod_start_names[08] ]][1], 
-                                                                   b8  = .[[ mod_start_names[09] ]][1], 
-                                                                   b9  = .[[ mod_start_names[10] ]][1], 
-                                                                   b10 = .[[ mod_start_names[11] ]][1], 
-                                                                   b11 = .[[ mod_start_names[12] ]][1], 
-                                                                   b12 = .[[ mod_start_names[13] ]][1], 
-                                                                   b13 = .[[ mod_start_names[14] ]][1], 
-                                                                   b14 = .[[ mod_start_names[15] ]][1], 
-                                                                   b15 = .[[ mod_start_names[16] ]][1], 
-                                                                   b16 = .[[ mod_start_names[17] ]][1], 
-                                                                   b17 = .[[ mod_start_names[18] ]][1], 
-                                                                   b18 = .[[ mod_start_names[19] ]][1], 
-                                                                   b19 = .[[ mod_start_names[20] ]][1], 
-                                                                   b20 = .[[ mod_start_names[21] ]][1]   ), na.action=na.exclude   ) ), 
+        dplyr::mutate(Reg = purrr::map(dat,  ~pos_nls( mod, .,
+                        c( b0  = .[[ mod_start_names[01] ]][[1]][1], 
+                           b1  = .[[ mod_start_names[02] ]][[1]][1], 
+                           b2  = .[[ mod_start_names[03] ]][[1]][1], 
+                           b3  = .[[ mod_start_names[04] ]][[1]][1],
+                           b4  = .[[ mod_start_names[05] ]][[1]][1], 
+                           b5  = .[[ mod_start_names[06] ]][[1]][1], 
+                           b6  = .[[ mod_start_names[07] ]][[1]][1], 
+                           b7  = .[[ mod_start_names[08] ]][[1]][1], 
+                           b8  = .[[ mod_start_names[09] ]][[1]][1], 
+                           b9  = .[[ mod_start_names[10] ]][[1]][1], 
+                           b10 = .[[ mod_start_names[11] ]][[1]][1], 
+                           b11 = .[[ mod_start_names[12] ]][[1]][1], 
+                           b12 = .[[ mod_start_names[13] ]][[1]][1], 
+                           b13 = .[[ mod_start_names[14] ]][[1]][1], 
+                           b14 = .[[ mod_start_names[15] ]][[1]][1], 
+                           b15 = .[[ mod_start_names[16] ]][[1]][1], 
+                           b16 = .[[ mod_start_names[17] ]][[1]][1], 
+                           b17 = .[[ mod_start_names[18] ]][[1]][1], 
+                           b18 = .[[ mod_start_names[19] ]][[1]][1], 
+                           b19 = .[[ mod_start_names[20] ]][[1]][1], 
+                           b20 = .[[ mod_start_names[21] ]][[1]][1]), na.action=na.exclude   ) ), 
                       Coefs = purrr::map(Reg, pos_tidy),
                       est = purrr::map2(Reg, dat, pos_predict) ) %T>% 
                       {options(warn=0)}
@@ -361,7 +386,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     x <-   df %>%
       dplyr::ungroup() %>% 
       dplyr::group_by(!!!.groups_syms) %>% 
-      tidyr::nest(.key="dat") %T>% #%>% 
+      tidyr::nest(dat = tidyselect::any_of(notgpvars) ) %T>% #%>% 
       {options(warn=-1)} %>% 
       dplyr::mutate(Reg = purrr::map(dat, ~pos_nls( mod, ., mod_start, na.action=na.exclude ) ),
                     Coefs = purrr::map(Reg, pos_tidy),
@@ -375,10 +400,10 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
       dplyr::mutate( est_n =  purrr::map(est, nrow  ),
                      data_n =  purrr::map(dat, nrow  ),
                      data_na = purrr::map2(NA,data_n,rep_ )  ) %>% 
-      tidyr::unnest(est_n,data_n) %>% 
+      tidyr::unnest(c(est_n,data_n)) %>% 
       dplyr::mutate(est = ifelse(est_n == 1, data_na, est) ) %>% 
       dplyr::select(-est_n,-data_n,-data_na) #%>% 
-    #tidyr::unnest(data,est) %>% 
+    #tidyr::unnest(c(data,est)) %>% 
     #select(-A)
     
   }
@@ -392,14 +417,14 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
   }
   
   if (output == "table") {
-    y <- tidyr::unnest(x, Coefs, .drop = F) %>% 
+    y <- tidyr::unnest(x, Coefs) %>% 
       dplyr::select(-dat, -est) 
     
   }
   else if (output == "merge") {
     
     # desninhar o dado e remover os chutes iniciais
-    x <- x %>% tidyr::unnest(dat, .drop = F) 
+    x <- x %>% tidyr::unnest(dat) 
     x[c("b0","b1","b2","b3","b4","b5","b6","b7","b8","b9","b10","b11","b12","b13","b14","b15","b16","b17","b18","b19","b20")] <- NULL
     
     # unir os coeficientes aos dados
@@ -411,7 +436,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
     
     #est ou estimate ira estimar a variavel y e uni-la aos dados originais
     y <- x %>% 
-      tidyr::unnest(dat, est, .drop = F) %>% 
+      tidyr::unnest(c(dat, est)) %>% 
       dplyr::select(-est, est )   # passar est para final da tabela
     
     y[c("A","Coefs", "b0","b1","b2","b3","b4","b5","b6","b7","b8","b9","b10","b11","b12","b13","b14","b15","b16","b17","b18","b19","b20")] <- NULL
