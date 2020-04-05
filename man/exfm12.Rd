@@ -4,7 +4,8 @@
 \name{exfm12}
 \alias{exfm12}
 \title{Inventory data of an eucalyptus forest in Brazil, with age and site variables}
-\format{A data frame with 139 observations and 8 variables:
+\format{
+A data frame with 139 observations and 8 variables:
 \describe{
   \item{strata}{stratum number}
   \item{plot}{plot number}
@@ -14,7 +15,8 @@
   \item{V}{volume of trees, in cubic meters}
   \item{B}{basal area, in square meters}
   \item{S}{site variable, in meters}   
-}}
+}
+}
 \usage{
 data(exfm12)
 }

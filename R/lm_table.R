@@ -61,7 +61,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE,weights=NA){
+lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE){
   # ####
   dat<-Reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
   # Checagem de variaveis ####

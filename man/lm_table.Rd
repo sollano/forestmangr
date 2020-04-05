@@ -10,8 +10,7 @@ lm_table(
   .groups = NA,
   output = "table",
   est.name = "est",
-  keep_model = FALSE,
-  weights = NA
+  keep_model = FALSE
 )
 }
 \arguments{

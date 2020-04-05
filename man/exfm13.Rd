@@ -4,7 +4,8 @@
 \name{exfm13}
 \alias{exfm13}
 \title{Experimental data on nitrogen effect in species fertilizing}
-\format{A data frame with 36 observations and 7 variables:
+\format{
+A data frame with 36 observations and 7 variables:
 \describe{
   \item{species}{species common name}
   \item{trat}{treatment number}
@@ -13,7 +14,8 @@
   \item{N2}{squared quantity of nitrogen used, in squared grams}
   \item{block}{block number}
   \item{dbh}{diameter at breast height, in meters}
-}}
+}
+}
 \usage{
 data(exfm13)
 }

@@ -4,7 +4,8 @@
 \name{exfm10}
 \alias{exfm10}
 \title{Inventory data of an eucalyptus forest Brazil with dominant height variable}
-\format{A data frame with 900 observations and 14 variables:
+\format{
+A data frame with 900 observations and 14 variables:
 \describe{
   \item{MAP}{map numbers}
   \item{PROJECT}{project number}
@@ -21,7 +22,8 @@
   \item{TH}{total height, in meters}
   \item{OBS}{quality of trees, N = normal tree, D = dominant tree, F = a failure, or dead tree}
   \item{DH}{dominant height, in meters}
-}}
+}
+}
 \usage{
 data(exfm10)
 }

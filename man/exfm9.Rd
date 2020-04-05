@@ -4,7 +4,8 @@
 \name{exfm9}
 \alias{exfm9}
 \title{Inventory data of an eucalyptus forest in minas gerais, Brazil}
-\format{A data frame with 900 observations and 14 variables:
+\format{
+A data frame with 900 observations and 14 variables:
 \describe{
   \item{MAP}{map numbers}
   \item{PROJECT}{project number}
@@ -20,7 +21,8 @@
   \item{DBH}{diameter at breast height, in meters}
   \item{TH}{total height, in meters}
   \item{OBS}{quality of trees, N = normal tree, D = dominant tree, F = a failure, or dead tree}
-}}
+}
+}
 \usage{
 data(exfm9)
 }

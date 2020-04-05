@@ -63,7 +63,7 @@
 
 ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, tidy=TRUE ) {
   # ####
-  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-NULL
+  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-VC<-NULL
   # checagem de variaveis ####
 
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar
@@ -75,7 +75,7 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
     stop( "length and number of rows 'df' must be greater than 1", call.=F)
   }
   
-  # se Yi nao for fornecido, não for character, ou nao for um nome de variavel, parar
+  # se Yi nao for fornecido, nao for character, ou nao for um nome de variavel, parar
   if(  missing(Yi) || Yi == "" ){  
     stop("Yi not set", call. = F) 
   }else if( !is.character(Yi) ){
@@ -189,21 +189,21 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
     dplyr::na_if(0) %>%
     dplyr::group_by(!!!.groups_syms, add=T) %>%
     dplyr::summarise(
-      age        = mean(!!age_sym,na.rm=T), # usa-se média pois os valores estão repetidos
+      age        = mean(!!age_sym,na.rm=T), # usa-se media pois os valores estao repetidos
       n            = dplyr::n() , # número de amostras
       N            = mean(!!total_area_sym,na.rm=T) / ( mean(!!plot_area_sym,na.rm=T)/10000 ), 
-      VC           = stats::sd(!!Yi_sym,na.rm=T) / mean(!!Yi_sym,na.rm=T) * 100, # Cálculo do coeficiente de variação
+      VC           = stats::sd(!!Yi_sym,na.rm=T) / mean(!!Yi_sym,na.rm=T) * 100, # Calculo do coeficiente de variacao
       t            = stats::qt(alpha/2, df = n-1, lower.tail = FALSE) ,
       t_rec        = stats::qt(alpha/2, df = ceiling( t^2 * VC^2 / error^2) - 1, lower.tail = FALSE),
       n_recalc     = ceiling( t_rec ^2 * VC^2 / error^2 ) ,
       S2           = stats::var(!!Yi_sym,na.rm=T), #Variancia
-      sd           = sd(!!Yi_sym,na.rm=T), # desvio padrao
-      Y            = mean(!!Yi_sym, na.rm=T), # Média do volume
+      sd           = stats::sd(!!Yi_sym,na.rm=T), # desvio padrao
+      Y            = mean(!!Yi_sym, na.rm=T), # Media do volume
       Sy           = sqrt( (sum(diff(!!Yi_sym)^2,na.rm=T) / (2 * n * (n-1) ) ) * ((N-n)/N) ),
       Abserror      = Sy * t , # Erro Absoluto
       Percerror     = Abserror / Y * 100 , # Erro Percentual
-      Yhat         = Y * N, # Media estimada para Área total
-      Total_Error   = Abserror * N, # Erro EStimado Para Área Total
+      Yhat         = Y * N, # Media estimada para area total
+      Total_Error   = Abserror * N, # Erro EStimado Para area Total
       CI_Inf       = Y - Abserror, # Intervalo de confianca inferior
       CI_Sup       = Y + Abserror, # Intervalo de confianca superior
       CI_ha_Inf    = (Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T), # Intervalo de confianca por ha inferior
@@ -222,7 +222,7 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
                     "t"            = "t-student"                      ,
                     "t_rec"        = "recalculated t-student", 
                     "n_recalc"     = "Number of samples regarding the admited error",
-                    "S2"           = "Variance (S²)",
+                    "S2"           = "Variance (S2)",
                     "sd"           = "Standard deviation (S)",
                     "VC"           = "Variance Quoeficient (VC)", 
                     "Y"            = "Mean (Y)"                ,

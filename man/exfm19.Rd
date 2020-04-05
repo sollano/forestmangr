@@ -4,7 +4,8 @@
 \name{exfm19}
 \alias{exfm19}
 \title{Volume of felled trees, measured in the Smalian method}
-\format{A data frame with 16 observations and 3393 variables:
+\format{
+A data frame with 16 observations and 3393 variables:
 \describe{
   \item{STRATA}{stratum number}
   \item{TREE}{number of trees}
@@ -14,7 +15,8 @@
   \item{VWB}{volume with bark, in cubic meters}
   \item{FFWB}{form factor for each section}
   \item{FFWB_mean}{average form vactor value}
-}}
+}
+}
 \usage{
 data(exfm19)
 }

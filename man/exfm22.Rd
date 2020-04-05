@@ -4,12 +4,14 @@
 \name{exfm22}
 \alias{exfm22}
 \title{Revenue data if an eucalyptus forest}
-\format{A data frame with 8 observations and 3 variables:
+\format{
+A data frame with 8 observations and 3 variables:
 \describe{
   \item{year}{Revenue year}
   \item{cost}{cost values for that year, in dollars}
   \item{revenue}{revenue values for that year, in dollars}
-}}
+}
+}
 \usage{
 data(exfm22)
 }

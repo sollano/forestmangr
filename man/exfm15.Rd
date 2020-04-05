@@ -4,7 +4,8 @@
 \name{exfm15}
 \alias{exfm15}
 \title{Simplified Inventory data of an eucalyptus forest in Brazil}
-\format{A data frame with 900 observations and 7 variables:
+\format{
+A data frame with 900 observations and 7 variables:
 \describe{
   \item{STRATA}{stratum number}
   \item{STRATA_AREA}{area of each strata, in hectares}
@@ -13,7 +14,8 @@
   \item{DBH}{diameter at breast height, in meters}
   \item{TH}{total height, in meters}
   \item{OBS}{quality of trees, N = normal tree, D = dominant tree, F = a failure, or dead tree}
-}}
+}
+}
 \usage{
 data(exfm15)
 }

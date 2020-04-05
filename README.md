@@ -23,8 +23,7 @@ statistical tests.
 
 If you need any help, I’m available for consulting. If you find
 forestmangr useful, please consider supporting my efforts in developing
-this open-source R package for the forestry
-community\!
+this open-source R package for the forestry community\!
 
 <div style="text-align:center">
 
@@ -94,8 +93,7 @@ head(exfm16_fit)
 ```
 
 Now, to fit Clutter’s model, we can use the `fit_clutter` function,
-indicating the DH, B, V, site and Plot variable
-names:
+indicating the DH, B, V, site and Plot variable names:
 
 ``` r
 coefs_clutter <- fit_clutter(exfm16_fit, "age", "DH", "B", "V", "site", "plot")
@@ -140,18 +138,20 @@ sprs(exfm3, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 #> 4                                      t-student    2.2622
 #> 5                         recalculated t-student    2.0452
 #> 6  Number of samples regarding the admited error   25.0000
-#> 7                                       Mean (Y)   34.0000
-#> 8                Standard error of the mean (Sy)    5.5405
-#> 9                                 Absolute Error   12.5335
-#> 10                            Relative Error (%)   36.8634
-#> 11                  Estimated Total Value (Yhat) 5304.0000
-#> 12                                   Total Error 1955.2326
-#> 13             Inferior Confidence Interval (m3)   21.4665
-#> 14             Superior Confidence Interval (m3)   46.5335
-#> 15          Inferior Confidence Interval (m3/ha)   71.5549
-#> 16          Superior Confidence Interval (m3/ha)  155.1118
-#> 17       inferior Total Confidence Interval (m3) 3348.7674
-#> 18       Superior Total Confidence Interval (m3) 7259.2326
+#> 7                                  Variance (S2)  328.0000
+#> 8                         Standard deviation (s)   18.1108
+#> 9                                       Mean (Y)   34.0000
+#> 10               Standard error of the mean (Sy)    5.5405
+#> 11                                Absolute Error   12.5335
+#> 12                            Relative Error (%)   36.8634
+#> 13                  Estimated Total Value (Yhat) 5304.0000
+#> 14                                   Total Error 1955.2326
+#> 15             Inferior Confidence Interval (m3)   21.4665
+#> 16             Superior Confidence Interval (m3)   46.5335
+#> 17          Inferior Confidence Interval (m3/ha)   71.5549
+#> 18          Superior Confidence Interval (m3/ha)  155.1118
+#> 19       inferior Total Confidence Interval (m3) 3348.7674
+#> 20       Superior Total Confidence Interval (m3) 7259.2326
 ```
 
 We can see that we have 10 plots, but 15 more are needed if we want a
@@ -167,18 +167,20 @@ sprs(exfm4, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 #> 4                                      t-student    2.0639
 #> 5                         recalculated t-student    2.0930
 #> 6  Number of samples regarding the admited error   20.0000
-#> 7                                       Mean (Y)   33.1200
-#> 8                Standard error of the mean (Sy)    2.7595
-#> 9                                 Absolute Error    5.6952
-#> 10                            Relative Error (%)   17.1957
-#> 11                  Estimated Total Value (Yhat) 5166.7200
-#> 12                                   Total Error  888.4555
-#> 13             Inferior Confidence Interval (m3)   27.4248
-#> 14             Superior Confidence Interval (m3)   38.8152
-#> 15          Inferior Confidence Interval (m3/ha)   91.4159
-#> 16          Superior Confidence Interval (m3/ha)  129.3841
-#> 17       inferior Total Confidence Interval (m3) 4278.2645
-#> 18       Superior Total Confidence Interval (m3) 6055.1755
+#> 7                                  Variance (S2)  226.6933
+#> 8                         Standard deviation (s)   15.0563
+#> 9                                       Mean (Y)   33.1200
+#> 10               Standard error of the mean (Sy)    2.7595
+#> 11                                Absolute Error    5.6952
+#> 12                            Relative Error (%)   17.1957
+#> 13                  Estimated Total Value (Yhat) 5166.7200
+#> 14                                   Total Error  888.4555
+#> 15             Inferior Confidence Interval (m3)   27.4248
+#> 16             Superior Confidence Interval (m3)   38.8152
+#> 17          Inferior Confidence Interval (m3/ha)   91.4159
+#> 18          Superior Confidence Interval (m3/ha)  129.3841
+#> 19       inferior Total Confidence Interval (m3) 4278.2645
+#> 20       Superior Total Confidence Interval (m3) 6055.1755
 ```
 
 The desired error was met.
@@ -202,48 +204,30 @@ head(exfm2,10)
 #>  9      1        14.4      1000  7.4 
 #> 10      1        14.4      1000  5.35
 sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups="STRATA", error = 20, pop = "fin")
-#>                                        Variables  STRATA1   STRATA2
-#> 1              Total number of sampled plots (n)  14.0000   20.0000
-#> 2                    Number of maximum plots (N) 144.0000  164.0000
-#> 3                      Variance Quoeficient (VC)  24.4785   15.8269
-#> 4                                      t-student   2.1604    2.0930
-#> 5                         recalculated t-student   2.4469    4.3027
-#> 6  Number of samples regarding the admited error   9.0000   11.0000
-#> 7                                       Mean (Y)   6.0357   12.0150
-#> 8                Standard error of the mean (Sy)   0.3752    0.3984
-#> 9                                 Absolute Error   0.8105    0.8339
-#> 10                            Relative Error (%)  13.4288    6.9409
-#> 11                  Estimated Total Value (Yhat) 869.1429 1970.4600
-#> 12                                   Total Error 116.7157  136.7670
-#> 13             Inferior Confidence Interval (m3)   5.2252   11.1811
-#> 14             Superior Confidence Interval (m3)   6.8462   12.8489
-#> 15          Inferior Confidence Interval (m3/ha)  52.2519  111.8105
-#> 16          Superior Confidence Interval (m3/ha)  68.4624  128.4895
-#> 17       inferior Total Confidence Interval (m3) 752.4271 1833.6930
-#> 18       Superior Total Confidence Interval (m3) 985.8586 2107.2270
-#>      STRATA3
-#> 1    23.0000
-#> 2   142.0000
-#> 3    16.7813
-#> 4     2.0739
-#> 5     4.3027
-#> 6    12.0000
-#> 7    13.7435
-#> 8     0.4402
-#> 9     0.9130
-#> 10    6.6431
-#> 11 1951.5739
-#> 12  129.6455
-#> 13   12.8305
-#> 14   14.6565
-#> 15  128.3048
-#> 16  146.5647
-#> 17 1821.9284
-#> 18 2081.2194
+#>                                        Variables  STRATA1   STRATA2   STRATA3
+#> 1              Total number of sampled plots (n)  14.0000   20.0000   23.0000
+#> 2                    Number of maximum plots (N) 144.0000  164.0000  142.0000
+#> 3                      Variance Quoeficient (VC)  24.4785   15.8269   16.7813
+#> 4                                      t-student   2.1604    2.0930    2.0739
+#> 5                         recalculated t-student   2.4469    4.3027    4.3027
+#> 6  Number of samples regarding the admited error   9.0000   11.0000   12.0000
+#> 7                                  Variance (S2)   2.1829    3.6161    5.3192
+#> 8                         Standard deviation (s)   1.4774    1.9016    2.3063
+#> 9                                       Mean (Y)   6.0357   12.0150   13.7435
+#> 10               Standard error of the mean (Sy)   0.3752    0.3984    0.4402
+#> 11                                Absolute Error   0.8105    0.8339    0.9130
+#> 12                            Relative Error (%)  13.4288    6.9409    6.6431
+#> 13                  Estimated Total Value (Yhat) 869.1429 1970.4600 1951.5739
+#> 14                                   Total Error 116.7157  136.7670  129.6455
+#> 15             Inferior Confidence Interval (m3)   5.2252   11.1811   12.8305
+#> 16             Superior Confidence Interval (m3)   6.8462   12.8489   14.6565
+#> 17          Inferior Confidence Interval (m3/ha)  52.2519  111.8105  128.3048
+#> 18          Superior Confidence Interval (m3/ha)  68.4624  128.4895  146.5647
+#> 19       inferior Total Confidence Interval (m3) 752.4271 1833.6930 1821.9284
+#> 20       Superior Total Confidence Interval (m3) 985.8586 2107.2270 2081.2194
 ```
 
-We can also run a stratified random sampling inventory with this
-data:
+We can also run a stratified random sampling inventory with this data:
 
 ``` r
 strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin")
@@ -261,16 +245,12 @@ strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin"
 #> 10                                              PjSj2    0.6985    1.3179
 #> 11                                               PjSj    0.4728    0.6930
 #> 12                                               PjYj    1.9314    4.3788
-#> 13                                             EPjSj2    3.6949    3.6949
-#> 14                                              EPjSj    1.8936    1.8936
-#> 15                                Stratified mean (Y)   10.6471   10.6471
-#> 16                          Variance Quoeficient (VC)   17.7851   17.7851
-#> 17                                          t-student    2.0032    2.0032
-#> 18                             recalculated t-student    3.1824    3.1824
-#> 19      Number of samples regarding the admited error    8.0000    8.0000
-#> 20 Optimal number of samples per stratum (nj optimal)    2.0000    3.0000
-#> 21              Optimal number of samples (n optimal)    9.0000    9.0000
-#> 22               Total value of Y per stratum (Yhatj)  869.1429 1970.4600
+#> 13                                          t-student    2.0032    2.0032
+#> 14                             recalculated t-student    3.1824    3.1824
+#> 15      Number of samples regarding the admited error    8.0000    8.0000
+#> 16 Optimal number of samples per stratum (nj optimal)    2.0000    3.0000
+#> 17              Optimal number of samples (n optimal)    9.0000    9.0000
+#> 18               Total value of Y per stratum (Yhatj)  869.1429 1970.4600
 #>     STRATA 3
 #> 1  1000.0000
 #> 2    23.0000
@@ -284,32 +264,31 @@ strs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA", "STRATA", error = 20, pop = "fin"
 #> 10    1.6785
 #> 11    0.7278
 #> 12    4.3368
-#> 13    3.6949
-#> 14    1.8936
-#> 15   10.6471
-#> 16   17.7851
-#> 17    2.0032
-#> 18    3.1824
-#> 19    8.0000
-#> 20    4.0000
-#> 21    9.0000
-#> 22 1951.5739
+#> 13    2.0032
+#> 14    3.1824
+#> 15    8.0000
+#> 16    4.0000
+#> 17    9.0000
+#> 18 1951.5739
 #> 
 #> $Table2
 #>                                  Variables     value
 #> 1                                t-student    2.0032
 #> 2          Standard error of the mean (Sy)    0.2339
-#> 3                      Stratified Mean (Y)   10.6471
-#> 4                           Absolute Error    0.4685
-#> 5                       Relative Error (%)    4.4003
-#> 6             Estimated Total Value (Yhat) 4791.1768
-#> 7                              Total Error  210.8250
-#> 8        Inferior Confidence Interval (m3)   10.1786
-#> 9        Superior Confidence Interval (m3)   11.1156
-#> 10    Inferior Confidence Interval (m3/ha)  101.7856
-#> 11    Superior Confidence Interval (m3/ha)  111.1556
-#> 12 inferior Total Confidence Interval (m3) 4580.3518
-#> 13 Superior Total Confidence Interval (m3) 5002.0018
+#> 3                      Stratified Variance    3.6949
+#> 4            Stratified Standard Deviation    1.8936
+#> 5                Variance Quoeficient (VC)   17.7851
+#> 6                      Stratified Mean (Y)   10.6471
+#> 7                           Absolute Error    0.4685
+#> 8                       Relative Error (%)    4.4003
+#> 9             Estimated Total Value (Yhat) 4791.1768
+#> 10                             Total Error  210.8250
+#> 11       Inferior Confidence Interval (m3)   10.1786
+#> 12       Superior Confidence Interval (m3)   11.1156
+#> 13    Inferior Confidence Interval (m3/ha)  101.7856
+#> 14    Superior Confidence Interval (m3/ha)  111.1556
+#> 15 inferior Total Confidence Interval (m3) 4580.3518
+#> 16 Superior Total Confidence Interval (m3) 5002.0018
 ```
 
 ## Citation
@@ -319,14 +298,14 @@ To cite this package in publications, use:
 ABNT:
 
 BRAGA S. R.; OLIVEIRA, M. L. R.; GORGENS, E. B. forestmangr: Functions
-for Forest Mensuration and Management. R package version 0.9.1, 2019.
+for Forest Mensuration and Management. R package version 0.9.2, 2020.
 Disponível em: <https://CRAN.R-project.org/package=forestmangr>
 
 APA:
 
 Sollano Rabelo Braga, Marcio Leles Romarco de Oliveira and Eric Bastos
-Gorgens (2019). forestmangr: Functions for Forest Mensuration and
-Management. R package version 0.9.1.
+Gorgens (2020). forestmangr: Functions for Forest Mensuration and
+Management. R package version 0.9.2.
 <https://CRAN.R-project.org/package=forestmangr>
 
 ## License

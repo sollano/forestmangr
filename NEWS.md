@@ -2,6 +2,8 @@
 
 # forestmangr 0.9.2
 
+* updated nls_table and lm_table to work with tibble 3.0.0;
+
 * new function: rm_empty_cols; this function is used internally to better handle optional variables;
 
 * added a new dependency, forcats;

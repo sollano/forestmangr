@@ -4,7 +4,8 @@
 \name{exfm21}
 \alias{exfm21}
 \title{Inventory data of an eucalyptus forest in Brazil}
-\format{A data frame with 900 observations and 13 variables:
+\format{
+A data frame with 900 observations and 13 variables:
 \describe{
   \item{STRATA}{stratum number}
   \item{STRATA_AREA}{area of each strata, in hectares}
@@ -19,7 +20,8 @@
   \item{AGE}{average age of plots, in months}
   \item{VWB}{volume with bark, in cubic meters}
   \item{VWOB}{volume without bark, in cubic meters}
-}}
+}
+}
 \usage{
 data(exfm21)
 }

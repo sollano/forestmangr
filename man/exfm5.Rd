@@ -4,12 +4,14 @@
 \name{exfm5}
 \alias{exfm5}
 \title{Systematic inventory data}
-\format{A data frame with 18 observations and 3 variables:
+\format{
+A data frame with 18 observations and 3 variables:
 \describe{
   \item{TOTAL_AREA}{total area, in hectares}
   \item{PLOT_AREA}{area of plots, in square meters}
   \item{VWB}{volume with bark, in cubic meters}
-}}
+}
+}
 \source{
 Soares, C. P. B., Paula Neto, F. and Souza, A. L. (2012) Dendrometria e Inventario Florestal. 2nd ed. Vicosa: UFV.
 }

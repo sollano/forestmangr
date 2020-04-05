@@ -4,13 +4,15 @@
 \name{exfm14}
 \alias{exfm14}
 \title{Inventory data of an eucalyptus forest in Brazil, with age and dominant height variables}
-\format{A data frame with 859 observations and 4 variables:
+\format{
+A data frame with 859 observations and 4 variables:
 \describe{
   \item{strata}{stratum number}
   \item{plot}{plot number}
   \item{age}{average age of plots, in months}
   \item{dh}{dominant height, in meters}
-}}
+}
+}
 \usage{
 data(exfm14)
 }

@@ -64,7 +64,7 @@
 
 sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
   # ####
-  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-NULL
+  n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-VC<-NULL
   # checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, parar
@@ -211,15 +211,15 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
                             ceiling( t_rec ^2 * VC^2 / error^2 ) ,
                             ceiling( t_rec ^2 * VC^2 / ( error^2 +(t_rec^2 * VC^2 / N) ) ) ),
       S2           = stats::var(!!Yi_sym,na.rm=T), #Variancia
-      sd           = sd(!!Yi_sym,na.rm=T), # desvio padrao
+      sd           = stats::sd(!!Yi_sym,na.rm=T), # desvio padrao
       Y            = mean(!!Yi_sym, na.rm=T), # Media do volume
       Sy           = ifelse(pop=="inf", 
                             sqrt( stats::var(!!Yi_sym,na.rm=T)/n ), 
                             sqrt( stats::var(!!Yi_sym,na.rm=T)/n  * (1 - (n/N)) ) ),
       Abserror      = Sy * t , # Erro Absoluto
       Percerror     = Abserror / Y * 100 , # Erro Percentual
-      Yhat         = Y * N, # Media estimada para Área total
-      Total_Error   = Abserror * N, # Erro EStimado Para Área Total
+      Yhat         = Y * N, # Media estimada para area total
+      Total_Error   = Abserror * N, # Erro EStimado Para area Total
       CI_Inf       = Y - Abserror, # Intervalo de confianca inferior
       CI_Sup       = Y + Abserror, # Intervalo de confianca superior
       CI_ha_Inf    = (Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T), # Intervalo de confianca por ha inferior
@@ -238,7 +238,7 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
                     "t"            = "t-student"                      ,
                     "t_rec"        = "recalculated t-student", 
                     "n_recalc"     = "Number of samples regarding the admited error",
-                    "S2"           = "Variance (S²)",
+                    "S2"           = "Variance (S2)",
                     "sd"           = "Standard deviation (s)",
                     "VC"           = "Variance Quoeficient (VC)", 
                     "Y"            = "Mean (Y)"                ,

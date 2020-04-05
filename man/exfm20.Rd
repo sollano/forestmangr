@@ -4,7 +4,8 @@
 \name{exfm20}
 \alias{exfm20}
 \title{Inventory data of a natural forest in Brazil}
-\format{A data frame with 12295 observations and 18 variables:
+\format{
+A data frame with 12295 observations and 18 variables:
 \describe{
   \item{cod}{area code}
   \item{transect}{plot number}
@@ -24,7 +25,8 @@
   \item{vol}{volume of trees, in cubic meters}
   \item{plot.area}{plot area, in square meters}
   \item{total.area}{total area, in hectares}
-}}
+}
+}
 \usage{
 data(exfm20)
 }

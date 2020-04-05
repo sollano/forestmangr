@@ -258,7 +258,7 @@ nls_table <- function(df, model, mod_start, .groups = NA, output = "table", est.
       dplyr::ungroup() %>% 
       dplyr::mutate(B = "dummy") %>% 
       dplyr::group_by(!!rlang::sym("B")) %>% 
-      tidyr::nest(dat= -any_of("B")) %T>% #%>% 
+      tidyr::nest(dat= -tidyselect::any_of("B")) %T>% #%>% 
       {options(warn=-1)} %>% 
       dplyr::mutate(Reg = purrr::map(dat, ~safe_nls( mod, ., mod_start_mean, na.action=na.exclude )[[1]]  )  #,
                     #  Coefs = purrr::map(Reg, tidy_)

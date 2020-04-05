@@ -4,7 +4,8 @@
 \name{exfm18}
 \alias{exfm18}
 \title{Experimental data on nitrogen effect in species fertilizing}
-\format{A data frame with 877 observations and 6 variables:
+\format{
+A data frame with 877 observations and 6 variables:
 \describe{
   \item{Plot}{plot number}
   \item{Species}{species scientific name}
@@ -12,7 +13,8 @@
   \item{Trunk}{trunk number}
   \item{CBH}{circumference at breast height, in meters}
   \item{DBH}{diameter at breast height, in meters}
-}}
+}
+}
 \usage{
 data(exfm18)
 }

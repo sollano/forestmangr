@@ -4,7 +4,8 @@
 \name{exfm6}
 \alias{exfm6}
 \title{Stratified random inventory definite data 2}
-\format{A data frame with 10 observations and 14 variables:
+\format{
+A data frame with 10 observations and 14 variables:
 \describe{
   \item{GENCODE}{genetic code of plots}
   \item{MAP}{map numbers}
@@ -20,7 +21,8 @@
   \item{G}{basal area, in square meters}
   \item{VWB}{volume with bark, in cubic meters}
   \item{VWOB}{volume without bark, in cubic meters}
-}}
+}
+}
 \usage{
 data(exfm6)
 }
