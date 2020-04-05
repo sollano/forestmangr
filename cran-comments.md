@@ -5,8 +5,8 @@ This is a small patch release fixing bugs discovered in the previous release, ad
 It also fixes the check notes on CRAN.
 
 ## Test environments
-* local Windows install, R 3.5.2
-* ubuntu 14.04.5 (on travis-ci), R 3.5.1
+* local Windows install, R 3.6.3
+* ubuntu 16.04.6 LTS (on travis-ci)
 * win-builder (devel and release)
 *R-hub  
 
