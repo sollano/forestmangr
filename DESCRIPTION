@@ -1,12 +1,12 @@
 Type: Package
 Package: forestmangr
-Title: Functions for Forest Mensuration and Management
+Title: Forest Mensuration and Management
 Version: 0.9.2
 Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com",role = c("aut", "cre", "cph")), 
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
               person(c("Eric", "Bastos","Gorgens"),email= "e.gorgensgmail.com", role =  "aut") )
 Author: Sollano Rabelo Braga [aut, cre, cph], Marcio Leles Romarco de Oliveira [aut], Eric Bastos Gorgens [aut]
-Description: Set of functions for processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and nonlinear grouped data fitting, and statistical tests.
+Description: Processing forest inventory data with methods such as simple random sampling, stratified random sampling and systematic sampling. There are also functions for yield and growth predictions and model fitting, linear and nonlinear grouped data fitting, and statistical tests. References: Kershaw Jr., Ducey, Beers and Husch (2016). <doi:10.1002/9781118902028>
 Maintainer: Sollano Rabelo Braga <sollanorb@gmail.com>
 URL: https://github.com/sollano/forestmangr#readme
 BugReports: https://github.com/sollano/forestmangr/issues

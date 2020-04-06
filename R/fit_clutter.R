@@ -21,7 +21,7 @@
 #'   \code{\link{est_clutter}} for estimating the Clutter growth and yield model variables, and
 #'   \code{\link{classify_site}} for classifying data according to site.
 #'   
-#' @keywords Clutter, 2SLS
+#' @keywords ClutterModel 2SLS
 #' @references 
 #' Clutter, J. L. (1963) Compatible Growth For Loblolly by the Southeastern, Forest Science, 9(3), pp. 354–371.
 #' Sullivan, A. D. and Clutter, J. L. (1972) A Simultaneous Growth and Yield for Loblolly Pine, Forest Science, 18(1), pp. 76–86.

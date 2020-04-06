@@ -75,4 +75,4 @@ other sampling functions:
 Sollano Rabelo Braga \email{sollanorb@gmail.com}
 }
 \keyword{2SLS}
-\keyword{Clutter,}
+\keyword{ClutterModel}
