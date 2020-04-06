@@ -15,11 +15,10 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 
 # forestmangr
 
-Set of functions for processing forest inventory data with methods such
-as simple random sampling, stratified random sampling and systematic
-sampling. There are also functions for yield and growth predictions and
-model fitting, linear and non linear grouped data fitting, and
-statistical tests.
+Processing forest inventory data with methods such as simple random
+sampling, stratified random sampling and systematic sampling. There are
+also functions for yield and growth predictions and model fitting,
+linear and non linear grouped data fitting, and statistical tests.
 
 If you need any help, I’m available for consulting. If you find
 forestmangr useful, please consider supporting my efforts in developing
@@ -297,16 +296,15 @@ To cite this package in publications, use:
 
 ABNT:
 
-BRAGA S. R.; OLIVEIRA, M. L. R.; GORGENS, E. B. forestmangr: Functions
-for Forest Mensuration and Management. R package version 0.9.2, 2020.
-Disponível em: <https://CRAN.R-project.org/package=forestmangr>
+BRAGA S. R.; OLIVEIRA, M. L. R.; GORGENS, E. B. forestmangr: Forest
+Mensuration and Management. R package version 0.9.2, 2020. Disponível
+em: <https://CRAN.R-project.org/package=forestmangr>
 
 APA:
 
 Sollano Rabelo Braga, Marcio Leles Romarco de Oliveira and Eric Bastos
-Gorgens (2020). forestmangr: Functions for Forest Mensuration and
-Management. R package version 0.9.2.
-<https://CRAN.R-project.org/package=forestmangr>
+Gorgens (2020). forestmangr: Forest Mensuration and Management. R
+package version 0.9.2. <https://CRAN.R-project.org/package=forestmangr>
 
 ## License
 
