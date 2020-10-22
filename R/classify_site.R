@@ -94,7 +94,7 @@ classify_site <- function(df, site, nc=3, plot, .groups=NA){
   # que sao organizados da menor para o maior valor de media
  suppressMessages(
    df <- df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T ) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T ) %>% 
     dplyr::summarise(site_mean = mean( !!site_sym ) ) %>% 
     dplyr::left_join(df) %>%
     round(4) %>% 

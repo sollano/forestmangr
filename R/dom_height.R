@@ -158,7 +158,7 @@ dom_height <- function(df, th, dbh, plot, obs, dom, .groups, merge_data=FALSE,dh
     
     suppressMessages(
     dhtable <- df %>% 
-      dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T) %>% 
+      dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T) %>% 
       dplyr::select(!!th_sym) %>% 
       dplyr::top_n(2) %>% 
       dplyr::summarise(DH = mean(!!th_sym) )
@@ -170,7 +170,7 @@ dom_height <- function(df, th, dbh, plot, obs, dom, .groups, merge_data=FALSE,dh
     obs_sym <- rlang::sym( obs )
     
     dhtable <- df %>%
-      dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T) %>% 
+      dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T) %>% 
       dplyr::filter( 
         !is.na(!!th_sym),
         !is.na(!!dbh_sym),

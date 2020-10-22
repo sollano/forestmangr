@@ -2,7 +2,7 @@
 
 # forestmangr 0.9.3
 
-* changes in sprs e ss_dffs due to dplyr updates (add to .add argument)
+* changes in sprs,ss_dffs,classify_site,dom_height,fit_clutter,plot_summarise,smalianwb,smalianwob,tree_summarise due to dplyr updates (add to .add argument)
 
 
 # forestmangr 0.9.2

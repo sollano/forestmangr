@@ -253,7 +253,7 @@ plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vw
   # novo nome = nome antigo
   
   df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T) %>% 
     dplyr::mutate(CSA = pi * (!!dbh_sym)^2 / 40000 ) %>% 
     dplyr::summarise(
       !!age_name        := round( mean(as.numeric( (!!age_sym) ), na.rm=T) ),

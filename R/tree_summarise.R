@@ -125,7 +125,7 @@ tree_summarise <- function(df,  dbh, tree, .groups=NA, vwb=NA, vwob=NA){
   # ####
   
   x <- df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!tree_syms, .add=T) %>% 
     dplyr::summarise(
       !!dbh_name := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ),
       !!vwb_name := sum( (!!vwb_sym), na.rm=T),
@@ -137,7 +137,7 @@ tree_summarise <- function(df,  dbh, tree, .groups=NA, vwb=NA, vwob=NA){
   
   # Remove data from other boles, keep only the first one
   y <- df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!tree_syms, .add=T) %>% 
     dplyr::mutate(nn=seq(1,dplyr::n())) %>% 
     dplyr::filter(nn==1) %>% 
     dplyr::select(-nn, -(!!dbh_sym), -(!!vwb_sym), -(!!vwob_sym) ) %>% 

@@ -161,7 +161,7 @@ smalianwob <- function(df, di, hi, bt, tree, .groups = NA, di_mm_to_cm=FALSE, hi
   # ####
   
   df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!tree_syms, .add=T) %>% 
     dplyr::mutate(
         di_wob = (!!di_sym)-2*(!!bt_sym),
         CSA_WOB = (di_wob^2* pi) / 40000 , 

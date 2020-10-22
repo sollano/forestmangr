@@ -175,7 +175,7 @@ fit_clutter <- function(df, age, dh, basal_area, volume, site, plot, .groups=NA,
     suppressMessages(
       
       struct_form_data <- df %>% 
-        dplyr::group_by(!!!.groups_syms, !!!plot_syms, add=T ) %>% 
+        dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T ) %>% 
         dplyr::transmute(
           I1 = !!age_sym, I2  = dplyr::lead(!!age_sym), 
           dh = !!dh_sym, dh2 = dplyr::lead(!!dh_sym), 
@@ -214,7 +214,7 @@ fit_clutter <- function(df, age, dh, basal_area, volume, site, plot, .groups=NA,
     restrict.rhs <- c(0, 1)
     
     model_fit <-  struct_form_data %>%   
-      dplyr::group_by( !!!.groups_syms, add=T ) %>% 
+      dplyr::group_by( !!!.groups_syms, .add=T ) %>% 
       dplyr::do(Reg = systemfit::systemfit(system, "2SLS", inst = inst, data = ., 
                                            restrict.matrix = restrict, 
                                            restrict.rhs = restrict.rhs)) %>% 
@@ -245,7 +245,7 @@ fit_clutter <- function(df, age, dh, basal_area, volume, site, plot, .groups=NA,
     restrict.rhs <- c(0, 1)
     
     model_fit <-  struct_form_data %>%   
-      dplyr::group_by( !!!.groups_syms, add=T ) %>% 
+      dplyr::group_by( !!!.groups_syms, .add=T ) %>% 
       dplyr::do(Reg = systemfit::systemfit(system, "2SLS", inst = inst, data = ., 
                                            restrict.matrix = restrict, 
                                            restrict.rhs = restrict.rhs)) %>% 

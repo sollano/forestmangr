@@ -141,7 +141,7 @@ smalianwb <- function(df, di, hi, tree, .groups = NA, di_mm_to_cm=FALSE, hi_cm_t
   # ####
   
    df %>% 
-     dplyr::group_by( !!!.groups_syms, !!!tree_syms, add=T ) %>% 
+     dplyr::group_by( !!!.groups_syms, !!!tree_syms, .add=T ) %>% 
      dplyr::mutate( 
         CSA_WB = ( ( (!!di_sym) ^2* pi) / 40000) , 
         VWB   =  ((CSA_WB + dplyr::lead(CSA_WB) )/2 ) * (dplyr::lead(!!hi_sym) - (!!hi_sym) ) ) %>% 
