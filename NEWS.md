@@ -1,5 +1,10 @@
 # forestmangr development
 
+# forestmangr 0.9.3
+
+* changes in sprs e ss_dffs due to dplyr updates (add to .add argument)
+
+
 # forestmangr 0.9.2
 
 * updated nls_table and lm_table to work with tibble 3.0.0;
