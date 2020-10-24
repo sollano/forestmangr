@@ -2,6 +2,10 @@
 
 # forestmangr 0.9.3
 
+* add shiny and miniUI dependency
+
+* add lm_resid and lm_resid_group experimental functions. These output shiny gadgets.
+
 * changes in sprs,ss_dffs,classify_site,dom_height,fit_clutter,plot_summarise,smalianwb,smalianwob,tree_summarise due to dplyr updates (add to .add argument)
 
 
