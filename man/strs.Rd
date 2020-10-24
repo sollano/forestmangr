@@ -46,7 +46,7 @@ If this argument is \code{NA}, the defined groups in the data frame will be used
 \item{tidy}{Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.}
 }
 \value{
-A list containing two data frames, one with informations for each strata, and one with the stratified sampling results.
+A list containing two data frames, one with information for each strata, and one with the stratified sampling results.
 }
 \description{
 Function for processing forest inventory data using stratified random sampling.

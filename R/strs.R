@@ -20,7 +20,7 @@
 #' @param dec_places Numeric value for the number of decimal places to be used in the output tables. Default: \code{4}.
 #' @param pop Character value for the type of population considered in the calculations. This can be either infinite (\code{"inf"}) or finite (\code{"fin"}). Default: \code{"inf"}.
 #' @param tidy Boolean value that defines if the output tables should be tidied up or not. Default: \code{TRUE}.
-#' @return A list containing two data frames, one with informations for each strata, and one with the stratified sampling results.
+#' @return A list containing two data frames, one with information for each strata, and one with the stratified sampling results.
 #' 
 #' @keywords Stratified Random Sampling
 #' @references 
