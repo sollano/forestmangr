@@ -27,7 +27,7 @@
 
 * updated tree_summarise to sum volume with and without bark using 2 new arguments;
 
-* fixed vol_summarise handlying of optional variables;
+* fixed vol_summarise handling of optional variables;
 
 * new function: class_center;
 
@@ -41,7 +41,7 @@
 
 * updated description;
 
-* converted all exemple data to tibbles;
+* converted all example data to tibbles;
 
 * removed head command from examples, since it's not necessary anymore;
 
@@ -49,9 +49,9 @@
 
 * added a gray_scale argument to est_clutter function;
 
-* fixed a bug where if a dataframe cointaned NA, resid_plot would fail;
+* fixed a bug where if a dataframe contained NA, resid_plot would fail;
 
-* vol_summarise now outputs ungrouped data;
+* vol_summarise now outputs ungroup data;
 
 * fixed vol_summarise name for average form factor value;
 
@@ -61,9 +61,9 @@
 
 * changed exfm19 to a data by tree;
 
-* added 6 vignettes in portuguese;
+* added 6 vignettes in Portuguese;
 
-* added 6 vignettes in english;
+* added 6 vignettes in English.
 
 * tree_summarise is now improved, and keeps all variables from data;
 
