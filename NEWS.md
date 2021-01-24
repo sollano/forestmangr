@@ -2,11 +2,13 @@
 
 # forestmangr 0.9.3
 
-* add shiny and miniUI dependency
+* replace order function call with dplyr's arrange, due to order's behaviour in certain situations;
 
-* add lm_resid and lm_resid_group experimental functions. These output shiny gadgets.
+* add shiny and miniUI dependency;
 
-* changes in sprs,ss_dffs,classify_site,dom_height,fit_clutter,plot_summarise,smalianwb,smalianwob,tree_summarise due to dplyr updates (add to .add argument)
+* add lm_resid and lm_resid_group experimental functions. These output shiny gadgets;
+
+* changes in sprs,ss_dffs,classify_site,dom_height,fit_clutter,plot_summarise,smalianwb,smalianwob,tree_summarise due to dplyr updates (due to .add argument);
 
 
 # forestmangr 0.9.2

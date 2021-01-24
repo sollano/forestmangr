@@ -338,7 +338,9 @@ guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher",
   tab_curva["DH_CURVE"] <- tab_curva["DH_EST"] * tab_curva["fator"]
   
   # reorganiza-se os dados em funcao da age
-  tab_curva <- tab_curva[order(tab_curva[AGE]),]
+  
+  #tab_curva <- tab_curva[order(tab_curva[AGE]),]
+  tab_curva <- dplyr::arrange(tab_curva,.data[[AGE]])
   
   # plota-se o grafico com ggplot
   

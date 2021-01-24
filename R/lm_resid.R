@@ -1,5 +1,43 @@
+#' @title 
+#' Fit linear regressions by group, with the option of removing outliers using a interactive plot of residuals.
+#' @description 
+#' With this function it's possible to fit linear regressions by a grouping variable, and evaluate each equation via
+#' a interactive plot of residuals, and get a data frame.
+#' with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
+#' @details 
+#' this function uses lm_table as a basis, but calls a plot of residuals for each fitted model, for the user to evaluate. If
+#' one decides to remove any of the points, one can click and drag, and then click on the 'remove points' button. After that,
+#' one must simply click 'done' and the coefficients will be printed out.
+#' 
+#' It's possible to use the \code{output} argument to get a merged table if \code{output="merge"}, that binds
+#' the original data frame and the fitted coefficients. 
+#' If \code{output="merge_est"} we get a merged table as well, but with y estimated using the coefficients. If the fit is made using groups, this is taken into account, i.e. the estimation is made by group.
+#' 
+#' If \code{output="nest"}, a data frame with nested columns is provided. This can be used if the user desires to get a customized output.
+#'
+#' @param df A data frame.
+#' @param model A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".
+#' @param output_mode  Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.
+#' @param est.name Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}. 
+#' @param group_print This argument is only used internally by another function. Please ignore.
+#' @return  A data frame. Different data frame options are available using the output argument.
+#' 
 #' @export
-lm_resid <- function(df,model,group_print=NA,output_mode='table'){
+#' @examples 
+#' if (interactive() ){
+#'   library(forestmangr)
+#'   library(dplyr)
+#' 
+#'   data("exfm19")
+#' 
+#'   # Fit SH model:
+#'   lm_resid_group(exfm19, log(VWB) ~  log(DBH) + log(TH))
+#' 
+#' }
+#' 
+#' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+#' @export
+lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=NA){
   # copiar nome da variavel Y, com base no modelo
   Y <- all.vars( stats::formula(model)[[2]]) 
   
@@ -14,8 +52,8 @@ lm_resid <- function(df,model,group_print=NA,output_mode='table'){
     ),
     # adiciona mini botoes
     miniUI::miniButtonBlock(
-      shiny::actionButton('rerun','retirar pontos'),
-      shiny::actionButton("reset", "restaurar")
+      shiny::actionButton('rerun','Remove selected points'),
+      shiny::actionButton("reset", "Restore removed points")
     ),
     
   ) # ui end
@@ -96,7 +134,9 @@ lm_resid <- function(df,model,group_print=NA,output_mode='table'){
       
       lm_table(dfok(), model, 
                             #output = "merge_est"
-                            output=output_mode
+                            output=output_mode,
+                            est.name = est.name
+               
       ) 
       
     })
