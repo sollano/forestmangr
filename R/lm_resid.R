@@ -38,6 +38,7 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' @export
 lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=NA){
+  reg<-data<-NULL
   # copiar nome da variavel Y, com base no modelo
   Y <- all.vars( stats::formula(model)[[2]]) 
   

@@ -38,7 +38,7 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 lm_resid_group <- function(df,model,.groups,output_mode='table',est.name = 'est'){
-  
+  reg<-data<-NULL
   if(missing(.groups))
     stop('Please define grouping variable(s)',call. = FALSE)
   
