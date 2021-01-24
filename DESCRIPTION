@@ -14,7 +14,7 @@ Depends: R(>= 3.3)
 Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, purrr, forcats, plyr, tibble(>= 3.0.0), systemfit, ggpmisc, rlang, utils, car, stats, methods, magrittr, minpack.lm, FinCal, formattable, scales, ggdendro, gridExtra,tidyselect,shiny,miniUI
 Suggests: covr, knitr, rmarkdown
 VignetteBuilder: knitr
-Date: 2020-04-05
+Date: 2021-01-24
 Encoding: UTF-8
 License: MIT + file LICENSE
 RoxygenNote: 7.1.1
