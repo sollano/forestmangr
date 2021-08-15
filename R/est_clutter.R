@@ -49,7 +49,7 @@
 #' est_clutter(ex_class,"age","B","S","category_", clutter,"model")  
 #'   
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-#' @importFrom ggplot2 ggplot after_stat
+#' @import ggplot2
 #' 
 est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "average", annual_increment=FALSE, gray_scale=TRUE, output="table"){
   # ####

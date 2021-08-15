@@ -51,7 +51,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-#' @importFrom ggplot2 ggplot after_stat
+#' @import ggplot2
 #' 
 resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NA, nrow = NA, ncol = NA, 
                           lim_y = NA, xlab = "Observed values", clab=NA, font = "serif", legend_pos = "bottom", gray_scale=TRUE, res_table = FALSE){
