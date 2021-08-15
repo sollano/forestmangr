@@ -11,6 +11,7 @@
 #' @param signif Numeric value for the significance level used in the test. Default: \code{0.05}.
 #' @param font font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for arial unicode MS. Default: \code{"serif"}.
 #' @param output Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,
+#' @param eq if \code{TRUE}, A model is adjusted and the equation is shown on the plot. Default \code{TRUE}
 #' if \code{"plot"} a ggplot plot/object representing the test is created,
 #' if \code{"table_plot"}, both anova table and plot are provided, and if \code{"full"},
 #' a list is provided, with details on the dummies variables created, the reduced and complete models,
@@ -35,26 +36,26 @@
 #' # We can get more details on this using a different output, that will also
 #' # give us a plot:
 #' 
-#' ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot")
+#' ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot",eq=FALSE)
 #' 
 #' # This gives us only the plot:
-#' ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot")
+#' ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot",eq=FALSE)
 #' 
 #' # And this gives us additional information on the test:
-#' ident_model(exfm13, "species", dbh ~  N + N2, output = "full")
+#' ident_model(exfm13, "species", dbh ~  N + N2, output = "full",eq=FALSE)
 #' 
 #' # Looking at the plot, it seems that 2 species are behaving very similar, while
 #' # the Pequi species is different from the other 2. We can confirm this by running
 #' # the test in a paired fashion, using the filter argument:
 #'
 #' ident_model(exfm13, "species", dbh ~  N + N2,
-#'  filter = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot")
+#'  filter = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot",eq=FALSE)
 #'  
 #' ident_model(exfm13, "species", dbh ~  N + N2, 
-#' filter = c("PEQUI", "VINHATICO"), output = "table_plot")
+#' filter = c("PEQUI", "VINHATICO"), output = "table_plot",eq=FALSE)
 #' 
 #' ident_model(exfm13, "species", dbh ~  N + N2, 
-#' filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
+#' filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot",eq=FALSE)
 #'
 #' # As we imagined, a single model can be used to describe the behavior of
 #' # the "Sucupira-preta" and "Vinhatico" species,
@@ -62,13 +63,12 @@
 #'
 #' # It's possible to apply a color scale to the plots, and also change it's font to arial:
 #' 
-#' ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=FALSE,font="sans")
+#' ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=FALSE,font="sans",eq=FALSE)
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' @author Marcio leles Romarco de Oliveira \email{marcioromarco@@gmail.com}
-#' @import ggplot2 ggpmisc ggpp
 
-ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRUE, signif = 0.05, font="serif", output = "table" ){
+ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRUE, signif = 0.05, font="serif", output = "table",eq=TRUE){
   # ####
   ..eq.label..<-..rr.label..<-NULL
   # ####
@@ -406,15 +406,15 @@ ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRU
                            formula = fun_graph ,
                            se = F,
                            size = 1.5,
-                           ggplot2::aes_string(color = factor ) ) +
-      
+                           ggplot2::aes_string(color = factor ) ) +{
+      if(eq==TRUE)
       ggpmisc::stat_poly_eq(formula = fun_graph,size = 6,
                             eq.x.rhs = paste("~italic(", VARSX[1] ,")", sep = ""),
                             eq.with.lhs = paste( "italic(hat(", Y, "))~`=`~", sep="" ), 
                             ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
-                            parse = TRUE) +
+                            parse = TRUE)} +
       
-      ggplot2::stat_summary(fun.y = mean, geom = "point", ggplot2::aes(color=NULL),size = 5 ) +
+      ggplot2::stat_summary(fun = mean, geom = "point", ggplot2::aes(color=NULL),size = 5 ) +
       
       ggthemes::theme_igray(base_family = font) +
       
@@ -438,14 +438,14 @@ ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRU
                            #     method.args = lista_args,
                            formula = fun_graph, 
                            se = F, 
-                           size = 1.5 ) +
-      
-      
+                           size = 1.5 ) +{
+      if(eq==TRUE)
       ggpmisc::stat_poly_eq(formula = fun_graph, size = 6,
                             eq.x.rhs = paste("~italic(", VARSX[1] ,")", sep = ""),
                             eq.with.lhs = paste( "italic(hat(", Y, "))~`=`~", sep="" ), 
                             ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")), 
-                            parse = TRUE) +
+                            parse = TRUE)
+                             } +
       
       
       
@@ -475,7 +475,7 @@ ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRU
   
   # Uniao dos objetos de interesse em uma lista
   lista_final <- list(
-    dummies_table  = dplyr::as.tbl(DUMMIES_FINAL),
+    dummies_table  = dplyr::as_tibble(DUMMIES_FINAL),
     Reduced_Model  = SUMMARY_MOD_RED, 
     Complete_Model = SUMMARY_MOD_COMP,
     Plot           = graph,

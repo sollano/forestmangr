@@ -12,7 +12,8 @@ ident_model(
   gray_scale = TRUE,
   signif = 0.05,
   font = "serif",
-  output = "table"
+  output = "table",
+  eq = TRUE
 )
 }
 \arguments{
@@ -30,7 +31,9 @@ ident_model(
 
 \item{font}{font family used in the plots. Can be either \code{"serif"} for Times New Roman or \code{"sans"} for arial unicode MS. Default: \code{"serif"}.}
 
-\item{output}{Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,
+\item{output}{Defines the type of output. If \code{"table"} an anova table with the identity of model test is provided,}
+
+\item{eq}{if \code{TRUE}, A model is adjusted and the equation is shown on the plot. Default \code{TRUE}
 if \code{"plot"} a ggplot plot/object representing the test is created,
 if \code{"table_plot"}, both anova table and plot are provided, and if \code{"full"},
 a list is provided, with details on the dummies variables created, the reduced and complete models,
@@ -56,26 +59,26 @@ ident_model(exfm13, "species", dbh ~ N + N2)
 # We can get more details on this using a different output, that will also
 # give us a plot:
 
-ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot")
+ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot",eq=FALSE)
 
 # This gives us only the plot:
-ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot")
+ident_model(exfm13, "species", dbh ~  N + N2, output = "table_plot",eq=FALSE)
 
 # And this gives us additional information on the test:
-ident_model(exfm13, "species", dbh ~  N + N2, output = "full")
+ident_model(exfm13, "species", dbh ~  N + N2, output = "full",eq=FALSE)
 
 # Looking at the plot, it seems that 2 species are behaving very similar, while
 # the Pequi species is different from the other 2. We can confirm this by running
 # the test in a paired fashion, using the filter argument:
 
 ident_model(exfm13, "species", dbh ~  N + N2,
- filter = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot")
+ filter = c("PEQUI", "SUCUPIRA-PRETA"), output = "table_plot",eq=FALSE)
  
 ident_model(exfm13, "species", dbh ~  N + N2, 
-filter = c("PEQUI", "VINHATICO"), output = "table_plot")
+filter = c("PEQUI", "VINHATICO"), output = "table_plot",eq=FALSE)
 
 ident_model(exfm13, "species", dbh ~  N + N2, 
-filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
+filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot",eq=FALSE)
 
 # As we imagined, a single model can be used to describe the behavior of
 # the "Sucupira-preta" and "Vinhatico" species,
@@ -83,7 +86,7 @@ filter = c("SUCUPIRA-PRETA", "VINHATICO"), output = "table_plot")
 
 # It's possible to apply a color scale to the plots, and also change it's font to arial:
 
-ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=FALSE,font="sans")
+ident_model(exfm13, "species", dbh ~  N + N2,output="plot",gray_scale=FALSE,font="sans",eq=FALSE)
 
 }
 \references{

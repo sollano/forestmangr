@@ -48,7 +48,7 @@ head(exfm7)
 
 # Get the data's average tree curve inserting the section diameter and height, total height
 # and dbh variables: 
-average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH",eq=FALSE)
 
 # It's possible to get the average tree curve of each strata with the facet argument,
 # and divide the data by color with the color argument:

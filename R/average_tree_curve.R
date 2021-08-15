@@ -26,15 +26,14 @@
 #' 
 #' # Get the data's average tree curve inserting the section diameter and height, total height
 #' # and dbh variables: 
-#' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+#' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH",eq=FALSE)
 #' 
 #' # It's possible to get the average tree curve of each strata with the facet argument,
 #' # and divide the data by color with the color argument:
 #' average_tree_curve(df=exfm7,d="di_wb",dbh="DBH",h="hi",th="TH",facet="STRATA",color="GENCODE")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-#' 
-#' @import ggplot2 ggpmisc ggpp
+#'
 average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,eq=TRUE){
   # ####
   ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th <- d_sob_dbh_negative <- d_sob_dbh_positive <-NULL
@@ -166,14 +165,14 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,
     ) + {
       if(eq==TRUE)
         
-      ggpmisc::stat_poly_eq(data=df_plot[df_plot$mirror=="d_sob_dbh_positive",],
-                         formula = x ~ stats::poly(y, 2, raw=T),
-                         size = 3,
-                         eq.x.rhs    = "italic(frac(h,TH))",
-                         eq.with.lhs = "italic(hat(frac(d,DBH)))~`=`~", 
-                         ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")),
-                         label.x.npc="right",
-                         parse = TRUE  )
+        ggpmisc::stat_poly_eq(data=df_plot[df_plot$mirror=="d_sob_dbh_positive",],
+                              formula = x ~ stats::poly(y, 2, raw=T),
+                              size = 3,
+                              eq.x.rhs    = "italic(frac(h,TH))",
+                              eq.with.lhs = "italic(hat(frac(d,DBH)))~`=`~", 
+                              ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")),
+                              label.x.npc="right",
+                              parse = TRUE  )
       
     } + {
       if(mirror==TRUE) ggplot2::geom_vline(xintercept=0)
