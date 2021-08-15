@@ -2,7 +2,7 @@
 % Please edit documentation in R/lm_resid.R
 \name{lm_resid}
 \alias{lm_resid}
-\title{Fit linear regressions by group, with the option of removing outliers using a interactive plot of residuals.}
+\title{Fit linear regressions, with the option of removing outliers using a interactive plot of residuals.}
 \usage{
 lm_resid(df, model, output_mode = "table", est.name = "est", group_print = NA)
 }
@@ -44,7 +44,7 @@ if (interactive() ){
   data("exfm19")
 
   # Fit SH model:
-  lm_resid_group(exfm19, log(VWB) ~  log(DBH) + log(TH))
+  lm_resid(exfm19, log(VWB) ~  log(DBH) + log(TH))
 
 }
 

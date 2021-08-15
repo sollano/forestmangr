@@ -48,7 +48,7 @@ Fit the Clutter model for growth and yield using the two stage least squares met
 
 library(forestmangr)
 data("exfm17")
-exfm17
+head(exfm17)
 
 # To fit the Clutter model we just need to define the data, and age, dominant height,
 # basal area, volume, site and plot variables:

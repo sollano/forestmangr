@@ -50,7 +50,7 @@ the basal area from Clutter's growth and yield model.
 
 library(forestmangr)
 data("exfm17")
-exfm17
+head(exfm17)
 
 clutter <- fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
 clutter

@@ -27,7 +27,7 @@ Function for calculating the bias of an estimator, given the observed values, an
 \examples{
 library(forestmangr)
 data("exfm11")
-exfm11
+head(exfm11)
 
 # Bias of an estimator, given the data frame and quoted variable names:
 bias_per(exfm11, "TH", "TH_EST3")

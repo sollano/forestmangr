@@ -57,7 +57,7 @@ data("exfm5")
 # We're trying to run a inventory for an area This data was collected systematically,
 # but we'll try to run the data using simple random sampling, 
 # to show the difference between the two methods:
-exfm5
+head(exfm5)
 
 sprs(exfm5, "VWB", "PLOT_AREA", "TOTAL_AREA")
 
