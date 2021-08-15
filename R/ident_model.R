@@ -24,7 +24,7 @@
 #' @examples
 #' library(forestmangr)
 #' data("exfm13")
-#' exfm13
+#' head(exfm13)
 #' 
 #' # The objective is to know if the diameter's behavior is similar among 3 species.
 #' # For this we'll use a quadratic model. We'll use nitrogen (N) as our X variable.
@@ -66,7 +66,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' @author Marcio leles Romarco de Oliveira \email{marcioromarco@@gmail.com}
-
+#' @importFrom ggplot2 ggplot after_stat
 
 ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRUE, signif = 0.05, font="serif", output = "table" ){
   # ####

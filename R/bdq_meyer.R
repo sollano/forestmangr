@@ -22,7 +22,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm20")
-#' exfm20
+#' head(exfm20)
 #' 
 #' # To get the table with the regulated forest:
 #' bdq_meyer(exfm20, "transect", "dbh", 1000)

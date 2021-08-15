@@ -19,7 +19,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm20")
-#' exfm20
+#' head(exfm20)
 #' 
 #' # To get the similarity matrix of an area, we simply need to provide
 #' # the species variable name, and a subdivision variable name, like
@@ -42,6 +42,7 @@
 #' similarity_matrix(ex_pair, "scientific.name", "transect", index = "all")
 #'
 #' @author Eric Bastos Gorgens \email{e.gorgens@@gmail.com}
+#' @importFrom ggplot2 ggplot after_stat
 #'
 similarity_matrix <- function(df, species, comparison, NI_label = "", index = "Sorensen", dendrogram = FALSE, n_groups=3){
   data <- label <- cluster <- NULL

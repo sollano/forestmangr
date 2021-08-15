@@ -20,7 +20,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm9")
-#' exfm9
+#' head(exfm9)
 #'
 #' # Let's say we need to get the dominant height (DH) values for a forest inventory data.
 #' # If we don't have a variable that tells which trees are dominant, it's ok. We can

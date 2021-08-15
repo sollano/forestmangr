@@ -18,7 +18,7 @@
 #' @examples
 #' library(forestmangr)
 #' data("exfm15")
-#' exfm15
+#' head(exfm15)
 #' 
 #' # Get the inverse of a vector
 #' inv(iris$Petal.Length)

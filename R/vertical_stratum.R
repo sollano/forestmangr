@@ -15,7 +15,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm10")
-#' exfm10
+#' head(exfm10)
 #' 
 #' # To classify the data, supply the data frame and the height variable name:
 #' vertical_stratum(exfm10, "TH" )

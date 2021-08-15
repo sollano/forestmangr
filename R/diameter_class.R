@@ -25,7 +25,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm20")
-#' exfm20
+#' head(exfm20)
 #' 
 #' # n
 #' # Number of individuals per ha per diameter class
