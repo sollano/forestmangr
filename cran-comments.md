@@ -1,11 +1,11 @@
 ## Release summary
 
-This is a small patch released to remove a call to the order function, as requested, and to add two experimental functions.
+fixes ggpmisc call and adds head calls to dataframe examples.
 
 It also fixes the check notes on CRAN.
 
 ## Test environments
-* local Windows install, R 4.0.3
+* local Windows install, R 4.1.0
 * ubuntu 16.04.6 LTS (on travis-ci)
 * win-builder (devel and release)
 *R-hub  
