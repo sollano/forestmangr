@@ -49,8 +49,7 @@
 #' est_clutter(ex_class,"age","B","S","category_", clutter,"model")  
 #'   
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-#' @import ggplot2
-#' 
+
 est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "average", annual_increment=FALSE, gray_scale=TRUE, output="table"){
   # ####
   LN_B2_EST<-Age<-V2_EST<-CMI<-MMI<-category_<-CAI<-MAI<-TAC<-TAC_Y<-Index<-Value<-NULL

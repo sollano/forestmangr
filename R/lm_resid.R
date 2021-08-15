@@ -36,7 +36,6 @@
 #' }
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-#' @import ggplot2
 #' @export
 lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=NA){
   reg<-data<-NULL

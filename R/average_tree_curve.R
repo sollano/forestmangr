@@ -166,7 +166,7 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,
     ) + {
       if(eq==TRUE)
         
-        stat_poly_eq(data=df_plot[df_plot$mirror=="d_sob_dbh_positive",],
+      ggpmisc::stat_poly_eq(data=df_plot[df_plot$mirror=="d_sob_dbh_positive",],
                          formula = x ~ stats::poly(y, 2, raw=T),
                          size = 3,
                          eq.x.rhs    = "italic(frac(h,TH))",

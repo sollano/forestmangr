@@ -36,7 +36,6 @@
 #' }
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-#' @import ggplot2
 #' 
 lm_resid_group <- function(df,model,.groups,output_mode='table',est.name = 'est'){
   reg<-data<-NULL

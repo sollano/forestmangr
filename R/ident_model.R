@@ -66,7 +66,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' @author Marcio leles Romarco de Oliveira \email{marcioromarco@@gmail.com}
-#' @import ggplot2
+#' @import ggpp
 
 ident_model <- function(df, factor, reduced_model, filter = NA, gray_scale = TRUE, signif = 0.05, font="serif", output = "table" ){
   # ####
