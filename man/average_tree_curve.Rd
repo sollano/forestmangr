@@ -44,7 +44,7 @@ Generate a ggplot curve of a forest's average tree using the Kozak taper model (
 \examples{
 library(forestmangr)
 data("exfm7")
-exfm7
+head(exfm7)
 
 # Get the data's average tree curve inserting the section diameter and height, total height
 # and dbh variables: 

@@ -25,7 +25,7 @@
 #' 
 #' library(forestmangr)
 #' data("exfm17")
-#' exfm17
+#' head(exfm17)
 #' 
 #' clutter <- fit_clutter(exfm17, "age", "DH", "B", "V", "S", "plot")
 #' clutter
@@ -49,7 +49,8 @@
 #' est_clutter(ex_class,"age","B","S","category_", clutter,"model")  
 #'   
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-#'
+#' @importFrom ggplot2 ggplot after_stat
+#' 
 est_clutter <- function(df, age, basal_area, site, category, coeffs, method = "average", annual_increment=FALSE, gray_scale=TRUE, output="table"){
   # ####
   LN_B2_EST<-Age<-V2_EST<-CMI<-MMI<-category_<-CAI<-MAI<-TAC<-TAC_Y<-Index<-Value<-NULL

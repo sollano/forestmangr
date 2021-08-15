@@ -31,7 +31,7 @@ This function has integration with dplyr, so it can be used inside a pipe, along
 \examples{
 library(forestmangr)
 data("exfm8")
-exfm8
+head(exfm8)
 
 # Calculate the volume with bark using the Huber method:
 huberwb(exfm8,"di_wb", "sec_length", "TREE")

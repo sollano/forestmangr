@@ -64,7 +64,7 @@ data("exfm6")
 
 # The objective is to sample an area, with an error of 5\%.
 # First we run a pilot inventory, considering a 5\% error and a finite population:
-exfm1
+head(exfm1)
 
 strs(exfm1, "VWB", "PLOT_AREA", "STRATA_AREA", strata = "STRATA", error = 5, pop = "fin")
 

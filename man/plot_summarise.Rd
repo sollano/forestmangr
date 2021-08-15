@@ -54,7 +54,7 @@ mean DBH, q, height, basal area, volume, etc.
 \examples{
 library(forestmangr)
 data("exfm21")
-exfm21
+head(exfm21)
 
 # Obligatory arguments. Basic informations about the plot.
 plot_summarise(exfm21, "PLOT", 810)

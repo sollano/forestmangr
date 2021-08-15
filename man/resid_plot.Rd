@@ -62,7 +62,7 @@ Function for creating plots and tables for residual values from observed and est
 \examples{
 library(forestmangr)
 data("exfm11")
-exfm11
+head(exfm11)
 
 # Specifying the observed and estimated variables, we get a scatter plot
 # for the percentage residuals:

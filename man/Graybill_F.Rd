@@ -38,7 +38,7 @@ according to the methodology described by Graybill (1976).
 \examples{
 library(forestmangr)
 data("exfm11")
-exfm11
+head(exfm11)
 
 # The data frame exfm11 contains a height variable called "TH". This will be our
 # standard value. We'll compare it to height estimated using different hypsometric equations.

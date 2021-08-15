@@ -27,7 +27,7 @@ Use the site variable to classify a forest management data.
 
 library(forestmangr)
 data("exfm17")
-exfm17
+head(exfm17)
 
 # Classify data into 3 classes:
 ex_class <- classify_site(exfm17, "S", 3, "plot")

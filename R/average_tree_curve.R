@@ -22,7 +22,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm7")
-#' exfm7
+#' head(exfm7)
 #' 
 #' # Get the data's average tree curve inserting the section diameter and height, total height
 #' # and dbh variables: 
@@ -34,6 +34,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
+#' @importFrom ggplot2 ggplot after_stat
 average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,eq=TRUE){
   # ####
   ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th <- d_sob_dbh_negative <- d_sob_dbh_positive <-NULL

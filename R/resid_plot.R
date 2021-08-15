@@ -25,7 +25,7 @@
 #' @examples 
 #' library(forestmangr)
 #' data("exfm11")
-#' exfm11
+#' head(exfm11)
 #'
 #' # Specifying the observed and estimated variables, we get a scatter plot
 #' # for the percentage residuals:
@@ -50,6 +50,8 @@
 #' head( resid_plot(exfm11, "TH", "TH_EST1", "TH_EST2", res_table = TRUE) )
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+#' 
+#' @importFrom ggplot2 ggplot after_stat
 #' 
 resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color = NA, nrow = NA, ncol = NA, 
                           lim_y = NA, xlab = "Observed values", clab=NA, font = "serif", legend_pos = "bottom", gray_scale=TRUE, res_table = FALSE){

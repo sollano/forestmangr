@@ -27,7 +27,7 @@ Shannon, Simpson, Equitability, Pielou and Jentsch.
 \examples{
 library(forestmangr)
 data("exfm20")
-exfm20
+head(exfm20)
 
 # By default, the function returns all indexes:
 species_diversity(exfm20, "scientific.name")

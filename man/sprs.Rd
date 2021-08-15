@@ -60,7 +60,7 @@ data("exfm4")
 
 # The objective is to sample an area, with an error of 20\%.
 # First we run a pilot inventory, considering a 20\% error and a finite population:
-exfm3
+head(exfm3)
 
 sprs(exfm3, "VWB", "PLOT_AREA", "TOTAL_AREA", error = 20, pop = "fin")
 

@@ -22,7 +22,7 @@
 #' 
 #' @examples 
 #' data("exfm14")
-#' exfm14
+#' head(exfm14)
 #' 
 #' # To get a guide curve plot for this data, we simply need to input
 #' # dominant height and age variables, age index, and number of classes to be used:
@@ -44,7 +44,8 @@
 #' guide_curve(exfm14, "dh", "age", 72, 5, output = "full")
 #' }
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
-#'
+#' @importFrom ggplot2 ggplot after_stat
+#' 
 guide_curve <- function(df, dh, age, age_index, n_class=4, model = "Schumacher", start_chap = c(b0=23, b1=0.03, b2 = 1.3), start_bailey = c( b0=3, b1=-130, b2 = 1.5), round_classes = FALSE, font = "serif", gray_scale = TRUE, output = "plot"){
   # ####
   C<-classe<-nivel<-DH_EST<-DH_CURVE<-.data<-NULL

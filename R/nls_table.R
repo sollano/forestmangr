@@ -27,7 +27,7 @@
 #' library(forestmangr)
 #' library(dplyr)
 #' data("exfm14")
-#' exfm14
+#' head(exfm14)
 #'
 #' # Fit Chapman & Richards non-linear model for dominant Height:
 #' nls_table(exfm14, dh ~ b0 * (1 - exp( -b1 * age )  )^b2, 

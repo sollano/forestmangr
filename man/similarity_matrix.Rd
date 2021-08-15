@@ -38,7 +38,7 @@ Calculates the Jaccard similarity index and Sorensen similarity index.
 \examples{
 library(forestmangr)
 data("exfm20")
-exfm20
+head(exfm20)
 
 # To get the similarity matrix of an area, we simply need to provide
 # the species variable name, and a subdivision variable name, like

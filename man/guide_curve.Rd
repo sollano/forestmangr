@@ -53,7 +53,7 @@ using the factor method, and different statistical models.
 }
 \examples{
 data("exfm14")
-exfm14
+head(exfm14)
 
 # To get a guide curve plot for this data, we simply need to input
 # dominant height and age variables, age index, and number of classes to be used:
