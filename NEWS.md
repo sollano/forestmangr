@@ -1,4 +1,6 @@
 # forestmangr development
+# forestmangr 0.9.4
+* fix ggpmisc call and add head calls to examples.
 
 # forestmangr 0.9.3
 
