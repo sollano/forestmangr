@@ -34,7 +34,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-#' @import ggplot2
+#' @import ggpp
 average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,eq=TRUE){
   # ####
   ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th <- d_sob_dbh_negative <- d_sob_dbh_positive <-NULL
@@ -138,6 +138,7 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,
   h_sym <- rlang::sym(h)
   th_sym <- rlang::sym(th)
   
+  
   # ####
   
   df_plot <- df %>% 
@@ -165,14 +166,14 @@ average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,
     ) + {
       if(eq==TRUE)
         
-        ggpmisc::stat_poly_eq(data=df_plot[df_plot$mirror=="d_sob_dbh_positive",],
-                              formula = x ~ stats::poly(y, 2, raw=T),
-                              size = 3,
-                              eq.x.rhs    = "italic(frac(h,TH))",
-                              eq.with.lhs = "italic(hat(frac(d,DBH)))~`=`~", 
-                              ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")),
-                              label.x.npc="right",
-                              parse = TRUE  )
+        stat_poly_eq(data=df_plot[df_plot$mirror=="d_sob_dbh_positive",],
+                         formula = x ~ stats::poly(y, 2, raw=T),
+                         size = 3,
+                         eq.x.rhs    = "italic(frac(h,TH))",
+                         eq.with.lhs = "italic(hat(frac(d,DBH)))~`=`~", 
+                         ggplot2::aes(label = paste(..eq.label.., ..rr.label.., sep = "*plain(\",\")~")),
+                         label.x.npc="right",
+                         parse = TRUE  )
       
     } + {
       if(mirror==TRUE) ggplot2::geom_vline(xintercept=0)
