@@ -11,3 +11,4 @@
 ^.git
 ^.gitattributes
 ^.gitignore
+^appveyor\.yml$
