@@ -3,7 +3,7 @@
 export("%>%")
 export("%T>%")
 export(":=")
-export(average_tree_curve)
+export(avg_tree_curve)
 export(bdq_meyer)
 export(bias_per)
 export(check_names)

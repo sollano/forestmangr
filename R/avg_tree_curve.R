@@ -10,8 +10,8 @@
 #' @param th Quoted name of the total height variable, in meters.
 #' @param facet Optional argument. If supplied with the Quoted name of a factor variable(s), this variable is used to divide the plot into facets. Default: \code{NA}.
 #' @param color Quoted name of a variable. If supplied, this variable will be used to classify the data by color. Default: \code{NA}.
-#' @param mirror if \code{TRUE}, the plot will be mirrored, to resemble the shape of a tree. Default: \code{TRUE}
 #' @param eq if \code{TRUE}, Kozak's taper model is adjusted and the equation is shown on the plot. Default \code{TRUE}
+#' @param mirror if \code{TRUE}, the plot will be mirrored, to resemble the shape of a tree. Default: \code{TRUE}
 #' 
 #' @return A ggplot object.
 #' 
@@ -24,17 +24,17 @@
 #' data("exfm7")
 #' head(exfm7)
 #' 
-#' # Get the data's average tree curve inserting the section diameter and height, total height
-#' # and dbh variables: 
-#' average_tree_curve(df = exfm7, d = "di_wb", dbh = "DBH", h = "hi", th = "TH",eq=FALSE)
+#' # Get the data's average tree curve inserting the section diameter and height,
+#' # total height and dbh variables: 
+#' avg_tree_curve(df=exfm7,d="di_wb",dbh="DBH",h="hi",th="TH",eq=FALSE)
 #' 
-#' # It's possible to get the average tree curve of each strata with the facet argument,
+#' # It's possible to get the average tree curve of each strata with the facet arg.,
 #' # and divide the data by color with the color argument:
-#' average_tree_curve(df=exfm7,d="di_wb",dbh="DBH",h="hi",th="TH",facet="STRATA",color="GENCODE",eq=FALSE)
+#' avg_tree_curve(exfm7,"di_wb","DBH","hi","TH""STRATA","GENCODE",FALSE)
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
-average_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,mirror=TRUE,eq=TRUE){
+avg_tree_curve <- function(df, d, dbh, h, th, facet=NA,color=NA,eq=TRUE,mirror=TRUE){
   # ####
   ..rr.label..<-..eq.label..<-d_sob_dbh<-h_sob_th <- d_sob_dbh_negative <- d_sob_dbh_positive <-NULL
   # checagem de variaveis ####
