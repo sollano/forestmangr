@@ -50,7 +50,7 @@ head(as.data.frame(dados_sma))
 
 Podemos visualizar a curva média das árvores desta área, utilizando o modelo de Kozak, com a função `average_tree_curve`:
 ```{r, warning=FALSE, message=FALSE}
-average_tree_curve(df = dados_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+avg_tree_curve(df=dados_sma,d="di_wb",dbh="DBH",h="hi",th="TH")
 ```
 
 Para calcular o volume por árvore, utilizamos a função `vol_summarise`.

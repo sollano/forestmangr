@@ -33,7 +33,7 @@ head(as.data.frame(data_ex_sma))
 
 Now, we'll calculate the volume without bark per secction, using the `smalianwb` function. We'll input the same variables as before, and the variable name for the bark thickness. In our data, this variable is in millimeters, so, we'll use the `bt_mm_to_cm` as `TRUE` to convert it to centimeters:
 ```{r}
-data_ex_sma <- smalianwob(data_ex_sma, "di_wb", "hi", "bark_t","TREE", bt_mm_to_cm = T)
+data_ex_sma <- smalianwob(data_ex_sma,"di_wb","hi","bark_t","TREE",bt_mm_to_cm=T)
 head(as.data.frame(data_ex_sma))
 ```
 
@@ -41,13 +41,13 @@ This can be done directly using pipes (`%>%`):
 ```{r}
 data_ex_sma <- data_ex %>% 
   smalianwb("di_wb", "hi", "TREE") %>% 
-  smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm = T)
+  smalianwob("di_wb", "hi", "bark_t", "TREE", bt_mm_to_cm=T)
 head(as.data.frame(data_ex_sma))
 ```
 
 We can also visualize the mean curve form of the trees in the area, using Kozak's model with the `average_tree_curve` function:
 ```{r, warning=FALSE, message=FALSE}
-average_tree_curve(df = data_ex_sma, d = "di_wb", dbh = "DBH", h = "hi", th = "TH")
+avg_tree_curve(df=data_ex_sma,d="di_wb",dbh="DBH",h="hi",th="TH")
 ```
 
 To calculate the volume of each tree, we'll use the `vol_summarise` function. We input the data, and dbhm height, volume with bark, volume without bark and tree variables:

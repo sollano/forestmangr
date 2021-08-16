@@ -11,8 +11,8 @@ Maintainer: Sollano Rabelo Braga <sollanorb@gmail.com>
 URL: https://github.com/sollano/forestmangr#readme
 BugReports: https://github.com/sollano/forestmangr/issues
 Depends: R(>= 3.3)
-Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr, broom, purrr, plyr, tibble(>= 3.0.0), systemfit, ggpmisc, rlang, utils, car, stats, methods, magrittr, minpack.lm, FinCal, formattable, scales, ggdendro, gridExtra,tidyselect,shiny,miniUI
-Suggests: covr, knitr, rmarkdown
+Imports: dplyr(>= 0.7.0), ggplot2(>= 2.0), ggthemes, tidyr,broom,purrr, plyr,tibble(>= 3.0.0), systemfit,ggpmisc,rlang,utils,car,stats,methods,magrittr, minpack.lm, FinCal,scales,ggdendro, gridExtra,shiny,miniUI
+Suggests: knitr,rmarkdown,tidyselect,formattable
 VignetteBuilder: knitr
 Date: 2021-08-16
 Encoding: UTF-8

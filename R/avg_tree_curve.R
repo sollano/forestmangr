@@ -30,7 +30,7 @@
 #' 
 #' # It's possible to get the average tree curve of each strata with the facet arg.,
 #' # and divide the data by color with the color argument:
-#' avg_tree_curve(exfm7,"di_wb","DBH","hi","TH""STRATA","GENCODE",FALSE)
+#' avg_tree_curve(exfm7,"di_wb","DBH","hi","TH","STRATA","GENCODE",FALSE)
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #'
