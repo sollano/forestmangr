@@ -59,10 +59,13 @@
 #' exfm2
 #' 
 #' sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA" ,error = 20, pop = "fin")
+#' 
+#' If the volume is in m3ha, you should set m3ha to TRUE:
+#' sprs(exfm3, "VWB_m3ha", "PLOT_AREA", "TOTAL_AREA",m3ha = TRUE,error = 20, pop = "fin")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
+sprs <- function(df,Yi, plot_area, total_area, m3ha=FALSE,age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
   # ####
   n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-VC<-NULL
   # checagem de variaveis ####
@@ -186,6 +189,13 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
     stop( "length of 'tidy' must be 1", call.=F)
   }
   
+  
+  # se tidy nao for igual a TRUE ou FALSE, parar
+  if( is.null(m3ha) || ! m3ha %in% c(TRUE, FALSE) ){ 
+    stop("m3ha must be equal to TRUE or FALSE", call. = F) 
+  }else if(length(m3ha)!=1){
+    stop( "length of 'm3ha' must be 1", call.=F)
+  }  
   # Transformar os objetos em simbolos, para que o dplyr entenda ####
   # e procure o nome das variaveis dentro dos objetos
   Yi_sym <- rlang::sym(Yi)
@@ -218,12 +228,12 @@ sprs <- function(df,Yi, plot_area, total_area, age=NA, .groups=NA, alpha = 0.05,
                             sqrt( stats::var(!!Yi_sym,na.rm=T)/n  * (1 - (n/N)) ) ),
       Abserror      = Sy * t , # Erro Absoluto
       Percerror     = Abserror / Y * 100 , # Erro Percentual
-      Yhat         = Y * N, # Media estimada para area total
-      Total_Error   = Abserror * N, # Erro EStimado Para area Total
+      Yhat         = ifelse(m3ha,Y *mean(!!total_area_sym,na.rm=T) ,Y * N), # Media estimada para area total
+      Total_Error   = ifelse(m3ha,Abserror * mean(!!total_area_sym,na.rm=T),Abserror * N), # Erro EStimado Para area Total
       CI_Inf       = Y - Abserror, # Intervalo de confianca inferior
       CI_Sup       = Y + Abserror, # Intervalo de confianca superior
-      CI_ha_Inf    = (Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T), # Intervalo de confianca por ha inferior
-      CI_ha_Sup    = (Y + Abserror)*10000/mean(!!plot_area_sym,na.rm=T), # Intervalo de confianca por ha superior
+      CI_ha_Inf    = ifelse(m3ha,(Y - Abserror),(Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T)), # Intervalo de confianca por ha inferior
+      CI_ha_Sup    = ifelse(m3ha,(Y + Abserror),(Y + Abserror)*10000/mean(!!plot_area_sym,na.rm=T)), # Intervalo de confianca por ha superior
       CI_Total_inf = Yhat - Total_Error, # Intervalo de confianca total inferior
       CI_Total_Sup = Yhat + Total_Error) %>% # Intervalo de confianca total superior
     dplyr::na_if(0) %>% # substitui 0 por NA

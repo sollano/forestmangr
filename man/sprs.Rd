@@ -9,6 +9,7 @@ sprs(
   Yi,
   plot_area,
   total_area,
+  m3ha = FALSE,
   age = NA,
   .groups = NA,
   alpha = 0.05,
@@ -81,6 +82,9 @@ sprs(exfm4, "VWB", 3000, 46.8, error = 20, pop = "fin")
 exfm2
 
 sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA" ,error = 20, pop = "fin")
+
+If the volume is in m3ha, you should set m3ha to TRUE:
+sprs(exfm3, "VWB_m3ha", "PLOT_AREA", "TOTAL_AREA",m3ha = TRUE,error = 20, pop = "fin")
 
 }
 \references{
