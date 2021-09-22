@@ -1,6 +1,8 @@
 # forestmangr development
 # forestmangr 0.9.5
-* add m3ha to sprs,ss_diffs,strs
+* add m3ha to sprs,ss_diffs,strs;
+
+* add rqm filter and option to show filtered data only, or original and filtered to lm_table;
 
 # forestmangr 0.9.4
 * fix ggpmisc call and add head calls to examples.

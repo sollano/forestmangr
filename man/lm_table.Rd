@@ -10,7 +10,11 @@ lm_table(
   .groups = NA,
   output = "table",
   est.name = "est",
-  keep_model = FALSE
+  keep_model = FALSE,
+  rmoutliers = FALSE,
+  fct_to_filter = NA,
+  rmlevels = NA,
+  onlyfiteddata = FALSE
 )
 }
 \arguments{
@@ -18,13 +22,21 @@ lm_table(
 
 \item{model}{A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".}
 
-\item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.}
+\item{.groups}{Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default: \code{NA}.}
 
 \item{output}{Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.}
 
 \item{est.name}{Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}.}
 
-\item{keep_model}{If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.}
+\item{keep_model}{If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression. Default: \code{FALSE}.}
+
+\item{rmoutliers}{If \code{TRUE}, outliers are filtered out using the IQR method. Default: \code{FALSE}.}
+
+\item{fct_to_filter}{Name of a factor or character column to be used as a filter to remove levels. Default: \code{NA}.}
+
+\item{rmlevels}{Levels of the fct_to_filter variable to be removed from the fit Default: \code{NA}.}
+
+\item{onlyfiteddata}{If \code{TRUE}, the output data will be the same as the fitted (and possibly filtered) data. Default: \code{FALSE}.}
 }
 \value{
 A data frame. Different data frame options are available using the output argument.

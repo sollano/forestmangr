@@ -17,10 +17,14 @@
 #'
 #' @param df A data frame.
 #' @param model A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".
-#' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
+#' @param .groups Optional argument. Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default: \code{NA}.
 #' @param output  Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.
 #' @param est.name Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}. 
-#' @param keep_model If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression.Default: \code{FALSE}.
+#' @param keep_model If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression. Default: \code{FALSE}.
+#' @param rmoutliers If \code{TRUE}, outliers are filtered out using the IQR method. Default: \code{FALSE}.
+#' @param fct_to_filter Name of a factor or character column to be used as a filter to remove levels. Default: \code{NA}.
+#' @param rmlevels Levels of the fct_to_filter variable to be removed from the fit Default: \code{NA}.
+#' @param onlyfiteddata If \code{TRUE}, the output data will be the same as the fitted (and possibly filtered) data. Default: \code{FALSE}.
 #' @return  A data frame. Different data frame options are available using the output argument.
 #' 
 #' @export
@@ -61,11 +65,11 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE){
+lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,rmlevels=NA,onlyfiteddata=FALSE){
   # ####
   dat<-Reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
   # Checagem de variaveis ####
-
+  
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
@@ -114,7 +118,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   }else if(length(output)!=1){
     stop("Length of 'output' must be 1", call.=F)
   }else if(! output %in% c('table', 'merge', 'merge_est', 'nest') ){ 
-  stop("'output' must be equal to 'table', 'merge', 'merge_est', or 'nest' ", call. = F) 
+    stop("'output' must be equal to 'table', 'merge', 'merge_est', or 'nest' ", call. = F) 
   }
   
   # se keep_model nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
@@ -136,7 +140,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     estimate<-b<-NULL
     
     tibble::tibble(b=broom::tidy(x)$term, # criamos um data frame que tem apenas as colunas dos betas e seus valores
-           estimate=broom::tidy(x)$estimate ) %>% 
+                   estimate=broom::tidy(x)$estimate ) %>% 
       dplyr::mutate(b = factor(0:(length(b)-1) , labels=0:(length(b)-1) ) ) %>% # mudamos os nomes dos coeficientes para bn
       tidyr::spread( b, estimate,sep="" )     # com spread deixamos a tabela horizontal, colocando cada coeficiente em uma coluna
     
@@ -149,17 +153,45 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
       Rsqr_adj  = broom::glance(x)$adj.r.squared, # criamos um data table que tem apenas as variaveis R quadrado ajustado e erro padrao
       Std.Error = broom::glance(x)$sigma ) }
   
+  # Separar dados entre dado de ajuste, e dado original
+  df <- df %>% 
+    dplyr::ungroup() %>% 
+    dplyr::group_by(!!!.groups_syms ) %>%
+    tidyr::nest( dat = tidyselect::any_of(notgpvars) ) %>% 
+    dplyr::mutate(fitdata=dat) # fazer copia para ser filtrada, etc
+  
+  # remover outliers
+  if(rmoutliers){
+    df <- df %>% 
+      dplyr::mutate(
+        outliers_check=purrr::map(fitdata, ~outliersiqr(.x[[Y]])  ),
+        fitdata = purrr::map2(fitdata, outliers_check,
+                              ~dplyr::filter(.x,.data[[Y]] >= .y$lowlimit & .data[[Y]] <= .y$uplimit) ) ) %>% 
+      dplyr::select(-outliers_check)
+  }
+  
+  # Filtrar dados selecionados
+  if( !all(is.na(rmlevels),is.na(fct_to_filter) )){
+    df <- df %>% 
+      mutate(
+        fitdata = purrr::map(fitdata,
+                             ~dplyr::filter(.x,! .data[[fct_to_filter]] %in% rmlevels) ) )
+  }
+  
+  if(onlyfiteddata){
+    # se o usuario quiser visualizar apenas os dados utilizados
+    # manter apenas os dados alterados e remover o original
+    df <- df %>% 
+      dplyr::mutate(dat=fitdata)
+  }
   
   # Aqui e onde a regressao e realmente feita
   x <- df %>% 
-    dplyr::ungroup() %>% 
-    dplyr::group_by( !!!.groups_syms ) %>% 
-    tidyr::nest( dat = tidyselect::any_of(notgpvars) )  %>% 
-    dplyr::mutate(Reg = purrr::map(dat, ~stats::lm(mod, data =., na.action = na.exclude ) ),
-           Coefs  = purrr::map(Reg, tidy_   ),
-           Qualid = purrr::map(Reg, glance_ ),
-           Res = purrr::map(Reg, stats::resid),
-           est = purrr::map2(Reg, dat, stats::predict) ) %>% 
+    dplyr::mutate(Reg = purrr::map(fitdata, ~stats::lm(mod, data =., na.action = na.exclude ) ),
+                  Coefs  = purrr::map(Reg, tidy_   ),
+                  Qualid = purrr::map(Reg, glance_ ),
+                  Res = purrr::map(Reg, stats::resid),
+                  est = purrr::map2(Reg, dat, stats::predict) ) %>% 
     dplyr::ungroup()
   
   x$A <- NULL 
@@ -177,7 +209,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     # table ira resultar em uma tabela com os coeficientes e as variaveis de qualidade
     y <-  x %>% 
       tidyr::unnest(c(Coefs, Qualid) ) %>% 
-      dplyr::select(-dat,-Res,-est)
+      dplyr::select(-fitdata,-dat,-Res,-est)
     
     
   }else if(output == "merge"){
@@ -186,14 +218,14 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     y <- x %>% 
       tidyr::unnest(dat) %>% 
       tidyr::unnest(c(Coefs, Qualid) ) %>% 
-      dplyr::select(-est, -Res)
+      dplyr::select(-fitdata,-est, -Res)
     
   }else if(output %in% c("merge_est","est", "estimate")){
     
     #est ou estimate ira estimar a variavel y e uni-la aos dados originais
     y <- x %>% 
       tidyr::unnest(c(dat, est) ) %>% 
-      dplyr::select(- dplyr::one_of( c("Coefs", "Qualid", "Res", "est" )), est )   # passar est para final da tabela
+      dplyr::select(-fitdata,- dplyr::one_of( c("Coefs", "Qualid", "Res", "est" )), est )   # passar est para final da tabela
     
   }else if( output == "nest" ){
     
@@ -206,7 +238,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   if(keep_model==F & output != "nest"){
     y$Reg <- NULL
     y <- as.data.frame(y)
-    }
+  }
   # Renomear est
   names(y)[names(y)=="est"] <- est.name
   
