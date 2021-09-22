@@ -1,10 +1,13 @@
 # forestmangr development
+# forestmangr 0.9.5
+* add m3ha to sprs,ss_diffs,strs
+
 # forestmangr 0.9.4
 * fix ggpmisc call and add head calls to examples.
 
 # forestmangr 0.9.3
 
-* replace order function call with dplyr's arrange, due to order's behaviour in certain situations;
+* replace order function call with dplyr's arrange, due to order's behavior in certain situations;
 
 * add shiny and miniUI dependency;
 

@@ -10,6 +10,7 @@
 #' @param Yi Quoted name of the volume variable, or other variable one desires to evaluate, in quotes.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param total_area Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.
+#' @param m3ha Boolean value. If \code{TRUE} Yi variable is treated in m3/ha, else, in m3. Default: \code{FALSE}.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
 #' If this argument is \code{NA}, the defined groups in the data frame will be used, if they exist. Default: \code{NA}.
 #' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.
@@ -60,12 +61,12 @@
 #' 
 #' sprs(exfm2, "VWB", "PLOT_AREA", "STRATA_AREA",.groups = "STRATA" ,error = 20, pop = "fin")
 #' 
-#' If the volume is in m3ha, you should set m3ha to TRUE:
+#' If the volume variable is in m3ha, you should set m3ha to TRUE:
 #' sprs(exfm3, "VWB_m3ha", "PLOT_AREA", "TOTAL_AREA",m3ha = TRUE,error = 20, pop = "fin")
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-sprs <- function(df,Yi, plot_area, total_area, m3ha=FALSE,age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
+sprs <- function(df,Yi, plot_area, total_area, m3ha=FALSE, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, pop="inf",tidy=TRUE){
   # ####
   n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-VC<-NULL
   # checagem de variaveis ####
@@ -190,7 +191,7 @@ sprs <- function(df,Yi, plot_area, total_area, m3ha=FALSE,age=NA, .groups=NA, al
   }
   
   
-  # se tidy nao for igual a TRUE ou FALSE, parar
+  # se m3ha nao for igual a TRUE ou FALSE, parar
   if( is.null(m3ha) || ! m3ha %in% c(TRUE, FALSE) ){ 
     stop("m3ha must be equal to TRUE or FALSE", call. = F) 
   }else if(length(m3ha)!=1){
@@ -230,8 +231,8 @@ sprs <- function(df,Yi, plot_area, total_area, m3ha=FALSE,age=NA, .groups=NA, al
       Percerror     = Abserror / Y * 100 , # Erro Percentual
       Yhat         = ifelse(m3ha,Y *mean(!!total_area_sym,na.rm=T) ,Y * N), # Media estimada para area total
       Total_Error   = ifelse(m3ha,Abserror * mean(!!total_area_sym,na.rm=T),Abserror * N), # Erro EStimado Para area Total
-      CI_Inf       = Y - Abserror, # Intervalo de confianca inferior
-      CI_Sup       = Y + Abserror, # Intervalo de confianca superior
+      CI_Inf       = ifelse(m3ha,(Y - Abserror)/10000*mean(!!plot_area_sym,na.rm=T),Y - Abserror), # Intervalo de confianca inferior
+      CI_Sup       = ifelse(m3ha,(Y + Abserror)/10000*mean(!!plot_area_sym,na.rm=T),Y + Abserror), # Intervalo de confianca superior
       CI_ha_Inf    = ifelse(m3ha,(Y - Abserror),(Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T)), # Intervalo de confianca por ha inferior
       CI_ha_Sup    = ifelse(m3ha,(Y + Abserror),(Y + Abserror)*10000/mean(!!plot_area_sym,na.rm=T)), # Intervalo de confianca por ha superior
       CI_Total_inf = Yhat - Total_Error, # Intervalo de confianca total inferior

@@ -9,6 +9,7 @@ ss_diffs(
   Yi,
   plot_area,
   total_area,
+  m3ha = FALSE,
   age = NA,
   .groups = NA,
   alpha = 0.05,
@@ -25,6 +26,8 @@ ss_diffs(
 \item{plot_area}{Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.}
 
 \item{total_area}{Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.}
+
+\item{m3ha}{Boolean value. If \code{TRUE} Yi variable is treated in m3/ha, else, in m3. Default: \code{FALSE}.}
 
 \item{age}{Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.}
 

@@ -12,6 +12,7 @@
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param strata_area Quoted name of the strata area variable, or a numeric vector with the plot strata values. If there are more than 1 area values, it's possible to use a vector with all area values, like so:\code{c(14.4, 16.4, 14.2)}. The strata area values must be in hectares.
 #' @param strata Quoted name of the subdivision variable(s), also known as strata. If this argument is not supplied, the defined groups in the data frame will be used, if they exist.
+#' @param m3ha Boolean value. If \code{TRUE} Yi variable is treated in m3/ha, else, in m3. Default: \code{FALSE}.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
 #' If this argument is \code{NA}, the defined groups in the data frame will be used, if they exist. Default: \code{NA}.
 #' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.
@@ -64,7 +65,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=TRUE ){
+strs <- function(df, Yi, plot_area, strata_area, strata, m3ha=FALSE, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=TRUE ){
   # ####
   Nj<-N<-Pj<-Yj<-Pj_Sj2<-Pj_Sj<-Pj_Yj<-EPj_Sj<-Y<-nj<-EPj_Sj2<-t_rec<-n_recalc<-nj_optimal<-Sy<-Abserror<-AREA_PC<-Yhat<-Total_Error<-VC<-NULL
   # Checagem de variaveis ####
@@ -230,6 +231,13 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
     stop( "length of 'tidy' must be 1", call.=F)
   }
   
+  # se m3ha nao for igual a TRUE ou FALSE, parar
+  if( is.null(m3ha) || ! m3ha %in% c(TRUE, FALSE) ){ 
+    stop("m3ha must be equal to TRUE or FALSE", call. = F) 
+  }else if(length(m3ha)!=1){
+    stop( "length of 'm3ha' must be 1", call.=F)
+  } 
+  
   # ####
   
   Yi_sym <- rlang::sym(Yi)
@@ -260,6 +268,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
     dplyr::mutate(Nj = (!!strata_area_sym ) / ( (!!plot_area_sym)/10000 ) ) %>%
     dplyr::group_by( !!!.groups_syms, !!!strata_syms) %>%
     dplyr::summarise(
+      STRATA_AREA = mean(!!strata_area_sym),
       AGE  = mean(!!age_sym),
       AREA_PC= mean(!!plot_area_sym),
       nj     = dplyr::n() ,
@@ -321,9 +330,8 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
         "n_optimal"  = "Optimal number of samples (n optimal)", 
         "Yhatj"      = "Total value of Y per stratum (Yhatj)"  ),
       warn_missing = F) %>% 
-    dplyr::select(-EPj_Sj2,-EPj_Sj,-VC,-Y) %>% #remover variaveis comuns aos estratos
+    dplyr::select(-EPj_Sj2,-EPj_Sj,-VC,-Y,STRATA_AREA) %>% #remover variaveis comuns aos estratos
     forestmangr::round_df(dec_places)  
-  
   
   y_ <- x_ %>%
     dplyr::summarise(
@@ -339,12 +347,12 @@ strs <- function(df, Yi, plot_area, strata_area, strata, .groups=NA, age=NA, alp
       Y            = sum(Pj_Yj), # media de Yi estratificada (ponderada) 
       Abserror      = Sy * t, # Erro Absoluto
       Percerror     = Abserror / Y * 100, # Erro percentual
-      Yhat         = sum(Nj) * Y, # Volume Total
-      Total_Error   = Abserror * sum(Nj), # Erro Total
-      CI_Inf       = Y - Abserror, # Intervalo de confianca inferior
-      CI_Sup       = Y + Abserror, # Intervalo de confianca superior
-      CI_ha_Inf    = (Y - Abserror)*10000/mean(AREA_PC,na.rm=T), # Intervalo de confianca por ha inferior
-      CI_ha_Sup    = (Y + Abserror)*10000/mean(AREA_PC,na.rm=T), # Intervalo de confianca por ha superior
+      Yhat         = ifelse(m3ha,Y*sum(STRATA_AREA),Y*sum(Nj)), # Volume Total
+      Total_Error   = ifelse(m3ha,Abserror*sum(STRATA_AREA), Abserror * sum(Nj)), # Erro Total
+      CI_Inf       = ifelse(m3ha,(Y - Abserror)/10000*mean(AREA_PC,na.rm=T), Y - Abserror), # Intervalo de confianca inferior
+      CI_Sup       = ifelse(m3ha,(Y + Abserror)/10000*mean(AREA_PC,na.rm=T), Y + Abserror), # Intervalo de confianca superior
+      CI_ha_Inf    = ifelse(m3ha,Y - Abserror,(Y - Abserror)*10000/mean(AREA_PC,na.rm=T)), # Intervalo de confianca por ha inferior
+      CI_ha_Sup    = ifelse(m3ha,Y + Abserror,(Y + Abserror)*10000/mean(AREA_PC,na.rm=T)), # Intervalo de confianca por ha superior
       CI_Total_inf = Yhat - Total_Error, # Intervalo de confianca total inferior
       CI_Total_Sup = Yhat + Total_Error    ) %>% # Intervalo de confianca total superior)
     forestmangr::round_df(dec_places)  

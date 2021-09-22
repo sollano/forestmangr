@@ -10,6 +10,7 @@
 #' @param Yi Quoted name of the volume variable, or other variable one desires to evaluate, in quotes.
 #' @param plot_area Quoted name of the plot area variable, or a numeric vector with the plot area value. The plot area value must be in square meters.
 #' @param total_area Quoted name of the total area variable, or a numeric vector with the total area value.The total area value must be in hectares.
+#' @param m3ha Boolean value. If \code{TRUE} Yi variable is treated in m3/ha, else, in m3. Default: \code{FALSE}.
 #' @param .groups Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
 #' If this argument is \code{NA}, the defined groups in the data frame will be used, if they exist. Default: \code{NA}.
 #' @param age Optional parameter. Quoted name of the age variable. Calculates the average age supplied. \code{NA}.
@@ -61,7 +62,7 @@
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, tidy=TRUE ) {
+ss_diffs <- function(df, Yi, plot_area, total_area, m3ha=FALSE, age=NA, .groups=NA, alpha = 0.05, error = 10, dec_places=4, tidy=TRUE ) {
   # ####
   n<-VC<-N<-t_rec<-Sy<-Abserror<-Y<-Yhat<-Total_Error<-VC<-NULL
   # checagem de variaveis ####
@@ -175,7 +176,12 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
   }else if(length(tidy)!=1){
     stop( "length of 'tidy' must be 1", call.=F)
   }
-  
+  # se m3ha nao for igual a TRUE ou FALSE, parar
+  if( is.null(m3ha) || ! m3ha %in% c(TRUE, FALSE) ){ 
+    stop("m3ha must be equal to TRUE or FALSE", call. = F) 
+  }else if(length(m3ha)!=1){
+    stop( "length of 'm3ha' must be 1", call.=F)
+  }  
   # Transformar os objetos em simbolos, para que o dplyr entenda
   # e procure o nome das variaveis dentro dos objetos
   Yi_sym <- rlang::sym(Yi)
@@ -202,12 +208,12 @@ ss_diffs <- function(df, Yi, plot_area, total_area,  age=NA, .groups=NA, alpha =
       Sy           = sqrt( (sum(diff(!!Yi_sym)^2,na.rm=T) / (2 * n * (n-1) ) ) * ((N-n)/N) ),
       Abserror      = Sy * t , # Erro Absoluto
       Percerror     = Abserror / Y * 100 , # Erro Percentual
-      Yhat         = Y * N, # Media estimada para area total
-      Total_Error   = Abserror * N, # Erro EStimado Para area Total
-      CI_Inf       = Y - Abserror, # Intervalo de confianca inferior
-      CI_Sup       = Y + Abserror, # Intervalo de confianca superior
-      CI_ha_Inf    = (Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T), # Intervalo de confianca por ha inferior
-      CI_ha_Sup    = (Y + Abserror)*10000/mean(!!plot_area_sym,na.rm=T), # Intervalo de confianca por ha superior
+      Yhat         = ifelse(m3ha,Y *mean(!!total_area_sym,na.rm=T) ,Y * N), # Media estimada para area total
+      Total_Error   = ifelse(m3ha,Abserror * mean(!!total_area_sym,na.rm=T),Abserror * N), # Erro EStimado Para area Total
+      CI_Inf       = ifelse(m3ha,(Y - Abserror)/10000*mean(!!plot_area_sym,na.rm=T),Y - Abserror), # Intervalo de confianca inferior
+      CI_Sup       = ifelse(m3ha,(Y + Abserror)/10000*mean(!!plot_area_sym,na.rm=T),Y + Abserror), # Intervalo de confianca superior
+      CI_ha_Inf    = ifelse(m3ha,(Y - Abserror),(Y - Abserror)*10000/mean(!!plot_area_sym,na.rm=T)), # Intervalo de confianca por ha inferior
+      CI_ha_Sup    = ifelse(m3ha,(Y + Abserror),(Y + Abserror)*10000/mean(!!plot_area_sym,na.rm=T)), # Intervalo de confianca por ha superior
       CI_Total_inf = Yhat - Total_Error, # Intervalo de confianca total inferior
       CI_Total_Sup = Yhat + Total_Error) %>% # Intervalo de confianca total superior
     dplyr::na_if(0) %>% # substitui 0 por NA

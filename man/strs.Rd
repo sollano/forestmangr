@@ -10,6 +10,7 @@ strs(
   plot_area,
   strata_area,
   strata,
+  m3ha = FALSE,
   .groups = NA,
   age = NA,
   alpha = 0.05,
@@ -29,6 +30,8 @@ strs(
 \item{strata_area}{Quoted name of the strata area variable, or a numeric vector with the plot strata values. If there are more than 1 area values, it's possible to use a vector with all area values, like so:\code{c(14.4, 16.4, 14.2)}. The strata area values must be in hectares.}
 
 \item{strata}{Quoted name of the subdivision variable(s), also known as strata. If this argument is not supplied, the defined groups in the data frame will be used, if they exist.}
+
+\item{m3ha}{Boolean value. If \code{TRUE} Yi variable is treated in m3/ha, else, in m3. Default: \code{FALSE}.}
 
 \item{.groups}{Optional argument. Quoted name(s) of additional grouping variable(s) that, if supplied, will be used to run multiple surveys, one for each level. 
 If this argument is \code{NA}, the defined groups in the data frame will be used, if they exist. Default: \code{NA}.}
