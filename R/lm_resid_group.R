@@ -20,6 +20,11 @@
 #' @param .groups Quoted name(s) of grouping variables used to fit multiple regressions, one for each level of the provided variable(s). Default \code{NA}.
 #' @param output_mode  Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.
 #' @param est.name Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}. 
+#' @param keep_model If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression. Default: \code{FALSE}.
+#' @param rmoutliers If \code{TRUE}, outliers are filtered out using the IQR method. Default: \code{FALSE}.
+#' @param fct_to_filter Name of a factor or character column to be used as a filter to remove levels. Default: \code{NA}.
+#' @param rmlevels Levels of the fct_to_filter variable to be removed from the fit Default: \code{NA}.
+#' @param onlyfiteddata If \code{TRUE}, the output data will be the same as the fitted (and possibly filtered) data. Default: \code{FALSE}.
 #' @return  A data frame. Different data frame options are available using the output argument.
 #' 
 #' @export
@@ -37,10 +42,10 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' 
-lm_resid_group <- function(df,model,.groups,output_mode='table',est.name = 'est'){
-  reg<-data<-NULL
-  if(missing(.groups))
-    stop('Please define grouping variable(s)',call. = FALSE)
+lm_resid_group <- function(df,model,.groups=NA,output_mode='table',est.name = "est",
+                           keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,
+                           rmlevels=NA,onlyfiteddata=FALSE){
+  
   
   .groups_syms <- rlang::syms(.groups) 
   
@@ -69,10 +74,13 @@ lm_resid_group <- function(df,model,.groups,output_mode='table',est.name = 'est'
                                    ~lm_resid(df = ., # simplesmente aplicamos o modelo em data,
                                              model=model, # que no caso sao os dados nestados
                                              group_print=group_var2, # nome da coluna de grupo, convertida em char
-                                             output_mode=output_mode,
-                                             est.name = est.name))) %>% # saida selecionada
-    dplyr::mutate(data = purrr::map(data,# aqui apagamos as colunas duplicadas
-                                    ~dplyr::select(., -dplyr::any_of(group_var2) ))) %>% 
+                                             output_mode=output_mode,# saida selecionada
+                                             est.name = est.name, keep_model = keep_model,
+                                             rmoutliers = rmoutliers,fct_to_filter=fct_to_filter,
+                                             rmlevels=rmlevels,onlyfiteddata=onlyfiteddata))) %>% 
+ #   dplyr::mutate(data = purrr::map(data,# aqui apagamos as colunas duplicadas
+#                                    ~dplyr::select(., -dplyr::any_of(group_var2) ))) %>% 
+    dplyr::select(-data) %>% 
     tidyr::unnest(reg) %>% # desnestar a saida final
     dplyr::ungroup() # desagrupar os dados
   return(lm_resid_g_ex)

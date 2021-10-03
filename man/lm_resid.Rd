@@ -4,7 +4,18 @@
 \alias{lm_resid}
 \title{Fit linear regressions, with the option of removing outliers using a interactive plot of residuals.}
 \usage{
-lm_resid(df, model, output_mode = "table", est.name = "est", group_print = NA)
+lm_resid(
+  df,
+  model,
+  output_mode = "table",
+  est.name = "est",
+  keep_model = FALSE,
+  rmoutliers = FALSE,
+  fct_to_filter = NA,
+  rmlevels = NA,
+  onlyfiteddata = FALSE,
+  group_print = NA
+)
 }
 \arguments{
 \item{df}{A data frame.}
@@ -14,6 +25,16 @@ lm_resid(df, model, output_mode = "table", est.name = "est", group_print = NA)
 \item{output_mode}{Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.}
 
 \item{est.name}{Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}.}
+
+\item{keep_model}{If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression. Default: \code{FALSE}.}
+
+\item{rmoutliers}{If \code{TRUE}, outliers are filtered out using the IQR method. Default: \code{FALSE}.}
+
+\item{fct_to_filter}{Name of a factor or character column to be used as a filter to remove levels. Default: \code{NA}.}
+
+\item{rmlevels}{Levels of the fct_to_filter variable to be removed from the fit Default: \code{NA}.}
+
+\item{onlyfiteddata}{If \code{TRUE}, the output data will be the same as the fitted (and possibly filtered) data. Default: \code{FALSE}.}
 
 \item{group_print}{This argument is only used internally by another function. Please ignore.}
 }

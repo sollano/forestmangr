@@ -14,6 +14,7 @@ lm_table(
   rmoutliers = FALSE,
   fct_to_filter = NA,
   rmlevels = NA,
+  boolean_filter = NA,
   onlyfiteddata = FALSE
 )
 }

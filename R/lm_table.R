@@ -65,7 +65,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,rmlevels=NA,onlyfiteddata=FALSE){
+lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,rmlevels=NA,boolean_filter=NA,onlyfiteddata=FALSE){
   # ####
   dat<-Reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
   # Checagem de variaveis ####
@@ -128,6 +128,7 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     stop("Length of 'keep_model' must be 1", call.=F)
   }
   
+  
   # ####
   
   #Extrair o y do model
@@ -173,10 +174,27 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
   # Filtrar dados selecionados
   if( !all(is.na(rmlevels),is.na(fct_to_filter) )){
     df <- df %>% 
-      mutate(
+      dplyr::mutate(
         fitdata = purrr::map(fitdata,
                              ~dplyr::filter(.x,! .data[[fct_to_filter]] %in% rmlevels) ) )
   }
+  
+  # Se boolean_filter nao for character,ou nao for de tamanho 1, parar
+  if(missing(boolean_filter) || is.null(boolean_filter) || is.na(boolean_filter) || boolean_filter == "" ){
+    #df$boolean_filter <- TRUE
+  }else if(!is.character( boolean_filter )){
+    stop( "'boolean_filter' must be character", call.=F)
+  }else if(length(boolean_filter)!=1){
+    stop("Length of 'boolean_filter' must be 1", call.=F)
+  }else{
+    
+    df <- df %>% 
+      dplyr::mutate(
+        fitdata = purrr::map(fitdata,
+                             ~dplyr::filter(.x, .data[[boolean_filter]] ) ) )
+    
+  }
+  
   
   if(onlyfiteddata){
     # se o usuario quiser visualizar apenas os dados utilizados

@@ -19,6 +19,11 @@
 #' @param model A linear regression model, with or without quotes. The variables mentioned in the model must exist in the provided data frame. X and Y sides of the model must be separated by "~".
 #' @param output_mode  Selects different output options. Can be either \code{"table"}, \code{"merge"}, \code{"merge_est"} and \code{"nest"}. See details for explanations for each option. Default: \code{"table"}.
 #' @param est.name Name of the estimated y value. Used only if \code{est.name = TRUE}. Default: \code{"est"}. 
+#' @param keep_model If \code{TRUE}, a column containing lm object(s) is kept in the output. Useful if the user desires to get more information on the regression. Default: \code{FALSE}.
+#' @param rmoutliers If \code{TRUE}, outliers are filtered out using the IQR method. Default: \code{FALSE}.
+#' @param fct_to_filter Name of a factor or character column to be used as a filter to remove levels. Default: \code{NA}.
+#' @param rmlevels Levels of the fct_to_filter variable to be removed from the fit Default: \code{NA}.
+#' @param onlyfiteddata If \code{TRUE}, the output data will be the same as the fitted (and possibly filtered) data. Default: \code{FALSE}.
 #' @param group_print This argument is only used internally by another function. Please ignore.
 #' @return  A data frame. Different data frame options are available using the output argument.
 #' 
@@ -37,8 +42,9 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 #' @export
-lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=NA){
-  reg<-data<-NULL
+lm_resid <- function(df,model,output_mode='table',est.name = "est",
+                     keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,
+                     rmlevels=NA,onlyfiteddata=FALSE,group_print=NA){
   # copiar nome da variavel Y, com base no modelo
   Y <- all.vars( stats::formula(model)[[2]]) 
   
@@ -53,11 +59,12 @@ lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=N
     ),
     # adiciona mini botoes
     miniUI::miniButtonBlock(
-      shiny::actionButton('rerun','Remove selected points'),
-      shiny::actionButton("reset", "Restore removed points")
+      shiny::actionButton('rerun','retirar pontos'),
+      shiny::actionButton("reset", "restaurar")
     ),
     
   ) # ui end
+  
   
   
   server <- function(input, output, session){
@@ -89,12 +96,18 @@ lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=N
     
     # dfok e o dataframe que contem apenas as linhas keeprows,
     # ou seja, apenas as que o usuario nao marcou e retirou.
+    # para facilitar o ajuste, será criada uma coluna com keeprows,
+    # e ele será utilizado para filtrar na hora de ajustar
     dfok <- shiny::reactive({
       
       dfok <- df
       
+      dfok$remove_these = vals$keeprows
+      
       if(input$rerun){
-        dfok <- dfok[vals$keeprows, ]
+        
+        dfok$remove_these = vals$keeprows
+        
       }
       
       dfok
@@ -105,7 +118,8 @@ lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=N
     # para ter como saida a tabela de residuos. sera uzado para fazer o plot com pontos vazios.
     resid_orig <- shiny::reactive({
       
-      tab <- lm_table(df, model, output = "merge_est") 
+      tab <- lm_table(df, model, output = "merge_est",
+                      rmoutliers = rmoutliers,fct_to_filter=fct_to_filter,rmlevels=rmlevels,onlyfiteddata = TRUE) 
       
       resid_plot(tab, Y,'est',res_table = TRUE)
       
@@ -115,7 +129,10 @@ lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=N
     output$plot <- shiny::renderPlot({
       
       # aqui, ajustamos o modelo novamente, porem utilizando dfok, nosso dado filtrado.
-      dfok <- lm_table(dfok(), model, output = "merge_est") 
+      dfok <- dfok() %>% 
+        dplyr::filter(remove_these) %>% 
+        lm_table(model, output = "merge_est",
+                       rmoutliers = rmoutliers,fct_to_filter=fct_to_filter,rmlevels=rmlevels,onlyfiteddata = TRUE) 
       # aqui puxamos os residuos dos dados originais
       residorig <- resid_orig()
       # aqui fazemos o grafico com o dfok
@@ -132,12 +149,14 @@ lm_resid <- function(df,model,output_mode='table',est.name = 'est',group_print=N
     # da selecao que o usuario fara dos pontos. # apenas ajustamos o modelo informado com dfok
     # o tipo de saida e definida pelo usuario. apenas betas, df com os dados (merge_est), etc
     out_final <- shiny::reactive({
-      
+      #print(dfok())
       lm_table(dfok(), model, 
-                            #output = "merge_est"
-                            output=output_mode,
-                            est.name = est.name
-               
+               #output = "merge_est"
+               output=output_mode,
+               est.name = est.name, keep_model = keep_model,
+               rmoutliers = rmoutliers,fct_to_filter=fct_to_filter,
+               rmlevels=rmlevels,onlyfiteddata=onlyfiteddata,
+               boolean_filter='remove_these'
       ) 
       
     })
