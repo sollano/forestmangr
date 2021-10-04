@@ -15,7 +15,8 @@ lm_table(
   fct_to_filter = NA,
   rmlevels = NA,
   boolean_filter = NA,
-  onlyfiteddata = FALSE
+  onlyfiteddata = FALSE,
+  del_boolean = FALSE
 )
 }
 \arguments{
@@ -37,7 +38,11 @@ lm_table(
 
 \item{rmlevels}{Levels of the fct_to_filter variable to be removed from the fit Default: \code{NA}.}
 
+\item{boolean_filter}{Name of a Boolean column to be used as a filter to remove data. Default: \code{NA}.}
+
 \item{onlyfiteddata}{If \code{TRUE}, the output data will be the same as the fitted (and possibly filtered) data. Default: \code{FALSE}.}
+
+\item{del_boolean}{If \code{TRUE}, the Boolean column supplied will be deleted after use. Default: \code{FALSE}.}
 }
 \value{
 A data frame. Different data frame options are available using the output argument.

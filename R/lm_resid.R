@@ -156,7 +156,7 @@ lm_resid <- function(df,model,output_mode='table',est.name = "est",
                est.name = est.name, keep_model = keep_model,
                rmoutliers = rmoutliers,fct_to_filter=fct_to_filter,
                rmlevels=rmlevels,onlyfiteddata=onlyfiteddata,
-               boolean_filter='remove_these'
+               boolean_filter='remove_these',del_boolean=TRUE
       ) 
       
     })

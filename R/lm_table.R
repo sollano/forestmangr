@@ -24,7 +24,9 @@
 #' @param rmoutliers If \code{TRUE}, outliers are filtered out using the IQR method. Default: \code{FALSE}.
 #' @param fct_to_filter Name of a factor or character column to be used as a filter to remove levels. Default: \code{NA}.
 #' @param rmlevels Levels of the fct_to_filter variable to be removed from the fit Default: \code{NA}.
+#' @param boolean_filter Name of a Boolean column to be used as a filter to remove data. Default: \code{NA}.
 #' @param onlyfiteddata If \code{TRUE}, the output data will be the same as the fitted (and possibly filtered) data. Default: \code{FALSE}.
+#' @param del_boolean If \code{TRUE}, the Boolean column supplied will be deleted after use. Default: \code{FALSE}.
 #' @return  A data frame. Different data frame options are available using the output argument.
 #' 
 #' @export
@@ -65,7 +67,7 @@
 #' 
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
-lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,rmlevels=NA,boolean_filter=NA,onlyfiteddata=FALSE){
+lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,rmlevels=NA,boolean_filter=NA,onlyfiteddata=FALSE,del_boolean=FALSE){
   # ####
   dat<-Reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
   # Checagem de variaveis ####
@@ -128,7 +130,15 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     stop("Length of 'keep_model' must be 1", call.=F)
   }
   
+
   
+  # se del_boolean nao for igual a TRUE ou FALSE,ou nao for de tamanho 1, parar
+  if(! del_boolean %in% c(TRUE, FALSE) ){ 
+    stop("'del_boolean' must be equal to TRUE or FALSE", call. = F) 
+  }else  if(length(del_boolean)!=1){
+    stop("Length of 'del_boolean' must be 1", call.=F)
+  }
+   
   # ####
   
   #Extrair o y do model
@@ -220,6 +230,17 @@ lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est"
     x <- x %>% dplyr::mutate(est = purrr::map(est, exp) ) 
     
   }
+  
+  #apagar a coluna criada la no lm_resid
+  if(del_boolean){
+    
+    x <- x %>% 
+      dplyr::mutate(
+        dat = purrr::map(dat,
+                             ~dplyr::select(.x, -.data[[boolean_filter]] ) ) )
+    
+  }
+  
   
   
   if(output == "table"){
