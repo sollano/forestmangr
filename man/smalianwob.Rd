@@ -50,7 +50,7 @@ data("exfm7")
 head(exfm7)
 
 # Calculate the volume without bark using Smalian's method:
-smalianwob(exfm7,"di_wb", "hi", "bark_t", "TREE")
+smalianwob(exfm7,"di_wb", "hi", "bark_t", "TREE",bt_mm_to_cm=TRUE)
 
 # Using pipes:
 library(dplyr)
