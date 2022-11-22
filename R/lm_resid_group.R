@@ -47,6 +47,8 @@ lm_resid_group <- function(df,model,.groups=NA,output_mode='table',est.name = "e
                            rmlevels=NA,onlyfiteddata=FALSE){
   
   
+  if(is.na(.groups)){stop('.groups must be informed',call. = F)}
+  
   .groups_syms <- rlang::syms(.groups) 
   
   
