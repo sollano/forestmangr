@@ -244,7 +244,7 @@ resid_plot <- function (df, obs, ..., type = "scatterplot",point_size = 3,color 
   
   if (res_table) {return(df_graph)}
   
-  if (is.null(YLIM)) {YLIM <- round(max(df_graph["ERROR"],na.rm=T), -1) + 10}
+  if (is.null(YLIM)) {YLIM <- round(max(abs(df_graph["ERROR"]),na.rm=T), -1) + 10}
   #if( is.null(XLIM) ){ XLIM <- round(max(df_graph[OBS]), -1) + 10 }
   
   p <- ggplot2::ggplot(df_graph) + {
