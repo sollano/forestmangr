@@ -21,6 +21,7 @@
 #'   \item{DH}{dominant height, in meters}
 #'   \item{G}{basal area, in square meters}
 #'   \item{VWB}{volume with bark, in cubic meters}
+#'   \item{VWB_m3ha}{volume with bark, in cubic meters per hectare}
 #'   \item{VWOB}{volume without bark, in cubic meters}
 #' }
 #' @name exfm6

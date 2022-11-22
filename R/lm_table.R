@@ -69,7 +69,7 @@
 
 lm_table <- function(df, model, .groups = NA, output = "table", est.name = "est", keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,rmlevels=NA,boolean_filter=NA,onlyfiteddata=FALSE,del_boolean=FALSE){
   # ####
-  dat<-Reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
+  dat<-Reg<-.<-est<-Coefs<-Qualid<-Res<-outliers_check<-fitdata<-NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar

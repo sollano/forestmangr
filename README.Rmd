@@ -80,7 +80,7 @@ coefs_clutter <- fit_clutter(exfm16_fit, "age", "DH", "B", "V", "site", "plot")
 coefs_clutter
 ```
 
-Now, say we wanted to do a Simple Random Sampling Forest Inventory, with 20% as a accepted error. 
+Now, say we wanted to do a Simple Random Sampling Forest Inventory, with 20% as an accepted error. 
 First, let's load the package and some data:
 
 ```{r}

@@ -2,7 +2,7 @@
 #' Fit linear regressions, with the option of removing outliers using a interactive plot of residuals.
 #' @description 
 #' With this function it's possible to fit linear regressions by a grouping variable, and evaluate each equation via
-#' a interactive plot of residuals, and get a data frame.
+#' an interactive plot of residuals, and get a data frame.
 #' with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 #' @details 
 #' this function uses lm_table as a basis, but calls a plot of residuals for each fitted model, for the user to evaluate. If
@@ -45,6 +45,8 @@
 lm_resid <- function(df,model,output_mode='table',est.name = "est",
                      keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,
                      rmlevels=NA,onlyfiteddata=FALSE,group_print=NA){
+  
+  remove_these<-data<-reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
   # copiar nome da variavel Y, com base no modelo
   Y <- all.vars( stats::formula(model)[[2]]) 
   

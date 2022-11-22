@@ -10,6 +10,7 @@ A data frame with 10 observations and 3 variables:
   \item{TOTAL_AREA}{total area, in hectares}
   \item{PLOT_AREA}{area of plots, in square meters}
   \item{VWB}{volume with bark, in cubic meters}
+  \item{VWB_m3ha}{volume with bark, in cubic meters per hectare}
 }
 }
 \source{

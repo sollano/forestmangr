@@ -43,7 +43,7 @@ A data frame. Different data frame options are available using the output argume
 }
 \description{
 With this function it's possible to fit linear regressions by a grouping variable, and evaluate each equation via
-a interactive plot of residuals, and get a data frame.
+an interactive plot of residuals, and get a data frame.
 with each column as a coefficient and quality of fit variables, and other output options. Works with dplyr grouping functions.
 }
 \details{

@@ -1,5 +1,7 @@
 # forestmangr development
 # forestmangr 0.9.5
+* add rmoutliers, fct_to_filter, rmlevels,boolean_filter,onlyfiteddata,del_boolean arguments to lm_table and lm_resid
+
 * add m3ha to sprs,ss_diffs,strs;
 
 * add rqm filter and option to show filtered data only, or original and filtered to lm_table;

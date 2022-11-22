@@ -1,4 +1,17 @@
+#' @title 
+#' Calculate interquartile range
+#' @description 
+#' Calculate interquartile range for a given vector
+#'
+#' @param x a vector.
 #' @export
+#' @examples 
+#' 
+#' library(forestmangr)
+#' outliersiqr(iris$Sepal.Length)
+#' 
+#' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
+
 
 outliersiqr <- function(x){
   

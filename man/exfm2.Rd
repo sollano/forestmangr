@@ -11,6 +11,7 @@ A data frame with 57 observations and 4 variables:
   \item{STRATA_AREA}{area of each strata, in hectares}
   \item{PLOT_AREA}{area of plots, in square meters}
   \item{VWB}{volume with bark, in cubic meters}
+  \item{VWB_m3ha}{volume with bark, in cubic meters per hectare}
 }
 }
 \source{

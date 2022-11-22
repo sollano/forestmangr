@@ -46,6 +46,7 @@ lm_resid_group <- function(df,model,.groups=NA,output_mode='table',est.name = "e
                            keep_model = FALSE,rmoutliers = FALSE,fct_to_filter=NA,
                            rmlevels=NA,onlyfiteddata=FALSE){
   
+  data<-reg<-.<-est<-Coefs<-Qualid<-Res<-NULL
   
   .groups_syms <- rlang::syms(.groups) 
   

@@ -67,7 +67,7 @@
 
 strs <- function(df, Yi, plot_area, strata_area, strata, m3ha=FALSE, .groups=NA, age=NA, alpha = 0.05, error = 10, dec_places = 4, pop="inf", tidy=TRUE ){
   # ####
-  Nj<-N<-Pj<-Yj<-Pj_Sj2<-Pj_Sj<-Pj_Yj<-EPj_Sj<-Y<-nj<-EPj_Sj2<-t_rec<-n_recalc<-nj_optimal<-Sy<-Abserror<-AREA_PC<-Yhat<-Total_Error<-VC<-NULL
+  Nj<-N<-Pj<-Yj<-Pj_Sj2<-Pj_Sj<-Pj_Yj<-EPj_Sj<-Y<-nj<-EPj_Sj2<-t_rec<-n_recalc<-nj_optimal<-Sy<-Abserror<-AREA_PC<-Yhat<-Total_Error<-VC<-STRATA_AREA<-NULL
   # Checagem de variaveis ####
   
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
