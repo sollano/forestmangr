@@ -146,7 +146,7 @@ vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
   # := e utilizado quando o nome da variavel nova dentro do pipe esta dentro de um objeto
   
    out <- df %>%                                     # define data frame utilizado
-    dplyr::na_if(0) %>%                              # Transforma zeros em NA
+    na_to_0() %>%                              # Transforma zeros em NA
     dplyr::group_by( !!!.groups_syms, !!!tree_syms ) %>% # definicao da chave
     dplyr::summarize(                                # Funcao que compila os df
       !!dbh_name := mean(!!dbh_sym, na.rm = TRUE), # Media de dbh
@@ -160,8 +160,8 @@ vol_summarise <- function(df, dbh, th, vwb, tree, .groups=NA, vwob=NA){
       FFWOB        = (!!rlang::sym(vwob_name)) / (CSA * (!!rlang::sym(th_name)) )   ) %>%     # Fator de forma sem casca
     dplyr::mutate_at(                                # Funcao que cria novas variaveis utilizando as variaveis
       dplyr::vars(FFWB, FFWOB),                   # especificadas por vars
-      dplyr::funs("mean" = mean)    ) %>%             # Fator de forma medio
-    dplyr::na_if(0) %>%                              # Se vwob nao for informado, variaveis que o utilizam serao 0, portanto, deve-se converte-las para NA, para depois remove-las
+      list("mean" = mean)    ) %>%             # Fator de forma medio
+    na_to_0() %>%                              # Se vwob nao for informado, variaveis que o utilizam serao 0, portanto, deve-se converte-las para NA, para depois remove-las
     #dplyr::select_if(~!all(is.na(.))) %>% 
     rm_empty_col %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     dplyr::ungroup()

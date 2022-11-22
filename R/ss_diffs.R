@@ -198,7 +198,7 @@ ss_diffs <- function(df, Yi, plot_area, total_area, m3ha=FALSE, age=NA, .groups=
   # ####
   
   x_ <-df %>%
-    dplyr::na_if(0) %>%
+    na_to_0() %>%
     dplyr::group_by(!!!.groups_syms,.add=T) %>%
     dplyr::summarise(
       age        = mean(!!age_sym,na.rm=T), # usa-se media pois os valores estao repetidos
@@ -222,7 +222,7 @@ ss_diffs <- function(df, Yi, plot_area, total_area, m3ha=FALSE, age=NA, .groups=
       CI_ha_Sup    = ifelse(m3ha,(Y + Abserror),(Y + Abserror)*10000/mean(!!plot_area_sym,na.rm=T)), # Intervalo de confianca por ha superior
       CI_Total_inf = Yhat - Total_Error, # Intervalo de confianca total inferior
       CI_Total_Sup = Yhat + Total_Error) %>% # Intervalo de confianca total superior
-    dplyr::na_if(0) %>% # substitui 0 por NA
+    na_to_0() %>% # substitui 0 por NA
     rm_empty_col %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     forestmangr::round_df(dec_places)
   

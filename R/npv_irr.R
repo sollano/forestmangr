@@ -150,7 +150,7 @@ npv_irr <- function(df, year, cost, revenue, rate, output="full", sens_limits = 
   
   
   tab2 <- tab1 %>%
-    dplyr::summarise_all(dplyr::funs(total=sum(.,na.rm=TRUE))) %>% 
+    dplyr::summarise_all(list(total=sum(.,na.rm=TRUE))) %>% 
     dplyr::mutate(n=max(df[[year_name]]),
                   #rate = formattable::percent(rate/100),
                   !!paste(year_name,"total",sep="_"):=NULL,

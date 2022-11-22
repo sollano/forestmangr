@@ -12,3 +12,4 @@
 ^.gitattributes
 ^.gitignore
 ^appveyor\.yml$
+^forestmangr\.Rproj$
