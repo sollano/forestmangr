@@ -1,5 +1,8 @@
 # forestmangr development
 # forestmangr 0.9.5
+
+* add na_to_zero function
+
 * add rmoutliers, fct_to_filter, rmlevels,boolean_filter,onlyfiteddata,del_boolean arguments to lm_table and lm_resid
 
 * add m3ha to sprs,ss_diffs,strs;

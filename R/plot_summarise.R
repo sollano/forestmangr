@@ -275,7 +275,3 @@ plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vw
     rm_empty_col %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     forestmangr::round_df(dec_places)
 }
-
-na_to_0 <- function(df) {
-  dplyr::mutate(df, dplyr::across(dplyr::where(is.numeric), ~ dplyr::na_if(.x, 0)))
-}
