@@ -271,7 +271,11 @@ plot_summarise <- function(df, plot, plot_area, dbh, th, .groups, total_area, vw
       !!vwb_ha_name     := (!!rlang::sym(vwb_name)) * 10000/ (!!plot_area_sym),
       !!vwob_name       := sum(!!vwob_sym, na.rm=T),
       !!vwob_ha_name    := (!!rlang::sym(vwob_name)) * 10000/ (!!plot_area_sym)  ) %>% #sumarise 
-    dplyr::na_if(0) %>% # substitui 0 por NA
+    na_to_0() %>% # substitui 0 por NA
     rm_empty_col %>%  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     forestmangr::round_df(dec_places)
+}
+
+na_to_0 <- function(df) {
+  dplyr::mutate(df, dplyr::across(dplyr::where(is.numeric), ~ dplyr::na_if(.x, 0)))
 }

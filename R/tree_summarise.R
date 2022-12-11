@@ -130,7 +130,7 @@ tree_summarise <- function(df,  dbh, tree, .groups=NA, vwb=NA, vwob=NA){
       !!dbh_name := sqrt( sum( (!!dbh_sym)^2, na.rm=T) ),
       !!vwb_name := sum( (!!vwb_sym), na.rm=T),
       !!vwob_name := sum( (!!vwob_sym), na.rm=T) ) %>% 
-    dplyr::na_if(0) %>% 
+    na_to_0() %>% 
     as.data.frame() %>% 
     dplyr::select_if(~!all(is.na(.))) %>% # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     dplyr::ungroup()

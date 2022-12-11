@@ -247,7 +247,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, m3ha=FALSE, .groups=NA,
   
   # Calcula-se o N separado, para caso se tenha diferentes tamanhos de area por talhao
   aux <- df %>%
-    dplyr::na_if(0) %>%
+    na_to_0() %>%
     dplyr::group_by( !!!.groups_syms, !!!strata_syms ) %>%
     dplyr::summarise( Nj = mean(!!strata_area_sym) / (mean(!!plot_area_sym)/10000) ) %>%
     dplyr::summarise(N  = sum(Nj) )
@@ -300,7 +300,7 @@ strs <- function(df, Yi, plot_area, strata_area, strata, m3ha=FALSE, .groups=NA,
       nj_optimal = ceiling(n_recalc*Pj_Sj/EPj_Sj), # por estrato utilizando o metodo de Neyman
       n_optimal  = sum(nj_optimal), # n calculado total
       Yhatj    = Nj * Yj )  %>% # producao total por estrato
-    dplyr::na_if(0) %>% # substitui 0 por NA
+    na_to_0() %>% # substitui 0 por NA
     rm_empty_col  # remove variaveis que nao foram informadas (argumentos opicionais nao inseridos viram NA)
     
   
