@@ -24,5 +24,5 @@
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
 na_to_0 <- function(df) {
-  dplyr::mutate(df, dplyr::across(dplyr::where(is.numeric), ~ dplyr::na_if(.x, 0)))
+  dplyr::mutate(df, dplyr::across(tidyselect::where(is.numeric), ~ dplyr::na_if(.x, 0)))
 }
