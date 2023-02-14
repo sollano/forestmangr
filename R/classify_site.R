@@ -97,8 +97,8 @@ classify_site <- function(df, site, nc=3, plot, .groups=NA){
     dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T ) %>% 
     dplyr::summarise(site_mean = mean( !!site_sym ) ) %>% 
     dplyr::left_join(df) %>%
-    round(4) %>% 
-    dplyr::arrange(site_mean)
+     dplyr::mutate(across( site_mean,round )) %>% 
+     dplyr::arrange(site_mean)
   )
   # Em seguida, com base no numero de classes, estas medias serao dividas em
   # nc classes.
