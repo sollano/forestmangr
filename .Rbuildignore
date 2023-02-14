@@ -13,3 +13,4 @@
 ^.gitignore
 ^appveyor\.yml$
 ^forestmangr\.Rproj$
+^CRAN-SUBMISSION$
