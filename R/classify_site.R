@@ -30,7 +30,7 @@
 classify_site <- function(df, site, nc=3, plot, .groups=NA){
   site_mean<-NULL
   # checagem de variaveis ####
-
+  
   # se df nao for fornecido, nulo, ou  nao for dataframe, ou nao tiver tamanho e nrow maior que 1,parar
   if(  missing(df) ){  
     stop("df not set", call. = F) 
@@ -92,13 +92,14 @@ classify_site <- function(df, site, nc=3, plot, .groups=NA){
   # Primeiro calcula-se a media da variavel a ser classificada
   # por grupo determinado pelo usuario, e a anexa-se a mesma aos dados,
   # que sao organizados da menor para o maior valor de media
- suppressMessages(
-   df <- df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T ) %>% 
-    dplyr::summarise(site_mean = mean( !!site_sym ) ) %>% 
-    dplyr::left_join(df) %>%
-     dplyr::mutate(across( site_mean,round )) %>% 
-     dplyr::arrange(site_mean)
+  
+  suppressMessages(
+    df <- df %>% 
+      dplyr::group_by(!!!.groups_syms, !!!plot_syms, .add=T ) %>% 
+      dplyr::summarise(site_mean = mean( !!site_sym ) ) %>% 
+      dplyr::left_join(df,multiple = "all") %>%
+      dplyr::mutate(dplyr::across(tidyselect::where(is.numeric),\(x) round(x, digits = 4) )) %>% 
+      dplyr::arrange(site_mean)
   )
   # Em seguida, com base no numero de classes, estas medias serao dividas em
   # nc classes.
