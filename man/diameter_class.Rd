@@ -63,26 +63,31 @@ head(exfm20)
 
 # n
 # Number of individuals per ha per diameter class
-diameter_class(df = exfm20, dbh = "dbh", ci = 10, dbhmin = 10, volume = "vol") 
+diameter_class(df = exfm20, dbh = "dbh", ci = 10, dbhmin = 10, volume = "vol")
 
 # Number of individuals per ha per diameter class per species
-diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name") 
+diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name") \%>\% 
+head(10)
 
 # Number of individuals per ha per diameter class, with each diameter class as a column
-diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name", cc_to_column=TRUE) 
+diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name", cc_to_column=TRUE) \%>\% 
+head(10)
 
 # G
 # Basal area per ha per diameter class, with each diameter class as a column
 diameter_class(exfm20,"dbh", "transect",10000,10,10,"scientific.name",
-cc_to_column=TRUE,G_to_cc=FALSE) 
+cc_to_column=TRUE,G_to_cc=FALSE) \%>\% 
+head(10)
 
 
 # Volume
 # Volume per ha per diameter class
-diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name",volume = "vol") 
+diameter_class(exfm20,"dbh", "transect", 10000, 10, 10, "scientific.name",volume = "vol") \%>\% 
+head(10)
 
 # Volume per ha per diameter class, with each diameter class as a column
-diameter_class(exfm20,"dbh","transect",10000,10,10,"scientific.name","vol",cc_to_column=TRUE) 
+diameter_class(exfm20,"dbh","transect",10000,10,10,"scientific.name","vol",cc_to_column=TRUE) \%>\% 
+head(10)
 
 }
 \author{
