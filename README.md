@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Travis-CI Build
-Status](https://travis-ci.org/sollano/forestmangr.svg?branch=master)](https://travis-ci.org/sollano/forestmangr)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/forestmangr)](https://cran.r-project.org/package=forestmangr)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/forestmangr)](https://cran.r-project.org/package=forestmangr)
 [![](https://cranlogs.r-pkg.org/badges/forestmangr)](https://cran.r-project.org/package=forestmangr)

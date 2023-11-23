@@ -1,4 +1,9 @@
 # forestmangr development
+
+# forestmangr 0.9.6
+
+* package now uses dplyr's new verbs
+
 # forestmangr 0.9.5
 
 * add na_to_zero function

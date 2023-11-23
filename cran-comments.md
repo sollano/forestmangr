@@ -1,11 +1,9 @@
 ## Release summary
 
-fixes ggpmisc call and adds head calls to dataframe examples.
-
-It also fixes the check notes on CRAN.
+updates to new dplyr verbs.
 
 ## Test environments
-* local Windows install, R 4.1.0
+* local Windows install, R 4.3.1
 * ubuntu 16.04.6 LTS (on travis-ci)
 * win-builder (devel and release)
 *R-hub  
