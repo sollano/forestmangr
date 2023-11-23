@@ -19,7 +19,7 @@
 #' pow(iris$Petal.Length, 2)
 #' 
 #' # Fit a model that contains the dbh squared, without the need to create a new variable:
-#' exfm15 %>% na_to_zero()
+#' exfm15 %>% na_to_0()
 #'
 #' @author Sollano Rabelo Braga \email{sollanorb@@gmail.com}
 
