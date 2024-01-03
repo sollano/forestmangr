@@ -13,7 +13,7 @@ A data frame with 11 observations and 3393 variables:
   \item{STRATA}{stratum number}
   \item{GENCODE}{genetic code of plots}
   \item{TREE}{number of trees}
-  \item{DBH}{diameter at breast height, in meters}
+  \item{DBH}{diameter at breast height, in centimeters}
   \item{TH}{total height, in meters}
   \item{hi}{height of sections, in meters}
   \item{di_wb}{diameter of sections with bark, in centimeters}

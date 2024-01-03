@@ -14,7 +14,7 @@
 #'   \item{common.name}{species common name}
 #'   \item{scientific.name}{species scientific name}
 #'   \item{family}{species family name}
-#'   \item{dbh}{diameter at breast height, in meters}
+#'   \item{dbh}{diameter at breast height, in centimeters}
 #'   \item{canopy.pos}{canopy position}
 #'   \item{light}{level of light received by the tree}
 #'   \item{dead}{tells if the tree is dead or not}

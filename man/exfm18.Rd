@@ -11,8 +11,8 @@ A data frame with 877 observations and 6 variables:
   \item{Species}{species scientific name}
   \item{Tree}{tree number}
   \item{Trunk}{trunk number}
-  \item{CBH}{circumference at breast height, in meters}
-  \item{DBH}{diameter at breast height, in meters}
+  \item{CBH}{circumference at breast height, in centimeters}
+  \item{DBH}{diameter at breast height, in centimeters}
 }
 }
 \usage{

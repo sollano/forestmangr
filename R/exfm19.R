@@ -10,7 +10,7 @@
 #' \describe{
 #'   \item{STRATA}{stratum number}
 #'   \item{TREE}{number of trees}
-#'   \item{DBH}{diameter at breast height, in meters}
+#'   \item{DBH}{diameter at breast height, in centimeters}
 #'   \item{TH}{total height, in meters}
 #'   \item{CSA}{cross section area with bark, in square meters}
 #'   \item{VWB}{volume with bark, in cubic meters}

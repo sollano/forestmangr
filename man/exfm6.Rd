@@ -14,8 +14,8 @@ A data frame with 10 observations and 14 variables:
   \item{AGE}{average age of plots, in months}
   \item{STRATA_AREA}{area of each strata, in hectares}
   \item{PLOT_AREA}{area of plots, in square meters}
-  \item{DBH}{diameter at breast height, in meters}
-  \item{q}{quadratic diameter, in meters}
+  \item{DBH}{diameter at breast height, in centimeters}
+  \item{q}{quadratic diameter, in centimeters}
   \item{TH}{total height, in meters}
   \item{DH}{dominant height, in meters}
   \item{G}{basal area, in square meters}

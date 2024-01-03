@@ -14,7 +14,7 @@
 #'   \item{N}{quantity of nitrogen used, in grams}
 #'   \item{N2}{squared quantity of nitrogen used, in squared grams}
 #'   \item{block}{block number}
-#'   \item{dbh}{diameter at breast height, in meters}
+  #'   \item{dbh}{diameter at breast height, in centimeters}
 #' }
 #' @name exfm13
 #' @docType data

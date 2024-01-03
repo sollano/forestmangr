@@ -18,7 +18,7 @@ A data frame with 900 observations and 14 variables:
   \item{MEASUREMENT_DATE}{date of measurement}
   \item{PLOT_AREA}{area of plots, in square meters}
   \item{PIT}{pit number}
-  \item{DBH}{diameter at breast height, in meters}
+  \item{DBH}{diameter at breast height, in centimeters}
   \item{TH}{total height, in meters}
   \item{OBS}{quality of trees, N = normal tree, D = dominant tree, F = a failure, or dead tree}
   \item{DH}{dominant height, in meters}

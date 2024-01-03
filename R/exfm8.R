@@ -12,7 +12,7 @@
 #'   \item{STRATA}{stratum number}
 #'   \item{TREE}{number of trees}
 #'   \item{LOG}{log number}
-#'   \item{DBH}{diameter at breast height, in meters}
+#'   \item{DBH}{diameter at breast height, in centimeters}
 #'   \item{TH}{total height, in meters}
 #'   \item{hi}{height of sections, in meters}
 #'   \item{di_wb}{diameter of sections with bark, in centimeters}
