@@ -1,5 +1,8 @@
 # forestmangr development
 
+# forestmangr 0.9.7
+* update e-mails
+
 # forestmangr 0.9.6
 
 * package now uses dplyr's new verbs
