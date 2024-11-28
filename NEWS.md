@@ -1,5 +1,8 @@
 # forestmangr development
 
+# forestmangr 0.9.8
+* fix na to zero
+
 # forestmangr 0.9.7
 * update e-mails
 

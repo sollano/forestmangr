@@ -1,7 +1,7 @@
 Type: Package
 Package: forestmangr
 Title: Forest Mensuration and Management
-Version: 0.9.7.9
+Version: 0.9.8
 Authors@R: c( person(c("Sollano","Rabelo", "Braga"), email="sollanorb@gmail.com",role = c("aut", "cre", "cph")), 
               person(c("Marcio", "Leles", "Romarco", "de","Oliveira"), email="marcioromarco@gmail.com", role = "aut"),
               person(c("Eric", "Bastos","Gorgens"),email= "e.gorgens@gmail.com", role =  "aut") )
@@ -14,7 +14,7 @@ Depends: R(>= 4.2)
 Imports: dplyr(>= 1.0), ggplot2(>= 3.0), ggthemes, tidyr,broom,purrr, plyr,tibble(>= 3.0.0), systemfit,ggpmisc,rlang,utils,car,stats,methods,magrittr, minpack.lm, FinCal,scales,ggdendro, gridExtra,shiny,miniUI
 Suggests: knitr,rmarkdown,tidyselect,formattable
 VignetteBuilder: knitr
-Date: 2023-11-30
+Date: 2024-11-27
 Encoding: UTF-8
 License: MIT + file LICENSE
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
