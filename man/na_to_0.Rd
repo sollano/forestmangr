@@ -19,7 +19,7 @@ this is used due to changes on dplyr 1.1.0.
 \examples{
 library(forestmangr)
 data("exfm15")
-head(exfm15
+head(exfm15)
 
 # Turn NA values to zero only on numeric values
 exfm15 \%>\% na_to_0()
