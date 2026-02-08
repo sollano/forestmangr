@@ -127,7 +127,7 @@ huberwb <- function(df, di, section_length, tree, .groups = NA, di_mm_to_cm = FA
   # ####
   
   df %>% 
-    dplyr::group_by(!!!.groups_syms, !!!tree_syms, add=T) %>% 
+    dplyr::group_by(!!!.groups_syms, !!!tree_syms, .add=T) %>% 
     dplyr::mutate(
        CSA_WB = ( ( (!!di_sym)^2* pi) / 40000) , 
        VWB = CSA_WB * (!!section_length_sym)  ) %>% 

@@ -1,5 +1,8 @@
 # forestmangr development
 
+# forestmangr 0.9.9
+* adpating to dplyr 1.0
+
 # forestmangr 0.9.8
 * fix na to zero
 
